@@ -117,7 +117,7 @@ Note: There is a bug at the moment that causes a crash when attempting to resize
 
 ### Available Gates
 
-See the [TinyQsim Gates](Gates.md) guide for details of the quantum gates available in TinyQsim.
+See the [TinyQsim Gates](TinyQsim_gates.md) guide for details of the quantum gates available in TinyQsim.
 
 These include: CCU, CCX, CP, CS, CSWAP, CT, CU, CX, CY, CZ, H, I, P, RX, RY, S, SWAP, SX, T, U, X, Y and Z. There is also a 'measure' gate, although this is not a normal gate as it is not a unitary operator.
 
@@ -131,14 +131,14 @@ u1 = np.array([[1, 0, 0, 0],  # Define a unitary matrix
                [0, 1, 0, 0],
                [0, 0, 0, 1]])
                  
-qc = QCircuit(3)
-qc.u(u1, 'U1', 0, 1, 2)  # Apply the matrix as a gate
+qc = QCircuit(2)
+qc.u(u1, 'U1', 0, 1)  # Apply the matrix as a gate
 ```
 
 This automatically generates a symbol which is labelled with the string given as the second argument.
 
 <div style="text-align: center;">
-<img src="assets/u012_gate.png" alt="u012_gate" width="80"/>
+<img src="assets/u2_gate.png" alt="u2_gate" width="80"/>
 </div>
 
 The are also CU and CCU variants for controlled-U and controlled-controlled-U gates.
