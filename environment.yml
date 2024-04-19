@@ -1,0 +1,13 @@
+name: tinyqsim
+channels:
+  - defaults
+dependencies:
+  - python>=3.12
+  - more-itertools
+  - numpy
+  - scipy
+  - matplotlib
+  - notebook
+  - ipympl
+  - pytest
+  - pip
