@@ -4,72 +4,65 @@ This is a short introduction to some basic concepts of quantum computation. Some
 
 ### Contents
 
--
-    - [Quantum Computing Basics](#quantum-computing-basics)
-    - [Contents](#contents)
-    - [Qubits](#qubits)
-    - [Quantum Probability and Interference](#quantum-probability-and-interference)
-    - [Bloch Sphere](#bloch-sphere)
-    - [Dirac Bra-Ket Notation](#dirac-bra-ket-notation)
-        - [Inner Product](#inner-product)
-        - [Outer Product](#outer-product)
-        - [Tensor Product](#tensor-product)
-        - [Projectors](#projectors)
-    - [Multi-Qubit States](#multi-qubit-states)
-    - [Measurement](#measurement)
-    - [X Basis](#x-basis)
-    - [Unitary Operators](#unitary-operators)
-    - [Quantum Gates](#quantum-gates)
-        - [Identity (I) Gate](#identity-i-gate)
-        - [X gate (aka NOT gate)](#x-gate-aka-not-gate)
-        - [Hadamard (H) Gate](#hadamard-h-gate)
-        - [Phase (P) Gate](#phase-p-gate)
-        - [SWAP Gate](#swap-gate)
-        - [Controlled-X (CX) Gate](#controlled-x-cx-gate)
-        - [Controlled-U (CU) Gate](#controlled-u-cu-gate)
-    - [Quantum Circuits](#quantum-circuits)
-        - [Operations on Multiple Qubits](#operations-on-multiple-qubits)
-        - [Composing Circuits](#composing-circuits)
-        - [Non-Consecutive Qubits](#non-consecutive-qubits)
-    - [Entanglement Example](#entanglement-example)
-    - [Conclusions](#conclusions)
+- [Quantum Computing Basics](#quantum-computing-basics)
+  - [Contents](#contents)
+  - [Qubits](#qubits)
+  - [Quantum Probability and Interference](#quantum-probability-and-interference)
+  - [Bloch Sphere](#bloch-sphere)
+  - [Dirac Bra-Ket Notation](#dirac-bra-ket-notation)
+    - [Inner Product](#inner-product)
+    - [Outer Product](#outer-product)
+    - [Tensor Product](#tensor-product)
+    - [Projectors](#projectors)
+  - [Multi-Qubit States](#multi-qubit-states)
+  - [Measurement](#measurement)
+  - [X Basis](#x-basis)
+  - [Unitary Operators](#unitary-operators)
+  - [Quantum Gates](#quantum-gates)
+    - [Introduction](#introduction)
+    - [Identity (I) Gate](#identity-i-gate)
+    - [X gate (aka NOT gate)](#x-gate-aka-not-gate)
+    - [Hadamard (H) Gate](#hadamard-h-gate)
+    - [Phase (P) Gate](#phase-p-gate)
+    - [SWAP Gate](#swap-gate)
+    - [Controlled-X (CX) Gate](#controlled-x-cx-gate)
+    - [Controlled-U (CU) Gate](#controlled-u-cu-gate)
+  - [Quantum Circuits](#quantum-circuits)
+    - [Operations on Multiple Qubits](#operations-on-multiple-qubits)
+    - [Composing Circuits](#composing-circuits)
+    - [Non-Consecutive Qubits](#non-consecutive-qubits)
+  - [Entanglement Example](#entanglement-example)
+  - [Conclusions](#conclusions)
 
 ### Qubits
 
-The unit of information for classical computers is the
-*bit*, which has two possible states that we label 0 and 1. The unit of information for quantum computers is the
-*qubit*.
+The unit of information for classical computers is the *bit*, which has two possible states that we label 0 and 1. The unit of information for quantum computers is the *qubit*.
 
-The qubit is an abstraction of a two-level quantum system, such as the spin of an electron. It has two orthonormal basis states denoted by $\ket{0}$ and $\ket{1}$. The
-*ket* symbol $\ket{\psi}$ is part of the Dirac *Bra-Ket* notation and represents a complex vector with label $\psi$.
+The qubit is an abstraction of a two-level quantum system, such as the spin of an electron. It has two orthonormal basis states denoted by $\ket{0}$ and $\ket{1}$. The *ket* symbol $\ket{\psi}$ is part of the Dirac *Bra-Ket* notation and represents a complex vector with label $\psi$.
 
 ```math
 \ket{0} =  \begin{bmatrix}1\\0\end{bmatrix}\quad\text{and}\quad\ket{1} =  \begin{bmatrix}0\\1\end{bmatrix}
 ```
 
-The $\ket{0}$ and $\ket{1}$ basis states can be thought of as corresponding to the classical bit states 0 and 1. This basis is known as the
-*computational basis* or Z-basis. The Z-basis will be assumed unless otherwise stated.
+The $\ket{0}$ and $\ket{1}$ basis states can be thought of as corresponding to the classical bit states 0 and 1. This basis is known as the *computational basis* or Z-basis. The Z-basis will be assumed unless otherwise stated.
 
-The qubit may also be in a linear superposition of these two states:
+Unlike a classical bit, which must be in *either* one of the states 0 or 1, a qubit may also be in a linear superposition of its two basis states:
 
 ```math
-\ket{\psi} = \alpha_0 \ket{0} + \alpha_1 \ket{1} = \begin{bmatrix}\alpha_0\\ \alpha_1\end{bmatrix}\qquad \alpha_0,\alpha_1 \in \mathbb{C}
+\ket{\psi} = \alpha_0 \ket{0} + \alpha_1 \ket{1} = \begin{bmatrix}\alpha_0\\ \alpha_1\end{bmatrix},\qquad \alpha_0,\alpha_1 \in \mathbb{C}
 ```
 
 where $\alpha_0$ and $\alpha_1$ are complex *probability amplitudes*.
 
-The quantum state of a physical qubit is not something we can observe. The only information we can get is as the result of a quantum measurement, which collapses the state into one of the two basis states $\ket{0}$ and $\ket{1}$ with probabilities $\lvert\alpha_0\rvert^2$ and $\lvert\alpha_1\rvert^2$, respectively. Measurement is discussed in more detail below.
-
 ### Quantum Probability and Interference
 
-Classical mechanics is deterministic, whereas quantum mechanics has an inherent randomness. In classical probability theory, if something can happen in two mutually exclusive ways, the probability that it will happen is the sum of the probabilities for the two cases:
+Classical physics is deterministic, whereas quantum mechanics has an inherent randomness. In classical probability theory, if something can happen in two mutually exclusive ways, the probability that it will happen is the sum of the probabilities for the two cases:
 
 ```math
 p = p_1 + p_2
 ```
 
-However, nature doesn't work this way at the quantum level. Instead, we need to use *probability
-amplitudes* that are complex numbers. The probability $p$ is then the square of the absolute value of the probability amplitude $\alpha$:
+However, nature doesn't work this way at the quantum level. Instead, we need to use *probability amplitudes* that are complex numbers. The probability $p$ is then the square of the absolute value of the probability amplitude $\alpha$:
 
 ```math
 p = \lvert \alpha \rvert ^2 = \alpha^*\,\alpha \qquad \alpha \in \mathbb{C}
@@ -102,8 +95,7 @@ results in:
 
 The first two terms are the classical probabilities $p_1$ and $p_2$.
 
-The final term represents quantum
-*interference*. This term can be positive (constructive interference) or negative (destructive interference), depending on the relative phase $(\phi_1 - \phi_2)$.
+The final term represents quantum *interference*. This term can be positive (constructive interference) or negative (destructive interference), depending on the relative phase $(\phi_1 - \phi_2)$.
 
 In the classical case, the two states of a bit (0 and 1) are mutually exclusive and the interference term disappears. In the quantum case, a qubit can be in a superposition of states $\ket{0}$ and $\ket{1}$ and interference can occur.
 
@@ -137,19 +129,15 @@ where $0 \le\theta\le\pi$ and $0\le\phi\le2\pi$.
 <img src="assets/bloch.png" width="300"/>
 </div>
 
-Quantum operators, in the form of quantum gates, can be used to manipulate the state of a qubit. Since the norm of the state vector must be one, the operators must be norm-preserving rotations on the sphere. These are known as
-*unitary* operators.
+Quantum operators, in the form of quantum gates, can be used to manipulate the state of a qubit. Since the norm of the state vector must be one, the operators on a single qubit must be norm-preserving rotations on the sphere. These are known as *unitary* operators.
 
-The Bloch sphere is really only useful for single qubits because the qubits of a multi-qubit system can become
-*entangled* such that the qubits no longer have an individual pure state. However, it is a useful way to visualize and understand the effects of single-qubit gates, which can then be used to build multi-qubit systems.
+The Bloch sphere is really only useful for single qubits because the qubits of a multi-qubit system can become *entangled* such that the qubits no longer have an individual pure state. However, it is a useful way to visualize and understand the effects of single-qubit gates, which can then be used to build multi-qubit systems.
 
 ### Dirac Bra-Ket Notation
 
-Dirac’s
-*Bra-Ket* notation is used in quantum mechanics to describe quantum states as vectors in a complex vector space. It provides a concise way to write vector equations and manipulate them symbolically in a coordinate-free way. The notation automatically takes care of complex conjugation where appropriate.
+Dirac’s *Bra-Ket* notation is used in quantum mechanics to describe quantum states as vectors in a complex vector space. It provides a concise way to write vector equations and manipulate them symbolically in a coordinate-free way. The notation automatically takes care of complex conjugation where appropriate.
 
-A quantum state is represented by the *Ket* symbol $\ket{A}$, where $A$ is just a label. The *Conjugate
-Transpose* of the ket $\ket{A}$ is called a *Bra* and is written $\bra{A}$.
+A quantum state is represented by the *Ket* symbol $\ket{A}$, where $A$ is just a label. The *Conjugate Transpose* $\ket{A}^\dagger$ of the ket $\ket{A}$ is called a *Bra* and is written $\bra{A}$.
 
 If we consider the quantum state in a specific orthonormal basis, we can represent a Ket by a column vector:
 
@@ -163,8 +151,7 @@ The corresponding Bra is then the conjugate transpose , which is a row vector:
 \bra{A} = \ket{A}^\dagger =  \begin{bmatrix}a_1^*, & a_2^*, ...\, a_n^*\end{bmatrix}
 ```
 
-There are three products of interest: the *inner product* $\braket{A|B}$, the *outer product* $\ket{A}\bra{B}$ and the
-*tensor product* $\ket{A}\ket{B}$.
+There are three products of interest: the *inner product* $\braket{A|B}$, the *outer product* $\ket{A}\bra{B}$ and the *tensor product* $\ket{A}\ket{B}$.
 
 #### Inner Product
 
@@ -225,8 +212,7 @@ The tensor product of $n$ identical states can be written as a *tensor power*. F
 
 #### Projectors
 
-The outer product $\ketbra{\psi}{\psi}$ of a vector with itself is known as a
-*projector*. If a projector is applied to a vector $\ket{\phi}$, the result is:
+The outer product $\ketbra{\psi}{\psi}$ of a vector with its conjugate transpose is known as a *projector*. If a projector is applied to a vector $\ket{\phi}$, the result is:
 
 ```math
 \begin{align*}
@@ -257,8 +243,7 @@ The tensor product is associative, so we can combine arbitrarily many qubits:
 
 In general, an N-qubit state is represented by a vector in the 2N-dimensional complex vector space $\mathbb{C}^{2N}$.
 
-The tensor product of individual pure qubit states gives the state of the N-qubit system. However, it is not necessarily possible to factorize the state back into individual qubit states after quantum gate operations have been applied. For example, the following is an
-*entangled* state that is not separable into the tensor product of individual qubit states:
+The tensor product of individual pure qubit states gives the state of the N-qubit system. However, it is not necessarily possible to factorize the state back into individual qubit states after quantum gate operations have been applied. For example, the following is an *entangled* state that is not separable into the tensor product of individual qubit states:
 
 ```math
 \frac{1}{\sqrt{2}} (\ket{01} + \ket{10} )
@@ -266,7 +251,7 @@ The tensor product of individual pure qubit states gives the state of the N-qubi
 
 Unentangled states are separable and can therefore be simulated efficiently on a classical computer. Without entanglement, quantum computers would be no more powerful than classical computers.
 
-A classical computer only requires 38 bytes of storage to represent 300 classical bits. In contrast, a quantum computer with 300 qubits requires a vector of $2^{300}$ (about $10^{93}$) complex values to represent it, which is much more than the number of atoms in the observable universe (estimated to be around $10^{80}$ ). A unitary operator to manipulate this state would require a $10^{93} \times 10^{93}$ matrix. Simulating a quantum computer with more than a few tens of qubits is infeasible even on a supercomputer.
+A classical computer requires only 38 bytes of storage to represent 300 classical bits. In contrast, a quantum computer with 300 qubits requires a vector of $2^{300}$ (about $10^{93}$) complex values to represent it, which is much more than the number of atoms in the observable universe (estimated to be around $10^{80}$ ). A unitary operator to manipulate this state would require a $10^{93} \times 10^{93}$ matrix. Simulating a quantum computer with more than a few tens of qubits is infeasible even on a supercomputer.
 
 Quantum states represent exponentially more information than classical states. However, we cannot access that information because measuring it will only give one of the classical states. The art of writing quantum algorithms is to utilize the vast state space, but then evolve the state towards one of the basis states, having some required property, which can be read out as the answer.
 
@@ -278,8 +263,7 @@ Measurement of the state of a quantum system is associated with a measurement op
 M \ket{\psi} = \lambda \ket{\psi}
 ```
 
-The operator must be
-*Hermitian* (self-adjoint). A Hermitian matrix is equal to its own conjugate transpose. The diagonal elements are real because they are their own conjugates. Hermitian matrices have the property that their eigenvalues are real and their eigenvectors are orthogonal.
+The operator must be *Hermitian* (self-adjoint). A Hermitian matrix is equal to its own conjugate transpose. The diagonal elements are real because they are their own conjugates. Hermitian matrices have the property that their eigenvalues are real and their eigenvectors are orthogonal.
 
 By convention, measurements are normally made in the Z basis, which has the eigenvectors:
 
@@ -299,8 +283,7 @@ Consider a single qubit with the state:
 \ket{\psi} = \alpha_0 \ket{0} + \alpha_1 \ket{1}
 ```
 
-The probability of the measurement resulting in a particular eigenvector is given by the squared magnitude of the corresponding amplitude. This is known as the
-*Born Rule*.
+The probability of the measurement resulting in a particular eigenvector is given by the squared magnitude of the corresponding amplitude. This is known as the *Born Rule*.
 
 ```math
 p(\ket{0}) = \lvert\alpha_0\rvert^2, \qquad p(\ket{1}) = \lvert\alpha_1\rvert^2
@@ -329,12 +312,11 @@ Another important basis is the X basis. The orthonormal X basis vectors are deno
 \end{align*}
 ```
 
-The scaling factor of $ \frac{1}{\sqrt{2}}$ normalises the vectors, so that the probabilities of the measurement outcomes sum to one.
+The scaling factor of $\frac{1}{\sqrt{2}}$ normalises the vectors, so that the probabilities of the measurement outcomes sum to one.
 
 A basis state in the Z-basis corresponds to an equal superposition in the X-basis and vice versa. If we measure a qubit in the Z basis, the state will collapse into the Z basis state $\ket{0}$ or $\ket{1}$. If we then measure it in the X-basis, there is an equal probability that we will measure $\ket{+}$ or $\ket{-}$ and the state will become that X-basis eigenstate. If we then measure it again in the Z-basis, there will be an equal probability of measuring $\ket{0}$ or $\ket{1}$.
 
-This is an example of the *Uncertainty
-Principle*. If a qubit is measured in one measurement basis (e.g. Z), the state becomes an eigenstate in that basis. The value of the state is then completely unknown (i.e. in an equal superposition) in the complementary measurement basis (e.g. X).
+This is an example of the *Uncertainty Principle*. If a qubit is measured in one measurement basis (e.g. Z), the state becomes an eigenstate in that basis. The value of the state is then completely unknown (i.e. in an equal superposition) in the complementary measurement basis (e.g. X).
 
 The operator that that converts from the Z basis to the X basis, or vice versa, is the *Hadamard* operator $H$:
 
@@ -356,11 +338,9 @@ X = \begin{bmatrix}0 & 1 \\ 1 & 0 \end{bmatrix}
 
 ### Unitary Operators
 
-The time evolution of a closed quantum system is
-*unitary*. The quantum state vector has a norm of one, so that the total probability of the measurement outcomes is one. The operators (i.e. matrices) applied to evolve the state must be unitary so as to preserve the norm. A unitary matrix is a square matrix whose inverse is its conjugate transpose. It is the complex equivalent of a real orthonormal matrix.
+The time evolution of a closed quantum system is *unitary*. The quantum state vector has a norm of one, so that the total probability of the measurement outcomes is one. The operators (i.e. matrices) applied to evolve the state must be unitary so as to preserve the norm. A unitary matrix is a square matrix whose inverse is its conjugate transpose. It is the complex equivalent of a real orthonormal matrix.
 
-The evolution of the state of a quantum system requires that the operators are
-*reversible* so that information is not lost. Operators that can be represented as a unitary matrix are reversible.
+The evolution of the state of a quantum system requires that the operators are *reversible* so that information is not lost. Operators that can be represented as a unitary matrix are reversible.
 
 Unitary operators are linear. Consequently, the result of applying a unitary operator U to the sum (e.g. superposition) of two states is the sum of the results of applying the operator to the states individually:
 
@@ -376,14 +356,19 @@ U (\alpha_0 \ket{0} + \alpha_1\ket{1}) = \alpha_0 U\ket{0} + \alpha_1 U\ket{1}
 
 ### Quantum Gates
 
+#### Introduction
+
 The unitary operators in a gate-model quantum computer are called “quantum gates” by analogy with the logic gates of traditional computers. A quantum gate can be represented by a unitary matrix or implemented in hardware by physical operations on the qubits. Measurement is not considered to be a normal gate because it is not reversible.
 
 Unitary matrices are square, which results in quantum gates (and hence quantum circuits) having the same number of outputs as inputs. This is very different to ordinary digital logic gates where, for example, a NAND gate has two inputs and one output. The inputs of a NAND gate cannot be inferred from the output, so it is not reversible.
 
-The simplest quantum gates operate on a single qubit. However, if this were the only kind of gate, the state would remain separable. i.e. it could be factored into individual qubits and the same computation could be done efficiently on a classical computer. It is essential to have at least one type of multi-qubit gate so that entanglement can be created.
+The simplest quantum gates operate on a single qubit. However, if this were the only kind of gate, the state would remain separable. i.e. it could be factored into individual qubits and the same computation could be done efficiently on a classical computer. It is essential to have at least one type of multi-qubit gate that allows entanglement to be created.
 
-The analogy with classical logic gates makes it tempting to think of quantum gates as having inputs and outputs. However, it is often better consider gates as operations that are applied to qubits and to think about
-*before* and *after* states rather than inputs and outputs.
+There are many kinds of quantum gates, but any quantum circuit can be built (or closely approximated) using a small subset known as a universal gate set. There are several such sets, with as few as three gates being sufficient. Essentially, what is required is two one-qubit rotation gates that can reach any point on the Bloch sphere and a CX gate to allow entanglement to be created.
+
+In practice, real quantum computers implement a small subset that is physically realizable given the technology available. Working at this level would make algorithm development very difficult and the algorithms would be specific to a given gate set. Consequently, quantum development tools usually have a wide range of gates that provide useful abstractions. A compiler then takes the quantum circuit and compiles it into instructions for a particular quantum computer.
+
+The following sections describe some of the most important gates including the X, CX, H and P gates.
 
 #### Identity (I) Gate
 
@@ -486,9 +471,6 @@ P(\phi) &= \ketbra{0}{0} + e^{i\phi}\ketbra{1}{1} \\[0.5em]
 \end{align*}
 ```
 
-The phase $\phi$ has no effect on the measurement outcome for a single qubit, but phases become important with multiple qubits because
-*interference* can occur, as discussed earlier. This plays an important role in quantum algorithms.
-
 When the phase gate is applied to a qubit $\alpha_0\ket{0} + \alpha_1\ket{1}$, the result is:
 
 ```math
@@ -524,6 +506,12 @@ SWAP &= \ketbra{00}{00} + \ketbra{01}{10} + \ketbra{10}{01} + \ketbra{11}{11}\\[
 
 This definition is the same for both big-endian and little-endian conventions because the swap operation is symmetrical with respect to the two qubits.
 
+The SWAP gate is equivalent to three CX gates:
+
+<div style="text-align: center;">
+<img src="assets2/cx3.png" width="220"/>
+</div>
+
 #### Controlled-X (CX) Gate
 
 The Controlled-X (CX or CNOT) gate is a quantum gate that operates on two qubits. Consequently, it is represented by a 4x4 unitary matrix:
@@ -544,8 +532,8 @@ The CX gate is the quantum equivalent of the classical exclusive-OR (XOR) gate, 
 
 ```math
 \begin{align*}
-\ket{0y} &\mapsto \ket{0y}\\
-\ket{1y} &\mapsto \ket{1,X y}
+\ket{0,y} &\mapsto \ket{0,y}\\
+\ket{1,y} &\mapsto \ket{1,X y}
 \end{align*}
 ```
 
@@ -589,8 +577,7 @@ In this way, we can make the controlled-SWAP (CSWAP) gate, which is also known a
 CSWAP = \textrm{cu}(SWAP)
 ```
 
-We can even make a controlled-controlled gate, such the controlled-controlled-X gate (CCX), which is also known as the
-*Toffoli* gate.
+We can even make a controlled-controlled gate, such the controlled-controlled-X gate (CCX), which is also known as the *Toffoli* gate.
 
 ```math
 CCX = \textrm{cu}(CX)
@@ -610,12 +597,9 @@ A quantum circuit consists of a sequence of gates representing unitary operation
 <img src="assets2/multi.png" width="300"/>
 </div>
 
-The input state on the left-hand side is $\ket{xy}=\ket{x}\otimes\ket{y}$ and the output state on the right-hand side is $\ket{\phi}$. The qubit on the left side of a tensor product is refered to as the
-*most-significant* qubit, even if the qubits are not used to encode a number. This document assumes that the most-significant qubit is drawn as the upper one in the diagram, so tensor products are applied going
-*down* the diagram.
+The input state on the left-hand side is $\ket{xy}=\ket{x}\otimes\ket{y}$ and the output state on the right-hand side is $\ket{\phi}$. The qubit on the left side of a tensor product is refered to as the *most-significant* qubit, even if the qubits are not used to encode a number. This document assumes that the most-significant qubit is drawn as the upper one in the diagram, so tensor products are applied going *down* the diagram.
 
-The quantum gates in the circuit simply represent quantum operations that are applied to the qubits. There is no implication that the gates are physical entities. In fact, the gates are often just quantum operations applied in-place to a fixed set of qubits. The inputs and outputs of the gates are not physical ports but simply the
-*before* and *after* states of the same qubits.
+The quantum gates in the circuit simply represent quantum operations that are applied to the qubits. There is no implication that the gates are physical entities. In fact, the gates are often just quantum operations applied in-place to a fixed set of qubits. The inputs and outputs of the gates are not physical ports but simply the *before* and *after* states of the same qubits.
 
 #### Composing Circuits
 
@@ -687,7 +671,7 @@ If, however, we want to apply a multi-qubit gate to non-consecutive qubits or qu
 
 In a quantum computer programming language, we normally just want to specify the qubits to which a gate is applied, such as $U(q_4,q_2,q_5)$, with any shuffling of the order carried out behind the scenes. The implementation may, for example, use a permutation matrix to perform the shuffling instead of swap gates.
 
-Non-consecutive qubits are problem in real quantum computers because the qubits are typically arranged in a one or two dimensional grid. Operations such as CX require interactions between the qubits which normally means they need to be physically adjacent.
+Non-consecutive qubits are a problem in real quantum computers because the qubits are typically physically arranged in a one or two dimensional grid. Operations such as CX require interactions between the qubits which requires them to be physically adjacent.
 
 ### Entanglement Example
 
@@ -748,4 +732,4 @@ There are many more topics to learn about, such as:
 - Mapping circuit-model gates onto physically available operations
 
 *Jon Brumfitt
-19 April 2024*
+20 April 2024*

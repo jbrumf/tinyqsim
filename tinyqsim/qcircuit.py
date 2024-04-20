@@ -38,7 +38,7 @@ class QCircuit(object):
         self._auto_exec = auto_exec
         self._model = Model(nqubits)
         self._schematic = Schematic(nqubits)
-        self._simulator = Simulator(nqubits)
+        self._simulator = Simulator(nqubits, init)
         self._gates = gates.GATES
 
     # -------------------------- Properties --------------------------

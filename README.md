@@ -56,13 +56,21 @@ A notebook session can be started as follows:
 
 Then navigate to the 'examples' folder.
 
+### Documentation
+
+The TinyQsim documentation can be viewed online on GitHub:
+
+- https://github.com/jbrumf/tinyqsim/tree/main/doc/index.md
+
+The Markdown files for the documentation can also be found in the `tinyqsim/doc` directory. These files require a Markdown viewer with LaTeX support.
+
 ### Examples
 
-The code of the Jupyter notebook examples can be found in the `tinyqsim/examples` directory. Alternatively, a rendered version of the notebooks including their output can be found on GitHub:
+Examples are provided in the form of Jupyter notebooks. These are located in the `tinyqsim/examples` directory. Alternatively, a rendered version of the notebooks including their output can be found on GitHub:
 
-https://github.com/jbrumf/tinyqsim/tree/main/examples/
+- https://github.com/jbrumf/tinyqsim/tree/main/examples/
 
-The current examples are:
+The current examples include:
 
 - Example 1: Tutorial introduction to TinyQsim:
     - https://github.com/jbrumf/tinyqsim/blob/main/examples/example_1.ipynb
@@ -70,17 +78,6 @@ The current examples are:
     - https://github.com/jbrumf/tinyqsim/blob/main/examples/example_2.ipynb
 - Example 3: Parameterized N-qubit QFT
     - https://github.com/jbrumf/tinyqsim/blob/main/examples/example_3.ipynb
-
-### Documentation
-
-See the documentation in the TinyQsim 'doc' directory. This includes:
-
-- [TinyQsim User Guide](doc/TinyQsim_user_guide.md)
-- [TinyQsim Gates](doc/TinyQsim_gates.md)
-
-There are also some notes on the design:
-
-- [TinyQsim Design](doc/TinyQsim_design.md)
 
 ### License
 

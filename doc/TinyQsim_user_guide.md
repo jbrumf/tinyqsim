@@ -3,22 +3,23 @@
 <!-- TOC -->
 
 - [TinyQsim User Guide](#tinyqsim-user-guide)
-    - [A Simple Example](#a-simple-example)
-    - [Creating a Quantum Circuit](#creating-a-quantum-circuit)
-    - [Drawing the Circuit](#drawing-the-circuit)
-        - [1: In a Jupyter Notebook](#1-in-a-jupyter-notebook)
-        - [2: Run from a Python Script](#2-run-from-a-python-script)
-    - [Available Gates](#available-gates)
-    - [Custom Gates](#custom-gates)
-    - [Parametrized Gates](#parametrized-gates)
-    - [Angle Parameters](#angle-parameters)
-    - [Inspecting and Measuring the State](#inspecting-and-measuring-the-state)
-        - [Quantum State Vector](#quantum-state-vector)
-        - [Measurement Probabilities](#measurement-probabilities)
-        - [Complex Components of State](#complex-components-of-state)
-        - [Measuring the State](#measuring-the-state)
-        - [Measurement Counts](#measurement-counts)
-    - [Bloch Sphere](#bloch-sphere)
+  - [A Simple Example](#a-simple-example)
+  - [Creating a Quantum Circuit](#creating-a-quantum-circuit)
+  - [Drawing the Circuit](#drawing-the-circuit)
+    - [1: In a Jupyter Notebook](#1-in-a-jupyter-notebook)
+    - [2: Run from a Python Script](#2-run-from-a-python-script)
+  - [Available Gates](#available-gates)
+  - [Custom Gates](#custom-gates)
+  - [Parameterized Custom Gates](#parameterized-custom-gates)
+  - [Angle Parameters](#angle-parameters)
+  - [Inspecting the State (without collapse)](#inspecting-the-state-without-collapse)
+    - [Quantum State Vector](#quantum-state-vector)
+    - [Complex Components of State](#complex-components-of-state)
+    - [Measurement Probabilities](#measurement-probabilities)
+    - [Measurement Counts](#measurement-counts)
+  - [Quantum Measurement (with collapse)](#quantum-measurement-with-collapse)
+  - [Bloch Sphere](#bloch-sphere)
+
 
 <!-- TOC -->
 
@@ -126,10 +127,10 @@ These include: CCU, CCX, CP, CS, CSWAP, CT, CU, CX, CY, CZ, H, I, P, RX, RY, S, 
 Custom gates are possible using the U gate that takes a unitary matrix as an argument. For example:
 
 ```
-u1 = np.array([[1, 0, 0, 0],  # Define a unitary matrix
-               [0, 0, 1, 0],
-               [0, 1, 0, 0],
-               [0, 0, 0, 1]])
+u1 = numpy.array([[1, 0, 0, 0],  # Define a unitary matrix
+                  [0, 0, 1, 0],
+                  [0, 1, 0, 0],
+                  [0, 0, 0, 1]])
                  
 qc = QCircuit(2)
 qc.u(u1, 'U1', 0, 1)  # Apply the matrix as a gate
@@ -143,13 +144,13 @@ This automatically generates a symbol which is labelled with the string given as
 
 The are also CU and CCU variants for controlled-U and controlled-controlled-U gates.
 
-For further details see the 'U' gate in the [TinyQsim Gates](Gates.md) guide.
+For further details see the 'U' gate in the [TinyQsim Gates](TinyQsim_gates.md) guide.
 
-### Parametrized Gates
+### Parameterized Custom Gates
 
-Parameterized gates, such as the P (phase) gate are internally defined as functions that return a unitary matrix.
+A parameterized gate can be defined as a function that returns a unitary matrix.
 
-We can create our own custom parametrized gates in the same way. For example, suppose that we wish to create the following custom parameterized phase gate.
+For example, suppose that we wish to create the following custom parameterized phase gate.
 
 ```math
 \text{RK}(k) =\begin{bmatrix}1 & 0 \\ 0 & e^{\large\frac{2\pi i}{2^k}}\end{bmatrix}
@@ -169,7 +170,7 @@ Alternatively, we could define it in terms of the existing P (phase) gate, as fo
       return gates.P(2 * pi / 2 ** k)
 ```
 
-In either case, we can apply the gate like this:
+In either case, the gate can be added to the circuit like this:
 
 ```
   qc.QCircuit(4)
@@ -195,11 +196,11 @@ The following examples show how to specify the label using a simple ASCII 'pi' o
 <img src="assets/p_gate.png" alt="p_gate" width="80"/>
 </div>
 
-### Inspecting and Measuring the State
+### Inspecting the State (without collapse)
 
 It is not possible to examine the state of real qubits without collapsing them to one the basis states of the measurement basis. However, a simulator such as TinyQsim does have access to the state, which can be very useful for understanding and developing quantum algorithms.
 
-The following methods allow the quantum state to be inspected and presented in several different ways. The state used for these examples is: $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$
+The following methods allow the quantum state to be inspected and presented in several different ways.
 
 #### Quantum State Vector
 
@@ -210,7 +211,7 @@ Example:
   state = qc.state_vector
 ```
 
-Example output:
+Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$ :
 
 ```
   [0. 0.70710678 0.70710678 0.]
@@ -232,30 +233,6 @@ The keywords have the following meanings:
 
 See the numpy 'printoptions' documentation for further options and details.
 
-#### Measurement Probabilities
-
-The probabilities of a measurement returning each basis state can be obtained as follows. This is not treated as a measurement, so the state is not collapsed.
-
-```
-API:
-  qc.probabilities(*options)   # Return dictionary of state probabilities
-     options: decimals=5, include_zeros=False
-     
-Example:
-  qc.probabilities()
-```
-
-Example output:
-
-```    
-  {'01': 0.5, '10': 0.5}
-```
-
-The options are as follows:
-
-- `decimals` : Number of decimal places
-- `include_zeros` : Include zero entries
-
 #### Complex Components of State
 
 The projection of the quantum state onto each basis vector can be obtained as follows. This is not treated as a measurement, so the state is not collapsed. This is similar to just printing the state except that the result is in the form of a Python dictionary with keys that label the basis states.
@@ -269,7 +246,7 @@ Example:
   qc.components(decimals=4)
 ```
 
-Example output:
+Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$ :
 
 ```
   {'01': (0.7071+0j), '10': (0.7071+0j)}
@@ -280,24 +257,35 @@ The options are as follows:
 - `decimals` : Number of decimal places
 - `include_zeros` : Include zero entries
 
-#### Measuring the State
+#### Measurement Probabilities
 
-A quantum measurement may be performed one or more qubits. This collapses the state as it would on a real quantum computer. If no qubits are specified, then all the qubits are measured.
+The probabilities of a measurement returning each basis state can be obtained as follows. This is not treated as a measurement, so the state is not collapsed.
 
 ```
 API:
-  qc.measure(*qubits)  # Measure the specified qubits
-  
-Examples:
-  qc.qc.measure(0,1)   # Measure qubits 0 and 1
-  qc.qc.measure()      # Measure all qubits
+  qc.probabilities(*options)   # Return dictionary of state probabilities
+     options: decimals=5, include_zeros=False
+     
+Example:
+  qc.probabilities()
 ```
 
-Example output:
+Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$ :
 
+```    
+  {'01': 0.5, '10': 0.5}
 ```
-  [0 1]
+
+So, the probabilties of the measurement outcomes are:
+
+```math
+p(\ket{01}) = 0.5, \quad p(\ket{10})= 0.5
 ```
+
+The options are as follows:
+
+- `decimals` : Number of decimal places
+- `include_zeros` : Include zero entries
 
 #### Measurement Counts
 
@@ -310,7 +298,7 @@ TinyQsim provides the following method that simulates such a sequence of test ru
      options: nruns=1000, include_zeros=False
 ```
 
-Example output:
+Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$ :
 
 ```
   {'01': 503, '10': 497}
@@ -320,6 +308,25 @@ The options are as follows:
 
 - `nruns`         : Number of test runs
 - `include_zeros` : Include zero entries
+
+### Quantum Measurement (with collapse)
+
+A quantum measurement may be performed on one or more qubits. This collapses the state as it would on a real quantum computer. If no qubits are specified, then all the qubits are measured.
+
+```
+API:
+  qc.measure(*qubits)  # Measure the specified qubits
+  
+Examples:
+  qc.measure(0,1)   # Measure qubits 0 and 1
+  qc.measure()      # Measure all qubits
+```
+
+Example output:
+
+```
+  [0 1]
+```
 
 ### Bloch Sphere
 
@@ -335,8 +342,7 @@ where $0 \le\theta\le\pi\,$ and $\,0\le\phi\le2\pi$.
 <img src="assets/bloch.png" alt="bloch" width="300"/>
 </div>
 
-The Bloch sphere is mostly useful for single qubits because the qubits of a multi-qubit system can become
-*entangled* such that the qubits no longer have individual pure states. However, the sphere is a useful way to visualize and learn about the effects of single-qubit gates, which can then be used as part of a multi-qubit system.
+The Bloch sphere is mostly useful for single qubits because the qubits of a multi-qubit system can become *entangled* such that the qubits no longer have individual pure states. However, the sphere is a useful way to visualize and learn about the effects of single-qubit gates, which can then be used as part of a multi-qubit system.
 
 The support for the Bloch Sphere in TinyQsim is at the prototype stage, so the details are likely to change. At present, it can display the Bloch sphere for a pair of angles, $\phi$ and $\theta$. For example:
 
@@ -353,7 +359,7 @@ The sphere can be rotated with the mouse when run from a Python program. When ru
   plot_bloch(phi, theta, azimuth=35, elevation=10)
 ```
 
-It is possible to create a one-qubit quantum circuit, use gates to configure the state and then plot the state on the Bloch sphere.
+The following example shows how to create a one-qubit quantum circuit, use gates to configure the state and then plot the state on the Bloch sphere.
 
 For example:
 
@@ -361,7 +367,7 @@ For example:
   from tinyqsim.bloch import plot_bloch
   from tinyqsim.extras import qubit_to_bloch
 
-  qc = QCircuit(1)  # This must be 1 qubit at present
+  qc = QCircuit(1)  # This must be 1 qubit
   
   qc.h(0)
   qc.p(pi/3, f'{PI}/3', 0)

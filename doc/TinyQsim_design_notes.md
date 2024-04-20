@@ -1,18 +1,19 @@
-## TinyQsim Design
+## TinyQsim Design Notes
 
 This document provides some informal notes on the background and design of TinyQsim, as well as some ideas for further development.
 
 <!-- TOC -->
 
-- [TinyQsim Design](#tinyqsim-design)
-    - [Background](#background)
-    - [Endianness](#endianness)
-    - [Execution Model](#execution-model)
-    - [Simulation](#simulation)
-    - [Software Modules](#software-modules)
-    - [Matrix Expansion](#matrix-expansion)
-    - [Qubit Permutation](#qubit-permutation)
-    - [The Future](#the-future)
+- [TinyQsim Design Notes](#tinyqsim-design-notes)
+  - [Background](#background)
+  - [Endianness](#endianness)
+  - [Execution Model](#execution-model)
+  - [Simulation](#simulation)
+  - [Software Modules](#software-modules)
+  - [Matrix Expansion](#matrix-expansion)
+  - [Qubit Permutation](#qubit-permutation)
+  - [The Future](#the-future)
+
 
 <!-- TOC -->
 
@@ -26,9 +27,7 @@ Because the code is simple, it should be easy to modify, providing a basis for e
 
 ### Endianness
 
-Some books, papers and online resources use the
-*big-endian* convention in which qubit 0 is the most-significant qubit, while others use the
-*little-endian* convention, in which qubit 0 is the least significant qubit. This can lead to confusion when comparing examples from different sources.
+Some books, papers and online resources use the *big-endian* convention in which qubit 0 is the most-significant qubit, while others use the *little-endian* convention, in which qubit 0 is the least significant qubit. This can lead to confusion when comparing examples from different sources.
 
 The big-endian convention was chosen for TinyQsim as it was easier to try out examples from the books I was reading at the time. It should not be too difficult to add an option for selecting big or little endian mode. The internal quantum measurement code already makes provision for it.
 
@@ -52,7 +51,7 @@ TinyQsim is intended as a tool for interactive experiments. It is written in Pyt
 
 An alternative approach, used by some quantum development tools, is to first construct a complete circuit, then compile it with optimization for execution on a simulator or real quantum computer.
 
-TinyQsim has adopted a hybrid approach. Gates are added to the circuit model but, by default, are applied to the state as they are added. (The model is also used as input for drawing the circuit schematic.) However, as an experimental feature, it is also possible to inhibit incremental execution and instead give an explict 'execute' command, which could potentially include optimization. It is envisaged that a circuit could be developed in incremental mode and then run with a larger number of qubits in explicit execution mode.
+TinyQsim has adopted a hybrid approach. Gates are added to a circuit model but, by default, are applied to the state as they are added. (The model is also used as input for drawing the circuit schematic.) However, as an experimental feature, it is also possible to inhibit incremental execution and instead give an explict 'execute' command, which could potentially include optimization. It is envisaged that a circuit could be developed in incremental mode and then run with a larger number of qubits in explicit execution mode.
 
 ```
   qc = QCircuit(8, auto_exec=False)
@@ -61,7 +60,7 @@ TinyQsim has adopted a hybrid approach. Gates are added to the circuit model but
   print(qc.state_vector)
 ```
 
-The execute command would typically be given after defining the circuit, but it can be given at any time, in which case it could either optimize and execute the whole circuit up to that point, or it could just optimize and run the commands added since the previous execute command.
+The execute command would typically be given after defining the circuit, but it can be given at any time, in which case it could either optimize and execute the whole circuit up to that point, or it could just optimize and run the gates added since the previous execute command.
 
 Another possibility would be for the execute command to be triggered implicitly whenever the user gives a command that requires the state vector. This would allow optimization without the need for explicit execute commands.
 
@@ -73,15 +72,15 @@ Another possibility would be for the execute command to be triggered implicitly 
   print(qc.state_vector)  # Triggers execution
 ```
 
-The execute command has no real use at the moment as there is no optimization, but it provides an architectural placeholder for further work.
+The execute command has no real use at the moment as there is no optimization, but it provides an architectural hook for further work.
 
 ### Simulation
 
-TinyQsim starts by creating an initial quantum state vector of size $2^K$ for a $K$-qubit circuit. Then, as each gate is added, the gate's unitary matrix is expanded to a $2^K\times 2^K$ matrix that maps the gate onto the relevant qubits. The state is then updated by multiplying it by the matrix. This is obviously very inefficient but it is satisfactoryfor up to about 12 qubits.
+TinyQsim starts by creating an initial quantum state vector of size $2^K$ for a $K$-qubit circuit. Then, as each gate is added, the gate's unitary matrix is expanded to a $2^K\times 2^K$ matrix that maps the gate onto the relevant qubits. The state is then updated by multiplying it by the matrix. This is obviously very inefficient but it is satisfactory for up to about 12 qubits.
 
 Using this approach, every application of even a one-qubit gate requires expanding it to a $2^K\times 2^K$ matrix. For example, a 10-qubit circuit requires a $2^{10}\times 2^{10}$ matrix of complex numbers. A complex number requires two floating-point numbers that are typically 64 bits, so the total size of the matrix is 16 MB. This starts to get slow by the time we reach 12-qubit circuits with 256 MB matrices.
 
-Using the circuit-model approach, the quantum circuit could, for example, be modelled by a Directed Acyclic Graph (DAG) representing the partial order of operations. Rewrite rules could, for example, be applied to simplify and combine elements building up progressively larger matrices. The size of the matrix increases by a factor 4 for each qubit that is added, so there is an advantage in combining smaller sub-circuits in a bottom-up manner.
+Using the circuit-model approach, the quantum circuit could, for example, be modelled by a Directed Acyclic Graph (DAG) representing the partial order of operations. Rewrite rules could be applied to simplify and combine elements building up progressively larger matrices. The size of the matrix increases by a factor of 4 for each qubit that is added, so there is an advantage in combining smaller sub-circuits in a bottom-up manner.
 
 ### Software Modules
 
@@ -120,7 +119,7 @@ The tensor product of $n$ identical states $\ket{\psi}$ is written as a *tensor 
 
 ### Qubit Permutation
 
-In practice, the gate may be applied to non-consecutive qubits which may not even be in the same order. TinyQsim simply expands the matrix, as described above and performs a quantum permutation on the gate qubits.
+In practice, a gate may be applied to non-consecutive qubits which may not even be in the same order. TinyQsim simply expands the matrix, as described above and performs a quantum permutation on the gate qubits to map the gate onto the relevant qubits.
 
 These approaches to applying a gate's unitary matrix to a quantum state are very-non-optimal, but easy to implement, following the 'keep it simple' approach. In fact, it works surprisingly well, allowing circuits of up to about 12 qubits.
 
@@ -128,4 +127,4 @@ There is a lot of scope for optimization and improvement, but this was not the g
 
 ### The Future
 
-TinyQsim was originally written as a learning exercise. Although there many other much-better quantum simulators available that I could use, I may occasionally add some new features to TinyQsim because it has been a fun project.
+TinyQsim was originally written as a learning exercise. Although there many other much-better quantum simulators available that I could use, I may occasionally add some new features to TinyQsim because it has been an interesting and fun project.

@@ -6,37 +6,37 @@ This document describes the quantum gates implemented by TinyQsim.
 
 - [TinyQsim Gates](#tinyqsim-gates)
 - [Introduction](#introduction)
-    - [Summary of Gates](#summary-of-gates)
-    - [Imports and Definitions](#imports-and-definitions)
-    - [Symbols and Notation](#symbols-and-notation)
-    - [Controlled Gates](#controlled-gates)
-    - [Global Phase](#global-phase)
+  - [Summary of Gates](#summary-of-gates)
+  - [Imports and Definitions](#imports-and-definitions)
+  - [Symbols and Notation](#symbols-and-notation)
+  - [Controlled Gates](#controlled-gates)
+  - [Global Phase](#global-phase)
 - [Gates in Alphabetical Order](#gates-in-alphabetical-order)
-    - [Barrier](#barrier)
-    - [CCU](#ccu)
-    - [CCX (aka Toffoli) Gate](#ccx-aka-toffoli-gate)
-    - [CP Gate](#cp-gate)
-    - [CS Gate](#cs-gate)
-    - [CSWAP (aka Fredkin) Gate](#cswap-aka-fredkin-gate)
-    - [CT Gate](#ct-gate)
-    - [CU](#cu)
-    - [CX (aka CNOT) Gate](#cx-aka-cnot-gate)
-    - [CY Gate](#cy-gate)
-    - [CZ Gate](#cz-gate)
-    - [H Gate](#h-gate)
-    - [I (aka ID) Gate](#i-aka-id-gate)
-    - [Measure Gate](#measure-gate)
-    - [P Gate](#p-gate)
-    - [RX Gate](#rx-gate)
-    - [RY Gate](#ry-gate)
-    - [S Gate](#s-gate)
-    - [SWAP Gate](#swap-gate)
-    - [SX (aka SQRTX) Gate](#sx-aka-sqrtx-gate)
-    - [T Gate](#t-gate)
-    - [U Gate](#u-gate)
-    - [X (aka NOT) Gate](#x-aka-not-gate)
-    - [Y Gate](#y-gate)
-    - [Z Gate](#z-gate)
+  - [Barrier](#barrier)
+  - [CCU](#ccu)
+  - [CCX (aka Toffoli) Gate](#ccx-aka-toffoli-gate)
+  - [CP Gate](#cp-gate)
+  - [CS Gate](#cs-gate)
+  - [CSWAP (aka Fredkin) Gate](#cswap-aka-fredkin-gate)
+  - [CT Gate](#ct-gate)
+  - [CU](#cu)
+  - [CX (aka CNOT) Gate](#cx-aka-cnot-gate)
+  - [CY Gate](#cy-gate)
+  - [CZ Gate](#cz-gate)
+  - [H Gate](#h-gate)
+  - [I (aka ID) Gate](#i-aka-id-gate)
+  - [Measure Gate](#measure-gate)
+  - [P Gate](#p-gate)
+  - [RX Gate](#rx-gate)
+  - [RY Gate](#ry-gate)
+  - [S Gate](#s-gate)
+  - [SWAP Gate](#swap-gate)
+  - [SX (aka SQRTX) Gate](#sx-aka-sqrtx-gate)
+  - [T Gate](#t-gate)
+  - [U Gate](#u-gate)
+  - [X (aka NOT) Gate](#x-aka-not-gate)
+  - [Y Gate](#y-gate)
+  - [Z Gate](#z-gate)
 
 <!-- TOC -->
 
@@ -176,7 +176,7 @@ Finally, custom gates are represented by a rectangle as they have no special sym
 
 ```
 qc = QCircuit(5)
-qc.u(mygate, 'U1', 0, 3, 1, 4)
+qc.ccu(mygate, 'U1', 0, 3, 1, 4)
 ```
 
 <div style="text-align: center;">
@@ -185,58 +185,27 @@ qc.u(mygate, 'U1', 0, 3, 1, 4)
 
 Note the following points about this example:
 
-- If the qubits are non-consecutive, a dotted line is drawn to indicate that a qubit just passes through without playing a role, such as q2.
+- The dotted line on qubit q2 indicates that it just passes through without playing a role.
 
 - The first two arguments (0, 3) of the call are the control qubits, which are indicated by a dot. The control qubits may be inside or outside the box as shown here.
 
-- The numbers (0, 1) in the rectangle are the argument positions for the target qubits (excluding controls). Targets (0, 1) are connected to (q1, q4) respectively.
+- The numbers (0, 1) in the symbol indicate that these are arguments 0 and 1 for the unitary U (excluding controls). In the example, these are connected to qubits q1 and q4.
 
 ### Controlled Gates
 
 Gates can have a *controlled* variant. The control enables the operation of the gate.
 
-Consider an arbitrary one-qubit gate described by the following unitary matrix $U$:
+The controlled version CU of a gate U applies the gate if the control is $\ket{1}$. For example, for a one-qubit gate defined by the unitary matrix $U$:
 
 ```math
-U = \begin{bmatrix}
-U_{00}&U_{01}\\U_{10}&U_{11}
-\end{bmatrix}
+CU = \ket{0}\bra{0} \otimes I + \ket{1}\bra{1} \otimes U
 ```
 
-A controlled version $CU$ can be made as follows:
+Since the input may be in a superposition of $\ket{0}$ and $\ket{1}$, the result is the superposition of the CU gate applied to the two components.
 
-```math
-CU(U) = \ket{0}\bra{0} \otimes I + \ket{1}\bra{1} \otimes U
-```
+TinyQsim provides controlled versions of many of the common gates. For example, CX is a controlled version of the X gate. Controls are denoted by a solid dot in the symbol, as shown in the earlier examples of the CX gate. It is possible for a gate to have multiple controls, such as the CCX gate.
 
-This can be written as the matrix:
-
-```math
-CU(U) = \begin{bmatrix}
-1&0&0&0\\
-0&1&0&0\\
-0&0&U_{00}&U_{01}\\
-0&0&U_{10}&U_{11}
-\end{bmatrix}
-``` 
-
-It can also be written as a *block matrix* (i.e. one made of sub-matrices):
-
-```math
-CU(U) = \begin{bmatrix}I_2&0_2\\0_2&U_2 \end{bmatrix}
-``` 
-
-The suffices indicate the size of the sub-matrices. $I_k$ is the $k\times k$ identity matrix, whilst $0_k$ is the $k\times k$ zero matrix.
-
-The suffix is 2 in the simple case that U is a one-qubit gate. However, this generalises to K-qubit gates as follows:
-
-```math
-CU(U) = \begin{bmatrix}I_M&0_M\\0_M&U_M \end{bmatrix}\quad\text{where}\, M=2^K
-```
-
-Gates may have multiple controls, such as the CCX gate. The matrix can be derived by repeated application of the above procedure.
-
-In the documentation that follows, the descriptions of the controlled gates do not include the matrix definition as this follows from the matrix of the uncontrolled version.
+A generic U gate is provided that allows a unitary matrix $U$ to be applied as a gate. This has CU and CCU variants. See the sections on the U, CU and CCU gates below for details.
 
 ### Global Phase
 
@@ -291,7 +260,7 @@ This extends to a multi-qubit system since:
 
 A barrier is not a real gate, but it is included here as it has a symbol in the circuit.
 
-A barrier is drawn in the circuit as a vertical dotted line, like a fence separating sections of the circuit. Its purpose is the prevent circuit optimizations crossing boundaries. This does not apply to TinyQsim since it currently does no circuit optimization. However, a barrier can still useful for separating parts of the circuit for clarify, for example to separate initialization from processing.
+A barrier is drawn in the circuit as a vertical dotted line, like a fence separating sections of the circuit. Its main use is to prevent circuit optimizations crossing boundaries. This does not apply to TinyQsim since it currently does no circuit optimization. However, a barrier can still be useful for separating parts of the circuit for clarify, for example to separate initialization from processing.
 
 <div style="text-align: center;">
 <img src="assets/barrier.png" alt="barrier" width="80"/>
@@ -533,7 +502,7 @@ H = \frac{1}{\sqrt{2}}\begin{bmatrix}1 & 1 \\ 1 & -1 \end{bmatrix}
 
 ### I (aka ID) Gate
 
-The I gate is the identity gate. The physical implementation in a quantum computer is simply 'do nothing'. Although it has no effect, it can be useful when analysing circuits. It is usually just drawn as a qubit line, but may occasionally be made explicit as follows:
+The I gate is the identity gate. The physical implementation in a quantum computer is simply 'do nothing'. Although it has no effect, it can be useful when analysing circuits. It is usually just drawn as a line, but may occasionally be made explicit as follows:
 
 <div style="text-align: center;">
 <img src="assets/i_gate.png" alt="i_gate" width="80"/>
@@ -601,9 +570,6 @@ API:
 ```
 
 The first argument is the phase angle in radians. The second argument is the phase angle as a string. The phase angles are typically multiples of $\pi$, so it is convenient to use unicode $\pi$ in the text string.
-
-The phase $\phi$ has no effect on the measurement outcome for a single qubit, but phases become important with multiple qubits because
-*interference* can occur. This plays an important role in quantum algorithms.
 
 When the phase gate is applied to a qubit $\alpha_0\ket{0} + \alpha_1\ket{1}$, the result is:
 
@@ -806,6 +772,12 @@ The T gate is described by the following matrix:
 
 ```math
 T =\begin{bmatrix}1 & 0 \\ 0 & e^{i\frac{\pi}{4}} \end{bmatrix}
+```
+
+Somewhat confusingly, the T gate is sometimes known as the $\pi/8$ gate. This because it can be written in a symmetrical form (up to global phase) as:
+
+```math
+T =\begin{bmatrix} e^{i\frac{\pi}{8}}& 0 \\ 0 & e^{i\frac{\pi}{8}} \end{bmatrix}
 ```
 
 ### U Gate
