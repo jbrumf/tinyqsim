@@ -59,7 +59,7 @@ Draw the circuit:
 <img src="assets/bell_1.png" alt="bell_1" width=160/>
 </div>
 
-This very simple circuit has created the quantum superposition state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$.
+This very simple circuit has created the entangled quantum state: $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$.
 
 There are various ways to inspect the state (without collapsing it):
 
@@ -198,7 +198,7 @@ The projection of the quantum state onto each basis vector can be obtained as fo
 
 ```
 API:
-  qc.components(*options) # Return dictionary of complex components of state
+  qc.components(*options)
      options: decimals=5, include_zeros=False     
 
 Example:
@@ -222,7 +222,7 @@ The probabilities of a measurement returning each basis state can be obtained as
 
 ```
 API:
-  qc.probabilities(*options)   # Return dictionary of state probabilities
+  qc.probabilities(*options)
      options: decimals=5, include_zeros=False
      
 Example:
@@ -253,7 +253,7 @@ The probabilities of different outcomes cannot be measured on a real quantum sys
 TinyQsim provides the following method that simulates such a sequence of test runs and returns a dictionary of the counts for each basis state. It does not affect the state. If you want the state to be updated, just follow it with a call to 'measure()'.
 
 ```       
-  qc.counts(*options)  # Return measurement counts for repeated experiment
+  qc.counts(*options)
      options: nruns=1000, include_zeros=False
 ```
 
@@ -274,7 +274,7 @@ A quantum measurement may be performed on one or more qubits. This collapses the
 
 ```
 API:
-  qc.measure(*qubits)  # Measure the specified qubits
+  qc.measure(*qubits)
   
 Examples:
   qc.measure(0,1)   # Measure qubits 0 and 1
