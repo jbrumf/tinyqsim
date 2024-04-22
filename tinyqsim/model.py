@@ -13,7 +13,7 @@ class Model:
             :param nqubits: Number of qubits.
         """
         self.nqubits = nqubits
-        self.items: list[(str, list[int], list[int], list)] = []  # (name, qubits, args)
+        self.items: list[(str, list[int], list[int], list)] = []
 
     def add_gate(self, name: str, cqubits: list[int], tqubits: list[int], args=None):
         """ Add gate to circuit.

@@ -46,20 +46,19 @@ The qubit is an abstraction of a two-level quantum system, such as the spin of a
 
 The $\ket{0}$ and $\ket{1}$ basis states can be thought of as corresponding to the classical bit states 0 and 1. This basis is known as the *computational basis* or Z-basis. The Z-basis will be assumed unless otherwise stated.
 
-Unlike a classical bit, which must be in *either* one of the states 0 or 1, a qubit may also be in a linear superposition of its two basis states:
+Unlike a classical bit, which must be in *either* the state 0 *or* the state 1, a qubit may also be in a linear superposition of its two basis states:
 
 ```math
 \ket{\psi} = \alpha_0 \ket{0} + \alpha_1 \ket{1} = \begin{bmatrix}\alpha_0\\ \alpha_1\end{bmatrix},\qquad \alpha_0,\alpha_1 \in \mathbb{C}
 ```
 
-where $\alpha_0$ and $\alpha_1$ are complex *probability amplitudes*.
+where $\alpha_0$ and $\alpha_1$ are called *probability amplitudes*.
 
-The quantum state is not something we can observe. The only information we can get is as the result of a quantum measurement which collapses the state into one of the two basis states $\ket{0}$ and $\ket{1}$, with probabilities $|\alpha_0|^2$ and $|\alpha_1|^2$ r
-espectively. Measurement is discussed in more detail below.
+The quantum state is not something we can observe. The only information we can get is as the result of a quantum measurement which collapses the state into one of the two basis states $\ket{0}$ and $\ket{1}$, with probabilities $|\alpha_0|^2$ and $|\alpha_1|^2$ respectively. Measurement is discussed in more detail below.
 
 ### Quantum Probability and Interference
 
-Classical physics is deterministic, whereas quantum mechanics has an inherent randomness. In classical probability theory, if something can happen in two mutually exclusive ways, the probability that it will happen is the sum of the probabilities for the two cases:
+Classical physics is deterministic, whereas quantum mechanics has an inherent randomness. In classical probability theory, if something can happen in two mutually exclusive ways, the probability of it happening is the sum of the probabilities for the two cases:
 
 ```math
 p = p_1 + p_2
@@ -260,7 +259,7 @@ Quantum states represent exponentially more information than classical states. H
 
 ### Measurement
 
-Measurement of the state of a quantum system is associated with a measurement operator $M$, for the measurement basis. The act of measurement changes the state to an eigenstate $\ket{\psi}$ of the measurement operator, which is one of the basis states. The measured value is the corresponding eigenvalue $\lambda$:
+Measurement of the state of a quantum system is associated with a measurement operator $M$, for the measurement basis. The act of measurement changes the state to an eigenvector $\ket{\psi}$ of the measurement operator, which is one of the basis states. The measured value is the corresponding eigenvalue $\lambda$:
 
 ```math
 M \ket{\psi} = \lambda \ket{\psi}

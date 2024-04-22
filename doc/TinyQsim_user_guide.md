@@ -33,12 +33,19 @@ For installation instructions, see the README file in the source distribution.
 
 ### A Simple Example
 
+The examples below require the following Python imports:
+
+```
+from tinyqsim.qcircuit import QCircuit
+import numpy as np
+```
+
 The main interface to the simulator is through the QCircuit class.
 
 First, create a quantum circuit with 2 qubits:
 
 ```
-  qc = QuantumCircuit(2)
+  qc = QCircuit(2)
 ```
 
 Then add some quantum gates:
@@ -89,6 +96,10 @@ We can also perform a quantum measurement (with collapse):
 
 As well as performing the measurement, this has also added measurement gates to the circuit:
 
+```
+  qc.draw()
+```
+
 <div style="text-align: center;">
 <img src="assets/bell_2.png" alt="bell_1" width=220/>
 </div>
@@ -107,17 +118,19 @@ To create an n-qubit quantum circuit:
   qc = QCircuit(n)
 ```
 
-By default the quantum state is initialized to $\ket{00\dots 0}$. A random quantum state is also possible using the `init` keyword argument:
-
-```
-  qc = QuantumCircuit(3, init='random')
-```
+By default the quantum state is initialized to $\ket{00\dots 0}$. The required initial state can then be created using a few gates.
 
 It is also possible to set the state using the `state_vector` property. The vector must have a norm of 1 and a length of $2^K$, where K is the number of qubits. For example:
 
 ```
   qc = QCircuit(2)
   qc.state_vector = np.array([0, 1, 0, 0])
+```
+
+A random quantum state is also possible using the `init` keyword argument:
+
+```
+  qc = QCircuit(3, init='random')
 ```
 
 ### Drawing the Circuit
@@ -157,13 +170,34 @@ The Gates guide also describes the 'barrier' symbol and the measurement gate, al
 
 ### Inspecting the State (without collapse)
 
-It is not possible to examine the state of real qubits without collapsing them to one the basis states of the measurement basis. However, a simulator such as TinyQsim does have access to the state, which can be very useful for understanding and developing quantum algorithms.
+It is not possible to examine the state of real qubits without collapsing them to one the basis states of the measurement basis. However, a simulator such as TinyQsim has access to the state, which can be very useful for understanding and developing quantum algorithms.
 
-The following methods allow the quantum state to be inspected and presented in several different ways.
+Four methods or properties are provided that allow you to access the state in different ways:
+
+```
+  qc.state_vector
+  qc.components()
+  qc.probabilities()
+  qc.counts()
+```
+
+The state_vector property returns a copy of the raw state vector as a numpy array. This is useful if you want to write some Python code to perform your own processing of the result.
+
+However, if you just want to examine the state, the other three methods may be more useful. These  return the result as a Python dictionary with the keys that are easy to relate to the basis states. By default, any elements that have a probabilities close to zero are omitted to make the output easier to read.
+
+For example:
+
+```
+  {'01': (0.7071+0j), '10': (0.7071+0j)}
+```
+
+where the key '01' corresponds to the component $\ket{01}$.
+
+The following subsections describe these methods in more detail.
 
 #### Quantum State Vector
 
-The quantum state vector can be accessed via a property of the quantum circuit. This returns a copy of the internal state.
+The quantum state vector can be accessed via a property of the quantum circuit. This returns a copy of the internal state as a numpy array.
 
 ```
 Example:

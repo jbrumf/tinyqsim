@@ -250,7 +250,7 @@ This automatically generates a symbol which is labelled with the string given as
 <img src="assets/u2_gate.png" alt="u2_gate" width="80"/>
 </div>
 
-The are also CU and CCU variants for controlled-U and controlled-controlled-U gates.
+There are also CU and CCU variants for controlled-U and controlled-controlled-U gates.
 
 For further details see the 'U' gate in the [TinyQsim Gates](TinyQsim_gates.md) guide.
 
@@ -609,7 +609,7 @@ The 'measure' operation is not a normal gate as it is not a unitary operator. Ho
 <img src="assets/measure01.png" alt="measure01" width="80"/>
 </div>
 
-The use of the measurement is discussed in the TinyQsim User Guide.
+The use of the 'measure' gate is discussed in the TinyQsim User Guide.
 
 ```
 Example:

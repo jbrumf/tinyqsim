@@ -9,19 +9,19 @@ This document provides some informal notes on the background and design of TinyQ
   - [Endianness](#endianness)
   - [Execution Model](#execution-model)
   - [Simulation](#simulation)
-  - [Software Modules](#software-modules)
+  - [Optimization](#optimization)
   - [Matrix Expansion](#matrix-expansion)
   - [Qubit Permutation](#qubit-permutation)
+  - [Software Modules](#software-modules)
   - [The Future](#the-future)
-
 
 <!-- TOC -->
 
 ### Background
 
-TinyQsim was originally started as a fun project during the first Covid lockdown, with the aim of learning about quantum computation. I have often found that writing code to simulate something is a good way to learn about it. Coding the ideas forces you to explore many subtle details, resulting in a deeper understanding. It's a bit like the way you really only get to properly understand maths by trying to solve problems, not just by reading a book or attending a lecture.
+TinyQsim was originally started as a fun project during the first Covid lockdown, with the aim of learning about quantum computation. I have often found that writing code to simulate something is a good way to learn about it. Coding the ideas forces you to explore many subtle details, resulting in a deeper understanding. It's a bit like the way you really only get to properly understand maths by trying to solve problems, not just by reading a book or attending lectures.
 
-The aim was to 'keep it simple', rather than worrying about optimization. Nevertheless, TinyQsim is capable of simulating a 12-qubit Quantum Fourier Transform in a few seconds.
+The aim was to 'keep it simple', rather than worrying about optimization. Nevertheless, TinyQsim is capable of simulating a 12-qubit Quantum Fourier Transform in a few seconds. That is sufficient for most simple textbook examples.
 
 Because the code is simple, it should be easy to modify, providing a basis for experiments with new ideas, such as alternative quantum programming paradigms.
 
@@ -31,7 +31,7 @@ Some books, papers and online resources use the *big-endian* convention in which
 
 The big-endian convention was chosen for TinyQsim as it was easier to try out examples from the books I was reading at the time. It should not be too difficult to add an option for selecting big or little endian mode. The internal quantum measurement code already makes provision for it.
 
-Single-qubit gates and the 2-qubit SWAP gate are the same for both endiannesses. Controlled gates differ according to endianness but the controlled vesions are all created using the function 'cu(u)' in the 'gates' module, so support for endian-selection of gates can all be done in one place.
+Single-qubit gates and the 2-qubit SWAP gate are the same for both endiannesses. Controlled gates differ according to endianness but the controlled vesions are all created using a single function, so support for endian-selection of gates can all be done in one place.
 
 It is envisaged that there could be an optional 'endian' argument for the QCircuit constructor to specify the endianness:
 
@@ -76,28 +76,23 @@ The execute command has no real use at the moment as there is no optimization, b
 
 ### Simulation
 
-TinyQsim starts by creating an initial quantum state vector of size $2^K$ for a $K$-qubit circuit. Then, as each gate is added, the gate's unitary matrix is expanded to a $2^K\times 2^K$ matrix that maps the gate onto the relevant qubits. The state is then updated by multiplying it by the matrix. This is obviously very inefficient but it is satisfactory for up to about 12 qubits.
+TinyQsim starts by creating an initial quantum state vector of size $2^K$ for a $K$-qubit circuit. Then, as each gate is added, the gate's unitary matrix is expanded to a $2^K\times 2^K$ matrix, using permutation to map the gate onto the relevant qubits. The state is then updated by multiplying it by the matrix. This is obviously very inefficient but it is satisfactory for up to about 12 qubits.
 
-Using this approach, every application of even a one-qubit gate requires expanding it to a $2^K\times 2^K$ matrix. For example, a 10-qubit circuit requires a $2^{10}\times 2^{10}$ matrix of complex numbers. A complex number requires two floating-point numbers that are typically 64 bits, so the total size of the matrix is 16 MB. This starts to get slow by the time we reach 12-qubit circuits with 256 MB matrices.
+Using this approach, every application of even a one-qubit gate requires expanding it to a $2^K\times 2^K$ matrix. For example, a 10-qubit circuit requires a $2^{10}\times 2^{10}$ matrix of complex numbers. A complex number requires two floating-point numbers that are typically 64 bits, so the total size of the matrix is 16 MB. This starts to get slow by the time we reach a 12-qubit circuit with 256 MB matrices.
 
-Using the circuit-model approach, the quantum circuit could, for example, be modelled by a Directed Acyclic Graph (DAG) representing the partial order of operations. Rewrite rules could be applied to simplify and combine elements building up progressively larger matrices. The size of the matrix increases by a factor of 4 for each qubit that is added, so there is an advantage in combining smaller sub-circuits in a bottom-up manner.
+### Optimization
 
-### Software Modules
+As mentioned earlier, an aim of TinyQsim was to keep it simple and not to worry about optimization. Nevertheless, the following are a few thoughts on potential optimizations that could be considered. There is currently no intention to explore these.
 
-The main software modules are as follows:
+- The use of sparse matrices, such as those provided by the 'scipy.sparse' package, could reduce the amount of memory needed for the matrices and reduce the number of multiplications.
 
-| Module    | Purpose                                             | 
-|:----------|:----------------------------------------------------|
-| qcircuit  | API wrapper to present circuit as an object         |
-| quantum   | Most of the quantum computations                    |       
-| gates     | Definitions of basic gates as unitary matrices      |
-| model     | Model of circuit (currently just a list of gates)   |
-| schematic | Graphics for drawing quantum circuit                |
-| simulator | Execution of model or just single commands          |
-| utils     | Utility functions that are not specific to TinyQsim |
-| bloch     | Prototype graphics for Bloch sphere                 |
+- The gate matrices could be combined in a bottom-up fashion, building up progressively larger matrices. The matrix size increases by a factor of 4 for each qubit that is added, so there is an advantage in combining matrices in a bottom-up manner.
 
-QCircuit is an API wrapper that presents the quantum circuit to the user as an object. Most of the actual functionality is in the other modules. This decoupling allows the possibility of alternative user interfaces etc.
+-  The quantum circuit could be modelled by a Directed Acyclic Graph (DAG) representing the partial order of operations. This would identify gates that could be applied in parallel, allowing them to be combined using a tensor product. However, where possible, it is preferable to combine gates in series by matrix multiplication rather than in parallel by tensor multiplication, as the matrix size grows less rapidly.
+
+- Rewrite rules could be applied to simplify and combine gates using their algebraic properties. One way to do this would be to convert the circuit into ZX-calculus notation.
+
+If an optimization improves the speed and memory use by a factor of four, it only allows one extra qubit, so it may not be worth the effort. Even a factor of 16 would only allow two extra qubits. In its current form, TinyQsim is usable with up to about 12 qubits. It is not clear that having 13 or 14 qubits would be a bit advantage.
 
 ### Matrix Expansion
 
@@ -123,7 +118,22 @@ In practice, a gate may be applied to non-consecutive qubits which may not even 
 
 These approaches to applying a gate's unitary matrix to a quantum state are very-non-optimal, but easy to implement, following the 'keep it simple' approach. In fact, it works surprisingly well, allowing circuits of up to about 12 qubits.
 
-There is a lot of scope for optimization and improvement, but this was not the goal of the Tiny Quantum Simulator.
+### Software Modules
+
+The main software modules are as follows:
+
+| Module    | Purpose                                             | 
+|:----------|:----------------------------------------------------|
+| qcircuit  | API wrapper to present circuit as an object         |
+| quantum   | Most of the quantum computations                    |       
+| gates     | Definitions of basic gates as unitary matrices      |
+| model     | Model of circuit (currently just a list of gates)   |
+| schematic | Graphics for drawing quantum circuit                |
+| simulator | Execution of model or just single commands          |
+| utils     | Utility functions that are not specific to TinyQsim |
+| bloch     | Prototype graphics for Bloch sphere                 |
+
+QCircuit is an API wrapper that presents the quantum circuit to the user as an object. Most of the actual functionality is in the other modules. This decoupling allows the possibility of alternative user interfaces etc.
 
 ### The Future
 
