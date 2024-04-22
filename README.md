@@ -4,13 +4,13 @@ TinyQsim is a tiny quantum circuit simulator based on the quantum gate model.
 
 <!-- TOC -->
 
-* [TinyQsim: Tiny Quantum Circuit Simulator](#tinyqsim-tiny-quantum-circuit-simulator)
-    * [Background](#background)
-    * [Installation](#installation)
-    * [Jupyter Notebooks](#jupyter-notebooks)
-    * [Examples](#examples)
-    * [Documentation](#documentation)
-    * [License](#license)
+- [TinyQsim: Tiny Quantum Circuit Simulator](#tinyqsim-tiny-quantum-circuit-simulator)
+  - [Background](#background)
+  - [Installation](#installation)
+  - [Jupyter Notebooks](#jupyter-notebooks)
+  - [Documentation](#documentation)
+  - [Examples](#examples)
+  - [License](#license)
 
 <!-- TOC -->
 

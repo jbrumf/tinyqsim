@@ -54,6 +54,9 @@ Unlike a classical bit, which must be in *either* one of the states 0 or 1, a qu
 
 where $\alpha_0$ and $\alpha_1$ are complex *probability amplitudes*.
 
+The quantum state is not something we can observe. The only information we can get is as the result of a quantum measurement which collapses the state into one of the two basis states $\ket{0}$ and $\ket{1}$, with probabilities $|\alpha_0|^2$ and $|\alpha_1|^2$ r
+espectively. Measurement is discussed in more detail below.
+
 ### Quantum Probability and Interference
 
 Classical physics is deterministic, whereas quantum mechanics has an inherent randomness. In classical probability theory, if something can happen in two mutually exclusive ways, the probability that it will happen is the sum of the probabilities for the two cases:

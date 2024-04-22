@@ -10,6 +10,9 @@ This document describes the quantum gates implemented by TinyQsim.
   - [Imports and Definitions](#imports-and-definitions)
   - [Symbols and Notation](#symbols-and-notation)
   - [Controlled Gates](#controlled-gates)
+  - [Angle Parameters](#angle-parameters)
+  - [Custom Gates](#custom-gates)
+  - [Parameterized Custom Gates](#parameterized-custom-gates)
   - [Global Phase](#global-phase)
 - [Gates in Alphabetical Order](#gates-in-alphabetical-order)
   - [Barrier](#barrier)
@@ -37,6 +40,7 @@ This document describes the quantum gates implemented by TinyQsim.
   - [X (aka NOT) Gate](#x-aka-not-gate)
   - [Y Gate](#y-gate)
   - [Z Gate](#z-gate)
+
 
 <!-- TOC -->
 
@@ -206,6 +210,80 @@ Since the input may be in a superposition of $\ket{0}$ and $\ket{1}$, the result
 TinyQsim provides controlled versions of many of the common gates. For example, CX is a controlled version of the X gate. Controls are denoted by a solid dot in the symbol, as shown in the earlier examples of the CX gate. It is possible for a gate to have multiple controls, such as the CCX gate.
 
 A generic U gate is provided that allows a unitary matrix $U$ to be applied as a gate. This has CU and CCU variants. See the sections on the U, CU and CCU gates below for details.
+
+### Angle Parameters
+
+One-qubit gates typically implement rotations of the state vector on the Bloch sphere. Some of these are fixed-angle rotations, such as X, Y, Z, S, T, etc. Others allow a user-specified rotation angle.
+
+The P, CP, RX and RY gates have two parameters for the angle. The first is the angle in radians and the second is a label for the circuit symbol that shows the angle in a convenient form, such as a multiple of $\pi$.
+
+The following examples show how to specify the label using a simple ASCII 'pi' or a Unicode $\pi$.
+
+```
+  PI = '\u03C0'  # PI unicode character
+  
+  qc.p(pi/2, 'pi/2', 1)      # ASCII 'pi/4'
+  qc.p(pi/2, f'{PI}/2', 1)   # Unicode PI
+```
+
+<div style="text-align: center;">
+<img src="assets/p_gate.png" alt="p_gate" width="80"/>
+</div>
+
+### Custom Gates
+
+Custom gates are possible using the U gate that takes a unitary matrix as an argument. For example:
+
+```
+u1 = numpy.array([[1, 0, 0, 0],  # Define a unitary matrix
+                  [0, 0, 1, 0],
+                  [0, 1, 0, 0],
+                  [0, 0, 0, 1]])
+                 
+qc = QCircuit(2)
+qc.u(u1, 'U1', 0, 1)  # Apply the matrix as a gate
+```
+
+This automatically generates a symbol which is labelled with the string given as the second argument.
+
+<div style="text-align: center;">
+<img src="assets/u2_gate.png" alt="u2_gate" width="80"/>
+</div>
+
+The are also CU and CCU variants for controlled-U and controlled-controlled-U gates.
+
+For further details see the 'U' gate in the [TinyQsim Gates](TinyQsim_gates.md) guide.
+
+### Parameterized Custom Gates
+
+A parameterized gate can be defined as a function that returns a unitary matrix.
+
+For example, suppose that we wish to create the following custom parameterized phase gate.
+
+```math
+\text{RK}(k) =\begin{bmatrix}1 & 0 \\ 0 & e^{\large\frac{2\pi i}{2^k}}\end{bmatrix}
+```
+
+One way to define it is:
+
+```
+  def rk(k: int):
+      return np.array([[1, 0], [0, cexp(1j * 2 * pi / 2 ** k)]])
+```
+
+Alternatively, we could define it in terms of the existing P (phase) gate, as follows:
+
+```
+  def rk(k: int):
+      return gates.P(2 * pi / 2 ** k)
+```
+
+In either case, the gate can be added to the circuit like this:
+
+```
+  qc.QCircuit(4)
+  qc.u(rk(3), 'RK', 2)  # Add rk(3) to qubit 2
+```
 
 ### Global Phase
 

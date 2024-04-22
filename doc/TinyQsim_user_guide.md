@@ -1,17 +1,19 @@
 ## TinyQsim User Guide
 
+This guide provides a short introduction to using TinyQsim. The companion [TinyQsim Gates](TinyQsim_gates.md) guide describes the circuit symbols and the different kinds of gates that can be used to build a quantum circuit.
+
+The Jupyter notebooks in the 'examples' directory contain some more detailed examples.
+
 <!-- TOC -->
 
 - [TinyQsim User Guide](#tinyqsim-user-guide)
+  - [Installation](#installation)
   - [A Simple Example](#a-simple-example)
   - [Creating a Quantum Circuit](#creating-a-quantum-circuit)
   - [Drawing the Circuit](#drawing-the-circuit)
     - [1: In a Jupyter Notebook](#1-in-a-jupyter-notebook)
     - [2: Run from a Python Script](#2-run-from-a-python-script)
-  - [Available Gates](#available-gates)
-  - [Custom Gates](#custom-gates)
-  - [Parameterized Custom Gates](#parameterized-custom-gates)
-  - [Angle Parameters](#angle-parameters)
+  - [Building the Circuit](#building-the-circuit)
   - [Inspecting the State (without collapse)](#inspecting-the-state-without-collapse)
     - [Quantum State Vector](#quantum-state-vector)
     - [Complex Components of State](#complex-components-of-state)
@@ -23,11 +25,17 @@
 
 <!-- TOC -->
 
+### Installation
+
+TinyQsim can be downloaded from [https://github.com/jbrumf/tinyqsim](https://github.com/jbrumf/tinyqsim).
+
+For installation instructions, see the README file in the source distribution.
+
 ### A Simple Example
 
 The main interface to the simulator is through the QCircuit class.
 
-Create a quantum circuit with 2 qubits:
+First, create a quantum circuit with 2 qubits:
 
 ```
   qc = QuantumCircuit(2)
@@ -51,22 +59,45 @@ Draw the circuit:
 <img src="assets/bell_1.png" alt="bell_1" width=160/>
 </div>
 
-There are various ways to inspect the state:
+This very simple circuit has created the quantum superposition state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$.
+
+There are various ways to inspect the state (without collapsing it):
 
 ```
-  print(qc.state_vector)    # Print the quantum state
-  print(qc.probabilities()) # Print the probabilities of each possible outcome
-  print(qc.components())    # Dictionary of complex components of state
-  print(qc.counts())        # Measurement counts for repeated experiment
+  # The quantum state vector
+  print(qc.state_vector)
+    [0. 0.70710678 0.70710678 0.]
+    
+  # Complex components of state
+  print(qc.components())
+    {'01': (0.7071+0j), '10': (0.7071+0j)}
+   
+  # Probabilities of each measurement outcome
+  print(qc.probabilities())
+    {'01': 0.5, '10': 0.5}
+   
+  # Measurement counts for repeated experiment
+  print(qc.counts(nruns=1000))
+    {'01': 503, '10': 497}
 ```
 
-Perform a quantum measurement (with collapse):
+We can also perform a quantum measurement (with collapse):
 
 ```
-  qc.measure()
+  print(qc.measure())  # Output: [0 1] or [1 0]
 ```
 
-These features are described in more detail in the following sections.
+As well as performing the measurement, this has also added measurement gates to the circuit:
+
+<div style="text-align: center;">
+<img src="assets/bell_2.png" alt="bell_1" width=220/>
+</div>
+
+By default, the gate operations are applied to the state as they are added to the circuit. There is no need to build the circuit and then run a simulator on it. Consequently, TinyQsim allows a very interactive way of working.
+
+All these features are described in more detail in the following sections.
+
+See the Jupyter notebooks in the 'examples' directory for more detailed examples.
 
 ### Creating a Quantum Circuit
 
@@ -116,85 +147,13 @@ If TinyQsim is run from a Python program, instead of from a notebook, the circui
 
 Note: There is a bug at the moment that causes a crash when attempting to resize the window.
 
-### Available Gates
+### Building the Circuit
 
-See the [TinyQsim Gates](TinyQsim_gates.md) guide for details of the quantum gates available in TinyQsim.
+The various gates and other components that can be used to build a quantum circuit are described in the [TinyQsim Gates](TinyQsim_gates.md) guide. This also explains the circuit symbols and several other matters relating to the use of gates.
 
-These include: CCU, CCX, CP, CS, CSWAP, CT, CU, CX, CY, CZ, H, I, P, RX, RY, S, SWAP, SX, T, U, X, Y and Z. There is also a 'measure' gate, although this is not a normal gate as it is not a unitary operator.
+The available gates include: CCU, CCX, CP, CS, CSWAP, CT, CU, CX, CY, CZ, H, I, P, RX, RY, S, SWAP, SX, T, U, X, Y and Z. It is also possible to define custom gates, including ones with parameters and controls.
 
-### Custom Gates
-
-Custom gates are possible using the U gate that takes a unitary matrix as an argument. For example:
-
-```
-u1 = numpy.array([[1, 0, 0, 0],  # Define a unitary matrix
-                  [0, 0, 1, 0],
-                  [0, 1, 0, 0],
-                  [0, 0, 0, 1]])
-                 
-qc = QCircuit(2)
-qc.u(u1, 'U1', 0, 1)  # Apply the matrix as a gate
-```
-
-This automatically generates a symbol which is labelled with the string given as the second argument.
-
-<div style="text-align: center;">
-<img src="assets/u2_gate.png" alt="u2_gate" width="80"/>
-</div>
-
-The are also CU and CCU variants for controlled-U and controlled-controlled-U gates.
-
-For further details see the 'U' gate in the [TinyQsim Gates](TinyQsim_gates.md) guide.
-
-### Parameterized Custom Gates
-
-A parameterized gate can be defined as a function that returns a unitary matrix.
-
-For example, suppose that we wish to create the following custom parameterized phase gate.
-
-```math
-\text{RK}(k) =\begin{bmatrix}1 & 0 \\ 0 & e^{\large\frac{2\pi i}{2^k}}\end{bmatrix}
-```
-
-One way to define it is:
-
-```
-  def rk(k: int):
-      return np.array([[1, 0], [0, cexp(1j * 2 * pi / 2 ** k)]])
-```
-
-Alternatively, we could define it in terms of the existing P (phase) gate, as follows:
-
-```
-  def rk(k: int):
-      return gates.P(2 * pi / 2 ** k)
-```
-
-In either case, the gate can be added to the circuit like this:
-
-```
-  qc.QCircuit(4)
-  qc.u(rk(3), 'RK', 2)  # Add rk(3) to qubit 2
-```
-
-### Angle Parameters
-
-One-qubit gates typically implement rotations of the state vector on the Bloch sphere. Some of these are fixed-angle rotations, such as X, Y, Z, S, T, etc. Others allow a user-specified rotation angle.
-
-The P, CP, RX and RY gates have two parameters for the angle. The first is the angle in radians and the second is a label for the circuit symbol that shows the angle in a convenient form, such as a multiple of $\pi$.
-
-The following examples show how to specify the label using a simple ASCII 'pi' or a Unicode $\pi$.
-
-```
-  PI = '\u03C0'  # PI unicode character
-  
-  qc.p(pi/2, 'pi/2', 1)      # ASCII 'pi/4'
-  qc.p(pi/2, f'{PI}/2', 1)   # Unicode PI
-```
-
-<div style="text-align: center;">
-<img src="assets/p_gate.png" alt="p_gate" width="80"/>
-</div>
+The Gates guide also describes the 'barrier' symbol and the measurement gate, although measurement is not a normal gate as it is not unitary.
 
 ### Inspecting the State (without collapse)
 

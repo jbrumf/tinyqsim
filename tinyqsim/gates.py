@@ -142,24 +142,4 @@ GATES = {
     'X': X,
     'Y': Y,
     'Z': Z,
-
-    # ############### BEGIN TEMP ################
-
-    # FIXME: Remove temporary code, for debugging
-    'J1': X,
-    'CJ1': cu(X),
-    'CCJ1': cu(cu(X)),
-
-    'J2': SWAP,
-    'CJ2': cu(SWAP),
-    'CCJ2': cu(cu(SWAP)),
-
-    'J3': CSWAP,
-    'CJ3': cu(CSWAP),
-    'CCJ3': cu(cu(CSWAP)),
-
-    'PJ1': P,
-    'PJ2': lambda x: SWAP
-
-    # ############### END TEMP ################
 }
