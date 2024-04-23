@@ -92,7 +92,7 @@ As mentioned earlier, an aim of TinyQsim was to keep it simple and not to worry 
 
 - Rewrite rules could be applied to simplify and combine gates using their algebraic properties. One way to do this would be to convert the circuit into ZX-calculus notation.
 
-If an optimization improves the speed and memory use by a factor of four, it only allows one extra qubit, so it may not be worth the effort. Even a factor of 16 would only allow two extra qubits. In its current form, TinyQsim is usable with up to about 12 qubits. It is not clear that having 13 or 14 qubits would be a bit advantage.
+If an optimization improves the speed and memory use by a factor of four, it only allows one extra qubit, so it may not be worth the effort. Even a factor of 16 would only allow two extra qubits. In its current form, TinyQsim is usable with up to about 12 qubits. It is not clear that having 13 or 14 qubits would be a big advantage.
 
 ### Matrix Expansion
 

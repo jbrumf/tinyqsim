@@ -51,9 +51,9 @@ First, create a quantum circuit with 2 qubits:
 Then add some quantum gates:
 
 ```
-  qc.x(1)       # Add an X gate to qubit 1
-  qc.h(0)       # Add an H gate to qubit 0
-  qc.cx(0, 1)   # Add a CX gate to qubits 0 and 1
+  qc.x(1)       # Add an X gate on qubit 1
+  qc.h(0)       # Add an H gate on qubit 0
+  qc.cx(0, 1)   # Add a CX gate on qubits 0 and 1
 ```
 
 Draw the circuit:
@@ -108,7 +108,7 @@ By default, the gate operations are applied to the state as they are added to th
 
 All these features are described in more detail in the following sections.
 
-See the Jupyter notebooks in the 'examples' directory for more detailed examples.
+See the Jupyter notebooks in the 'examples' directory for further detailed examples.
 
 ### Creating a Quantum Circuit
 
@@ -118,7 +118,7 @@ To create an n-qubit quantum circuit:
   qc = QCircuit(n)
 ```
 
-By default the quantum state is initialized to $\ket{00\dots 0}$. The required initial state can then be created using a few gates.
+By default the quantum state is initialized to $\ket{00\dots 0}$. The required initial state can then be configured using a few gates.
 
 It is also possible to set the state using the `state_vector` property. The vector must have a norm of 1 and a length of $2^K$, where K is the number of qubits. For example:
 
@@ -141,9 +141,9 @@ The quantum circuit can be drawn using the 'draw' method:
   qc.draw(*options)
   
   options:
-    scale = 1.2          # Draw with specified scale (default=1.0)
-    show = True          # Display the circuit (default=True)
-    save = 'bloch.png'   # Save to file in home directory (default=None)
+    scale = 1.2      # Draw with specified scale (default=1.0)
+    show = True      # Display the circuit (default=True)
+    save = 'qc.png'  # Save to file in home directory (default=None)
 ```
 
 If the circuit has a large number of gates, it may get reduced in size to fit in the window. The following sections explain how to zoom and pan the view.
@@ -166,13 +166,13 @@ The various gates and other components that can be used to build a quantum circu
 
 The available gates include: CCU, CCX, CP, CS, CSWAP, CT, CU, CX, CY, CZ, H, I, P, RX, RY, S, SWAP, SX, T, U, X, Y and Z. It is also possible to define custom gates, including ones with parameters and controls.
 
-The Gates guide also describes the 'barrier' symbol and the measurement gate, although measurement is not a normal gate as it is not unitary.
+The Gates guide also describes the 'barrier' symbol and the measurement gate. 
 
 ### Inspecting the State (without collapse)
 
 It is not possible to examine the state of real qubits without collapsing them to one the basis states of the measurement basis. However, a simulator such as TinyQsim has access to the state, which can be very useful for understanding and developing quantum algorithms.
 
-Four methods or properties are provided that allow you to access the state in different ways:
+Four methods and properties are provided that allow you to access the state in different ways:
 
 ```
   qc.state_vector
@@ -183,7 +183,7 @@ Four methods or properties are provided that allow you to access the state in di
 
 The state_vector property returns a copy of the raw state vector as a numpy array. This is useful if you want to write some Python code to perform your own processing of the result.
 
-However, if you just want to examine the state, the other three methods may be more useful. These  return the result as a Python dictionary with the keys that are easy to relate to the basis states. By default, any elements that have a probabilities close to zero are omitted to make the output easier to read.
+However, for just examining the state, the other three methods may be more useful. These  return the result as a Python dictionary with keys that are easy to relate to the basis states. By default, any elements that have probabilities close to zero are omitted to make the output easier to read.
 
 For example:
 
@@ -228,7 +228,7 @@ See the numpy 'printoptions' documentation for further options and details.
 
 #### Complex Components of State
 
-The projection of the quantum state onto each basis vector can be obtained as follows. This is not treated as a measurement, so the state is not collapsed. This is similar to just printing the state except that the result is in the form of a Python dictionary with keys that label the basis states.
+The projection of the quantum state onto each basis vector can be obtained as follows. This is similar to just printing the state except that the result is in the form of a Python dictionary with keys that label the basis states. It is not treated as a measurement, so the state is not collapsed.
 
 ```
 API:
