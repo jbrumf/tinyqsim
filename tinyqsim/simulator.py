@@ -4,7 +4,7 @@ Simulator for quantum circuit execution.
 Licensed under MIT license: see LICENSE.txt
 Copyright (c) 2024 Jon Brumfitt
 """
-
+import numpy as np
 from numpy import ndarray
 
 from tinyqsim import quantum, gates
@@ -15,19 +15,37 @@ class Simulator:
     """Simulator to evolve quantum state of system."""
 
     def __init__(self, nqubits: int, init='zeros'):
+        """Initialize simulator.
+        :param nqubits: Number of qubits
+        :param init: Initial state: 'zeros' or 'random'
+        """
         self._nqubits = nqubits
         self._init = init
-        self.state = None
+        self._state = None
         self._gates = gates.GATES
 
         # Initialize state
         match init:
             case 'zeros':
-                self.state = quantum.init_state(self._nqubits)
+                self._state = quantum.init_state(self._nqubits)
             case 'random':
-                self.state = quantum.random_state(self._nqubits)
+                self._state = quantum.random_state(self._nqubits)
             case _:
                 raise ValueError(f'Invalid init state: {init}')
+
+    @property
+    def state(self) -> np.ndarray:
+        """Return quantum state.
+        :return: quantum state
+        """
+        return self._state
+
+    @state.setter
+    def state(self, state: np.ndarray) -> None:
+        """Setter for state vector.
+        :param state: State vector
+        """
+        self._state = state
 
     def apply(self, u: ndarray, cqubits: list[int], tqubits: list[int]) -> None:
         """ Apply a unitary matrix to specified qubits of state.
@@ -41,14 +59,16 @@ class Simulator:
         if 2 ** len(all_qubits) != len(u):
             raise ValueError(f'Wrong number of qubit indices, expected {quantum.n_qubits(u)}')
 
-        self.state = quantum.map_qubits(u, self._nqubits, all_qubits) @ self.state
+        self._state = quantum.map_qubits(u, self._nqubits, all_qubits) @ self._state
 
     def execute(self, model: Model) -> None:
-        """Execute the circuit."""
+        """Execute the circuit.
+        :param model: Model to execute
+        """
         if self._init == 'random':
-            self.state = quantum.random_state(self._nqubits)
+            self._state = quantum.random_state(self._nqubits)
         else:
-            self.state = quantum.init_state(self._nqubits)
+            self._state = quantum.init_state(self._nqubits)
 
         for (name, cqubits, tqubits, args) in model.items:
             all_qubits = cqubits + tqubits
@@ -62,7 +82,7 @@ class Simulator:
                     self.apply(u, cqubits, tqubits)
 
                 case 'measure':  # Measurement
-                    m, self.state = quantum.measure_qubits(self.state, all_qubits)
+                    m, self._state = quantum.measure_qubits(self._state, all_qubits)
                     print(f'm = {m}')
 
                 case 'barrier':  # Barrier

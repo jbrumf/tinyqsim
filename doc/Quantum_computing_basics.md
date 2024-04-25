@@ -511,7 +511,7 @@ This definition is the same for both big-endian and little-endian conventions be
 The SWAP gate is equivalent to three CX gates:
 
 <div style="text-align: center;">
-<img src="assets2/cx3.png" width="220"/>
+<img src="assets/cx3.png" width="220"/>
 </div>
 
 #### Controlled-X (CX) Gate
@@ -519,7 +519,7 @@ The SWAP gate is equivalent to three CX gates:
 The Controlled-X (CX or CNOT) gate is a quantum gate that operates on two qubits. Consequently, it is represented by a 4x4 unitary matrix:
 
 <div style="text-align: center;">
-<img src="assets2/cnotgate.png" width="130"/>
+<img src="assets/cnotgate.png" width="130"/>
 </div>
 
 ```math
@@ -554,7 +554,7 @@ Note that this definition assumes the big-endian qubit convention.
 We can make a controlled version of any one-qubit gate $U$ as follows.
 
 <div style="text-align: center;">
-<img src="assets2/cugate.png" width="130"/>
+<img src="assets/cugate.png" width="130"/>
 </div>
 
 ```math
@@ -596,7 +596,7 @@ A quantum circuit is network of quantum gates applied to a set of qubits. It can
 A quantum circuit consists of a sequence of gates representing unitary operations. These are placed on a set of parallel lines representing the qubits. Measurement gates may be added to the outputs (not shown).
 
 <div style="text-align: center;">
-<img src="assets2/multi.png" width="300"/>
+<img src="assets/multi.png" width="300"/>
 </div>
 
 The input state on the left-hand side is $\ket{xy}=\ket{x}\otimes\ket{y}$ and the output state on the right-hand side is $\ket{\phi}$. The qubit on the left side of a tensor product is refered to as the *most-significant* qubit, even if the qubits are not used to encode a number. This document assumes that the most-significant qubit is drawn as the upper one in the diagram, so tensor products are applied going *down* the diagram.
@@ -610,7 +610,7 @@ A sequence of operations from left to right are combined by matrix multiplicatio
 The following example shows the series composition of two one-qubit gates:
 
 <div style="text-align: center;">
-<img src="assets2/series.png" width="230"/>
+<img src="assets/series.png" width="230"/>
 </div>
 
 ```math
@@ -622,7 +622,7 @@ Note that the operations in the diagram are applied left to right, whereas in th
 Single qubit operators may be applied to the tensor product of qubit states by first taking the tensor product of the operators:
 
 <div style="text-align: center;">
-<img src="assets2/parallel_ab.png" width="160"/>
+<img src="assets/parallel_ab.png" width="160"/>
 </div>
 
 ```math
@@ -638,7 +638,7 @@ The tensor product is formed with the most-significant qubit on the left of the 
 If gate B is absent in the above example, we must replace it with an imaginary identity gate, so that we can still form the tensor product to expand B to operate on the full quantum state:
 
 <div style="text-align: center;">
-<img src="assets2/parallel_i.png" width="140"/>
+<img src="assets/parallel_i.png" width="140"/>
 </div>
 
 ```math
@@ -654,7 +654,7 @@ Taking the tensor product with $I$ converts the one-qubit $A$ gate into a 2-qubi
 Returning to the example given earlier:
 
 <div style="text-align: center;">
-<img src="assets2/multi.png" width="300"/>
+<img src="assets/multi.png" width="300"/>
 </div>
 
 This corresponds to the following matrix operations:
@@ -680,7 +680,7 @@ Non-consecutive qubits are a problem in real quantum computers because the qubit
 The following simple example of a quantum circuit consists of a Hadamard gate and a CX gate:
 
 <div style="text-align: center;">
-<img src="assets2/hcnot.png" width="230"/>
+<img src="assets/hcnot.png" width="230"/>
 </div>
 
 The Hadamard gate creates an equal superposition of $\ket{0}$ and $\ket{1}$:
@@ -705,7 +705,7 @@ Although very simple, this circuit is an important building block because entang
 Finally, if we add an X gate to the $q_1$ qubit, we get a different Bell state:
 
 <div style="text-align: center;">
-<img src="assets2/bell.png" width="230"/>
+<img src="assets/bell.png" width="230"/>
 </div>
 
 ```math

@@ -5,9 +5,9 @@
 - [TinyQsim User Guide](TinyQsim_user_guide.md)
 - [TinyQsim Gates](TinyQsim_gates.md)
 
-### Notes on the Design
+### API Documentation
 
-- [TinyQsim Design Notes](TinyQsim_design_notes.md)
+API documentation can be found in the 'tinyqsim/doc/api' directory as HTML files. These must be browsed locally as GitHub does not render HTML pages on their server. 
 
 ### Quantum Computation
 

@@ -8,6 +8,11 @@ from mpl_toolkits.mplot3d import proj3d
 
 
 class Arrow3D(FancyArrowPatch):
+    """Fix for Arrow3D problem introduced by matplotlib 3.5.
+    See: https://github.com/matplotlib/matplotlib/issues/21688
+    @private
+    """
+
     def __init__(self, xs, ys, zs, *args, **kwargs):
         super().__init__((0, 0), (0, 0), *args, **kwargs)
         self._verts3d = xs, ys, zs

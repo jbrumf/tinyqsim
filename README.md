@@ -64,20 +64,24 @@ The TinyQsim documentation can be viewed online on GitHub:
 
 The Markdown files for the documentation can also be found in the `tinyqsim/doc` directory. These files require a Markdown viewer with LaTeX support.
 
+API document is located in the `tinyqsim/doc/api` directory. This cannot be viewed on GitHub as GitHub does not render HTML pages. Instead, open your downloaded copy of `tinyqsim/doc/api/index.html` in a browser. 
+
 ### Examples
 
 Examples are provided in the form of Jupyter notebooks. These are located in the `tinyqsim/examples` directory. Alternatively, a rendered version of the notebooks including their output can be found on GitHub:
 
 - https://github.com/jbrumf/tinyqsim/tree/main/examples/
 
-The current examples include:
+The examples currently include:
 
 - Example 1: Tutorial introduction to TinyQsim:
-    - https://github.com/jbrumf/tinyqsim/blob/main/examples/example_1.ipynb
+    - https://github.com/jbrumf/tinyqsim/blob/main/examples/example_1_tutorial.ipynb
 - Example 2: 4-Qubit Quantum Fourier Transform
-    - https://github.com/jbrumf/tinyqsim/blob/main/examples/example_2.ipynb
+    - https://github.com/jbrumf/tinyqsim/blob/main/examples/example_2_QFT4.ipynb
 - Example 3: Parameterized N-qubit QFT
-    - https://github.com/jbrumf/tinyqsim/blob/main/examples/example_3.ipynb
+    - https://github.com/jbrumf/tinyqsim/blob/main/examples/example_3_QFT.ipynb
+- Example 4: Quantum Phase Estimation
+    - https://github.com/jbrumf/tinyqsim/blob/main/examples/example_4_QPE.ipynb
 
 ### License
 

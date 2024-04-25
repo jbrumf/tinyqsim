@@ -7,16 +7,12 @@ Copyright (c) 2024 Jon Brumfitt
 
 from math import sqrt
 
-import numpy as np
 import pytest
-from numpy import kron, ndarray
-from numpy.linalg import norm
 from numpy.testing import assert_array_equal, assert_allclose
 from pytest import approx
 
 from tinyqsim.gates import ID, CX, X, SWAP
-from tinyqsim.quantum import (init_state, n_qubits, permute_qubits, swap_endian, map_qubits,
-                              random_state)
+from tinyqsim.quantum import *
 from tinyqsim.utils import kron_all, kron_n, normalize
 
 ENABLE_STATS_TESTS = True  # Enable stochastic tests that may occasionally fail
@@ -36,6 +32,25 @@ def test_init_qubits():
     assert_array_equal(init_state(3), [1, 0, 0, 0, 0, 0, 0, 0])
 
 
+@pytest.mark.skipif(not ENABLE_STATS_TESTS, reason='Skipping Statistical Test')
+def test_random_state():
+    """ Test random state has expected norm and standard deviation."""
+    nruns = 10
+    nqubits = 8
+    zmax = 0.15  # Test threshold
+    n = 2 ** nqubits
+    sigma = 1 / sqrt(2 * n)  # Expected standard deviation
+    for _ in range(nruns):
+        psi = random_state(nqubits)  # / sqrt(2)
+        # Check norm of state is approximately 1
+        assert (norm(psi) == approx(1.0, abs=1e-10))
+        # Check standard deviation is approximately as expected
+        zr = np.std(psi.real) / sigma
+        zi = np.std(psi.imag) / sigma
+        assert abs(1 - zr) < zmax
+        assert abs(1 - zi) < zmax
+
+
 def test_n_qubits():
     # Test with vector
     assert_array_equal(n_qubits(np.array([])), 0)
@@ -48,7 +63,12 @@ def test_n_qubits():
     assert_array_equal(n_qubits(kron(ID, ID)), 2)
 
 
-def test_qubit_permutation():
+def test_basis_names():
+    assert_array_equal(basis_names(1), ['0', '1'])
+    assert_array_equal(basis_names(3), ['000', '001', '010', '011', '100', '101', '110', '111'])
+
+
+def test_permute_qubits():
     # Trivial case of 1 qubit
     x = permute_qubits(X, [0])
     assert_array_equal(x, X)
@@ -92,22 +112,42 @@ def test_swap_endian():
     assert_array_equal(swap_endian(swap_endian(s)), s)
 
 
-@pytest.mark.skipif(not ENABLE_STATS_TESTS, reason='Skipping Statistical Test')
-def test_random_state():
-    """ Test random state has expected norm and standard deviation."""
-    nruns = 10
-    nqubits = 8
-    zmax = 0.15  # Test threshold
-    n = 2 ** nqubits
-    sigma = 1 / sqrt(2 * n)  # Expected standard deviation
-    for _ in range(nruns):
-        psi = random_state(nqubits)  # / sqrt(2)
-        # Check norm of state is approximately 1
-        assert (norm(psi) == approx(1.0, abs=1e-10))
-        # Check standard deviation is approximately as expected
-        zr = np.std(psi.real) / sigma
-        zi = np.std(psi.imag) / sigma
-        assert abs(1 - zr) < zmax
-        assert abs(1 - zi) < zmax
+def test_to_tensor():
+    assert_array_equal(to_tensor(np.array([1, 2])), [1, 2])
+    assert_array_equal(to_tensor(np.array([1, 2, 3, 4, 5, 6, 7, 8])),
+                       np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]))
+
+
+def test_from_tensor():
+    assert_array_equal(from_tensor(np.array([1, 2])), [1, 2])
+    assert_array_equal(from_tensor(np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])),
+                       [1, 2, 3, 4, 5, 6, 7, 8])
+
+
+def test_subscript():
+    assert subscript([1]) == 'b'
+    assert subscript([0, 3, 5]) == 'adf'
+
+
+def test_sum_except_qubits():
+    assert_array_equal(sum_except_qubits(np.array(range(8)), [0]), [6, 22])
+    assert_array_equal(sum_except_qubits(np.array(range(8)), [1]), [10, 18])
+    assert_array_equal(sum_except_qubits(np.array(range(8)), [2]), [12, 16])
+    assert_array_equal(sum_except_qubits(np.array(range(8)), [1, 2]), [4, 6, 8, 10])
+    assert_array_equal(sum_except_qubits(np.array(range(8)), [0, 2]), [2, 4, 10, 12])
+
+
+def test_components_dict():
+    assert components_dict(np.array([1, 2, 3, 4])) == {'00': 1, '01': 2, '10': 3, '11': 4}
+
+
+def test_probabilities():
+    a = np.array([-2, 1j, 2, 3]) / sqrt(18)
+    assert_allclose(probabilities(a, [0, 1]), [2 / 9, 5 / 90, 2 / 9, 1 / 2])
+    assert_allclose(probabilities(a, [0]), [5 / 18, 13 / 18])
+    assert_allclose(probabilities(a, [1]), [4 / 9, 5 / 9])
+
+# def test_probability_dict():
+# def test_counts_dict
 
 # Note: Measurement tests are now in a separate module

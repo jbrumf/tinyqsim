@@ -62,32 +62,19 @@ def test_measure_eigen():
 
     # Prepare a 3-qubit state vector
     state = np.zeros(8)
-    state[4] = 1  # |100> (big endian), |001> (little endian)
+    state[4] = 1
 
-    # Big endian: Q0 is MSB
-    m0, v0 = measure_qubit(state, 0, endian='big')
+    m0, v0 = measure_qubit(state, 0)
     assert m0 == 1
     assert_array_equal(v0, state)
 
-    m1, v1 = measure_qubit(state, 2, endian='big')
+    m1, v1 = measure_qubit(state, 2)
 
     assert m1 == 0
     assert_array_equal(v1, state)
 
-    # Little endian: Q0 is LSB
-    m2, v2 = measure_qubit(state, 0, endian='little')
-    assert m2 == 0
-    assert_array_equal(v2, state)
-
-    m3, v3 = measure_qubit(state, 2, endian='little')
-    assert m3 == 1
-    assert_array_equal(v3, state)
-
     m4, v4 = measure_qubits(state, [0, 1, 2])
-    assert_array_equal(m4, [1, 0, 0])  # Big endian
-
-    m4, v4 = measure_qubits(state, [0, 1, 2], endian='little')
-    assert_array_equal(m4, [0, 0, 1])  # Little endian
+    assert_array_equal(m4, [1, 0, 0])
 
 
 @pytest.mark.skipif(not ENABLE_STATS_TESTS, reason='Skipping Statistical Test')

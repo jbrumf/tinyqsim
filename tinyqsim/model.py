@@ -1,4 +1,5 @@
-""" Model for quantum circuit.
+"""
+Model for quantum circuit.
 
 Licensed under MIT license: see LICENSE.txt
 Copyright (c) 2024 Jon Brumfitt

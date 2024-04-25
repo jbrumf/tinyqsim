@@ -14,8 +14,8 @@ from numpy.linalg import norm
 from numpy.testing import (assert_array_almost_equal)
 from pytest import approx
 
-from tinyqsim.extras import (bloch_to_qubit, qubit_to_bloch,
-                             random_bloch, random_qubit)
+from tinyqsim.bloch import (bloch_to_qubit, qubit_to_bloch,
+                            random_bloch, random_qubit)
 
 DECIMAL = 15  # Require precision (decimal places)
 ENABLE_STATS_TESTS = True  # Enable stochastic tests that may occasionally fail

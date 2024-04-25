@@ -33,16 +33,16 @@ For installation instructions, see the README file in the source distribution.
 
 ### A Simple Example
 
-The examples below require the following Python imports:
+The examples in this document require the following Python imports:
 
 ```
 from tinyqsim.qcircuit import QCircuit
 import numpy as np
 ```
 
-The main interface to the simulator is through the QCircuit class.
+The main interface to the simulator is through the QCircuit class. Documentation of the QCircuit API can be found in the 'doc/api' directory.
 
-First, create a quantum circuit with 2 qubits:
+First, let us create a quantum circuit with 2 qubits:
 
 ```
   qc = QCircuit(2)
@@ -66,56 +66,74 @@ Draw the circuit:
 <img src="assets/bell_1.png" alt="bell_1" width=160/>
 </div>
 
-This very simple circuit has created the entangled quantum state: $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$.
+This simple circuit has created the entangled quantum state: $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$.
 
-There are various ways to inspect the state (without collapsing it):
+We can confirm this by printing the components of the quantum state (zero values are omitted by default):
 
 ```
-  # The quantum state vector
-  print(qc.state_vector)
-    [0. 0.70710678 0.70710678 0.]
-    
-  # Complex components of state
   print(qc.components())
-    {'01': (0.7071+0j), '10': (0.7071+0j)}
-   
-  # Probabilities of each measurement outcome
+```
+Output: {'01': (0.7071+0j), '10': (0.7071+0j)}
+
+The probabilities of the different measurement outcomes are the squares of the absolute values:
+```
   print(qc.probabilities())
-    {'01': 0.5, '10': 0.5}
-   
-  # Measurement counts for repeated experiment
-  print(qc.counts(nruns=1000))
-    {'01': 503, '10': 497}
 ```
+Output: {'01': 0.5, '10': 0.5}
 
-We can also perform a quantum measurement (with collapse):
+These can be printed and plotted as follows:
 
 ```
-  print(qc.measure())  # Output: [0 1] or [1 0]
+  qc.plot_probabilities()
 ```
 
-As well as performing the measurement, this has also added measurement gates to the circuit:
+<div style="text-align: center;">
+<img src="assets/bell_probs.png" alt="bell_probs" width=350/>
+</div>
+
+With a real quantum computer, the only way to get a result is to perform a quantum measurement that collapses the state to one of the basis states. The probabilities can be estimated by running the program many times and looking at the frequencies of the various outcomes.
+
+We can simulate such a set of measurement runs as follows:
 
 ```
+  qc.plot_counts(runs=1000)
+```
+
+<div style="text-align: center;">
+<img src="assets/bell_counts.png" alt="bell_probs" width=350/>
+</div>
+
+The simulated measurement counts function does not collape the quantum state.
+
+A single quantum measurement with collapse of the state can be performed by adding measurement gates to the circuit:
+
+```
+  qc.measure()
   qc.draw()
 ```
+Output: [0 1] or [1 0]
 
 <div style="text-align: center;">
 <img src="assets/bell_2.png" alt="bell_1" width=220/>
 </div>
 
-By default, the gate operations are applied to the state as they are added to the circuit. There is no need to build the circuit and then run a simulator on it. Consequently, TinyQsim allows a very interactive way of working.
-
 All these features are described in more detail in the following sections.
 
 See the Jupyter notebooks in the 'examples' directory for further detailed examples.
 
+---
+
+The following sections provide some more detail on the functions introduced by the simple example above. Documentation of the QCircuit API can be found in the 'doc/api' directory.
+
 ### Creating a Quantum Circuit
 
-To create an n-qubit quantum circuit:
+A quantum circuit is created using the QCircuit constructor:
 
 ```
-  qc = QCircuit(n)
+  qc = QCircuit(n, *options)
+  
+  options:
+    init = random  # Initialize with random quantum state
 ```
 
 By default the quantum state is initialized to $\ket{00\dots 0}$. The required initial state can then be configured using a few gates.
@@ -127,10 +145,10 @@ It is also possible to set the state using the `state_vector` property. The vect
   qc.state_vector = np.array([0, 1, 0, 0])
 ```
 
-A random quantum state is also possible using the `init` keyword argument:
+The circuit can be initialized with a random quantum state by using the following keyword argument:
 
 ```
-  qc = QCircuit(3, init='random')
+  qc = QCircuit(2, init='random')
 ```
 
 ### Drawing the Circuit
@@ -210,10 +228,26 @@ Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10
   [0. 0.70710678 0.70710678 0.]
 ```
 
-The state vector can be quite large, so it is often useful to format it to make it more readable. For example:
+It is often useful to format the state vector to make it more readable as the ouput can be quite long. This can be done done using the numpy 'printoptions' context manager. 
+
+For example, to print the state components to only 3 decimal places:
 
 ```
-  with np.printoptions(precision=4, suppress=True, threshold=100, edgeitems=10):
+ with np.printoptions(precision=4, suppress=True):
+      print(qc.state_vector)
+```
+
+If the state vector is long, only the first and last few elements are printed. This behaviour can be controlled as follows:
+
+```
+  with np.printoptions(threshold=100, edgeitems=10):
+      print(qc.state_vector)
+```
+
+Alternatively, the whole state vector can be printed as follows:
+
+```
+  with np.printoptions(threshold=sys.maxsize):
       print(qc.state_vector)
 ```
 
@@ -233,10 +267,14 @@ The projection of the quantum state onto each basis vector can be obtained as fo
 ```
 API:
   qc.components(*options)
-     options: decimals=5, include_zeros=False     
+     options:
+       decimals       : Number of decimal places
+       include_zeros. : Include zero values (default=False)
 
-Example:
+Examples:
+  qc.components()
   qc.components(decimals=4)
+  qc.components(include_zeros=True)
 ```
 
 Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$ :
@@ -245,22 +283,22 @@ Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10
   {'01': (0.7071+0j), '10': (0.7071+0j)}
 ```
 
-The options are as follows:
+#### Probabilities
 
-- `decimals` : Number of decimal places
-- `include_zeros` : Include zero entries
+The probabilities of a measurement returning each basis state can be obtained as follows. This is not treated as a measurement, so the state is not collapsed. 
 
-#### Measurement Probabilities
-
-The probabilities of a measurement returning each basis state can be obtained as follows. This is not treated as a measurement, so the state is not collapsed.
+The 'qubits' argument specifies the qubits to be considered. If it is omitted, all qubits are used.
 
 ```
 API:
-  qc.probabilities(*options)
-     options: decimals=5, include_zeros=False
+  qc.probabilities(qubits=None, *options)
+     options:
+       decimal       : Number of decimal places
+       include_zeros : Include zero values  (default=False)
      
-Example:
+Examples:
   qc.probabilities()
+  qc.probabilities([1,2], decimals=3)
 ```
 
 Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$ :
@@ -275,20 +313,24 @@ So, the probabilties of the measurement outcomes are:
 p(\ket{01}) = 0.5, \quad p(\ket{10})= 0.5
 ```
 
-The options are as follows:
-
-- `decimals` : Number of decimal places
-- `include_zeros` : Include zero entries
-
 #### Measurement Counts
 
 The probabilities of different outcomes cannot be measured on a real quantum system, so it is common to run a quantum program many times to find the frequency with which each outcome occurs. This provides an approximation to the true probabilities which improves as the number of test runs is increased.
 
 TinyQsim provides the following method that simulates such a sequence of test runs and returns a dictionary of the counts for each basis state. It does not affect the state. If you want the state to be updated, just follow it with a call to 'measure()'.
 
+The 'qubits' argument specifies the qubits to be measured. If it is omitted, all qubits are measured.
+
 ```       
-  qc.counts(*options)
-     options: nruns=1000, include_zeros=False
+  qc.counts(qubits=None, *options)
+     options:
+       nruns=1000
+       include_zeros : Include zero values (default=False)
+       
+Examples:
+  qc.counts()
+  qc.counts([1,2])
+  qc.counts([1,2], nruns=500)
 ```
 
 Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$ :
@@ -297,22 +339,19 @@ Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10
   {'01': 503, '10': 497}
 ```
 
-The options are as follows:
-
-- `nruns`         : Number of test runs
-- `include_zeros` : Include zero entries
-
 ### Quantum Measurement (with collapse)
 
-A quantum measurement may be performed on one or more qubits. This collapses the state as it would on a real quantum computer. If no qubits are specified, then all the qubits are measured.
+A quantum measurement may be performed on one or more qubits. This collapses the state as it would on a real quantum computer. 
+
+The 'qubits' argument specifies the qubits to be measured. If it is omitted, all qubits are measured.
 
 ```
 API:
-  qc.measure(*qubits)
+  qc.measure(qubits)
   
 Examples:
-  qc.measure(0,1)   # Measure qubits 0 and 1
-  qc.measure()      # Measure all qubits
+  qc.measure()        # Measure all qubits
+  qc.measure([0,1])   # Measure qubits 0 and 1
 ```
 
 Example output:
