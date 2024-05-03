@@ -9,7 +9,7 @@ from typing import Iterable
 
 import numpy as np
 import numpy.random as random
-from numpy import ndarray, kron, eye, einsum
+from numpy import ndarray, einsum
 from numpy.linalg import norm
 
 from tinyqsim.utils import (is_normalized, normalize, complete)
@@ -61,8 +61,8 @@ def basis_names(nqubits: int) -> list[str]:
     return [bin(i)[2:].zfill(nqubits) for i in range(2 ** nqubits)]
 
 
-def permute_qubits(u: ndarray, perm: list[int]) -> ndarray:
-    """Permute the unitary 'u' into qubit order 'perm'.
+def permute_unitary(u: ndarray, perm: list[int]) -> ndarray:
+    """Permute the unitary matrix 'u' into qubit order 'perm'.
        Qubit indices [0,1,2,...] are mapped onto the indices in 'perm'.
        :param u: Unitary matrix of the gate
        :param perm: qubit indices that [0,1,2,...] map to
@@ -76,21 +76,6 @@ def permute_qubits(u: ndarray, perm: list[int]) -> ndarray:
     return einsum(u, indices).reshape([nq2, nq2])
 
 
-def map_qubits(u: ndarray, nqubits, indices: list[int]) -> ndarray:
-    """Return unitary matrix expanded to nqubits with mapped indices.
-       :param u: unitary matrix
-       :param nqubits: number of qubits in expanded matrix
-       :param indices: qubit indices to be mapped onto in state
-       :return: unitary matrix expanded to nqubits
-    """
-    assert n_qubits(u) == len(indices)
-    perm = complete(indices, nqubits)
-    nextra = nqubits - n_qubits(u)
-    if nextra > 0:
-        u = kron(u, eye(2 ** nextra))
-    return permute_qubits(u, perm)
-
-
 def swap_endian(u: ndarray) -> np.ndarray:
     """Swap the qubit-endianness of unitary matrix 'u'.
        :param: u: The unitary matrix to swap
@@ -98,10 +83,10 @@ def swap_endian(u: ndarray) -> np.ndarray:
     """
     nqubits = n_qubits(u)
     lower = list(reversed(range(nqubits)))
-    return permute_qubits(u, lower)
+    return permute_unitary(u, lower)
 
 
-def to_tensor(a: ndarray) -> ndarray:
+def state_to_tensor(a: ndarray) -> ndarray:
     """Convert state vector into a tensor.
         :param a: state vector
         :return: tensor representation of state
@@ -110,7 +95,7 @@ def to_tensor(a: ndarray) -> ndarray:
     return a.reshape([2] * nqubits)
 
 
-def from_tensor(t: ndarray) -> ndarray:
+def tensor_to_state(t: ndarray) -> ndarray:
     """Convert tensor into a state vector.
         :param t: tensor representation of state
         :return: state vector
@@ -119,8 +104,31 @@ def from_tensor(t: ndarray) -> ndarray:
     return t.reshape(2 ** k)
 
 
+def apply(state: ndarray, u: ndarray, qubits: list[int]) -> ndarray:
+    """ Apply a unitary matrix to specified qubits of state.
+        :param state: quantum state
+        :param u: unitary matrix
+        :param qubits: list of qubits
+        :return: updated state
+    """
+    nu = len(u)
+    nqubits = n_qubits(state)
+
+    t = state.reshape([2] * nqubits)  # Turn into tensor
+    perm = complete(qubits, nqubits)
+    x = subscript(range(len(perm)))
+    y = subscript(perm)
+
+    t = np.einsum(f'{x}->{y}', t)
+    t = u @ t.reshape((nu, 2 ** nqubits // nu))
+    t = t.reshape([2] * nqubits)
+    t = np.einsum(f'{y}->{x}', t)
+
+    return t.reshape(2 ** nqubits)  # Convert back to a vector
+
+
 def subscript(indices: Iterable[int]) -> str:
-    """Convert indices to subscripts for einsum.
+    """Convert indices to subscript letters for einsum.
         Example: subscripts([1,3,5]) -> 'bdf'.
         :param indices: list of indices
         :return: subscript string
@@ -138,7 +146,7 @@ def sum_except_qubits(data: ndarray, qubits: Iterable[int]):
     nq = n_qubits(data)
     assert 0 <= min(qubits) <= max(qubits) < nq, 'qubit out of range'
     subscripts = subscript(range(nq)) + '->' + subscript(qubits)
-    return from_tensor(np.einsum(subscripts, to_tensor(data)))
+    return tensor_to_state(np.einsum(subscripts, state_to_tensor(data)))
 
 
 def qft(state: ndarray, inverse=False) -> ndarray:

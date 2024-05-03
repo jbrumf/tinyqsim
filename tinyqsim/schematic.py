@@ -30,7 +30,7 @@ QUBIT_COLOR = 'k'
 
 
 class Scheduler:
-    """Simple time-slot scheduler for placing gates."""
+    """Simple time-slot scheduler for placing gates in schematic."""
 
     def __init__(self):
         self._slots = []

@@ -8,6 +8,7 @@ Copyright (c) 2024 Jon Brumfitt
 from math import sqrt
 
 import pytest
+from numpy import kron
 from numpy.testing import assert_array_equal, assert_allclose
 from pytest import approx
 
@@ -68,39 +69,38 @@ def test_basis_names():
     assert_array_equal(basis_names(3), ['000', '001', '010', '011', '100', '101', '110', '111'])
 
 
-def test_permute_qubits():
+def test_permute_unitary():
     # Trivial case of 1 qubit
-    x = permute_qubits(X, [0])
+    x = permute_unitary(X, [0])
     assert_array_equal(x, X)
 
     # Swapping a 2-qubit gate
-    x = permute_qubits(CX, [1, 0])
+    x = permute_unitary(CX, [1, 0])
     assert_array_equal(x, CX_BIG)
-    x = permute_qubits(CX, [0, 1])
+    x = permute_unitary(CX, [0, 1])
     assert_array_equal(x, CX)
 
     # Permutation of all |0> state should have no effect
     all_zeros = kron_n(4, ID)
-    x = permute_qubits(all_zeros, [2, 1, 3, 0])
+    x = permute_unitary(all_zeros, [2, 1, 3, 0])
     assert_array_equal(x, all_zeros)
 
     # More complex cases
     u = kron_all([X, CX, SWAP])
-    x = permute_qubits(u, [4, 3, 2, 1, 0])
+    x = permute_unitary(u, [4, 3, 2, 1, 0])
     assert_array_equal(x, kron_all([SWAP, CX_BIG, X]))
 
     u = kron_all([X, CX])
     exp = kron(ID, SWAP) @ kron(CX, X) @ kron(ID, SWAP)
-    assert_array_equal(permute_qubits(u, [1, 0, 2]), exp)
+    assert_array_equal(permute_unitary(u, [1, 0, 2]), exp)
 
 
-def test_map_qubits():
-    u = kron_all([X, CX])
-    state = create_state(5)
-    exp = kron((kron(ID, SWAP) @ kron(CX, X) @ kron(ID, SWAP)), kron_n(2, ID))
-    nqubits = n_qubits(state)
-    u2 = map_qubits(u, nqubits, [1, 0, 2])
-    assert_allclose(u2, exp)
+def test_apply():
+    u = kron(X, CX)
+    state = random_state(5)
+    u2 = kron((kron(ID, SWAP) @ kron(CX, X) @ kron(ID, SWAP)), kron_n(2, ID))
+    assert_allclose(apply(state, u, [1, 0, 2]),
+                    u2 @ state)
 
 
 def test_swap_endian():
@@ -113,14 +113,14 @@ def test_swap_endian():
 
 
 def test_to_tensor():
-    assert_array_equal(to_tensor(np.array([1, 2])), [1, 2])
-    assert_array_equal(to_tensor(np.array([1, 2, 3, 4, 5, 6, 7, 8])),
+    assert_array_equal(state_to_tensor(np.array([1, 2])), [1, 2])
+    assert_array_equal(state_to_tensor(np.array([1, 2, 3, 4, 5, 6, 7, 8])),
                        np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]))
 
 
 def test_from_tensor():
-    assert_array_equal(from_tensor(np.array([1, 2])), [1, 2])
-    assert_array_equal(from_tensor(np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])),
+    assert_array_equal(tensor_to_state(np.array([1, 2])), [1, 2])
+    assert_array_equal(tensor_to_state(np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])),
                        [1, 2, 3, 4, 5, 6, 7, 8])
 
 

@@ -16,7 +16,7 @@ TinyQsim is a tiny quantum circuit simulator based on the quantum gate model.
 
 ### Background
 
-The original version of the simulator was written during the first UK Covid-19 lockdown in 2020. The intention in writing it was to learn about quantum computation, rather than to produce a practical simulator. However, it is capable of running simple quantum algorithms with at least 10 qubits and up to 12 with a few seconds wait (on a Mac Mini M2).
+The intention in writing TiyQsim was to learn about quantum computing, rather than to produce a practical simulator. However, it is capable of running a 20-qubit quantum Fourier Transform in about one second (tested on a Mac Mini M2).
 
 ### Installation
 

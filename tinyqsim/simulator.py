@@ -53,13 +53,13 @@ class Simulator:
             :param cqubits: list of control qubits
             :param tqubits: list of target qubits
         """
-        all_qubits = cqubits + tqubits
-        if min(all_qubits) < 0 or max(all_qubits) >= self._nqubits:
-            raise ValueError(f'Qubit indices out of range: {all_qubits}')
-        if 2 ** len(all_qubits) != len(u):
+        qubits = cqubits + tqubits
+        if min(qubits) < 0 or max(qubits) >= self._nqubits:
+            raise ValueError(f'Qubit indices out of range: {qubits}')
+        if 2 ** len(qubits) != len(u):
             raise ValueError(f'Wrong number of qubit indices, expected {quantum.n_qubits(u)}')
 
-        self._state = quantum.map_qubits(u, self._nqubits, all_qubits) @ self._state
+        self._state = quantum.apply(self._state, u, qubits)
 
     def execute(self, model: Model) -> None:
         """Execute the circuit.
