@@ -17,6 +17,7 @@ class Arrow3D(FancyArrowPatch):
         super().__init__((0, 0), (0, 0), *args, **kwargs)
         self._verts3d = xs, ys, zs
 
+    # noinspection PyUnusedLocal
     def do_3d_projection(self, renderer=None):
         xs3d, ys3d, zs3d = self._verts3d
         xs, ys, zs = proj3d.proj_transform(xs3d, ys3d, zs3d, self.axes.M)

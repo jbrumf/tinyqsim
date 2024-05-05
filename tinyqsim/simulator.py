@@ -61,6 +61,11 @@ class Simulator:
 
         self._state = quantum.apply(self._state, u, qubits)
 
+    def measure(self, qubits: list[int]):
+        """ Measure specified qubits."""
+        m, self.state = quantum.measure_qubits(self.state, qubits)
+        print(f'Measured qubits{qubits} -> {m}')
+
     def execute(self, model: Model) -> None:
         """Execute the circuit.
         :param model: Model to execute
@@ -71,7 +76,7 @@ class Simulator:
             self._state = quantum.init_state(self._nqubits)
 
         for (name, cqubits, tqubits, args) in model.items:
-            all_qubits = cqubits + tqubits
+            qubits = cqubits + tqubits
             match name:
                 case 'U':  # Custom unitary
                     u = args[1]
@@ -82,8 +87,7 @@ class Simulator:
                     self.apply(u, cqubits, tqubits)
 
                 case 'measure':  # Measurement
-                    m, self._state = quantum.measure_qubits(self._state, all_qubits)
-                    print(f'm = {m}')
+                    self.measure(qubits)
 
                 case 'barrier':  # Barrier
                     pass

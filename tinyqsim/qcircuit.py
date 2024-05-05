@@ -97,16 +97,13 @@ class QCircuit(object):
             u = self._gates[name](args[0])
             self._simulator.apply(u, cqubits, tqubits)
 
-    def _add_measure(self, qubits: list[int]) -> ndarray:
+    def _add_measure(self, qubits: list[int]) -> None:
         """ Add a measurement to the model.
             :param qubits: list of qubits
-            :return: the measured values
         """
         self._model.add_gate('measure', [], qubits)
-        m = None
         if self._auto_exec:
-            m, self._simulator.state = quantum.measure_qubits(self._simulator.state, qubits)
-        return m
+            self._simulator.measure(qubits)
 
     def _add_unitary(self, name: str, u: ndarray, cqubits: list[int], tqubits: list[int]) -> None:
         """ Add a unitary matrix to the model.
@@ -149,7 +146,7 @@ class QCircuit(object):
         counts = quantum.counts_dict(self._simulator.state, qubits, runs)
         return {k: v for k, v in counts.items() if include_zeros or v > EPS}
 
-    def probabilities(self, qubits: list[int] = None, decimals: int = 5,
+    def probabilities(self, qubits: Iterable[int] = None, decimals: int = 5,
                       include_zeros: bool = False) -> dict[str, float]:
         """ Return dictionary of the probabilities of each outcome.
             :param qubits: list of qubits
@@ -164,14 +161,14 @@ class QCircuit(object):
 
     # ------------------ Measurement ------------------
 
-    def measure(self, qubits: Iterable[int] = None) -> ndarray:
-        """Measure one or more qubits.
+    def measure(self, qubits: Iterable[int] = None) -> None:
+        """Add a measurement gate to one or more qubits.
             :param qubits: list of qubits
             :return: list of measured qubits
         """
         if not qubits:
             qubits = range(self._nqubits)
-        return self._add_measure(list(qubits))
+        self._add_measure(list(qubits))
 
     # -------------------------- Graphics ---------------------------
 
@@ -183,7 +180,7 @@ class QCircuit(object):
         """
         self._schematic.draw(self._model, scale=scale, show=show, save=save)
 
-    def plot_probabilities(self, qubits: list[int] = None, save: str | None = False) -> None:
+    def plot_probabilities(self, qubits: Iterable[int] = None, save: str | None = False) -> None:
         """Plot histogram of probabilities for list of qubits.
             :param qubits: list of qubits (None => all)
             :param save: file to save image if required

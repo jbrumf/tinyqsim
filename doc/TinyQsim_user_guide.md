@@ -111,7 +111,7 @@ A single quantum measurement with collapse of the state can be performed by addi
   qc.measure()
   qc.draw()
 ```
-Output: [0 1] or [1 0]
+Output: Measured qubits[0, 1] -> [1 0]
 
 <div style="text-align: center;">
 <img src="assets/bell_2.png" alt="bell_1" width=220/>
@@ -357,7 +357,7 @@ Examples:
 Example output:
 
 ```
-  [0 1]
+  Measured qubits[0, 1] -> [1 0]
 ```
 
 ### Bloch Sphere

@@ -9,7 +9,7 @@ from typing import Iterable
 
 import numpy as np
 import numpy.random as random
-from numpy import ndarray, einsum
+from numpy import ndarray
 from numpy.linalg import norm
 
 from tinyqsim.utils import (is_normalized, normalize, complete)
@@ -38,7 +38,7 @@ def random_state(nqubits: int) -> np.ndarray:
         v = gen.normal(size=(2, n))
         z = v[0] + 1j * v[1]  # Random complex
         n = norm(z)
-        if n > 1e-9:  # Repeat if norm is zero
+        if n > 1e-9:  # Try again if norm is zero
             break
     return z / n
 
@@ -54,36 +54,11 @@ def n_qubits(a: ndarray) -> int:
 
 
 def basis_names(nqubits: int) -> list[str]:
-    """Return list of integers <= 2**nqubits as binary strings.
+    """Return list of integers < 2**nqubits as binary strings.
         :param nqubits: number of qubits
         :return: list of integers as binary strings
     """
     return [bin(i)[2:].zfill(nqubits) for i in range(2 ** nqubits)]
-
-
-def permute_unitary(u: ndarray, perm: list[int]) -> ndarray:
-    """Permute the unitary matrix 'u' into qubit order 'perm'.
-       Qubit indices [0,1,2,...] are mapped onto the indices in 'perm'.
-       :param u: Unitary matrix of the gate
-       :param perm: qubit indices that [0,1,2,...] map to
-       :return: permuted matrix
-    """
-    nqubits = n_qubits(u)
-    assert len(perm) == nqubits
-    nq2 = 2 ** nqubits
-    u = u.reshape([2] * (2 * nqubits))
-    indices = perm + [i + nqubits for i in perm]
-    return einsum(u, indices).reshape([nq2, nq2])
-
-
-def swap_endian(u: ndarray) -> np.ndarray:
-    """Swap the qubit-endianness of unitary matrix 'u'.
-       :param: u: The unitary matrix to swap
-       :return: Swapped unitary matrix
-    """
-    nqubits = n_qubits(u)
-    lower = list(reversed(range(nqubits)))
-    return permute_unitary(u, lower)
 
 
 def state_to_tensor(a: ndarray) -> ndarray:
@@ -112,29 +87,33 @@ def apply(state: ndarray, u: ndarray, qubits: list[int]) -> ndarray:
         :return: updated state
     """
     nu = len(u)
-    nqubits = n_qubits(state)
+    ns = len(state)
+    nq = n_qubits(state)
 
-    t = state.reshape([2] * nqubits)  # Turn into tensor
-    perm = complete(qubits, nqubits)
-    x = subscript(range(len(perm)))
-    y = subscript(perm)
-
-    t = np.einsum(f'{x}->{y}', t)
-    t = u @ t.reshape((nu, 2 ** nqubits // nu))
-    t = t.reshape([2] * nqubits)
-    t = np.einsum(f'{y}->{x}', t)
-
-    return t.reshape(2 ** nqubits)  # Convert back to a vector
+    perm = complete(qubits, nq)
+    t = state.reshape([2] * nq)
+    t = np.transpose(t, perm)
+    t = u @ t.reshape((nu, ns // nu))
+    t = t.reshape([2] * nq)
+    t = np.transpose(t, np.argsort(perm))
+    return t.reshape(ns)
 
 
-def subscript(indices: Iterable[int]) -> str:
-    """Convert indices to subscript letters for einsum.
-        Example: subscripts([1,3,5]) -> 'bdf'.
-        :param indices: list of indices
-        :return: subscript string
-    """
-    a = ord('a')
-    return ''.join(str(chr(a + i)) for i in indices)
+# # Fully tensor version of apply - Actually slightly slower
+# def apply(v: ndarray, m: ndarray, qubits: list[int]) -> ndarray:
+#     nq = n_qubits(v)
+#     nqu = int.bit_length(len(m) - 1)
+#
+#     # Convert state vector and unitary matrix to tensors
+#     tv = v.reshape([2] * nq)
+#     tu = m.reshape([2] * nqu * 2)
+#
+#     # Tensor subscripts as lists of integers
+#     a = range(nq)
+#     b = [q + nq for q in qubits] + qubits
+#     c = [i + nq if i in qubits else i for i in a]
+#
+#     return np.einsum(tv, a, tu, b, c, optimize=True).reshape(len(v))
 
 
 def sum_except_qubits(data: ndarray, qubits: Iterable[int]):
@@ -145,20 +124,8 @@ def sum_except_qubits(data: ndarray, qubits: Iterable[int]):
     """
     nq = n_qubits(data)
     assert 0 <= min(qubits) <= max(qubits) < nq, 'qubit out of range'
-    subscripts = subscript(range(nq)) + '->' + subscript(qubits)
-    return tensor_to_state(np.einsum(subscripts, state_to_tensor(data)))
-
-
-def qft(state: ndarray, inverse=False) -> ndarray:
-    """Quantum FourierTransform (QFT).
-       :param state: state vector
-       :param inverse: inverse of QFT
-       :return: the QFT of the state
-    """
-    if inverse:
-        return np.fft.fft(state, norm='ortho')
-    else:
-        return np.fft.ifft(state, norm='ortho')
+    return tensor_to_state(np.einsum(state_to_tensor(data),
+                                     range(nq), list(qubits)))
 
 
 def components_dict(state: ndarray) -> dict:
@@ -180,7 +147,7 @@ def probabilities(state: ndarray, qubits: Iterable[int]) -> ndarray:
     return sum_except_qubits(probs_n, qubits)
 
 
-def probability_dict(state: ndarray, qubits: Iterable[int] = 0) \
+def probability_dict(state: ndarray, qubits: Iterable[int] | None = 0) \
         -> dict[str, float]:
     """ Return dictionary of the probabilities of each outcome.
         :param state: State vector
