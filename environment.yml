@@ -11,3 +11,6 @@ dependencies:
   - ipympl
   - pytest
   - pip
+  - pip:
+      - pdoc
+      - nb-clean

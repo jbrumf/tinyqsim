@@ -14,15 +14,14 @@ class Model:
             :param nqubits: Number of qubits.
         """
         self.nqubits = nqubits
-        self.items: list[(str, list[int], list[int], list)] = []
+        self.items: list[(str, list[int], list)] = []
 
-    def add_gate(self, name: str, cqubits: list[int], tqubits: list[int], args=None):
+    def add_gate(self, name: str, qubits: list[int], params=None):
         """ Add gate to circuit.
             :param name: Name of gate
-            :param cqubits: Control qubits
-            :param tqubits: Target qubits
-            :param args: Arguments of gate
+            :param qubits: qubits to which gate is applied
+            :param params:  parameters
         """
-        if args is None:
-            args = []
-        self.items.append((name, cqubits, tqubits, args))
+        if params is None:
+            params = {}
+        self.items.append((name, qubits, params))

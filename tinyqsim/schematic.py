@@ -79,8 +79,8 @@ class Schematic:
         # Count  number of time slots needed
         slots = Scheduler()
         n_slots = 0
-        for (_, cqubits, tqubits, _) in model.items:
-            n_slots = slots.schedule(cqubits + tqubits)
+        for (_, qubits, _) in model.items:
+            n_slots = slots.schedule(qubits)
         n_slots += 1
 
         # Calculate drawing parameters
@@ -105,10 +105,13 @@ class Schematic:
         slots = Scheduler()
         x0 = self._xstep / 2  # X position of first gate
         self.draw_qubit_lines(xlength)
-        for (name, cqubits, tqubits, args) in model.items:
-            slot = slots.schedule(cqubits + tqubits)
+        for (name, qubits, params) in model.items:
+            slot = slots.schedule(qubits)
+            ncontrol = params.get('controls', 0)
             x = self._xstep * slot + x0
-            self.draw_gate(name, x, cqubits, tqubits, args)
+            cqubits = qubits[0:ncontrol]
+            tqubits = qubits[ncontrol:]
+            self.draw_gate(name, x, cqubits, tqubits, params)
 
         # Save figure to PNG file
         if save:
@@ -130,13 +133,13 @@ class Schematic:
             self._ax.annotate('q' + str(qubit), (-LEFT_MARGIN, y), color=G_COLOR,
                               fontsize=12, ha='center', va='center')
 
-    def draw_gate(self, name: str, x: float, cqubits: list[int], tqubits: list[int], args=None) -> None:
+    def draw_gate(self, name: str, x: float, cqubits: list[int], tqubits: list[int], params=None) -> None:
         """Draw a gate.
             :param: name: name of gate
             :param: x: x position
             :param: cqubits: list of control qubits
             :param: tqubits: list of target qubits
-            :param: args: arguments
+            :param: params: parameters
         """
         qubits = cqubits + tqubits
         match name:
@@ -148,7 +151,7 @@ class Schematic:
 
             # Parameterized gates
             case 'P' | 'RX' | 'RY':
-                self.draw_generic_gate(x, name, [], qubits[0:1], args[1])
+                self.draw_generic_gate(x, name, [], qubits[0:1], params['label'])
 
             # Controlled gates
             case 'CS' | 'CT' | 'CY':
@@ -156,13 +159,13 @@ class Schematic:
 
             # Controlled parameterized gates
             case 'CP':
-                self.draw_generic_gate(x, name[1:], qubits[0:1], qubits[1:2], args[1])
+                self.draw_generic_gate(x, name[1:], qubits[0:1], qubits[1:2], params['label'])
 
             # Custom unitary gates
             case 'U':
-                self.draw_generic_gate(x, args[0], cqubits, tqubits)
+                self.draw_generic_gate(x, params['label'], cqubits, tqubits)
             case 'CU':
-                self.draw_generic_gate(x, args[0], qubits[0:1], qubits[1:])
+                self.draw_generic_gate(x, params['label'], qubits[0:1], qubits[1:])
 
             # Gates with special symbols
             case 'CX':

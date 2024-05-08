@@ -9,6 +9,8 @@ from numpy import ndarray
 
 from tinyqsim import quantum, gates
 from tinyqsim.model import Model
+from tinyqsim.quantum import (state_to_tensor, tensor_to_state,
+                              unitary_to_tensor, apply_tensor)
 
 
 class Simulator:
@@ -21,45 +23,44 @@ class Simulator:
         """
         self._nqubits = nqubits
         self._init = init
-        self._state = None
+        self._state = None  # State tensor
         self._gates = gates.GATES
 
         # Initialize state
         match init:
             case 'zeros':
-                self._state = quantum.init_state(self._nqubits)
+                self._state = state_to_tensor(quantum.init_state(self._nqubits))
             case 'random':
-                self._state = quantum.random_state(self._nqubits)
+                self._state = state_to_tensor(quantum.random_state(self._nqubits))
             case _:
                 raise ValueError(f'Invalid init state: {init}')
 
     @property
     def state(self) -> np.ndarray:
-        """Return quantum state.
-        :return: quantum state
+        """Return quantum state as a vector.
+        :return: quantum state vector
         """
-        return self._state
+        return tensor_to_state(self._state)
 
     @state.setter
     def state(self, state: np.ndarray) -> None:
         """Setter for state vector.
         :param state: State vector
         """
-        self._state = state
+        self._state = state_to_tensor(state)
 
-    def apply(self, u: ndarray, cqubits: list[int], tqubits: list[int]) -> None:
+    def apply(self, u: ndarray, qubits: list[int]) -> None:
         """ Apply a unitary matrix to specified qubits of state.
             :param u: unitary matrix
-            :param cqubits: list of control qubits
-            :param tqubits: list of target qubits
+            :param qubits: qubits
         """
-        qubits = cqubits + tqubits
         if min(qubits) < 0 or max(qubits) >= self._nqubits:
             raise ValueError(f'Qubit indices out of range: {qubits}')
         if 2 ** len(qubits) != len(u):
             raise ValueError(f'Wrong number of qubit indices, expected {quantum.n_qubits(u)}')
 
-        self._state = quantum.apply(self._state, u, qubits)
+        tu = unitary_to_tensor(u)
+        self._state = apply_tensor(self._state, tu, qubits)
 
     def measure(self, qubits: list[int]):
         """ Measure specified qubits."""
@@ -71,20 +72,19 @@ class Simulator:
         :param model: Model to execute
         """
         if self._init == 'random':
-            self._state = quantum.random_state(self._nqubits)
+            self._state = state_to_tensor(quantum.random_state(self._nqubits))
         else:
-            self._state = quantum.init_state(self._nqubits)
+            self._state = state_to_tensor(quantum.init_state(self._nqubits))
 
-        for (name, cqubits, tqubits, args) in model.items:
-            qubits = cqubits + tqubits
+        for (name, qubits, params) in model.items:
             match name:
                 case 'U':  # Custom unitary
-                    u = args[1]
-                    self.apply(u, cqubits, tqubits)
+                    u = params[1]
+                    self.apply(u, qubits)
 
                 case 'P' | 'CP' | 'RX' | 'RY':  # Parameterized gate
-                    u = self._gates[name](args[0])
-                    self.apply(u, cqubits, tqubits)
+                    u = self._gates[name](params['args'])
+                    self.apply(u, qubits)
 
                 case 'measure':  # Measurement
                     self.measure(qubits)
@@ -93,4 +93,4 @@ class Simulator:
                     pass
 
                 case _:  # Simple non-parameterized gate
-                    self.apply(self._gates[name], cqubits, tqubits)
+                    self.apply(self._gates[name], qubits)

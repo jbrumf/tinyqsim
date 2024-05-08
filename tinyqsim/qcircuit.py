@@ -75,48 +75,48 @@ class QCircuit(object):
 
     # ----------------- Add components to the model -----------------
 
-    def _add_gate(self, name: str, cqubits: list[int], tqubits: list[int]) -> None:
+    def _add_gate(self, name: str, qubits: list[int], params: dict = None) -> None:
         """ Add a gate to the model.
             :param name: name of the gate
-            :param cqubits: control qubits
-            :param tqubits: target qubits
+            :param qubits: qubits
+            :param params: parameter dictionary
         """
-        self._model.add_gate(name, cqubits, tqubits)
+        self._model.add_gate(name, qubits, params)
         if self._auto_exec:
-            self._simulator.apply(self._gates[name], cqubits, tqubits)
+            self._simulator.apply(self._gates[name], qubits)
 
-    def _add_param_gate(self, name: str, cqubits: list[int], tqubits: list[int], args: list) -> None:
+    def _add_param_gate(self, name: str, qubits: list[int], params: dict) -> None:
         """ Add a parameterized gate to the model.
             :param name: name of the gate
-            :param cqubits: control qubits
-            :param tqubits: target qubits
-            :param args: list of arguments
+            :param qubits: Qubits
+            :param params: Parameter dictionary
         """
-        self._model.add_gate(name, cqubits, tqubits, args)
+        self._model.add_gate(name, qubits, params)
         if self._auto_exec:
-            u = self._gates[name](args[0])
-            self._simulator.apply(u, cqubits, tqubits)
+            u = self._gates[name](params['args'])
+            self._simulator.apply(u, qubits)
 
     def _add_measure(self, qubits: list[int]) -> None:
         """ Add a measurement to the model.
             :param qubits: list of qubits
         """
-        self._model.add_gate('measure', [], qubits)
+        self._model.add_gate('measure', qubits)
         if self._auto_exec:
             self._simulator.measure(qubits)
 
-    def _add_unitary(self, name: str, u: ndarray, cqubits: list[int], tqubits: list[int]) -> None:
+    def _add_unitary(self, name: str, u: ndarray, qubits: list[int], params: dict) -> None:
         """ Add a unitary matrix to the model.
             :param name: name of the gate
             :param u: unitary matrix
-            :param cqubits: control qubits
-            :param tqubits: target qubits
+            :param qubits: qubits
+            :param params: Parameter dictionary
         """
-        self._model.add_gate('U', cqubits, tqubits, [name, u])
+        params['label'] = name
+        self._model.add_gate('U', qubits, params)
         if self._auto_exec:
             if not utils.is_unitary(u):
                 raise ValueError('Matrix must be unitary')
-            self._simulator.apply(u, cqubits, tqubits)
+            self._simulator.apply(u, qubits)
 
     # ----------------- Execution of quantum circuit ----------------
 
@@ -164,7 +164,6 @@ class QCircuit(object):
     def measure(self, qubits: Iterable[int] = None) -> None:
         """Add a measurement gate to one or more qubits.
             :param qubits: list of qubits
-            :return: list of measured qubits
         """
         if not qubits:
             qubits = range(self._nqubits)
@@ -211,7 +210,7 @@ class QCircuit(object):
         """
         qs = list(qubits)
         cu = gates.cu
-        self._add_unitary(name, cu(cu(u)), qs[0:2], qs[2:])
+        self._add_unitary(name, cu(cu(u)), qs, {'controls': 2})
 
     def ccx(self, c1: int, c2: int, t: int) -> None:
         """Add a controlled-controlled-X (CCX) gate.
@@ -219,7 +218,7 @@ class QCircuit(object):
         :param c2: target qubit
         :param t: target qubit
         """
-        self._add_gate('CCX', [c1, c2], [t])
+        self._add_gate('CCX', [c1, c2, t], {'controls': 2})
 
     def cp(self, phi: float, phi_text: str, c: int, t: int) -> None:
         """Add a controlled-phase (CP) gate.
@@ -228,14 +227,15 @@ class QCircuit(object):
         :param c: control qubit
         :param t: target qubit
         """
-        self._add_param_gate('CP', [c], [t], [phi, phi_text])
+        self._add_param_gate('CP', [c, t],
+                             {'args': phi, 'label': phi_text, 'controls': 1})
 
     def cs(self, c: int, t: int) -> None:
         """ Add a controlled-S (CS) gate.
         :param c: control qubit
         :param t: target qubit
         """
-        self._add_gate('CS', [c], [t])
+        self._add_gate('CS', [c, t], {'controls': 1})
 
     def cswap(self, c: int, t1: int, t2: int) -> None:
         """ Add a controlled-swap (CSWAP) gate.
@@ -243,14 +243,14 @@ class QCircuit(object):
         :param t1: target qubit
         :param t2: target qubit
         """
-        self._add_gate('CSWAP', [c], [t1, t2])
+        self._add_gate('CSWAP', [c, t1, t2], {'controls': 1})
 
     def ct(self, c: int, t: int) -> None:
         """ Add a controlled-T (CT) gate.
         :param c: control qubit
         :param t: target qubit
         """
-        self._add_gate('CT', [c], [t])
+        self._add_gate('CT', [c, t], {'controls': 1})
 
     def cu(self, u: ndarray, name: str, *qubits) -> None:
         """Add a controlled-U (CU) gate.
@@ -259,41 +259,40 @@ class QCircuit(object):
         :param qubits: list of qubits
         """
         qs = list(qubits)
-        self._add_unitary(name, gates.cu(u), qs[0:1], qs[1:])
+        self._add_unitary(name, gates.cu(u), qs, {'controls': 1})
 
     def cx(self, c: int, t: int) -> None:
         """Add a controlled-X (CX) gate.
         :param c: control qubit
         :param t: target qubit
         """
-        # self.add_gate('CX', [], [c, t])
-        self._add_gate('CX', [c], [t])
+        self._add_gate('CX', [c, t], {'controls': 1})
 
     def cy(self, c: int, t: int) -> None:
         """Add a controlled-Y (CY) gate.
         :param c: control qubit
         :param t: target qubit
         """
-        self._add_gate('CY', [c], [t])
+        self._add_gate('CY', [c, t], {'controls': 1})
 
     def cz(self, c: int, t: int) -> None:
         """Add a controlled-Z (CZ) gate.
         :param c: control qubit
         :param t: target qubit
         """
-        self._add_gate('CZ', [c], [t])
+        self._add_gate('CZ', [c, t], {'controls': 1})
 
     def h(self, t: int) -> None:
         """Add a Hadamard (H) gate.
         :param t: target qubit
         """
-        self._add_gate('H', [], [t])
+        self._add_gate('H', [t])
 
     def i(self, t: int) -> None:
         """Add an identity (I) gate.
         :param t: target qubit
         """
-        self._add_gate('I', [], [t])
+        self._add_gate('I', [t])
 
     def p(self, phi: float, phi_text: str, t: int) -> None:
         """Add a phase (P) gate.
@@ -301,7 +300,7 @@ class QCircuit(object):
         :param phi_text: text value of phase angle
         :param t: target qubit
         """
-        self._add_param_gate('P', [], [t], [phi, phi_text])
+        self._add_param_gate('P', [t], {'args': phi, 'label': phi_text})
 
     def rx(self, theta: float, theta_text: str, t: int) -> None:
         """Add an RX gate.
@@ -309,7 +308,7 @@ class QCircuit(object):
         :param theta_text: text value of phase angle
         :param t: target qubit
         """
-        self._add_param_gate('RX', [], [t], [theta, theta_text])
+        self._add_param_gate('RX', [t], {'args': theta, 'label': theta_text})
 
     def ry(self, theta: float, theta_text: str, t: int) -> None:
         """Add an RY gate.
@@ -317,32 +316,32 @@ class QCircuit(object):
         :param theta_text: text value of phase angle
         :param t: target qubit
         """
-        self._add_param_gate('RY', [], [t], [theta, theta_text])
+        self._add_param_gate('RY', [t], {'args': theta, 'label': theta_text})
 
     def s(self, t: int) -> None:
         """Add an S gate.
         :param t: target qubit
         """
-        self._add_gate('S', [], [t])
+        self._add_gate('S', [t])
 
     def swap(self, t1: int, t2: int) -> None:
         """Add a swap (SWAP) gate.
         :param t1: target qubit
         :param t2: target qubit
         """
-        self._add_gate('SWAP', [], [t1, t2])
+        self._add_gate('SWAP', [t1, t2])
 
     def sx(self, t: int) -> None:
         """Add a sqrt(X) gate.
         :param t: target qubit
         """
-        self._add_gate('SX', [], [t])
+        self._add_gate('SX', [t])
 
     def t(self, t: int) -> None:
         """Add a T gate.
         :param t: target qubit
         """
-        self._add_gate('T', [], [t])
+        self._add_gate('T', [t])
 
     def u(self, u: ndarray, name: str, *qubits):
         """Add a custom unitary gate (U).
@@ -350,26 +349,26 @@ class QCircuit(object):
         :param name: name of the gate
         :param qubits: list of qubits
         """
-        self._add_unitary(name, u, [], list(qubits))
+        self._add_unitary(name, u, list(qubits), {})
 
     def x(self, t: int) -> None:
         """Add an X gate.
         :param t: target qubit
         """
-        self._add_gate('X', [], [t])
+        self._add_gate('X', [t])
 
     def y(self, t: int) -> None:
         """Add a Y gate.
         :param t: target qubit
         """
-        self._add_gate('Y', [], [t])
+        self._add_gate('Y', [t])
 
     def z(self, t: int) -> None:
         """Add a Z gate.
         :param t: target qubit
         """
-        self._add_gate('Z', [], [t])
+        self._add_gate('Z', [t])
 
     def barrier(self) -> None:
         """Add a barrier to the circuit."""
-        self._model.add_gate('barrier', [], [0, self._nqubits - 1])
+        self._model.add_gate('barrier', [0, self._nqubits - 1])

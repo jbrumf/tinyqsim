@@ -69,11 +69,15 @@ def test_basis_names():
     assert_array_equal(basis_names(3), ['000', '001', '010', '011', '100', '101', '110', '111'])
 
 
-def test_apply():
+def test_apply_tensor():
     u = kron(X, CX)
     state = random_state(5)
     u2 = kron((kron(ID, SWAP) @ kron(CX, X) @ kron(ID, SWAP)), kron_n(2, ID))
-    assert_allclose(apply(state, u, [1, 0, 2]),
+
+    tu = unitary_to_tensor(u)
+    tv = state_to_tensor(state)
+
+    assert_allclose(tensor_to_state(apply_tensor(tv, tu, [1, 0, 2])),
                     u2 @ state)
 
 

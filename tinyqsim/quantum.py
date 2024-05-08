@@ -12,7 +12,7 @@ import numpy.random as random
 from numpy import ndarray
 from numpy.linalg import norm
 
-from tinyqsim.utils import (is_normalized, normalize, complete)
+from tinyqsim.utils import (is_normalized, normalize)
 
 
 def init_state(n: int) -> ndarray:
@@ -62,7 +62,7 @@ def basis_names(nqubits: int) -> list[str]:
 
 
 def state_to_tensor(a: ndarray) -> ndarray:
-    """Convert state vector into a tensor.
+    """Convert state vector to tensor representation.
         :param a: state vector
         :return: tensor representation of state
     """
@@ -79,41 +79,30 @@ def tensor_to_state(t: ndarray) -> ndarray:
     return t.reshape(2 ** k)
 
 
-def apply(state: ndarray, u: ndarray, qubits: list[int]) -> ndarray:
-    """ Apply a unitary matrix to specified qubits of state.
-        :param state: quantum state
+def unitary_to_tensor(u: ndarray):
+    """Convert unitary matrix to tensor representation.
         :param u: unitary matrix
-        :param qubits: list of qubits
-        :return: updated state
+        :return: tensor representation of unitary
     """
-    nu = len(u)
-    ns = len(state)
-    nq = n_qubits(state)
-
-    perm = complete(qubits, nq)
-    t = state.reshape([2] * nq)
-    t = np.transpose(t, perm)
-    t = u @ t.reshape((nu, ns // nu))
-    t = t.reshape([2] * nq)
-    t = np.transpose(t, np.argsort(perm))
-    return t.reshape(ns)
+    nqu = int.bit_length(len(u) - 1)
+    return u.reshape([2] * nqu * 2)
 
 
-# # Fully tensor version of apply - Actually slightly slower
-# def apply(v: ndarray, m: ndarray, qubits: list[int]) -> ndarray:
-#     nq = n_qubits(v)
-#     nqu = int.bit_length(len(m) - 1)
-#
-#     # Convert state vector and unitary matrix to tensors
-#     tv = v.reshape([2] * nq)
-#     tu = m.reshape([2] * nqu * 2)
-#
-#     # Tensor subscripts as lists of integers
-#     a = range(nq)
-#     b = [q + nq for q in qubits] + qubits
-#     c = [i + nq if i in qubits else i for i in a]
-#
-#     return np.einsum(tv, a, tu, b, c, optimize=True).reshape(len(v))
+def apply_tensor(tv: ndarray, tu: ndarray, qubits: list[int]) -> ndarray:
+    """ Apply tensor of unitary to specified qubits of state.
+        :param tv: quantum state tensor
+        :param tu: tensor of unitary
+        :param qubits: list of qubits
+        :return: updated state tensor
+    """
+    nq = int.bit_length(tv.size - 1)
+
+    # Tensor subscripts as lists of integers
+    a = range(nq)
+    b = [q + nq for q in qubits] + qubits
+    c = [i + nq if i in qubits else i for i in a]
+
+    return np.einsum(tv, a, tu, b, c, optimize=True)
 
 
 def sum_except_qubits(data: ndarray, qubits: Iterable[int]):

@@ -90,18 +90,17 @@ Copyright (c) 2024 Jon Brumfitt</p>
 </span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="sd">            :param nqubits: Number of qubits.</span>
 </span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">nqubits</span> <span class="o">=</span> <span class="n">nqubits</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">list</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">list</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
 </span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="k">def</span> <span class="nf">add_gate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cqubits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">tqubits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="k">def</span> <span class="nf">add_gate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">qubits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 </span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Add gate to circuit.</span>
 </span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="sd">            :param name: Name of gate</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="sd">            :param cqubits: Control qubits</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="sd">            :param tqubits: Target qubits</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a><span class="sd">            :param args: Arguments of gate</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>        <span class="k">if</span> <span class="n">args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">cqubits</span><span class="p">,</span> <span class="n">tqubits</span><span class="p">,</span> <span class="n">args</span><span class="p">))</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="sd">            :param qubits: qubits to which gate is applied</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="sd">            :param params:  parameters</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>        <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>            <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">qubits</span><span class="p">,</span> <span class="n">params</span><span class="p">))</span>
 </span></pre></div>
 
 
@@ -125,18 +124,17 @@ Copyright (c) 2024 Jon Brumfitt</p>
 </span><span id="Model-15"><a href="#Model-15"><span class="linenos">15</span></a><span class="sd">            :param nqubits: Number of qubits.</span>
 </span><span id="Model-16"><a href="#Model-16"><span class="linenos">16</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="Model-17"><a href="#Model-17"><span class="linenos">17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">nqubits</span> <span class="o">=</span> <span class="n">nqubits</span>
-</span><span id="Model-18"><a href="#Model-18"><span class="linenos">18</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">list</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="Model-18"><a href="#Model-18"><span class="linenos">18</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">list</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
 </span><span id="Model-19"><a href="#Model-19"><span class="linenos">19</span></a>
-</span><span id="Model-20"><a href="#Model-20"><span class="linenos">20</span></a>    <span class="k">def</span> <span class="nf">add_gate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cqubits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">tqubits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="Model-20"><a href="#Model-20"><span class="linenos">20</span></a>    <span class="k">def</span> <span class="nf">add_gate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">qubits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 </span><span id="Model-21"><a href="#Model-21"><span class="linenos">21</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Add gate to circuit.</span>
 </span><span id="Model-22"><a href="#Model-22"><span class="linenos">22</span></a><span class="sd">            :param name: Name of gate</span>
-</span><span id="Model-23"><a href="#Model-23"><span class="linenos">23</span></a><span class="sd">            :param cqubits: Control qubits</span>
-</span><span id="Model-24"><a href="#Model-24"><span class="linenos">24</span></a><span class="sd">            :param tqubits: Target qubits</span>
-</span><span id="Model-25"><a href="#Model-25"><span class="linenos">25</span></a><span class="sd">            :param args: Arguments of gate</span>
-</span><span id="Model-26"><a href="#Model-26"><span class="linenos">26</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Model-27"><a href="#Model-27"><span class="linenos">27</span></a>        <span class="k">if</span> <span class="n">args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Model-28"><a href="#Model-28"><span class="linenos">28</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="Model-29"><a href="#Model-29"><span class="linenos">29</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">cqubits</span><span class="p">,</span> <span class="n">tqubits</span><span class="p">,</span> <span class="n">args</span><span class="p">))</span>
+</span><span id="Model-23"><a href="#Model-23"><span class="linenos">23</span></a><span class="sd">            :param qubits: qubits to which gate is applied</span>
+</span><span id="Model-24"><a href="#Model-24"><span class="linenos">24</span></a><span class="sd">            :param params:  parameters</span>
+</span><span id="Model-25"><a href="#Model-25"><span class="linenos">25</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Model-26"><a href="#Model-26"><span class="linenos">26</span></a>        <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Model-27"><a href="#Model-27"><span class="linenos">27</span></a>            <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="Model-28"><a href="#Model-28"><span class="linenos">28</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">qubits</span><span class="p">,</span> <span class="n">params</span><span class="p">))</span>
 </span></pre></div>
 
 
@@ -159,7 +157,7 @@ Copyright (c) 2024 Jon Brumfitt</p>
 </span><span id="Model.__init__-15"><a href="#Model.__init__-15"><span class="linenos">15</span></a><span class="sd">            :param nqubits: Number of qubits.</span>
 </span><span id="Model.__init__-16"><a href="#Model.__init__-16"><span class="linenos">16</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="Model.__init__-17"><a href="#Model.__init__-17"><span class="linenos">17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">nqubits</span> <span class="o">=</span> <span class="n">nqubits</span>
-</span><span id="Model.__init__-18"><a href="#Model.__init__-18"><span class="linenos">18</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">list</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="Model.__init__-18"><a href="#Model.__init__-18"><span class="linenos">18</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="nb">list</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
 </span></pre></div>
 
 
@@ -187,7 +185,7 @@ Copyright (c) 2024 Jon Brumfitt</p>
                             </div>
                             <div id="Model.items" class="classattr">
                                 <div class="attr variable">
-            <span class="name">items</span><span class="annotation">: list[str, list[int], list[int], list]</span>
+            <span class="name">items</span><span class="annotation">: list[str, list[int], list]</span>
 
         
     </div>
@@ -201,22 +199,21 @@ Copyright (c) 2024 Jon Brumfitt</p>
 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">add_gate</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">name</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">cqubits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>, </span><span class="param"><span class="n">tqubits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>, </span><span class="param"><span class="n">args</span><span class="o">=</span><span class="kc">None</span></span><span class="return-annotation">):</span></span>
+        <span class="name">add_gate</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">name</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">qubits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>, </span><span class="param"><span class="n">params</span><span class="o">=</span><span class="kc">None</span></span><span class="return-annotation">):</span></span>
 
                 <label class="view-source-button" for="Model.add_gate-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#Model.add_gate"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Model.add_gate-20"><a href="#Model.add_gate-20"><span class="linenos">20</span></a>    <span class="k">def</span> <span class="nf">add_gate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cqubits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">tqubits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Model.add_gate-20"><a href="#Model.add_gate-20"><span class="linenos">20</span></a>    <span class="k">def</span> <span class="nf">add_gate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">qubits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 </span><span id="Model.add_gate-21"><a href="#Model.add_gate-21"><span class="linenos">21</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Add gate to circuit.</span>
 </span><span id="Model.add_gate-22"><a href="#Model.add_gate-22"><span class="linenos">22</span></a><span class="sd">            :param name: Name of gate</span>
-</span><span id="Model.add_gate-23"><a href="#Model.add_gate-23"><span class="linenos">23</span></a><span class="sd">            :param cqubits: Control qubits</span>
-</span><span id="Model.add_gate-24"><a href="#Model.add_gate-24"><span class="linenos">24</span></a><span class="sd">            :param tqubits: Target qubits</span>
-</span><span id="Model.add_gate-25"><a href="#Model.add_gate-25"><span class="linenos">25</span></a><span class="sd">            :param args: Arguments of gate</span>
-</span><span id="Model.add_gate-26"><a href="#Model.add_gate-26"><span class="linenos">26</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Model.add_gate-27"><a href="#Model.add_gate-27"><span class="linenos">27</span></a>        <span class="k">if</span> <span class="n">args</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Model.add_gate-28"><a href="#Model.add_gate-28"><span class="linenos">28</span></a>            <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="Model.add_gate-29"><a href="#Model.add_gate-29"><span class="linenos">29</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">cqubits</span><span class="p">,</span> <span class="n">tqubits</span><span class="p">,</span> <span class="n">args</span><span class="p">))</span>
+</span><span id="Model.add_gate-23"><a href="#Model.add_gate-23"><span class="linenos">23</span></a><span class="sd">            :param qubits: qubits to which gate is applied</span>
+</span><span id="Model.add_gate-24"><a href="#Model.add_gate-24"><span class="linenos">24</span></a><span class="sd">            :param params:  parameters</span>
+</span><span id="Model.add_gate-25"><a href="#Model.add_gate-25"><span class="linenos">25</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Model.add_gate-26"><a href="#Model.add_gate-26"><span class="linenos">26</span></a>        <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Model.add_gate-27"><a href="#Model.add_gate-27"><span class="linenos">27</span></a>            <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="Model.add_gate-28"><a href="#Model.add_gate-28"><span class="linenos">28</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">qubits</span><span class="p">,</span> <span class="n">params</span><span class="p">))</span>
 </span></pre></div>
 
 
@@ -226,9 +223,8 @@ Copyright (c) 2024 Jon Brumfitt</p>
 
 <ul>
 <li><strong>name</strong>:  Name of gate</li>
-<li><strong>cqubits</strong>:  Control qubits</li>
-<li><strong>tqubits</strong>:  Target qubits</li>
-<li><strong>args</strong>:  Arguments of gate</li>
+<li><strong>qubits</strong>:  qubits to which gate is applied</li>
+<li><strong>params</strong>:   parameters</li>
 </ul>
 </div>
 
