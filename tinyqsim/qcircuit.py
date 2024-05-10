@@ -75,12 +75,20 @@ class QCircuit(object):
 
     # ----------------- Add components to the model -----------------
 
+    def check_qubits(self, qubits):
+        """ Validate qubit indices.
+            :param qubits: list of qubits
+        """
+        if min(qubits) < 0 or max(qubits) >= self._nqubits:
+            raise ValueError(f'Qubit indices out of range: {qubits}')
+
     def _add_gate(self, name: str, qubits: list[int], params: dict = None) -> None:
         """ Add a gate to the model.
             :param name: name of the gate
             :param qubits: qubits
             :param params: parameter dictionary
         """
+        self.check_qubits(qubits)
         self._model.add_gate(name, qubits, params)
         if self._auto_exec:
             self._simulator.apply(self._gates[name], qubits)
@@ -91,6 +99,7 @@ class QCircuit(object):
             :param qubits: Qubits
             :param params: Parameter dictionary
         """
+        self.check_qubits(qubits)
         self._model.add_gate(name, qubits, params)
         if self._auto_exec:
             u = self._gates[name](params['args'])
@@ -111,7 +120,12 @@ class QCircuit(object):
             :param qubits: qubits
             :param params: Parameter dictionary
         """
+        self.check_qubits(qubits)
+        if 2 ** len(qubits) != len(u):
+            raise ValueError(f'Wrong number of qubit indices, expected {quantum.n_qubits(u)}')
+
         params['label'] = name
+        params['unitary'] = u
         self._model.add_gate('U', qubits, params)
         if self._auto_exec:
             if not utils.is_unitary(u):

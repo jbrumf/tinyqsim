@@ -54,11 +54,6 @@ class Simulator:
             :param u: unitary matrix
             :param qubits: qubits
         """
-        if min(qubits) < 0 or max(qubits) >= self._nqubits:
-            raise ValueError(f'Qubit indices out of range: {qubits}')
-        if 2 ** len(qubits) != len(u):
-            raise ValueError(f'Wrong number of qubit indices, expected {quantum.n_qubits(u)}')
-
         tu = unitary_to_tensor(u)
         self._state = apply_tensor(self._state, tu, qubits)
 
@@ -79,7 +74,7 @@ class Simulator:
         for (name, qubits, params) in model.items:
             match name:
                 case 'U':  # Custom unitary
-                    u = params[1]
+                    u = params['unitary']
                     self.apply(u, qubits)
 
                 case 'P' | 'CP' | 'RX' | 'RY':  # Parameterized gate
