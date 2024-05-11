@@ -88,16 +88,13 @@ def test_sx():
 
 
 def test_equivalences():
-    """ Test for expected equivalences with global phase."""
+    """ Test for expected equivalences allowing for global phase."""
     assert np.allclose(1j * RX(pi), X)
     assert np.allclose(1j * RY(pi), Y)
 
 
-# def test_swap():
-
-
-def test_2input():
-    assert_array_equal(CX @ CX, kron(ID, ID))
+def test_swap():
+    assert is_unitary(SWAP)
     assert_array_equal(SWAP @ SWAP, kron(ID, ID))
 
 

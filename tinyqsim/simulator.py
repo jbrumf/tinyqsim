@@ -19,7 +19,7 @@ class Simulator:
     def __init__(self, nqubits: int, init='zeros'):
         """Initialize simulator.
         :param nqubits: Number of qubits
-        :param init: Initial state: 'zeros' or 'random'
+        :param init: Initial state - 'zeros' or 'random'
         """
         self._nqubits = nqubits
         self._init = init
@@ -29,7 +29,7 @@ class Simulator:
         # Initialize state
         match init:
             case 'zeros':
-                self._state = state_to_tensor(quantum.init_state(self._nqubits))
+                self._state = state_to_tensor(quantum.zeros_state(self._nqubits))
             case 'random':
                 self._state = state_to_tensor(quantum.random_state(self._nqubits))
             case _:
@@ -69,7 +69,7 @@ class Simulator:
         if self._init == 'random':
             self._state = state_to_tensor(quantum.random_state(self._nqubits))
         else:
-            self._state = state_to_tensor(quantum.init_state(self._nqubits))
+            self._state = state_to_tensor(quantum.zeros_state(self._nqubits))
 
         for (name, qubits, params) in model.items:
             match name:

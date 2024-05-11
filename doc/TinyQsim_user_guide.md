@@ -17,7 +17,7 @@ The Jupyter notebooks in the 'examples' directory contain some more detailed exa
   - [Inspecting the State (without collapse)](#inspecting-the-state-without-collapse)
     - [Quantum State Vector](#quantum-state-vector)
     - [Complex Components of State](#complex-components-of-state)
-    - [Measurement Probabilities](#measurement-probabilities)
+    - [Probabilities](#probabilities)
     - [Measurement Counts](#measurement-counts)
   - [Quantum Measurement (with collapse)](#quantum-measurement-with-collapse)
   - [Bloch Sphere](#bloch-sphere)
@@ -298,7 +298,7 @@ API:
      
 Examples:
   qc.probabilities()
-  qc.probabilities([1,2], decimals=3)
+  qc.probabilities(1,2, decimals=3)
 ```
 
 Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$ :
@@ -329,8 +329,8 @@ The 'qubits' argument specifies the qubits to be measured. If it is omitted, all
        
 Examples:
   qc.counts()
-  qc.counts([1,2])
-  qc.counts([1,2], nruns=500)
+  qc.counts(1,2)
+  qc.counts(1,2, nruns=500)
 ```
 
 Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$ :
@@ -350,8 +350,8 @@ API:
   qc.measure(qubits)
   
 Examples:
-  qc.measure()        # Measure all qubits
-  qc.measure([0,1])   # Measure qubits 0 and 1
+  qc.measure()      # Measure all qubits
+  qc.measure(0,1)   # Measure qubits 0 and 1
 ```
 
 Example output:

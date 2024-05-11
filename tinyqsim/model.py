@@ -13,8 +13,12 @@ class Model:
         """ Initialize circuit model.
             :param nqubits: Number of qubits.
         """
-        self.nqubits = nqubits
-        self.items: list[(str, list[int], list)] = []
+        self._nqubits = nqubits
+        self._items: list[(str, list[int], list)] = []
+
+    @property
+    def items(self):
+        return self._items
 
     def add_gate(self, name: str, qubits: list[int], params=None):
         """ Add gate to circuit.
@@ -24,4 +28,4 @@ class Model:
         """
         if params is None:
             params = {}
-        self.items.append((name, qubits, params))
+        self._items.append((name, qubits, params))

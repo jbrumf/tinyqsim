@@ -30,9 +30,11 @@ This is a short introduction to some basic concepts of quantum computation. Some
   - [Quantum Circuits](#quantum-circuits)
     - [Operations on Multiple Qubits](#operations-on-multiple-qubits)
     - [Composing Circuits](#composing-circuits)
+    - [Entanglement Example](#entanglement-example)
     - [Non-Consecutive Qubits](#non-consecutive-qubits)
-  - [Entanglement Example](#entanglement-example)
+  - [Simulation](#simulation)
   - [Conclusions](#conclusions)
+
 
 ### Qubits
 
@@ -589,7 +591,9 @@ Note that this definition assumes the big-endian qubit convention.
 
 ### Quantum Circuits
 
-A quantum circuit is network of quantum gates applied to a set of qubits. It can be described by a quantum circuit diagram or in a quantum programming language. Quantum circuit diagrams are easier to work with than matrix equations and allow a more intuitive level of understanding.
+A quantum circuit is network of quantum gates applied to a set of qubits. It can be described by a quantum circuit diagram or in a quantum programming language. Quantum circuit diagrams allow a more intuitive level of understanding.
+
+A quantum circuit has a fixed number of qubits. No qubits can be added to the circuit or deleted. Any extra qubits (known as *ancilla* qubits) that the computation needs must be included and initialized as part of the initial state. This is required to satisfy unitarity of the quantum operations.
 
 #### Operations on Multiple Qubits
 
@@ -599,13 +603,13 @@ A quantum circuit consists of a sequence of gates representing unitary operation
 <img src="assets/multi.png" width="300"/>
 </div>
 
-The input state on the left-hand side is $\ket{xy}=\ket{x}\otimes\ket{y}$ and the output state on the right-hand side is $\ket{\phi}$. The qubit on the left side of a tensor product is refered to as the *most-significant* qubit, even if the qubits are not used to encode a number. This document assumes that the most-significant qubit is drawn as the upper one in the diagram, so tensor products are applied going *down* the diagram.
+The input state on the left-hand side is $\ket{xy}=\ket{x}\otimes\ket{y}$ and the output state on the right-hand side is $\ket{\psi}$. The qubit on the left side of a tensor product is refered to as the *most-significant* qubit. The circuits in this document are drawn with the most-signifiant qubit at the top, so tensor products are applied in a downward direction.
 
 The quantum gates in the circuit simply represent quantum operations that are applied to the qubits. There is no implication that the gates are physical entities. In fact, the gates are often just quantum operations applied in-place to a fixed set of qubits. The inputs and outputs of the gates are not physical ports but simply the *before* and *after* states of the same qubits.
 
 #### Composing Circuits
 
-A sequence of operations from left to right are combined by matrix multiplication, whereas operations on different qubits are combined by tensor multiplication.
+A sequence of operations can be combined by matrix multiplication, whereas operations on different qubits are combined by tensor multiplication.
 
 The following example shows the series composition of two one-qubit gates:
 
@@ -617,9 +621,9 @@ The following example shows the series composition of two one-qubit gates:
 \ket{\psi}=BA\ket{x}
 ```
 
-Note that the operations in the diagram are applied left to right, whereas in the equation the order is reversed.
+Note that the operations in the diagram are applied left to right, whereas the order is from right to left in the equation. The order of the gates cannot be interchaged unless the associated operators commute.
 
-Single qubit operators may be applied to the tensor product of qubit states by first taking the tensor product of the operators:
+Single qubit operators may be applied to the tensor product of qubit states by taking the tensor product of the operators:
 
 <div style="text-align: center;">
 <img src="assets/parallel_ab.png" width="160"/>
@@ -649,7 +653,7 @@ If gate B is absent in the above example, we must replace it with an imaginary i
 \end{align*}
 ```
 
-Taking the tensor product with $I$ converts the one-qubit $A$ gate into a 2-qubit gate that only operates on one of the qubits. The identity gate is a "do nothing" operation, so doesn't need a physical implementation in hardware, so we just draw it as a straight line in the circuit.
+Taking the tensor product with $I$ converts the one-qubit $A$ gate into a 2-qubit gate that operates on one of the qubits. The identity gate is a "do nothing" operation that doesn't need a physical implementation in hardware, so it doesn't appear in the circuit.
 
 Returning to the example given earlier:
 
@@ -663,21 +667,13 @@ This corresponds to the following matrix operations:
 \ket{\psi} = (H \otimes I) U (H \otimes X) \ket{xy}
 ```
 
-First, H and X are applied to the two qubit inputs $\ket{x}$ and $\ket{y}$. Then a two-qubit gate U is applied. (The symbol $U$ is often used to denote an arbitrary unitary operator.) Finally, another H is applied to the first qubit.
+First, H and X are applied to the two qubit inputs $\ket{x}$ and $\ket{y}$. Then a two-qubit gate U is applied (The symbol $U$ is often used to denote an arbitrary unitary operator). Finally, another H is applied to the first qubit.
 
-#### Non-Consecutive Qubits
+The X gate and first H gate  in this example may be applied in either order, or they can both be performed in parallel. However, both these operations must be complete before the U gate is applied. 
 
-The examples above have shown how we can apply a one-qubit gate in a multi-qubit system, by taking the tensor product with $I$ (i.e. using dummy identity gates). We can do the same for a multi-qubit gate provided that the gate is applied to consecutive qubits that are in the correct order.
+#### Entanglement Example
 
-If, however, we want to apply a multi-qubit gate to non-consecutive qubits or qubits in a different order, it gets more complicated. One possibility is to use SWAP gates to rearrange the required qubits to be in order and adjacent, then apply the gate and finally reverse all the swaps to put the qubits back in the original order.
-
-In a quantum computer programming language, we normally just want to specify the qubits to which a gate is applied, such as $U(q_4,q_2,q_5)$, with any shuffling of the order carried out behind the scenes. The implementation may, for example, use a permutation matrix to perform the shuffling instead of swap gates.
-
-Non-consecutive qubits are a problem in real quantum computers because the qubits are typically physically arranged in a one or two dimensional grid. Operations such as CX require interactions between the qubits which requires them to be physically adjacent.
-
-### Entanglement Example
-
-The following simple example of a quantum circuit consists of a Hadamard gate and a CX gate:
+The following simple example of a quantum circuit consists of a Hadamard gate and a CX gate, with an initial state of $\ket{00}$.
 
 <div style="text-align: center;">
 <img src="assets/hcnot.png" width="230"/>
@@ -689,49 +685,49 @@ The Hadamard gate creates an equal superposition of $\ket{0}$ and $\ket{1}$:
 H \ket{0} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})
 ```
 
-The CX gate applies an X operation to the second input if the first input is $\ket{1}$. However, the first input of the CX gate is in a superposition, so the output is also in a superposition:
+The CX gate applies an X operation to the second input if the first input is $\ket{1}$.:
+
+```math
+CX = \ket{0}\bra{0} \otimes I + \ket{1}\bra{1} \otimes X
+```
+
+The first input of the CX gate is in a superposition, so the output is also in a superposition:
 
 ```math
 \begin{align*}
-\ket{\psi}&={\scriptsize\frac{1}{\sqrt{2}}}(\ket{0}\ket{0} + \ket{1} (X \ket{0}))\\
+\ket{\psi}&=CX\,(H\otimes I)\ket{00}\\
+&={\scriptsize\frac{1}{\sqrt{2}}}(\ket{0}\ket{0} + \ket{1} (X \ket{0}))\\
  &= {\scriptsize\frac{1}{\sqrt{2}}} (\ket{00} + \ket{11} )
 \end{align*}
 ```
 
-This is a fully-entangled Bell state.
+This is an entangled state that cannot be factored as the tensor product of two individual qubit states.
 
-Although very simple, this circuit is an important building block because entanglement is essential in order to make useful quantum algorithms.
+Although very simple, this circuit is an important building block because entanglement is essential in order to perform useful quantum computations.
 
-Finally, if we add an X gate to the $q_1$ qubit, we get a different Bell state:
+#### Non-Consecutive Qubits
 
-<div style="text-align: center;">
-<img src="assets/bell.png" width="230"/>
-</div>
+It is more complicated when we want to apply a multi-qubit gate, such as CX, to non-consecutive qubits or to qubits in a different order. One possibility is to use SWAP gates to rearrange the required qubits of the state to be adjacent and in the correct order, then apply the gate and finally reverse all the swaps to put the qubits back in the original order.
 
-```math
-\begin{align*}
-\ket{\psi}&={\scriptsize\frac{1}{\sqrt{2}}} (\ket{0}(X\ket{0}) + \ket{1} (X (X\ket{0})))\\
-&= {\scriptsize\frac{1}{\sqrt{2}}} (\ket{01} + \ket{10} )
-\end{align*}
-```
+Non-consecutive qubits are a problem in real quantum computers because the qubits are typically physically arranged in a grid. Operations such as CX involve interactions between the qubits, requiring them to be to be physically adjacent.
+
+In a quantum computer programming language, we usually want to work at a higher level of abstraction where multi-qubit gates can be applied to arbitrary qubits, without worrying about such issues.
+
+### Simulation
+
+One way to simulate a quantum circuit is to represent the state as a vector and the gates as unitary matrices as described earlier. Some juggling of qubits is needed to apply the gates to the correct qubits and the matrices need to be extended to operate on the number of qubits in the state. Some optimization may be possible by multiplying matrices bottom-up, starting with the smallest one, but at least one full-size matrix is likley to be needed, assuming that entanglement takes place and all the qubits take part in the computation.
+
+Although this works for small examples with a few qubits, it rapidly become impractical as the number of qubits is increased. For example, a 20-qubit state requires a $2^{20}\approx 10^6$ element complex vector and a $10^6 \times 10^6$ matrix! The number of multiplications required results in a time complexity of $\mathcal{O}(2^{2N})$ for $N$ qubits.
+
+More efficient ways of performing the simulation are possible using tensors. A tensor representation of the state and unitary operators allows the operators to be applied without expanding the matrix. The time complexity reduces to $\mathcal{O}(2^N)$.
+
+The quantum circuit can also be represented as a tensor network. Then rewrite rules can be applied to simplify the network so that the simulation is faster. One such approach is using ZX-calculus.
+
+However, whatever approach is used, simulation of quantum circuits on a classical computer has exponential complexity. Real quantum computers will be required to solve real-world problems that need many thousands or millions of qubits.
 
 ### Conclusions
 
-This has been a quick look at the basics of quantum computing, from the perspective of information processing rather than physical implementation. It is hoped that it has given you some understanding of the basics.
-
-There are many more topics to learn about, such as:
-
-- Quantum phase estimation
-- Quantum error correction
-- Quantum phase kickback
-- Quantum Algorithms (e.g. Shor's algorithm, Grover's algorithm)
-- Quantum information theory
-- Decoherence
-- Quantum cryptography
-- Optimization of quantum networks (e.g. ZX calculus)
-- Physical implementation of qubits and quantum computers
-- Physical topology of sets of qubits
-- Mapping circuit-model gates onto physically available operations
+This has been a quick look at the basics of quantum computing, mostly from the perspective of information processing rather than physical implementation. There are many more topics to learn about, but it is hoped that this has been a useful start.
 
 *Jon Brumfitt
-20 April 2024*
+14 May 2024*

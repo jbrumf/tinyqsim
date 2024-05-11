@@ -23,7 +23,7 @@ The software is intended as a tool for interactive experiments. It is written in
 
 ### Simulation
 
-When a new instance of QCircuit is created, the quantum state is initialized to the all-zero state $\ket{000\dots 0}$. The state is represented by a multi-dimensional array, with one dimension per qubit, that provides an implementation of a tensor. Tensors make it simple to apply unitary operators to specific qubits of the state with reasonable performance.
+When a new instance of QCircuit is created, the quantum state is initialized to the all-zero state $\ket{000\dots 0}$. The state is represented by a tensor that is implemented as multi-dimensional array with one dimension per qubit. Tensors make it simple to apply unitary operators to specific qubits of the state with reasonable performance.
 
 Ignoring for the moment that the gate operations are applied on-the-fly, running a simulation of the quantum circuit just involves applying each gate in the circuit in turn to the quantum state as a unitary operator. The quantum gates are defined as unitary matrices, which are then converted into tensors.
 

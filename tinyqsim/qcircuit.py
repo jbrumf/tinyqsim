@@ -6,13 +6,11 @@ Copyright (c) 2024 Jon Brumfitt
 """
 
 from math import isclose
-from typing import Iterable
 
 import numpy as np
 from numpy import ndarray
 from numpy.linalg import norm
 
-import tinyqsim
 from tinyqsim import gates, quantum, utils, plotting
 from tinyqsim.model import Model
 from tinyqsim.schematic import Schematic
@@ -25,16 +23,17 @@ EPS = 1e-12  # Threshold for ignoring small valUes
 class QCircuit(object):
     """ Class representing a quantum circuit.
 
-        QCircuit ties together all the components of a quantum simulation
-        and presents them as a quantum circuit with methods to add gates
-        and perform measurements.
+        QCircuit provides the main user interface for TinyQsim.
+        A QCircuit instance represents a quantum circuit, with methods to add
+        gates, query the state, plot data and perform quantum measurements.
+
+        The big-endian qubit convention is used.
     """
-    version = tinyqsim.__version__
 
     def __init__(self, nqubits: int, init='zeros', auto_exec=True) -> None:
         """Initialize QCircuit.
            :param: nqubits: number of qubits
-           :param: init: initialization 'zeros' or 'random'
+           :param: init: initialization mode: 'zeros' or 'random'
            :param: auto_exec: Enable on-the-fly execution
         """
         self._nqubits = nqubits
@@ -49,8 +48,8 @@ class QCircuit(object):
 
     @property
     def state_vector(self) -> np.ndarray:
-        """Return copy of the quantum state vector.
-           :return: copy of quantum state vector
+        """Return a copy of the quantum state vector.
+           :return: copy of the quantum state vector
         """
         return self._simulator.state
 
@@ -71,11 +70,11 @@ class QCircuit(object):
         """Return the number of qubits.
            :return: number of qbits
         """
-        return self.n_qubits
+        return self._nqubits
 
     # ----------------- Add components to the model -----------------
 
-    def check_qubits(self, qubits):
+    def _check_qubits(self, qubits):
         """ Validate qubit indices.
             :param qubits: list of qubits
         """
@@ -88,7 +87,7 @@ class QCircuit(object):
             :param qubits: qubits
             :param params: parameter dictionary
         """
-        self.check_qubits(qubits)
+        self._check_qubits(qubits)
         self._model.add_gate(name, qubits, params)
         if self._auto_exec:
             self._simulator.apply(self._gates[name], qubits)
@@ -99,7 +98,7 @@ class QCircuit(object):
             :param qubits: Qubits
             :param params: Parameter dictionary
         """
-        self.check_qubits(qubits)
+        self._check_qubits(qubits)
         self._model.add_gate(name, qubits, params)
         if self._auto_exec:
             u = self._gates[name](params['args'])
@@ -120,7 +119,7 @@ class QCircuit(object):
             :param qubits: qubits
             :param params: Parameter dictionary
         """
-        self.check_qubits(qubits)
+        self._check_qubits(qubits)
         if 2 ** len(qubits) != len(u):
             raise ValueError(f'Wrong number of qubit indices, expected {quantum.n_qubits(u)}')
 
@@ -149,21 +148,21 @@ class QCircuit(object):
         comp = quantum.components_dict(self._simulator.state)
         return {k: round_complex(v, decimals) for k, v in comp.items() if include_zeros or v > EPS}
 
-    def counts(self, qubits: list[int] = None, runs: int = 1000, include_zeros: bool = False) -> dict[str, int]:
+    def counts(self, *qubits: int, runs: int = 1000, include_zeros: bool = False) -> dict[str, int]:
         """ Return measurement counts for repeated experiment.
             The state is not changed (collapsed).
-                        :param qubits: list of qubits
+            :param qubits: qubits (None => all)
             :param runs: Number of test runs (default=1000)
             :param include_zeros: True to include zero values (default=False)
             :return: frequencies of outcomes as a dictionary
         """
-        counts = quantum.counts_dict(self._simulator.state, qubits, runs)
+        counts = quantum.counts_dict(self._simulator.state, list(qubits), runs)
         return {k: v for k, v in counts.items() if include_zeros or v > EPS}
 
-    def probabilities(self, qubits: Iterable[int] = None, decimals: int = 5,
+    def probabilities(self, *qubits: int, decimals: int = 5,
                       include_zeros: bool = False) -> dict[str, float]:
         """ Return dictionary of the probabilities of each outcome.
-            :param qubits: list of qubits
+            :param qubits: qubits (None => all)
             :param decimals: number of decimal places (default=5)
             :param include_zeros: True to include zero values (default=False)
             :return: dictionary of outcome->probability
@@ -175,9 +174,9 @@ class QCircuit(object):
 
     # ------------------ Measurement ------------------
 
-    def measure(self, qubits: Iterable[int] = None) -> None:
+    def measure(self, *qubits: int) -> None:
         """Add a measurement gate to one or more qubits.
-            :param qubits: list of qubits
+            :param qubits: qubits (None => all)
         """
         if not qubits:
             qubits = range(self._nqubits)
@@ -193,9 +192,9 @@ class QCircuit(object):
         """
         self._schematic.draw(self._model, scale=scale, show=show, save=save)
 
-    def plot_probabilities(self, qubits: Iterable[int] = None, save: str | None = False) -> None:
-        """Plot histogram of probabilities for list of qubits.
-            :param qubits: list of qubits (None => all)
+    def plot_probabilities(self, *qubits: int, save: str | None = False) -> None:
+        """Plot histogram of probabilities of measurement outcomes.
+            :param qubits: qubits (None => all)
             :param save: file to save image if required
         """
         if not qubits:
@@ -203,13 +202,13 @@ class QCircuit(object):
         probs = quantum.probability_dict(self._simulator.state, qubits)
         plotting.plot_histogram(probs, save=save, ylabel='Probability')
 
-    def plot_counts(self, qubits: list[int] = None, runs: int = 1000, save: str | None = False) -> None:
+    def plot_counts(self, *qubits: int, runs: int = 1000, save: str | None = False) -> None:
         """Plot histogram of measurement counts.
-        :param qubits: list of qubits
+        :param qubits: qubits (None => all)
         :param runs: number of test runs (default=1000)
         :param save: file to save image if required
         """
-        freq = quantum.counts_dict(self._simulator.state, qubits, runs=runs)
+        freq = quantum.counts_dict(self._simulator.state, list(qubits), runs=runs)
         plotting.plot_histogram(freq, save=save, ylabel='Counts')
 
     # ------------------ Wrapper methods for gates ------------------
@@ -218,7 +217,7 @@ class QCircuit(object):
 
     def ccu(self, u: ndarray, name: str, *qubits) -> None:
         """Add a controlled-controlled-U (CCU) gate.
-        :param name: name of the gate
+        :param name: name of gate to appear in symbol
         :param u: unitary matrix
         :param qubits: list of qubits
         """
@@ -227,7 +226,7 @@ class QCircuit(object):
         self._add_unitary(name, cu(cu(u)), qs, {'controls': 2})
 
     def ccx(self, c1: int, c2: int, t: int) -> None:
-        """Add a controlled-controlled-X (CCX) gate.
+        """Add a controlled-controlled-X (CCX, aka Tofolli) gate.
         :param c1: control qubit
         :param c2: target qubit
         :param t: target qubit
@@ -236,8 +235,8 @@ class QCircuit(object):
 
     def cp(self, phi: float, phi_text: str, c: int, t: int) -> None:
         """Add a controlled-phase (CP) gate.
-        :param phi: phase angle
-        :param phi_text: text of phase angle
+        :param phi: phase angle in radians
+        :param phi_text: text annotation for phase angle
         :param c: control qubit
         :param t: target qubit
         """
@@ -252,7 +251,7 @@ class QCircuit(object):
         self._add_gate('CS', [c, t], {'controls': 1})
 
     def cswap(self, c: int, t1: int, t2: int) -> None:
-        """ Add a controlled-swap (CSWAP) gate.
+        """ Add a controlled-swap (CSWAP, aka Fredkin) gate.
         :param c: control qubit
         :param t1: target qubit
         :param t2: target qubit
@@ -269,14 +268,14 @@ class QCircuit(object):
     def cu(self, u: ndarray, name: str, *qubits) -> None:
         """Add a controlled-U (CU) gate.
         :param u: unitary matrix
-        :param name: name of the gate
+        :param name: name of gate to appear in symbol
         :param qubits: list of qubits
         """
         qs = list(qubits)
         self._add_unitary(name, gates.cu(u), qs, {'controls': 1})
 
     def cx(self, c: int, t: int) -> None:
-        """Add a controlled-X (CX) gate.
+        """Add a controlled-X (CX, aka CNOT) gate.
         :param c: control qubit
         :param t: target qubit
         """
@@ -319,7 +318,7 @@ class QCircuit(object):
     def rx(self, theta: float, theta_text: str, t: int) -> None:
         """Add an RX gate.
         :param theta: target qubit
-        :param theta_text: text value of phase angle
+        :param theta_text: text annotation for phase angle
         :param t: target qubit
         """
         self._add_param_gate('RX', [t], {'args': theta, 'label': theta_text})
@@ -327,7 +326,7 @@ class QCircuit(object):
     def ry(self, theta: float, theta_text: str, t: int) -> None:
         """Add an RY gate.
         :param theta: target qubit
-        :param theta_text: text value of phase angle
+        :param theta_text: text annotation for phase angle
         :param t: target qubit
         """
         self._add_param_gate('RY', [t], {'args': theta, 'label': theta_text})
@@ -360,13 +359,13 @@ class QCircuit(object):
     def u(self, u: ndarray, name: str, *qubits):
         """Add a custom unitary gate (U).
         :param u: unitary matrix
-        :param name: name of the gate
+        :param name: name of gate to appear in symbol
         :param qubits: list of qubits
         """
         self._add_unitary(name, u, list(qubits), {})
 
     def x(self, t: int) -> None:
-        """Add an X gate.
+        """Add an X (NOT) gate.
         :param t: target qubit
         """
         self._add_gate('X', [t])

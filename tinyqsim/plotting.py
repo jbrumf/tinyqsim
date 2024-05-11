@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 def plot_histogram(data, save: str = False, ylabel=None, height=2.5) -> None:
     """Plot histogram of data.
-        :param data: The data to plot
+        :param data: Dictionary of data to plot
         :param save: File name to save image (or None)
         :param ylabel: Label for the Y-axis
         :param height: Height of the plot in inches

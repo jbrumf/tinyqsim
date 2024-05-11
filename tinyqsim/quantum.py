@@ -15,13 +15,13 @@ from numpy.linalg import norm
 from tinyqsim.utils import (is_normalized, normalize)
 
 
-def init_state(n: int) -> ndarray:
-    """Initialize an N-qubit state to all |0>.
-       :param n: number of qubits
+def zeros_state(nqubits: int) -> ndarray:
+    """Return a quantum state initialized to |000...0>.
+       :param nqubits: number of qubits
        :return: the initialized state vector
     """
-    assert n > 0
-    state = np.zeros(2 ** n, dtype='int')
+    assert nqubits > 0
+    state = np.zeros(2 ** nqubits, dtype='int')
     state[0] = 1
     return state
 
@@ -45,7 +45,6 @@ def random_state(nqubits: int) -> np.ndarray:
 
 def n_qubits(a: ndarray) -> int:
     """Return the number of qubits of a state or unitary matrix.
-       The argument should be a power of two.
        :param a: state or unitary matrix
        :return: number of qubits
     """
@@ -89,8 +88,8 @@ def unitary_to_tensor(u: ndarray):
 
 
 def apply_tensor(tv: ndarray, tu: ndarray, qubits: list[int]) -> ndarray:
-    """ Apply tensor of unitary to specified qubits of state.
-        :param tv: quantum state tensor
+    """ Apply tensor of unitary to specified qubits of state tensor.
+        :param tv: state tensor
         :param tu: tensor of unitary
         :param qubits: list of qubits
         :return: updated state tensor
@@ -105,8 +104,8 @@ def apply_tensor(tv: ndarray, tu: ndarray, qubits: list[int]) -> ndarray:
     return np.einsum(tv, a, tu, b, c, optimize=True)
 
 
-def sum_except_qubits(data: ndarray, qubits: Iterable[int]):
-    """Sum data over indices except those in 'qubits'.
+def sum_except(data: ndarray, qubits: Iterable[int]):
+    """Sum data over qubit indices EXCEPT those in 'qubits'.
         :param data: data to sum
         :param qubits: list of qubits to retain
         :return: summed data
@@ -118,7 +117,7 @@ def sum_except_qubits(data: ndarray, qubits: Iterable[int]):
 
 
 def components_dict(state: ndarray) -> dict:
-    """Return complex components of the state vector.
+    """Return components of the state vector as a dictionary.
        :param state: State vector
        :return: Dictionary of state components
     """
@@ -127,20 +126,20 @@ def components_dict(state: ndarray) -> dict:
 
 
 def probabilities(state: ndarray, qubits: Iterable[int]) -> ndarray:
-    """ Return the probabilities of each outcome.
+    """ Return the probabilities of measurement outcomes as a dictionary.
         :param state: State vector
         :param qubits: List of qubit indices
         :return: list of probabilities
     """
     probs_n = np.array([norm(a) ** 2 for a in state])
-    return sum_except_qubits(probs_n, qubits)
+    return sum_except(probs_n, qubits)
 
 
 def probability_dict(state: ndarray, qubits: Iterable[int] | None = 0) \
         -> dict[str, float]:
-    """ Return dictionary of the probabilities of each outcome.
+    """ Return dictionary of the probabilities of measurement outcomes.
         :param state: State vector
-        :param qubits: List of qubit indices
+        :param qubits: List of qubits
         :return: dictionary of outcome->probability
     """
     if not qubits:
@@ -169,20 +168,20 @@ def counts_dict(state: ndarray, qubits: list[int], runs: int = 1000) -> dict[str
 
 # ------------------- Measurement of qubits states ------------------
 
-def measure_qubit(state: ndarray, index: int = 0) -> tuple[int, ndarray]:
+def measure_qubit(state: ndarray, qubit: int) -> tuple[int, ndarray]:
     """Measure a single qubit of a state vector with collapse.
     :param state: State vector
-    :param index: Index of qubit
+    :param qubit: Qubit to be measured
     :return: (measured, new_state) where 'measured' is the measured value
     """
     assert is_normalized(state)
-    probs = probabilities(state, [index])
+    probs = probabilities(state, [qubit])
     measured = np.random.choice([0, 1], None, p=probs)
 
     # Create the new state
     n = len(state)
     nqubits = n_qubits(state)
-    index1 = nqubits - index - 1  # Convert to little-endian
+    index1 = nqubits - qubit - 1  # Convert to little-endian
     new_state = np.zeros(n, dtype=np.cdouble)
     for i in range(n):
         if measured == (i >> index1) & 1:  # bit=1 if state contributes
@@ -190,14 +189,13 @@ def measure_qubit(state: ndarray, index: int = 0) -> tuple[int, ndarray]:
     return measured, normalize(new_state)
 
 
-def measure_qubits(state: ndarray, indices: [int]) \
-        -> tuple[ndarray, ndarray]:
+def measure_qubits(state: ndarray, qubits: [int]) -> tuple[ndarray, ndarray]:
     """Measure a list of qubits with collapse.
-    :param state: Initial state vector
-    :param indices: List of qubit indices
+    :param state: State vector
+    :param qubits: Qubits to be measured
     :return: (bits, new_state) where bits is list of measured values
     """
-    bits = np.zeros(len(indices), dtype=int)
-    for i in range(len(indices)):
-        bits[i], state = measure_qubit(state, indices[i])
+    bits = np.zeros(len(qubits), dtype=int)
+    for i in range(len(qubits)):
+        bits[i], state = measure_qubit(state, qubits[i])
     return bits, state

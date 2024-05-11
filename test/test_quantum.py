@@ -28,9 +28,9 @@ def create_state(nqubits: int) -> ndarray:
     return normalize(np.arange(2 ** nqubits))
 
 
-def test_init_qubits():
-    assert_array_equal(init_state(1), [1, 0])
-    assert_array_equal(init_state(3), [1, 0, 0, 0, 0, 0, 0, 0])
+def test_zeros_state():
+    assert_array_equal(zeros_state(1), [1, 0])
+    assert_array_equal(zeros_state(3), [1, 0, 0, 0, 0, 0, 0, 0])
 
 
 @pytest.mark.skipif(not ENABLE_STATS_TESTS, reason='Skipping Statistical Test')
@@ -93,12 +93,12 @@ def test_from_tensor():
                        [1, 2, 3, 4, 5, 6, 7, 8])
 
 
-def test_sum_except_qubits():
-    assert_array_equal(sum_except_qubits(np.array(range(8)), [0]), [6, 22])
-    assert_array_equal(sum_except_qubits(np.array(range(8)), [1]), [10, 18])
-    assert_array_equal(sum_except_qubits(np.array(range(8)), [2]), [12, 16])
-    assert_array_equal(sum_except_qubits(np.array(range(8)), [1, 2]), [4, 6, 8, 10])
-    assert_array_equal(sum_except_qubits(np.array(range(8)), [0, 2]), [2, 4, 10, 12])
+def test_sum_except():
+    assert_array_equal(sum_except(np.array(range(8)), [0]), [6, 22])
+    assert_array_equal(sum_except(np.array(range(8)), [1]), [10, 18])
+    assert_array_equal(sum_except(np.array(range(8)), [2]), [12, 16])
+    assert_array_equal(sum_except(np.array(range(8)), [1, 2]), [4, 6, 8, 10])
+    assert_array_equal(sum_except(np.array(range(8)), [0, 2]), [2, 4, 10, 12])
 
 
 def test_components_dict():
