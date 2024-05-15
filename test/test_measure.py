@@ -57,7 +57,7 @@ def do_measurement_test(state_probs: list[float], expected: list[float]) -> None
             raise ValueError(f'p-value {result.pvalue:.4f} < {P_TEST}')
 
 
-def test_measure_eigen():
+def test_measure_eigen1():
     """ Test measure_qubit with simple eigenstate."""
 
     # Prepare a 3-qubit state vector
@@ -68,13 +68,39 @@ def test_measure_eigen():
     assert m0 == 1
     assert_array_equal(v0, state)
 
-    m1, v1 = measure_qubit(state, 2)
+    m0, v0 = measure_qubit(state, 1)
+    assert m0 == 0
+    assert_array_equal(v0, state)
 
+    m1, v1 = measure_qubit(state, 2)
     assert m1 == 0
     assert_array_equal(v1, state)
 
     m4, v4 = measure_qubits(state, [0, 1, 2])
     assert_array_equal(m4, [1, 0, 0])
+
+
+def test_measure_eigen2():
+    """ Test measure_qubit with simple eigenstate."""
+
+    # Prepare a 3-qubit state vector
+    state = np.zeros(8)
+    state[3] = 1
+
+    m0, v0 = measure_qubit(state, 0)
+    assert m0 == 0
+    assert_array_equal(v0, state)
+
+    m0, v0 = measure_qubit(state, 1)
+    assert m0 == 1
+    assert_array_equal(v0, state)
+
+    m1, v1 = measure_qubit(state, 2)
+    assert m1 == 1
+    assert_array_equal(v1, state)
+
+    m4, v4 = measure_qubits(state, [0, 1, 2])
+    assert_array_equal(m4, [0, 1, 1])
 
 
 @pytest.mark.skipif(not ENABLE_STATS_TESTS, reason='Skipping Statistical Test')

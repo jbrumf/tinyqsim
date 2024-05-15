@@ -24,6 +24,8 @@ class Simulator:
         self._nqubits = nqubits
         self._init = init
         self._state = None  # State tensor
+        # self._results = np.zeros(nqubits, dtype=int)  # Measurement results
+        self._results = {}  # Measurement results
         self._gates = gates.GATES
 
         # Initialize state
@@ -36,18 +38,22 @@ class Simulator:
                 raise ValueError(f'Invalid init state: {init}')
 
     @property
-    def state(self) -> np.ndarray:
+    def state_vector(self) -> np.ndarray:
         """Return quantum state as a vector.
         :return: quantum state vector
         """
         return tensor_to_state(self._state)
 
-    @state.setter
-    def state(self, state: np.ndarray) -> None:
+    @state_vector.setter
+    def state_vector(self, state: np.ndarray) -> None:
         """Setter for state vector.
         :param state: State vector
         """
         self._state = state_to_tensor(state)
+
+    def results(self) -> dict[int, int]:
+        """Return results of quantum measurements."""
+        return self._results
 
     def apply(self, u: ndarray, qubits: list[int]) -> None:
         """ Apply a unitary matrix to specified qubits of state.
@@ -57,10 +63,27 @@ class Simulator:
         tu = unitary_to_tensor(u)
         self._state = apply_tensor(self._state, tu, qubits)
 
-    def measure(self, qubits: list[int]):
-        """ Measure specified qubits."""
-        m, self.state = quantum.measure_qubits(self.state, qubits)
-        print(f'Measured qubits{qubits} -> {m}')
+    def measure(self, qubits: list[int]) -> ndarray:
+        """ Measure specified qubits."
+            :param qubits: qubits to be measured
+            :return: measured values
+        """
+        m, self.state_vector = quantum.measure_qubits(self.state_vector, qubits)
+        for i, q in enumerate(qubits):
+            # self._results[q] = m[i]
+            self._results[q] = m[i]
+        # print(f'Measured qubits{qubits} -> {m}')
+        return m
+
+    def reset(self, qubit: int) -> None:
+        """ Reset specified qubit."
+            :param qubit: qubit to be reset
+        """
+        # Measure qubit and then apply X if it is |1>
+        m, self.state_vector = quantum.measure_qubits(self.state_vector, [qubit])
+        if m == 1:
+            tu = unitary_to_tensor(self._gates['X'])
+            self._state = apply_tensor(self._state, tu, [qubit])
 
     def execute(self, model: Model) -> None:
         """Execute the circuit.
@@ -70,6 +93,8 @@ class Simulator:
             self._state = state_to_tensor(quantum.random_state(self._nqubits))
         else:
             self._state = state_to_tensor(quantum.zeros_state(self._nqubits))
+        # self._results = np.zeros(self._nqubits, dtype=int)
+        self._results = {}
 
         for (name, qubits, params) in model.items:
             match name:
@@ -83,6 +108,9 @@ class Simulator:
 
                 case 'measure':  # Measurement
                     self.measure(qubits)
+
+                case 'reset':  # Reset
+                    self.reset(qubits[0])
 
                 case 'barrier':  # Barrier
                     pass

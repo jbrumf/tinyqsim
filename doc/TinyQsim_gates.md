@@ -7,6 +7,7 @@ This document describes the quantum gates implemented by TinyQsim.
 - [TinyQsim Gates](#tinyqsim-gates)
 - [Introduction](#introduction)
   - [Summary of Gates](#summary-of-gates)
+  - [Other Elements](#other-elements)
   - [Imports and Definitions](#imports-and-definitions)
   - [Symbols and Notation](#symbols-and-notation)
   - [Controlled Gates](#controlled-gates)
@@ -15,9 +16,9 @@ This document describes the quantum gates implemented by TinyQsim.
   - [Parameterized Custom Gates](#parameterized-custom-gates)
   - [Global Phase](#global-phase)
 - [Gates in Alphabetical Order](#gates-in-alphabetical-order)
-  - [Barrier](#barrier)
   - [CCU](#ccu)
   - [CCX (aka Toffoli) Gate](#ccx-aka-toffoli-gate)
+  - [CH Gate](#ch-gate)
   - [CP Gate](#cp-gate)
   - [CS Gate](#cs-gate)
   - [CSWAP (aka Fredkin) Gate](#cswap-aka-fredkin-gate)
@@ -28,19 +29,23 @@ This document describes the quantum gates implemented by TinyQsim.
   - [CZ Gate](#cz-gate)
   - [H Gate](#h-gate)
   - [I (aka ID) Gate](#i-aka-id-gate)
-  - [Measure Gate](#measure-gate)
   - [P Gate](#p-gate)
   - [RX Gate](#rx-gate)
   - [RY Gate](#ry-gate)
   - [S Gate](#s-gate)
+  - [Sdg Gate](#sdg-gate)
   - [SWAP Gate](#swap-gate)
   - [SX (aka SQRTX) Gate](#sx-aka-sqrtx-gate)
   - [T Gate](#t-gate)
+  - [Tdg Gate](#tdg-gate)
   - [U Gate](#u-gate)
   - [X (aka NOT) Gate](#x-aka-not-gate)
   - [Y Gate](#y-gate)
   - [Z Gate](#z-gate)
-
+- [Other Circuit Elements](#other-circuit-elements)
+  - [Barrier](#barrier)
+  - [Measure](#measure)
+  - [Reset](#reset)
 
 <!-- TOC -->
 
@@ -50,11 +55,11 @@ This document describes the quantum gates implemented by TinyQsim.
 
 | API                               | Description                              | 
 |:----------------------------------|:-----------------------------------------|
-| qc.barrier()                      | Insert barrier in circuit (not a gate)   |
 | qc.ccu(matrix, label, c1, c2, *t) | Controlled-controlled-U gate             |
 | qc.ccx(c1, c2, t)                 | Controlled-controlled-X (aka Toffoli)    |
+| qc.ch(c, t)                       | Controlled-H                             |
 | qc.cp(phi, label, c, t)           | Controlled-P                             |
-| qc.cs(c, t)                       | Controlled-S                             
+| qc.cs(c, t)                       | Controlled-S                             |
 | qc.cswap(c, t1, t2)               | Controlled SWAP (aka Fredkin)            |
 | qc.ct(c, t)                       | Controlled-T                             |
 | qc.cu(matrix, label, c, *t)       | Controlled-U gate                        |
@@ -63,14 +68,15 @@ This document describes the quantum gates implemented by TinyQsim.
 | qc.cz(c, t)                       | Controlled-Z                             |
 | qc.h(t)                           | Hadamard                                 |
 | qc.i(t)                           | Identity (aka ID)                        |
-| qc.measure(*t)                    | Measurement operation (not a gate)       |
 | qc.p(phi, label, t)               | Phase: 'phi' radians about Z axis        |
 | qc.rx(theta, label, t)            | Rotation by 'theta' radians about X axis |
 | qc.ry(theta, label, t)            | Rotation by 'theta' radians about Y axis |
-| qc.s(t)                           | pi/4 phase (S = sqrt(Z))                 |
+| qc.s(t)                           | pi/2 phase (S = sqrt(Z))                 |
+| qc.sdg(t)                         | -pi/2 phase (S-dagger)                   |
 | qc.swap(t1, t2)                   | Swap 2 qubits                            |
 | qc.sx(t)                          | Sqrt(X)                                  |
-| qc.t(t)                           | pi/8 phase (T = sqrt(S))                 |
+| qc.t(t)                           | pi/4 phase (T = sqrt(S))                 |
+| qc.tdg(t)                         | -pi/4 phase (T dagger)                   |
 | qc.u(matrix, label, *t)           | Use unitary matrix as a gate             |
 | qc.x(t)                           | Pauli X (aka NOT)                        |
 | qc.y(t)                           | Pauli Y                                  |
@@ -87,7 +93,15 @@ The argument names are abbreviations for:
   theta  Angle in radians
 ```
 
-The 'measure' operation is not a normal gate as it does not represent a unitary operation. However, it is included here as it has a gate symbol in the circuit.
+### Other Elements
+
+The following are additional circuit elements that are strictly not gates because they are not reversible unitary operations.
+
+| API                               | Description                              | 
+|:----------------------------------|:-----------------------------------------|
+| qc.barrier()                      | Insert barrier in circuit (not a gate)   |
+| qc.measure(*t)                    | Measurement operation (not a gate)       |
+| qc.reset(t)                       | Reset qubit to |0>                       |
 
 ### Imports and Definitions
 
@@ -184,7 +198,7 @@ qc.ccu(mygate, 'U1', 0, 3, 1, 4)
 ```
 
 <div style="text-align: center;">
-<img src="assets/ccu0314_gate.png" alt="u240_gate" width="80"/>
+<img src="assets/ccu0314_gate.png" alt="ccu0314_gate" width="80"/>
 </div>  
 
 Note the following points about this example:
@@ -334,24 +348,6 @@ This extends to a multi-qubit system since:
 
 ## Gates in Alphabetical Order
 
-### Barrier
-
-A barrier is not a real gate, but it is included here as it has a symbol in the circuit.
-
-A barrier is drawn in the circuit as a vertical dotted line, like a fence separating sections of the circuit. Its main use is to prevent circuit optimizations crossing boundaries. This does not apply to TinyQsim since it currently does no circuit optimization. However, a barrier can still be useful for separating parts of the circuit for clarify, for example to separate initialization from processing.
-
-<div style="text-align: center;">
-<img src="assets/barrier.png" alt="barrier" width="80"/>
-</div>
-
-```
-Example:
-   qc.barrier()
-   
-API:
-   barrier()
-```
-
 ### CCU
 
 The CCU gate is a controlled-controlled custom unitary gate. See the U gate for further details.
@@ -397,6 +393,24 @@ API:
       c1 : the first control qubit
       c2 : the second control qubit
       t  : the target qubit
+```
+
+### CH Gate
+
+The CH gate is a controlled version of the H gate. See the H gate for further details.
+
+<div style="text-align: center;">
+<img src="assets/ch_gate.png" alt="ch_gate" width="80"/>
+</div>
+
+```
+Example:
+   qc.ch(0, 1)
+
+API:
+   ch(c: int, t: int)
+      c : the control qubit
+      t : the target qubit
 ```
 
 ### CP Gate
@@ -601,27 +615,6 @@ The I gate is described by the identity matrix:
 I = \begin{bmatrix}1 & 0 \\ 0 & 1 \end{bmatrix}
 ```
 
-### Measure Gate
-
-The 'measure' operation is not a normal gate as it is not a unitary operator. However, it is included here as it has a gate symbol in the circuit.
-
-<div style="text-align: center;">
-<img src="assets/measure01.png" alt="measure01" width="80"/>
-</div>
-
-The use of the 'measure' gate is discussed in the TinyQsim User Guide.
-
-```
-Example:
-   qc.measure(0, 1)
-
-API:
-   measure(t1, t2, ... : int)
-      t1, t2, ... : the qubits to be measured
-```
-
-If the argument list is left blank, then all qubits will be measured.
-
 ### P Gate
 
 The phase gate P rotates the phase of a qubit around the Z axis in the Bloch sphere.
@@ -774,6 +767,29 @@ The S gate is described by the following matrix:
 S =\begin{bmatrix}1 & 0 \\ 0 & i \end{bmatrix}
 ```
 
+### Sdg Gate
+
+The Sdg (S-dagger) $S^\dagger$ gate is the conjugate transpose of the S gate. It performs a phase rotation by $-\pi/2$ radians.
+
+<div style="text-align: center;">
+<img src="assets/sdg_gate.png" alt="sdg_gate" width="80"/>
+</div>
+
+```
+Example:
+   qc.sdg(0)
+
+API:
+   sdg(t: int)
+      t : the target qubit
+```
+
+The Sdg gate is described by the following matrix:
+
+```math
+Sdg =\begin{bmatrix}1 & 0 \\ 0 & -i \end{bmatrix}
+```
+
 ### SWAP Gate
 
 The SWAP gate swaps the state of two qubits.
@@ -856,6 +872,29 @@ Somewhat confusingly, the T gate is sometimes known as the $\pi/8$ gate. This be
 
 ```math
 T =\begin{bmatrix} e^{i\frac{\pi}{8}}& 0 \\ 0 & e^{i\frac{\pi}{8}} \end{bmatrix}
+```
+
+### Tdg Gate
+
+The Tdg (T-dagger) $T^\dagger$ gate is the conjugate transpose of the T gate. It performs a phase rotation by $-\pi/4$ radians.
+
+<div style="text-align: center;">
+<img src="assets/tdg_gate.png" alt="tdg_gate" width="80"/>
+</div>
+
+```
+Example:
+   qc.tdg(0)
+
+API:
+   tdg(t: int)
+      t : the target qubit
+```
+
+The Tdg gate is described by the following matrix:
+
+```math
+Tdg =\begin{bmatrix}1 & 0 \\ 0 & e^{-i\frac{\pi}{4}} \end{bmatrix}
 ```
 
 ### U Gate
@@ -947,3 +986,55 @@ The Z gate is described by the following matrix:
 
 ```math
 Z =\begin{bmatrix}1&0 \\ 0&-1 \end{bmatrix}
+```
+
+## Other Circuit Elements
+
+This section covers circuit elements that are not considered to be quantum gates because they are not reversible unitary operations.
+
+### Barrier
+
+A barrier is drawn in the circuit as a vertical dotted line, like a fence separating sections of the circuit. Its main use is to prevent circuit optimizations crossing boundaries. This does not apply to TinyQsim since it currently does no circuit optimization. However, a barrier can still be useful for separating parts of the circuit for clarify, for example to separate initialization from processing.
+
+<div style="text-align: center;">
+<img src="assets/barrier.png" alt="barrier" width="80"/>
+</div>
+
+```
+Example:
+   qc.barrier()
+   
+API:
+   barrier()
+```
+
+### Measure
+
+The 'measure' operation performs a quantum measurement on one or more qubits.
+
+<div style="text-align: center;">
+<img src="assets/measure01.png" alt="measure01" width="80"/>
+</div>
+
+The use of 'measure' is discussed in the TinyQsim User Guide.
+
+```
+Example:
+   qc.measure(0, 1)
+
+API:
+   measure(t1, t2, ... : int)
+      t1, t2, ... : the qubits to be measured
+```
+
+If the argument list is left blank, then all qubits will be measured.
+
+### Reset
+
+The 'reset' operation resets a qubit to the $\ket{0}$ state.
+
+<div style="text-align: center;">
+<img src="assets/reset.png" alt="reset" width="80"/>
+</div>
+
+It is equivalent to a measurement of the qubit, followed by an X operation conditional on the measurement result being 1.

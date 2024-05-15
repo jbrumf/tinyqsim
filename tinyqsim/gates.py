@@ -39,9 +39,17 @@ H = np.array([[1, 1],
 S = np.array([[1, 0],
               [0, 1j]])  # Phase: S=sqrt(Z)
 
+# Sdg gate: S-dagger
+Sdg = np.array([[1, 0],
+                [0, -1j]])
+
 # T gate: T = sqrt(S)
 T = np.array([[1, 0],
               [0, (1 + 1j) / RT2]])
+
+# Tdg gate: S-dagger
+Tdg = np.array([[1, 0],
+                [0, (1 - 1j) / RT2]])
 
 # SX gate: sqrt(X)
 SX = np.array([[1 + 1j, 1 - 1j],
@@ -72,6 +80,7 @@ def cu(u: ndarray, n_controls=1) -> ndarray:
 
 
 # Controlled versions of gates
+CH = cu(H)
 CX = cu(X)
 CY = cu(Y)
 CZ = cu(Z)
@@ -123,6 +132,7 @@ def RY(theta: float) -> ndarray:
 """ Dictionary to look-up gates by name."""
 GATES = {
     'CCX': CCX,
+    'CH': CH,
     'CP': CP,
     'CS': CS,
     'CSWAP': CSWAP,
@@ -136,9 +146,11 @@ GATES = {
     'RX': RX,
     'RY': RY,
     'S': S,
+    'Sdg': Sdg,
     'SX': SX,
     'SWAP': SWAP,
     'T': T,
+    'Tdg': Tdg,
     'X': X,
     'Y': Y,
     'Z': Z,

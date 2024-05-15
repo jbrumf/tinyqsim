@@ -9,6 +9,10 @@
 
 API documentation can be found in the 'tinyqsim/doc/api' directory as HTML files. These must be browsed locally as GitHub does not render HTML pages on their server.
 
+- [TinyQsim API](api/index.html)
+
+Browse to the 'qcircuit' module for details of the QCircuit API.
+
 ### Design Notes
 
 - [TinyQsim Design Notes](TinyQsim_design_notes.md)

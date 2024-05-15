@@ -51,9 +51,19 @@ def test_s():
     assert_array_almost_equal(S @ S, Z)
 
 
+def test_sdg():
+    assert is_unitary(Sdg)
+    assert_array_almost_equal(S @ Sdg, ID)
+
+
 def test_t():
     assert is_unitary(T)
     assert_array_almost_equal(T @ T, S)
+
+
+def test_tdg():
+    assert is_unitary(Sdg)
+    assert_array_almost_equal(T @ Tdg, ID)
 
 
 def test_p():

@@ -52,7 +52,13 @@
                     <a class="variable" href="#S">S</a>
             </li>
             <li>
+                    <a class="variable" href="#Sdg">Sdg</a>
+            </li>
+            <li>
                     <a class="variable" href="#T">T</a>
+            </li>
+            <li>
+                    <a class="variable" href="#Tdg">Tdg</a>
             </li>
             <li>
                     <a class="variable" href="#SX">SX</a>
@@ -62,6 +68,9 @@
             </li>
             <li>
                     <a class="function" href="#cu">cu</a>
+            </li>
+            <li>
+                    <a class="variable" href="#CH">CH</a>
             </li>
             <li>
                     <a class="variable" href="#CX">CX</a>
@@ -166,110 +175,122 @@ Copyright (c) 2024 Jon Brumfitt</p>
 </span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a><span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
 </span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a>              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="n">j</span><span class="p">]])</span>  <span class="c1"># Phase: S=sqrt(Z)</span>
 </span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a>
-</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a><span class="c1"># T gate: T = sqrt(S)</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">/</span> <span class="n">RT2</span><span class="p">]])</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a><span class="c1"># Sdg gate: S-dagger</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="n">Sdg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span><span class="p">]])</span>
 </span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>
-</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="c1"># SX gate: sqrt(X)</span>
-</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="n">SX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span><span class="p">],</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>               <span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="p">]])</span> <span class="o">/</span> <span class="mi">2</span>  <span class="c1"># aka SQRT-NOT</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="c1"># T gate: T = sqrt(S)</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>              <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">/</span> <span class="n">RT2</span><span class="p">]])</span>
 </span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a>
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="c1"># ---------- Big-endian versions of multi-qubit gates ----------</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a>
-</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a><span class="c1"># SWAP GATE</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="n">SWAP</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="c1"># Tdg gate: S-dagger</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="n">Tdg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>                <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="o">/</span> <span class="n">RT2</span><span class="p">]])</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a>
+</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a><span class="c1"># SX gate: sqrt(X)</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a><span class="n">SX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span><span class="p">],</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>               <span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="p">]])</span> <span class="o">/</span> <span class="mi">2</span>  <span class="c1"># aka SQRT-NOT</span>
 </span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a>
-</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a>
-</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a><span class="k">def</span> <span class="nf">cu</span><span class="p">(</span><span class="n">u</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">n_controls</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
-</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return controlled version of U (big endian).</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="sd">       :param u: Unitary matrix of gate</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a><span class="sd">       :param n_controls: Number of controls</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a><span class="sd">       :return: The controlled-U gate</span>
-</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a>    <span class="n">n_extra</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">n_controls</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
-</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_extra</span><span class="p">):</span>
-</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>        <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>    <span class="k">return</span> <span class="n">a</span>
-</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>
-</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a><span class="c1"># Controlled versions of gates</span>
-</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a><span class="n">CX</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a><span class="n">CY</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a><span class="n">CZ</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
-</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a><span class="n">CS</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
-</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a><span class="n">CT</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
-</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a><span class="n">CCX</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">CX</span><span class="p">)</span>
-</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a><span class="n">CSWAP</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">SWAP</span><span class="p">)</span>
-</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a>
-</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a>
-</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="c1"># ---------- Parameterized gates ----------</span>
-</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>
-</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a><span class="k">def</span> <span class="nf">P</span><span class="p">(</span><span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
-</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Phase gate: Rotation by &#39;phi radians about Z axis.</span>
-</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a><span class="sd">       :param phi: Phase angle in radians</span>
-</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a><span class="sd">       :return: the phase gate</span>
-</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">]])</span>
-</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>
+</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="c1"># ---------- Big-endian versions of multi-qubit gates ----------</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a>
+</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a><span class="c1"># SWAP GATE</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="n">SWAP</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a>                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a>                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>                 <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a>
+</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>
+</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a><span class="k">def</span> <span class="nf">cu</span><span class="p">(</span><span class="n">u</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">n_controls</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return controlled version of U (big endian).</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a><span class="sd">       :param u: Unitary matrix of gate</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a><span class="sd">       :param n_controls: Number of controls</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a><span class="sd">       :return: The controlled-U gate</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>    <span class="n">n_extra</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">n_controls</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_extra</span><span class="p">):</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>        <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>    <span class="k">return</span> <span class="n">a</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>
+</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>
+</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a><span class="c1"># Controlled versions of gates</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="n">CH</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="n">CX</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a><span class="n">CY</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a><span class="n">CZ</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a><span class="n">CS</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a><span class="n">CT</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a><span class="n">CCX</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">CX</span><span class="p">)</span>
+</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a><span class="n">CSWAP</span> <span class="o">=</span> <span class="n">cu</span><span class="p">(</span><span class="n">SWAP</span><span class="p">)</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>
+</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a><span class="c1"># ---------- Parameterized gates ----------</span>
 </span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>
-</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a><span class="k">def</span> <span class="nf">CP</span><span class="p">(</span><span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
-</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Controlled phase gate.</span>
+</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a><span class="k">def</span> <span class="nf">P</span><span class="p">(</span><span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
+</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Phase gate: Rotation by &#39;phi radians about Z axis.</span>
 </span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a><span class="sd">       :param phi: Phase angle in radians</span>
-</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="sd">       :return: the controlled-phase gate</span>
+</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="sd">       :return: the phase gate</span>
 </span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>    <span class="k">return</span> <span class="n">cu</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
-</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>
+</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span>
+</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">]])</span>
 </span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>
-</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a><span class="k">def</span> <span class="nf">RX</span><span class="p">(</span><span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
-</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;RX gate: Rotation by &#39;theta&#39; radians about X axis.</span>
-</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a><span class="sd">       :param theta: angle in radians</span>
-</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a><span class="sd">       :return: the gate</span>
-</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>    <span class="n">c</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">s</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]])</span>
+</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>
+</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a><span class="k">def</span> <span class="nf">CP</span><span class="p">(</span><span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
+</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Controlled phase gate.</span>
+</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a><span class="sd">       :param phi: Phase angle in radians</span>
+</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a><span class="sd">       :return: the controlled-phase gate</span>
+</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>    <span class="k">return</span> <span class="n">cu</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>
 </span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>
-</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>
-</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="k">def</span> <span class="nf">RY</span><span class="p">(</span><span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
-</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;RY gate: Rotation by &#39;theta&#39; radians about Y axis.</span>
-</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="sd">       :param theta: angle in radians</span>
-</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="sd">       :return: the gate</span>
-</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>    <span class="n">c</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="p">],</span> <span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]])</span>
+</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a><span class="k">def</span> <span class="nf">RX</span><span class="p">(</span><span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
+</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;RX gate: Rotation by &#39;theta&#39; radians about X axis.</span>
+</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="sd">       :param theta: angle in radians</span>
+</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="sd">       :return: the gate</span>
+</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>    <span class="n">c</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">s</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]])</span>
+</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>
 </span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a>
-</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>
-</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="sd">&quot;&quot;&quot; Dictionary to look-up gates by name.&quot;&quot;&quot;</span>
-</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a><span class="n">GATES</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>    <span class="s1">&#39;CCX&#39;</span><span class="p">:</span> <span class="n">CCX</span><span class="p">,</span>
-</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>    <span class="s1">&#39;CP&#39;</span><span class="p">:</span> <span class="n">CP</span><span class="p">,</span>
-</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>    <span class="s1">&#39;CS&#39;</span><span class="p">:</span> <span class="n">CS</span><span class="p">,</span>
-</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>    <span class="s1">&#39;CSWAP&#39;</span><span class="p">:</span> <span class="n">CSWAP</span><span class="p">,</span>
-</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>    <span class="s1">&#39;CT&#39;</span><span class="p">:</span> <span class="n">CT</span><span class="p">,</span>
-</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a>    <span class="s1">&#39;CX&#39;</span><span class="p">:</span> <span class="n">CX</span><span class="p">,</span>
-</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a>    <span class="s1">&#39;CY&#39;</span><span class="p">:</span> <span class="n">CY</span><span class="p">,</span>
-</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a>    <span class="s1">&#39;CZ&#39;</span><span class="p">:</span> <span class="n">CZ</span><span class="p">,</span>
-</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a>    <span class="s1">&#39;H&#39;</span><span class="p">:</span> <span class="n">H</span><span class="p">,</span>
-</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>    <span class="s1">&#39;I&#39;</span><span class="p">:</span> <span class="n">ID</span><span class="p">,</span>
-</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>    <span class="s1">&#39;P&#39;</span><span class="p">:</span> <span class="n">P</span><span class="p">,</span>
-</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>    <span class="s1">&#39;RX&#39;</span><span class="p">:</span> <span class="n">RX</span><span class="p">,</span>
-</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>    <span class="s1">&#39;RY&#39;</span><span class="p">:</span> <span class="n">RY</span><span class="p">,</span>
-</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a>    <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="n">S</span><span class="p">,</span>
-</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>    <span class="s1">&#39;SX&#39;</span><span class="p">:</span> <span class="n">SX</span><span class="p">,</span>
-</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a>    <span class="s1">&#39;SWAP&#39;</span><span class="p">:</span> <span class="n">SWAP</span><span class="p">,</span>
-</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a>    <span class="s1">&#39;T&#39;</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span>
-</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>    <span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span>
-</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>    <span class="s1">&#39;Y&#39;</span><span class="p">:</span> <span class="n">Y</span><span class="p">,</span>
-</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a>    <span class="s1">&#39;Z&#39;</span><span class="p">:</span> <span class="n">Z</span><span class="p">,</span>
-</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a><span class="p">}</span>
+</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a><span class="k">def</span> <span class="nf">RY</span><span class="p">(</span><span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;RY gate: Rotation by &#39;theta&#39; radians about Y axis.</span>
+</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a><span class="sd">       :param theta: angle in radians</span>
+</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a><span class="sd">       :return: the gate</span>
+</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>    <span class="n">c</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="p">],</span> <span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]])</span>
+</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a>
+</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a>
+</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a><span class="sd">&quot;&quot;&quot; Dictionary to look-up gates by name.&quot;&quot;&quot;</span>
+</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a><span class="n">GATES</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>    <span class="s1">&#39;CCX&#39;</span><span class="p">:</span> <span class="n">CCX</span><span class="p">,</span>
+</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>    <span class="s1">&#39;CH&#39;</span><span class="p">:</span> <span class="n">CH</span><span class="p">,</span>
+</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>    <span class="s1">&#39;CP&#39;</span><span class="p">:</span> <span class="n">CP</span><span class="p">,</span>
+</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>    <span class="s1">&#39;CS&#39;</span><span class="p">:</span> <span class="n">CS</span><span class="p">,</span>
+</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a>    <span class="s1">&#39;CSWAP&#39;</span><span class="p">:</span> <span class="n">CSWAP</span><span class="p">,</span>
+</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>    <span class="s1">&#39;CT&#39;</span><span class="p">:</span> <span class="n">CT</span><span class="p">,</span>
+</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a>    <span class="s1">&#39;CX&#39;</span><span class="p">:</span> <span class="n">CX</span><span class="p">,</span>
+</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a>    <span class="s1">&#39;CY&#39;</span><span class="p">:</span> <span class="n">CY</span><span class="p">,</span>
+</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>    <span class="s1">&#39;CZ&#39;</span><span class="p">:</span> <span class="n">CZ</span><span class="p">,</span>
+</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a>    <span class="s1">&#39;H&#39;</span><span class="p">:</span> <span class="n">H</span><span class="p">,</span>
+</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a>    <span class="s1">&#39;I&#39;</span><span class="p">:</span> <span class="n">ID</span><span class="p">,</span>
+</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a>    <span class="s1">&#39;P&#39;</span><span class="p">:</span> <span class="n">P</span><span class="p">,</span>
+</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a>    <span class="s1">&#39;RX&#39;</span><span class="p">:</span> <span class="n">RX</span><span class="p">,</span>
+</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a>    <span class="s1">&#39;RY&#39;</span><span class="p">:</span> <span class="n">RY</span><span class="p">,</span>
+</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a>    <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="n">S</span><span class="p">,</span>
+</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a>    <span class="s1">&#39;Sdg&#39;</span><span class="p">:</span> <span class="n">Sdg</span><span class="p">,</span>
+</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a>    <span class="s1">&#39;SX&#39;</span><span class="p">:</span> <span class="n">SX</span><span class="p">,</span>
+</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a>    <span class="s1">&#39;SWAP&#39;</span><span class="p">:</span> <span class="n">SWAP</span><span class="p">,</span>
+</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a>    <span class="s1">&#39;T&#39;</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span>
+</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a>    <span class="s1">&#39;Tdg&#39;</span><span class="p">:</span> <span class="n">Tdg</span><span class="p">,</span>
+</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a>    <span class="s1">&#39;X&#39;</span><span class="p">:</span> <span class="n">X</span><span class="p">,</span>
+</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a>    <span class="s1">&#39;Y&#39;</span><span class="p">:</span> <span class="n">Y</span><span class="p">,</span>
+</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a>    <span class="s1">&#39;Z&#39;</span><span class="p">:</span> <span class="n">Z</span><span class="p">,</span>
+</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a><span class="p">}</span>
 </span></pre></div>
 
 
@@ -364,6 +385,19 @@ Copyright (c) 2024 Jon Brumfitt</p>
     
 
                 </section>
+                <section id="Sdg">
+                    <div class="attr variable">
+            <span class="name">Sdg</span>        =
+<span class="default_value">array([[ 1.+0.j,  0.+0.j],
+       [ 0.+0.j, -0.-1.j]])</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Sdg"></a>
+    
+    
+
+                </section>
                 <section id="T">
                     <div class="attr variable">
             <span class="name">T</span>        =
@@ -374,6 +408,20 @@ Copyright (c) 2024 Jon Brumfitt</p>
         
     </div>
     <a class="headerlink" href="#T"></a>
+    
+    
+
+                </section>
+                <section id="Tdg">
+                    <div class="attr variable">
+            <span class="name">Tdg</span>        =
+<input id="Tdg-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+            <label class="view-value-button pdoc-button" for="Tdg-view-value"></label><span class="default_value">array([[1.        +0.j        , 0.        +0.j        ],
+       [0.        +0.j        , 0.70710678-0.70710678j]])</span>
+
+        
+    </div>
+    <a class="headerlink" href="#Tdg"></a>
     
     
 
@@ -417,19 +465,19 @@ Copyright (c) 2024 Jon Brumfitt</p>
 
     </div>
     <a class="headerlink" href="#cu"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="cu-60"><a href="#cu-60"><span class="linenos">60</span></a><span class="k">def</span> <span class="nf">cu</span><span class="p">(</span><span class="n">u</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">n_controls</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
-</span><span id="cu-61"><a href="#cu-61"><span class="linenos">61</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return controlled version of U (big endian).</span>
-</span><span id="cu-62"><a href="#cu-62"><span class="linenos">62</span></a><span class="sd">       :param u: Unitary matrix of gate</span>
-</span><span id="cu-63"><a href="#cu-63"><span class="linenos">63</span></a><span class="sd">       :param n_controls: Number of controls</span>
-</span><span id="cu-64"><a href="#cu-64"><span class="linenos">64</span></a><span class="sd">       :return: The controlled-U gate</span>
-</span><span id="cu-65"><a href="#cu-65"><span class="linenos">65</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="cu-66"><a href="#cu-66"><span class="linenos">66</span></a>    <span class="n">n_extra</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">n_controls</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
-</span><span id="cu-67"><a href="#cu-67"><span class="linenos">67</span></a>    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
-</span><span id="cu-68"><a href="#cu-68"><span class="linenos">68</span></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_extra</span><span class="p">):</span>
-</span><span id="cu-69"><a href="#cu-69"><span class="linenos">69</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</span><span id="cu-70"><a href="#cu-70"><span class="linenos">70</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="cu-71"><a href="#cu-71"><span class="linenos">71</span></a>        <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span id="cu-72"><a href="#cu-72"><span class="linenos">72</span></a>    <span class="k">return</span> <span class="n">a</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="cu-68"><a href="#cu-68"><span class="linenos">68</span></a><span class="k">def</span> <span class="nf">cu</span><span class="p">(</span><span class="n">u</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">n_controls</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
+</span><span id="cu-69"><a href="#cu-69"><span class="linenos">69</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return controlled version of U (big endian).</span>
+</span><span id="cu-70"><a href="#cu-70"><span class="linenos">70</span></a><span class="sd">       :param u: Unitary matrix of gate</span>
+</span><span id="cu-71"><a href="#cu-71"><span class="linenos">71</span></a><span class="sd">       :param n_controls: Number of controls</span>
+</span><span id="cu-72"><a href="#cu-72"><span class="linenos">72</span></a><span class="sd">       :return: The controlled-U gate</span>
+</span><span id="cu-73"><a href="#cu-73"><span class="linenos">73</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="cu-74"><a href="#cu-74"><span class="linenos">74</span></a>    <span class="n">n_extra</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="n">n_controls</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</span><span id="cu-75"><a href="#cu-75"><span class="linenos">75</span></a>    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</span><span id="cu-76"><a href="#cu-76"><span class="linenos">76</span></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_extra</span><span class="p">):</span>
+</span><span id="cu-77"><a href="#cu-77"><span class="linenos">77</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="cu-78"><a href="#cu-78"><span class="linenos">78</span></a>        <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="cu-79"><a href="#cu-79"><span class="linenos">79</span></a>        <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="cu-80"><a href="#cu-80"><span class="linenos">80</span></a>    <span class="k">return</span> <span class="n">a</span>
 </span></pre></div>
 
 
@@ -449,6 +497,22 @@ Copyright (c) 2024 Jon Brumfitt</p>
 </blockquote>
 </div>
 
+
+                </section>
+                <section id="CH">
+                    <div class="attr variable">
+            <span class="name">CH</span>        =
+<input id="CH-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+            <label class="view-value-button pdoc-button" for="CH-view-value"></label><span class="default_value">array([[ 1.        ,  0.        ,  0.        ,  0.        ],
+       [ 0.        ,  1.        ,  0.        ,  0.        ],
+       [ 0.        ,  0.        ,  0.70710678,  0.70710678],
+       [ 0.        ,  0.        ,  0.70710678, -0.70710678]])</span>
+
+        
+    </div>
+    <a class="headerlink" href="#CH"></a>
+    
+    
 
                 </section>
                 <section id="CX">
@@ -584,13 +648,13 @@ Copyright (c) 2024 Jon Brumfitt</p>
 
     </div>
     <a class="headerlink" href="#P"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="P-87"><a href="#P-87"><span class="linenos">87</span></a><span class="k">def</span> <span class="nf">P</span><span class="p">(</span><span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
-</span><span id="P-88"><a href="#P-88"><span class="linenos">88</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Phase gate: Rotation by &#39;phi radians about Z axis.</span>
-</span><span id="P-89"><a href="#P-89"><span class="linenos">89</span></a><span class="sd">       :param phi: Phase angle in radians</span>
-</span><span id="P-90"><a href="#P-90"><span class="linenos">90</span></a><span class="sd">       :return: the phase gate</span>
-</span><span id="P-91"><a href="#P-91"><span class="linenos">91</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="P-92"><a href="#P-92"><span class="linenos">92</span></a>    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span>
-</span><span id="P-93"><a href="#P-93"><span class="linenos">93</span></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">]])</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="P-96"><a href="#P-96"><span class="linenos"> 96</span></a><span class="k">def</span> <span class="nf">P</span><span class="p">(</span><span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
+</span><span id="P-97"><a href="#P-97"><span class="linenos"> 97</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Phase gate: Rotation by &#39;phi radians about Z axis.</span>
+</span><span id="P-98"><a href="#P-98"><span class="linenos"> 98</span></a><span class="sd">       :param phi: Phase angle in radians</span>
+</span><span id="P-99"><a href="#P-99"><span class="linenos"> 99</span></a><span class="sd">       :return: the phase gate</span>
+</span><span id="P-100"><a href="#P-100"><span class="linenos">100</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="P-101"><a href="#P-101"><span class="linenos">101</span></a>    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phi</span><span class="p">)</span>
+</span><span id="P-102"><a href="#P-102"><span class="linenos">102</span></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="p">]])</span>
 </span></pre></div>
 
 
@@ -622,12 +686,12 @@ Copyright (c) 2024 Jon Brumfitt</p>
 
     </div>
     <a class="headerlink" href="#CP"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CP-96"><a href="#CP-96"><span class="linenos"> 96</span></a><span class="k">def</span> <span class="nf">CP</span><span class="p">(</span><span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
-</span><span id="CP-97"><a href="#CP-97"><span class="linenos"> 97</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Controlled phase gate.</span>
-</span><span id="CP-98"><a href="#CP-98"><span class="linenos"> 98</span></a><span class="sd">       :param phi: Phase angle in radians</span>
-</span><span id="CP-99"><a href="#CP-99"><span class="linenos"> 99</span></a><span class="sd">       :return: the controlled-phase gate</span>
-</span><span id="CP-100"><a href="#CP-100"><span class="linenos">100</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="CP-101"><a href="#CP-101"><span class="linenos">101</span></a>    <span class="k">return</span> <span class="n">cu</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CP-105"><a href="#CP-105"><span class="linenos">105</span></a><span class="k">def</span> <span class="nf">CP</span><span class="p">(</span><span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
+</span><span id="CP-106"><a href="#CP-106"><span class="linenos">106</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Controlled phase gate.</span>
+</span><span id="CP-107"><a href="#CP-107"><span class="linenos">107</span></a><span class="sd">       :param phi: Phase angle in radians</span>
+</span><span id="CP-108"><a href="#CP-108"><span class="linenos">108</span></a><span class="sd">       :return: the controlled-phase gate</span>
+</span><span id="CP-109"><a href="#CP-109"><span class="linenos">109</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="CP-110"><a href="#CP-110"><span class="linenos">110</span></a>    <span class="k">return</span> <span class="n">cu</span><span class="p">(</span><span class="n">P</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
 </span></pre></div>
 
 
@@ -659,14 +723,14 @@ Copyright (c) 2024 Jon Brumfitt</p>
 
     </div>
     <a class="headerlink" href="#RX"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="RX-104"><a href="#RX-104"><span class="linenos">104</span></a><span class="k">def</span> <span class="nf">RX</span><span class="p">(</span><span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
-</span><span id="RX-105"><a href="#RX-105"><span class="linenos">105</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;RX gate: Rotation by &#39;theta&#39; radians about X axis.</span>
-</span><span id="RX-106"><a href="#RX-106"><span class="linenos">106</span></a><span class="sd">       :param theta: angle in radians</span>
-</span><span id="RX-107"><a href="#RX-107"><span class="linenos">107</span></a><span class="sd">       :return: the gate</span>
-</span><span id="RX-108"><a href="#RX-108"><span class="linenos">108</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="RX-109"><a href="#RX-109"><span class="linenos">109</span></a>    <span class="n">c</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="RX-110"><a href="#RX-110"><span class="linenos">110</span></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="RX-111"><a href="#RX-111"><span class="linenos">111</span></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">s</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]])</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="RX-113"><a href="#RX-113"><span class="linenos">113</span></a><span class="k">def</span> <span class="nf">RX</span><span class="p">(</span><span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
+</span><span id="RX-114"><a href="#RX-114"><span class="linenos">114</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;RX gate: Rotation by &#39;theta&#39; radians about X axis.</span>
+</span><span id="RX-115"><a href="#RX-115"><span class="linenos">115</span></a><span class="sd">       :param theta: angle in radians</span>
+</span><span id="RX-116"><a href="#RX-116"><span class="linenos">116</span></a><span class="sd">       :return: the gate</span>
+</span><span id="RX-117"><a href="#RX-117"><span class="linenos">117</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="RX-118"><a href="#RX-118"><span class="linenos">118</span></a>    <span class="n">c</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="RX-119"><a href="#RX-119"><span class="linenos">119</span></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="RX-120"><a href="#RX-120"><span class="linenos">120</span></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">s</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]])</span>
 </span></pre></div>
 
 
@@ -698,14 +762,14 @@ Copyright (c) 2024 Jon Brumfitt</p>
 
     </div>
     <a class="headerlink" href="#RY"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="RY-114"><a href="#RY-114"><span class="linenos">114</span></a><span class="k">def</span> <span class="nf">RY</span><span class="p">(</span><span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
-</span><span id="RY-115"><a href="#RY-115"><span class="linenos">115</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;RY gate: Rotation by &#39;theta&#39; radians about Y axis.</span>
-</span><span id="RY-116"><a href="#RY-116"><span class="linenos">116</span></a><span class="sd">       :param theta: angle in radians</span>
-</span><span id="RY-117"><a href="#RY-117"><span class="linenos">117</span></a><span class="sd">       :return: the gate</span>
-</span><span id="RY-118"><a href="#RY-118"><span class="linenos">118</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="RY-119"><a href="#RY-119"><span class="linenos">119</span></a>    <span class="n">c</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="RY-120"><a href="#RY-120"><span class="linenos">120</span></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="RY-121"><a href="#RY-121"><span class="linenos">121</span></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="p">],</span> <span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]])</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="RY-123"><a href="#RY-123"><span class="linenos">123</span></a><span class="k">def</span> <span class="nf">RY</span><span class="p">(</span><span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
+</span><span id="RY-124"><a href="#RY-124"><span class="linenos">124</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;RY gate: Rotation by &#39;theta&#39; radians about Y axis.</span>
+</span><span id="RY-125"><a href="#RY-125"><span class="linenos">125</span></a><span class="sd">       :param theta: angle in radians</span>
+</span><span id="RY-126"><a href="#RY-126"><span class="linenos">126</span></a><span class="sd">       :return: the gate</span>
+</span><span id="RY-127"><a href="#RY-127"><span class="linenos">127</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="RY-128"><a href="#RY-128"><span class="linenos">128</span></a>    <span class="n">c</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="RY-129"><a href="#RY-129"><span class="linenos">129</span></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">theta</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="RY-130"><a href="#RY-130"><span class="linenos">130</span></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">c</span><span class="p">,</span> <span class="o">-</span><span class="n">s</span><span class="p">],</span> <span class="p">[</span><span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]])</span>
 </span></pre></div>
 
 
@@ -737,7 +801,10 @@ Copyright (c) 2024 Jon Brumfitt</p>
        [0, 0, 0, 0, 1, 0, 0, 0],
        [0, 0, 0, 0, 0, 1, 0, 0],
        [0, 0, 0, 0, 0, 0, 0, 1],
-       [0, 0, 0, 0, 0, 0, 1, 0]]), &#39;CP&#39;: &lt;function CP&gt;, &#39;CS&#39;: array([[1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
+       [0, 0, 0, 0, 0, 0, 1, 0]]), &#39;CH&#39;: array([[ 1.        ,  0.        ,  0.        ,  0.        ],
+       [ 0.        ,  1.        ,  0.        ,  0.        ],
+       [ 0.        ,  0.        ,  0.70710678,  0.70710678],
+       [ 0.        ,  0.        ,  0.70710678, -0.70710678]]), &#39;CP&#39;: &lt;function CP&gt;, &#39;CS&#39;: array([[1.+0.j, 0.+0.j, 0.+0.j, 0.+0.j],
        [0.+0.j, 1.+0.j, 0.+0.j, 0.+0.j],
        [0.+0.j, 0.+0.j, 1.+0.j, 0.+0.j],
        [0.+0.j, 0.+0.j, 0.+0.j, 0.+1.j]]), &#39;CSWAP&#39;: array([[1, 0, 0, 0, 0, 0, 0, 0],
@@ -766,12 +833,14 @@ Copyright (c) 2024 Jon Brumfitt</p>
        [ 0,  0,  0, -1]]), &#39;H&#39;: array([[ 0.70710678,  0.70710678],
        [ 0.70710678, -0.70710678]]), &#39;I&#39;: array([[1, 0],
        [0, 1]]), &#39;P&#39;: &lt;function P&gt;, &#39;RX&#39;: &lt;function RX&gt;, &#39;RY&#39;: &lt;function RY&gt;, &#39;S&#39;: array([[1.+0.j, 0.+0.j],
-       [0.+0.j, 0.+1.j]]), &#39;SX&#39;: array([[0.5+0.5j, 0.5-0.5j],
+       [0.+0.j, 0.+1.j]]), &#39;Sdg&#39;: array([[ 1.+0.j,  0.+0.j],
+       [ 0.+0.j, -0.-1.j]]), &#39;SX&#39;: array([[0.5+0.5j, 0.5-0.5j],
        [0.5-0.5j, 0.5+0.5j]]), &#39;SWAP&#39;: array([[1, 0, 0, 0],
        [0, 0, 1, 0],
        [0, 1, 0, 0],
        [0, 0, 0, 1]]), &#39;T&#39;: array([[1.        +0.j        , 0.        +0.j        ],
-       [0.        +0.j        , 0.70710678+0.70710678j]]), &#39;X&#39;: array([[0, 1],
+       [0.        +0.j        , 0.70710678+0.70710678j]]), &#39;Tdg&#39;: array([[1.        +0.j        , 0.        +0.j        ],
+       [0.        +0.j        , 0.70710678-0.70710678j]]), &#39;X&#39;: array([[0, 1],
        [1, 0]]), &#39;Y&#39;: array([[ 0.+0.j, -0.-1.j],
        [ 0.+1.j,  0.+0.j]]), &#39;Z&#39;: array([[ 1,  0],
        [ 0, -1]])}</span>

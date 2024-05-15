@@ -17,7 +17,7 @@ from tinyqsim.schematic import Schematic
 from tinyqsim.simulator import Simulator
 from tinyqsim.utils import round_complex
 
-EPS = 1e-12  # Threshold for ignoring small valUes
+EPS = 1e-12  # Threshold for ignoring small values
 
 
 class QCircuit(object):
@@ -51,7 +51,7 @@ class QCircuit(object):
         """Return a copy of the quantum state vector.
            :return: copy of the quantum state vector
         """
-        return self._simulator.state
+        return self._simulator.state_vector
 
     @state_vector.setter
     def state_vector(self, state: ndarray) -> None:
@@ -63,7 +63,7 @@ class QCircuit(object):
         if not len(state) == 2 ** self._nqubits:
             raise ValueError(f'State vector should have length {2 ** self._nqubits}')
 
-        self._simulator.state = state
+        self._simulator.state_vector = state
 
     @property
     def n_qubits(self) -> int:
@@ -72,9 +72,13 @@ class QCircuit(object):
         """
         return self._nqubits
 
+    def results(self) -> dict[int, int]:
+        """Return the most recent results of measurements."""
+        return self._simulator.results()
+
     # ----------------- Add components to the model -----------------
 
-    def _check_qubits(self, qubits):
+    def _check_qubits(self, qubits) -> None:
         """ Validate qubit indices.
             :param qubits: list of qubits
         """
@@ -104,13 +108,21 @@ class QCircuit(object):
             u = self._gates[name](params['args'])
             self._simulator.apply(u, qubits)
 
-    def _add_measure(self, qubits: list[int]) -> None:
+    def _add_measure(self, qubits: list[int]) -> ndarray:
         """ Add a measurement to the model.
             :param qubits: list of qubits
         """
         self._model.add_gate('measure', qubits)
         if self._auto_exec:
-            self._simulator.measure(qubits)
+            return self._simulator.measure(qubits)
+
+    def _add_reset(self, qubit: int) -> None:
+        """ Add a reset to the model.
+            :param qubit: qubit to be reset
+        """
+        self._model.add_gate('reset', [qubit])
+        if self._auto_exec:
+            self._simulator.reset(qubit)
 
     def _add_unitary(self, name: str, u: ndarray, qubits: list[int], params: dict) -> None:
         """ Add a unitary matrix to the model.
@@ -133,8 +145,8 @@ class QCircuit(object):
 
     # ----------------- Execution of quantum circuit ----------------
 
-    def _execute(self) -> None:
-        """Execute the circuit."""
+    def execute(self) -> None:
+        """Execute/re-execute the circuit."""
         self._simulator.execute(self._model)
 
     # -------------- Obtain information about the state -------------
@@ -145,19 +157,8 @@ class QCircuit(object):
            :param include_zeros: True to include zero values (default=False)
            :return: Dictionary of state components
         """
-        comp = quantum.components_dict(self._simulator.state)
+        comp = quantum.components_dict(self._simulator.state_vector)
         return {k: round_complex(v, decimals) for k, v in comp.items() if include_zeros or abs(v) > EPS}
-
-    def counts(self, *qubits: int, runs: int = 1000, include_zeros: bool = False) -> dict[str, int]:
-        """ Return measurement counts for repeated experiment.
-            The state is not changed (collapsed).
-            :param qubits: qubits (None => all)
-            :param runs: Number of test runs (default=1000)
-            :param include_zeros: True to include zero values (default=False)
-            :return: frequencies of outcomes as a dictionary
-        """
-        counts = quantum.counts_dict(self._simulator.state, list(qubits), runs)
-        return {k: v for k, v in counts.items() if include_zeros or v > EPS}
 
     def probabilities(self, *qubits: int, decimals: int = 5,
                       include_zeros: bool = False) -> dict[str, float]:
@@ -169,28 +170,65 @@ class QCircuit(object):
         """
         if not qubits:
             qubits = range(self._nqubits)
-        probs = quantum.probability_dict(self._simulator.state, qubits)
+        probs = quantum.probability_dict(self._simulator.state_vector, qubits)
         return {k: round(v, decimals) for k, v in probs.items() if include_zeros or v > EPS}
+
+    def counts(self, *qubits: int, runs: int = 1000, rerun: bool = False,
+               include_zeros: bool = False) -> dict[str, int]:
+        """ Return measurement counts for repeated experiment.
+            Any measurements within the circuit will be re-run if rerun=True.
+            :param qubits: qubits (None => all)
+            :param runs: Number of test runs (default=1000)
+            :param rerun: True to re-run the whole experiment (default=False)
+            :param include_zeros: True to include zero values (default=False)
+            :return: frequencies of outcomes as a dictionary
+        """
+        if not qubits:
+            qubits = range(self.n_qubits)
+        if not rerun:
+            dic = quantum.counts_dict(self._simulator.state_vector, list(qubits), runs)
+        else:
+            sim = self._simulator
+            names = quantum.basis_names(len(qubits))
+            count = np.zeros(2 ** len(qubits), dtype=int)
+            for run in range(runs):
+                sim.execute(self._model)
+                probs = quantum.probabilities(sim.state_vector, qubits)
+                k = np.random.choice(len(probs), None, p=probs)
+                count[k] += 1
+            dic = dict(zip(names, count))
+        return {k: v for k, v in dic.items() if include_zeros or v > EPS}
 
     # ------------------ Measurement ------------------
 
-    def measure(self, *qubits: int) -> None:
+    def measure(self, *qubits: int) -> ndarray:
         """Add a measurement gate to one or more qubits.
             :param qubits: qubits (None => all)
         """
         if not qubits:
             qubits = range(self._nqubits)
-        self._add_measure(list(qubits))
+        return self._add_measure(list(qubits))
+
+    def reset(self, qubit: int) -> None:
+        """Reset the state of qubit to |0>.
+        :param qubit: qubit index
+        """
+        self._add_reset(qubit)
 
     # -------------------------- Graphics ---------------------------
 
-    def draw(self, scale: float = 1, show: bool = True, save: str | None = None) -> None:
+    def qubit_labels(self, labels: dict[int, str]) -> None:
+        """Assign labels to qubits
+            :param labels: Dictionary of qubit labels
+        """
+        self._schematic.set_labels(labels)
+
+    def draw(self, show: bool = True, save: str | None = None) -> None:
         """Draw the quantum circuit.
-            :param: scale: scale factor (default=1)
             :param: show: show the quantum circuit
             :param: save: file to save image if required
         """
-        self._schematic.draw(self._model, scale=scale, show=show, save=save)
+        self._schematic.draw(self._model, show=show, save=save)
 
     def plot_probabilities(self, *qubits: int, save: str | None = False) -> None:
         """Plot histogram of probabilities of measurement outcomes.
@@ -199,16 +237,18 @@ class QCircuit(object):
         """
         if not qubits:
             qubits = range(self._nqubits)
-        probs = quantum.probability_dict(self._simulator.state, qubits)
+        probs = quantum.probability_dict(self._simulator.state_vector, qubits)
         plotting.plot_histogram(probs, save=save, ylabel='Probability')
 
-    def plot_counts(self, *qubits: int, runs: int = 1000, save: str | None = False) -> None:
+    def plot_counts(self, *qubits: int, runs: int = 1000, rerun: bool = False,
+                    save: str | None = False) -> None:
         """Plot histogram of measurement counts.
         :param qubits: qubits (None => all)
         :param runs: number of test runs (default=1000)
+        :param rerun: True to re-run the whole experiment (default=False)
         :param save: file to save image if required
         """
-        freq = quantum.counts_dict(self._simulator.state, list(qubits), runs=runs)
+        freq = self.counts(*qubits, runs=runs, rerun=rerun, include_zeros=True)
         plotting.plot_histogram(freq, save=save, ylabel='Counts')
 
     # ------------------ Wrapper methods for gates ------------------
@@ -232,6 +272,13 @@ class QCircuit(object):
         :param t: target qubit
         """
         self._add_gate('CCX', [c1, c2, t], {'controls': 2})
+
+    def ch(self, c: int, t: int) -> None:
+        """Add a controlled-H gate.
+        :param c: control qubit
+        :param t: target qubit
+        """
+        self._add_gate('CH', [c, t], {'controls': 1})
 
     def cp(self, phi: float, phi_text: str, c: int, t: int) -> None:
         """Add a controlled-phase (CP) gate.
@@ -337,6 +384,12 @@ class QCircuit(object):
         """
         self._add_gate('S', [t])
 
+    def sdg(self, t: int) -> None:
+        """Add an S-dagger gate.
+        :param t: target qubit
+        """
+        self._add_gate('Sdg', [t])
+
     def swap(self, t1: int, t2: int) -> None:
         """Add a swap (SWAP) gate.
         :param t1: target qubit
@@ -355,6 +408,12 @@ class QCircuit(object):
         :param t: target qubit
         """
         self._add_gate('T', [t])
+
+    def tdg(self, t: int) -> None:
+        """Add an T-dagger gate.
+        :param t: target qubit
+        """
+        self._add_gate('Tdg', [t])
 
     def u(self, u: ndarray, name: str, *qubits):
         """Add a custom unitary gate (U).
