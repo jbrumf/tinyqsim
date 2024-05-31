@@ -146,7 +146,7 @@ class QCircuit(object):
            :return: Dictionary of state components
         """
         comp = quantum.components_dict(self._simulator.state)
-        return {k: round_complex(v, decimals) for k, v in comp.items() if include_zeros or v > EPS}
+        return {k: round_complex(v, decimals) for k, v in comp.items() if include_zeros or abs(v) > EPS}
 
     def counts(self, *qubits: int, runs: int = 1000, include_zeros: bool = False) -> dict[str, int]:
         """ Return measurement counts for repeated experiment.
