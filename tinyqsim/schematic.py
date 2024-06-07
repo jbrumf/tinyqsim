@@ -68,17 +68,21 @@ class Schematic:
         self._labels = None
         self.set_default_labels()
 
-    def set_default_labels(self):
+    def set_default_labels(self, numbers: bool = True):
         """Set default qubit labels: q0, q1,..."""
-        self._labels = ['q' + str(q) for q in range(self._nqubits)]
+        if numbers:
+            self._labels = ['q' + str(q) for q in range(self._nqubits)]
+        else:
+            self._labels = [''] * self._nqubits
 
-    def set_labels(self, labels: dict[int, str]) -> None:
+    def set_labels(self, labels: dict[int, str], numbers: bool = True) -> None:
         """Set labels for qubits.
         :param labels: labels for qubits
+        :param numbers: if True, default labels are q0, q1...
         """
-        self.set_default_labels()
+        self.set_default_labels(numbers)
         for k, v in labels.items():
-            self._labels[k] = v + ' q' + str(k)
+            self._labels[k] = v + ' ' + self._labels[k]
 
     # ------------------- Draw the quantum circuit ------------------
 

@@ -214,7 +214,7 @@ Copyright (c) 2024 Jon Brumfitt</p>
 </span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>
 </span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a>
 </span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="k">def</span> <span class="nf">probabilities</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">qubits</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
-</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; Return the probabilities of measurement outcomes as a dictionary.</span>
+</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; Return the probability of each measurement outcome.</span>
 </span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a><span class="sd">        :param state: State vector</span>
 </span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="sd">        :param qubits: List of qubit indices</span>
 </span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a><span class="sd">        :return: list of probabilities</span>
@@ -665,7 +665,7 @@ Copyright (c) 2024 Jon Brumfitt</p>
     </div>
     <a class="headerlink" href="#probabilities"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="probabilities-117"><a href="#probabilities-117"><span class="linenos">117</span></a><span class="k">def</span> <span class="nf">probabilities</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">qubits</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
-</span><span id="probabilities-118"><a href="#probabilities-118"><span class="linenos">118</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; Return the probabilities of measurement outcomes as a dictionary.</span>
+</span><span id="probabilities-118"><a href="#probabilities-118"><span class="linenos">118</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; Return the probability of each measurement outcome.</span>
 </span><span id="probabilities-119"><a href="#probabilities-119"><span class="linenos">119</span></a><span class="sd">        :param state: State vector</span>
 </span><span id="probabilities-120"><a href="#probabilities-120"><span class="linenos">120</span></a><span class="sd">        :param qubits: List of qubit indices</span>
 </span><span id="probabilities-121"><a href="#probabilities-121"><span class="linenos">121</span></a><span class="sd">        :return: list of probabilities</span>
@@ -679,7 +679,7 @@ Copyright (c) 2024 Jon Brumfitt</p>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Return the probabilities of measurement outcomes as a dictionary.</p>
+            <div class="docstring"><p>Return the probability of each measurement outcome.</p>
 
 <h6 id="parameters">Parameters</h6>
 

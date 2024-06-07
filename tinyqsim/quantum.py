@@ -114,7 +114,7 @@ def components_dict(state: ndarray) -> dict:
 
 
 def probabilities(state: ndarray, qubits: Iterable[int]) -> ndarray:
-    """ Return the probabilities of measurement outcomes as a dictionary.
+    """ Return the probability of each measurement outcome.
         :param state: State vector
         :param qubits: List of qubit indices
         :return: list of probabilities

@@ -49,7 +49,7 @@ The example programs are in the form of Jupyter Notebooks. Notebooks provide a n
 A notebook session can be started as follows:
 
 ```
-  mkdir mywork
+  cd mywork
   conda activate tinyqsim
   jupyter notebook
 ```
