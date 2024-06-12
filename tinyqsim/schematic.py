@@ -196,7 +196,9 @@ class Schematic:
                 self.draw_generic_gate(x, name, [], qubits[0:1], params['label'])
 
             # Controlled gates
-            case 'CH' | 'CS' | 'CT' | 'CY':
+            case 'CH':
+                self.draw_generic_gate(x, name[1:], qubits[0:1], qubits[1:2], color=H_COLOR)
+            case 'CS' | 'CT' | 'CY':
                 self.draw_generic_gate(x, name[1:], qubits[0:1], qubits[1:2])
 
             # Controlled parameterized gates
