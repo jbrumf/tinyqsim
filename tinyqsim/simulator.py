@@ -24,7 +24,6 @@ class Simulator:
         self._nqubits = nqubits
         self._init = init
         self._state = None  # State tensor
-        # self._results = np.zeros(nqubits, dtype=int)  # Measurement results
         self._results = {}  # Measurement results
         self._gates = gates.GATES
 
@@ -70,7 +69,6 @@ class Simulator:
         """
         m, self.state_vector = quantum.measure_qubits(self.state_vector, qubits)
         for i, q in enumerate(qubits):
-            # self._results[q] = m[i]
             self._results[q] = m[i]
         # print(f'Measured qubits{qubits} -> {m}')
         return m

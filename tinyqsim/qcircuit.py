@@ -231,29 +231,32 @@ class QCircuit(object):
         """
         self._schematic.draw(self._model, show=show, save=save)
 
-    def plot_probabilities(self, *qubits: int, save: str | None = False,
+    def plot_probabilities(self, *qubits: int, show=True, save: str | None = False,
                            height: float = 1) -> None:
         """Plot histogram of probabilities of measurement outcomes.
             :param qubits: qubits (None => all)
+            :param show: show the plot
             :param save: file to save image if required
             :param height: Scaling factor for plot height
         """
         if not qubits:
             qubits = range(self._nqubits)
         probs = quantum.probability_dict(self._simulator.state_vector, qubits)
-        plotting.plot_histogram(probs, save=save, ylabel='Probability', height=height)
+        plotting.plot_histogram(probs, show=show, save=save, ylabel='Probability',
+                                height=height)
 
     def plot_counts(self, *qubits: int, runs: int = 1000, rerun: bool = False,
-                    save: str | None = False, height: float = 1) -> None:
+                    show=True, save: str | None = False, height: float = 1) -> None:
         """Plot histogram of measurement counts.
         :param qubits: qubits (None => all)
         :param runs: number of test runs (default=1000)
         :param rerun: True to re-run the whole experiment (default=False)
+        :param show: show the plot
         :param save: file to save image if required
         :param height: Scaling factor for plot height
         """
         freq = self.counts(*qubits, runs=runs, rerun=rerun, include_zeros=True)
-        plotting.plot_histogram(freq, save=save, ylabel='Counts', height=height)
+        plotting.plot_histogram(freq, show=show, save=save, ylabel='Counts', height=height)
 
     # ------------------ Wrapper methods for gates ------------------
 

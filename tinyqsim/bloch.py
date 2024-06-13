@@ -47,11 +47,11 @@ def qubit_to_bloch(psi: np.ndarray) -> tuple[float, float]:
 def plot_bloch(phi: float, theta: float, scale=1, azimuth=35, elevation=10,
                show: bool = True, show_angles=True, save: str = None) -> None:
     """ Plot bloch sphere.
-        :param phi: Bloch sphere 'phi' angle in radians
-        :param theta: Bloch sphere 'theta' angle in radians
+        :param phi: State vector 'phi' angle in radians
+        :param theta: State vector 'theta' angle in radians
         :param scale: scaling factor
-        :param azimuth: view-point azimuth (radians)
-        :param elevation: view-point elevation (radians)
+        :param azimuth: view-point azimuth (degrees)
+        :param elevation: view-point elevation (degrees)
         :param show: show the plot
         :param show_angles: show the angles
         :param save: File name to save image (or None)

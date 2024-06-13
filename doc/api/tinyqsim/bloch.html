@@ -123,11 +123,11 @@ Copyright (c) 2024 Jon Brumfitt</p>
 </span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="k">def</span> <span class="nf">plot_bloch</span><span class="p">(</span><span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">azimuth</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
 </span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>               <span class="n">show</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">show_angles</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; Plot bloch sphere.</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="sd">        :param phi: Bloch sphere &#39;phi&#39; angle in radians</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="sd">        :param theta: Bloch sphere &#39;theta&#39; angle in radians</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="sd">        :param phi: State vector &#39;phi&#39; angle in radians</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="sd">        :param theta: State vector &#39;theta&#39; angle in radians</span>
 </span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a><span class="sd">        :param scale: scaling factor</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="sd">        :param azimuth: view-point azimuth (radians)</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a><span class="sd">        :param elevation: view-point elevation (radians)</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="sd">        :param azimuth: view-point azimuth (degrees)</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a><span class="sd">        :param elevation: view-point elevation (degrees)</span>
 </span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a><span class="sd">        :param show: show the plot</span>
 </span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a><span class="sd">        :param show_angles: show the angles</span>
 </span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a><span class="sd">        :param save: File name to save image (or None)</span>
@@ -352,11 +352,11 @@ Copyright (c) 2024 Jon Brumfitt</p>
             <div class="pdoc-code codehilite"><pre><span></span><span id="plot_bloch-48"><a href="#plot_bloch-48"><span class="linenos"> 48</span></a><span class="k">def</span> <span class="nf">plot_bloch</span><span class="p">(</span><span class="n">phi</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">azimuth</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span> <span class="n">elevation</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
 </span><span id="plot_bloch-49"><a href="#plot_bloch-49"><span class="linenos"> 49</span></a>               <span class="n">show</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">show_angles</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">save</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="plot_bloch-50"><a href="#plot_bloch-50"><span class="linenos"> 50</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; Plot bloch sphere.</span>
-</span><span id="plot_bloch-51"><a href="#plot_bloch-51"><span class="linenos"> 51</span></a><span class="sd">        :param phi: Bloch sphere &#39;phi&#39; angle in radians</span>
-</span><span id="plot_bloch-52"><a href="#plot_bloch-52"><span class="linenos"> 52</span></a><span class="sd">        :param theta: Bloch sphere &#39;theta&#39; angle in radians</span>
+</span><span id="plot_bloch-51"><a href="#plot_bloch-51"><span class="linenos"> 51</span></a><span class="sd">        :param phi: State vector &#39;phi&#39; angle in radians</span>
+</span><span id="plot_bloch-52"><a href="#plot_bloch-52"><span class="linenos"> 52</span></a><span class="sd">        :param theta: State vector &#39;theta&#39; angle in radians</span>
 </span><span id="plot_bloch-53"><a href="#plot_bloch-53"><span class="linenos"> 53</span></a><span class="sd">        :param scale: scaling factor</span>
-</span><span id="plot_bloch-54"><a href="#plot_bloch-54"><span class="linenos"> 54</span></a><span class="sd">        :param azimuth: view-point azimuth (radians)</span>
-</span><span id="plot_bloch-55"><a href="#plot_bloch-55"><span class="linenos"> 55</span></a><span class="sd">        :param elevation: view-point elevation (radians)</span>
+</span><span id="plot_bloch-54"><a href="#plot_bloch-54"><span class="linenos"> 54</span></a><span class="sd">        :param azimuth: view-point azimuth (degrees)</span>
+</span><span id="plot_bloch-55"><a href="#plot_bloch-55"><span class="linenos"> 55</span></a><span class="sd">        :param elevation: view-point elevation (degrees)</span>
 </span><span id="plot_bloch-56"><a href="#plot_bloch-56"><span class="linenos"> 56</span></a><span class="sd">        :param show: show the plot</span>
 </span><span id="plot_bloch-57"><a href="#plot_bloch-57"><span class="linenos"> 57</span></a><span class="sd">        :param show_angles: show the angles</span>
 </span><span id="plot_bloch-58"><a href="#plot_bloch-58"><span class="linenos"> 58</span></a><span class="sd">        :param save: File name to save image (or None)</span>
@@ -449,11 +449,11 @@ Copyright (c) 2024 Jon Brumfitt</p>
 <h6 id="parameters">Parameters</h6>
 
 <ul>
-<li><strong>phi</strong>:  Bloch sphere 'phi' angle in radians</li>
-<li><strong>theta</strong>:  Bloch sphere 'theta' angle in radians</li>
+<li><strong>phi</strong>:  State vector 'phi' angle in radians</li>
+<li><strong>theta</strong>:  State vector 'theta' angle in radians</li>
 <li><strong>scale</strong>:  scaling factor</li>
-<li><strong>azimuth</strong>:  view-point azimuth (radians)</li>
-<li><strong>elevation</strong>:  view-point elevation (radians)</li>
+<li><strong>azimuth</strong>:  view-point azimuth (degrees)</li>
+<li><strong>elevation</strong>:  view-point elevation (degrees)</li>
 <li><strong>show</strong>:  show the plot</li>
 <li><strong>show_angles</strong>:  show the angles</li>
 <li><strong>save</strong>:  File name to save image (or None)</li>

@@ -10,9 +10,10 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 
-def plot_histogram(data, save: str = False, ylabel=None, height=1) -> None:
+def plot_histogram(data, show=True, save: str = False, ylabel=None, height=1) -> None:
     """Plot histogram of data.
         :param data: Dictionary of data to plot
+        :param show: Show the plot
         :param save: File name to save image (or None)
         :param ylabel: Label for the Y-axis
         :param height: Scaling factor for plot height
@@ -30,7 +31,8 @@ def plot_histogram(data, save: str = False, ylabel=None, height=1) -> None:
     plt.subplots_adjust(bottom=0.25)
     if ylabel:
         plt.ylabel(ylabel)
-    plt.show()
+    if show:
+        plt.show()
     if save:
         fname = Path.home() / save
-        fig.savefig(fname)
+        fig.savefig(fname, bbox_inches='tight')
