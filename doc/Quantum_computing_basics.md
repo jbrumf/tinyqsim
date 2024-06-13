@@ -837,7 +837,7 @@ If the state has multiple qubits, they may be measured together or one-at-a-time
 The meter symbol denotes measurement of a single qubit in the computational (Z) basis. The measurement is often drawn with two outputs:
 
 <div style="text-align: center;">
-<img src="assets/meter3.png" alt="ghz" height="70"/>
+<img src="assets/meter3.png" alt="meter3" height="70"/>
 </div>
 
 The output on the right is the qubit, which has collapsed into the basis state $\ket{0}$ or $\ket{1}$. The lower output is the boolean result of the measurement: 0 or 1. It is drawn with a double line to indicate that it is a classical bit.
