@@ -10,10 +10,10 @@ import pytest
 import scipy
 from numpy.testing import assert_array_equal
 
+from test.config import ENABLE_STATS_TESTS
 from tinyqsim.quantum import (n_qubits, measure_qubits, measure_qubit)
 
 DEBUG = False  # Enable printing of debug information
-ENABLE_STATS_TESTS = True  # Enable stochastic tests that may occasionally fail
 NRUNS = 1000  # Number of runs for stats
 P_TEST = 0.02  # P-value for testing null hypothesis
 

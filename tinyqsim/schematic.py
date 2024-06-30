@@ -208,8 +208,6 @@ class Schematic:
             # Custom unitary gates
             case 'U':
                 self.draw_generic_gate(x, params['label'], cqubits, tqubits)
-            case 'CU':
-                self.draw_generic_gate(x, params['label'], qubits[0:1], qubits[1:])
 
             # Gates with special symbols
             case 'CX':

@@ -47,7 +47,7 @@ Sdg = np.array([[1, 0],
 T = np.array([[1, 0],
               [0, (1 + 1j) / RT2]])
 
-# Tdg gate: S-dagger
+# Tdg gate: T-dagger
 Tdg = np.array([[1, 0],
                 [0, (1 - 1j) / RT2]])
 

@@ -19,7 +19,7 @@ This is a short introduction to some basic concepts of quantum computation using
   - [Unitary Operators](#unitary-operators)
   - [No-Cloning Theorem](#no-cloning-theorem)
   - [Quantum Circuits](#quantum-circuits)
-    - [Conventions](#conventions)
+    - [Endianness](#endianness)
     - [Operations on Multiple Qubits](#operations-on-multiple-qubits)
     - [Composing Circuits](#composing-circuits)
     - [Rearranging Qubits](#rearranging-qubits)
@@ -57,6 +57,7 @@ This is a short introduction to some basic concepts of quantum computation using
   - [Conclusions](#conclusions)
   - [Bibliography](#bibliography)
 
+
 ## Introduction
 
 Quantum computing uses the special properties of quantum systems, such as superposition and entanglement, to perform computations. In principle, this makes it possible to solve certain problems that would be totally intractable on a conventional (classical) computer.
@@ -79,7 +80,9 @@ An added benefit of developing the technology for quantum computers is that we a
 
 The unit of information for classical computers is the *bit*, which has two possible states that we label 0 and 1. The unit of information for quantum computers is the *qubit*.
 
-The qubit is an abstraction of a two-level quantum system, such as the spin of an electron. It has two orthonormal basis states denoted by $\ket{0}$ and $\ket{1}$. The *ket* symbol $\ket{\psi}$ is part of the Dirac *Bra-Ket* notation and represents a complex vector with label $\psi$.
+The qubit is an abstraction of a two-level quantum system, such as the spin of an electron or the polarisation of a photon. It has two orthonormal basis states denoted by $\ket{0}$ and $\ket{1}$. The *ket* symbol $\ket{\psi}$ is part of the Dirac *Bra-Ket* notation and represents a complex vector with label $\psi$.
+
+The two basis states can be represented as column vectors as follows:
 
 ```math
 \ket{0} =  \begin{bmatrix}1\\0\end{bmatrix}\quad\text{and}\quad\ket{1} =  \begin{bmatrix}0\\1\end{bmatrix}
@@ -95,11 +98,33 @@ Unlike a classical bit, which must be in *either* the state 0 *or* the state 1, 
 
 where $\alpha_0$ and $\alpha_1$ are called *probability amplitudes*.
 
+The quantum state is manipulated by unitary operators that can be represented by matrices. For example, the quantum NOT operator $X$ is described by the following matrix:
+
+```math
+X =\begin{bmatrix}0 & 1 \\ 1 & 0 \end{bmatrix}
+```
+
+When applied to a qubit state, the X gate simply swaps the amplitudes (and hence probabilities) of $\ket{0}$ and $\ket{1}$ :
+
+```math
+\begin{bmatrix}0 & 1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix}\alpha_0 \\ \alpha_1 \end{bmatrix} = \begin{bmatrix}\alpha_1 \\ \alpha_0 \end{bmatrix}
+```
+
+When applied to the basis states $\ket{0}$ or $\ket{1}$, it reduces to the classical NOT operation:
+
+```math
+\begin{align*}
+ X \ket{0} = \begin{bmatrix}0 & 1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix}1 \\ 0 \end{bmatrix} = \begin{bmatrix}0 \\ 1 \end{bmatrix} = \ket{1}\\[1ex]
+X \ket{1} = \begin{bmatrix}0 & 1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix}0 \\ 1 \end{bmatrix} = \begin{bmatrix}1 \\ 0 \end{bmatrix}= \ket{0}
+ \end{align*}
+```
+
+
 The quantum state of a qubit is not something we can observe. The only information we can get is as the result of a quantum measurement that results in the state collapsing into one of the two basis states $\ket{0}$ and $\ket{1}$, with probabilities $|\alpha_0|^2$ and $|\alpha_1|^2$ respectively. Measurement is discussed in more detail below.
 
 ## Quantum Probability and Interference
 
-Classical physics is deterministic, whereas quantum mechanics has an inherent randomness. In classical probability theory, if an outcome can occur in two mutually exclusive ways, the probability of it happening is the sum of the probabilities for the two cases:
+In classical probability theory, if an outcome can occur in two mutually exclusive ways, the probability of it happening is the sum of the probabilities for the two cases:
 
 ```math
 p = p_1 + p_2
@@ -342,7 +367,7 @@ Quantum states represent exponentially more information than classical states. H
 
 ## Unitary Operators
 
-A *unitary* operator $U$ is one whose inverse is its *conjugate transpose* (aka *Hermitian transpose*):
+A *unitary* operator $U$ is one whose inverse is its *conjugate transpose* $U^\dagger$ (aka *Hermitian transpose*):
 
 ```math
 U^\dagger U = U U^\dagger = I
@@ -355,7 +380,7 @@ Unitary operators are norm-preserving and invertible. The eigenvalues $\lambda$ 
 U\ket{\psi} = \lambda \ket{\psi},\quad |\lambda|=1
 ```
 
-The time evolution of a closed quantum system is *unitary*, according to the *Schrödinger equation*. If the state of a quantum system is $\ket{\psi}$, then the state $\ket{\psi'}$ at a later time corresponds to the application of a unitary operator:
+The time evolution of a closed quantum system is *unitary*, according to the *Schrödinger equation*. If the state of a quantum system is $\ket{\psi}$, then the state $\ket{\psi'}$ at a later time corresponds to the application of a unitary operator $U$:
 
 ```math
 \ket{\psi'} = U\ket{\psi}
@@ -377,7 +402,7 @@ Unitary operators can be expressed as unitary matrices. A unitary matrix is one 
 
 The *no-cloning* theorem of quantum mechanics says that, given an unknown quantum state, it is not possible to create an exact independent copy of it. For example, in quantum teleportation, it is not possible to send an unknown state from A to B, unless the original state at A is lost in the process.
 
-Cloning would be the operation:
+Cloning, if it were possible, would be the operation:
 
 ```math
 \ket{\psi 0} \rightarrow \ket{\psi\psi} = \ket{\psi} \otimes \ket{\psi}
@@ -400,15 +425,21 @@ The no-cloning theorem implies that it is not possible to connect the output of 
 
 A quantum circuit is a network of quantum gates applied to a set of qubits. It can be described by a quantum circuit diagram or in a quantum programming language. Quantum circuit diagrams allow a more intuitive level of understanding than equations.
 
+The following is a simple example of a quantum circuit involving a Hadamard gate H and two CX (aka controlled-NOT) gates. The convention used in this document is that qubit 0 is the *most-significant* qubit and it is drawn as the top-most qubit in the diagram. It is normally assumed that all qubits are initialized to $\ket{0}$ unless otherwise stated.
+
+<div style="text-align: center;">
+<img src="assets/endianness.png" height="170"/>
+</div>
+
 A quantum circuit has a fixed number of qubits, as required by unitarity and the no-cloning theorem. No qubits can be added to the circuit or deleted. Any extra qubits (known as *ancilla* qubits) that the computation needs must be included and initialized as part of the initial state.
 
-### Conventions
+### Endianness
 
-The qubit on the left side of a tensor product is refered to as the most-significant qubit.
+The qubit on the left side of a tensor product is refered to as the *most-significant* qubit. Hence, in the quantum state $\ket{011}$, the most-significant qubit is $\ket{0}$ and the least-significant qubit is $\ket{1}$:
 
-This document uses the *big-endian* qubit convention in which qubit 0 is the most-significant qubit. Note that some books and papers use the *little-endian* convention in which qubit 0 is the least significant qubit. This can lead to confusion when comparing examples from different sources.
+This document uses the *big-endian* qubit numbering convention in which the most-significant qubit is called qubit 0. Note that some books and papers use the *little-endian* convention in which the least significant qubit is qubit 0. This can lead to confusion when comparing examples from different sources. It also leads to different matrix representation of multi-qubit gates, such as CX, which can be a further source of confusion.
 
-The circuits in this document are drawn with the most-significant qubit at the top, so tensor products are applied in a downward direction.
+If quantum circuits are drawn with qubit 0 at the top, tensor products are applied in a downward direction for the big-endian convention and in an upward direction for the little-endian convention. The circuits in this document are drawn with the most-significant qubit at the top, so tensor products are applied in a downward direction.
 
 ### Operations on Multiple Qubits
 
@@ -504,7 +535,7 @@ It is more complicated when we want to apply a multi-qubit gate to non-consecuti
 
 Non-consecutive qubits are a problem in real quantum computers because the qubits are typically physically arranged in a one or two dimensional array. Operations that involve interactions between qubits (e.g. CX), require them to be physically adjacent. A single swap of two non-adjacent qubits may be built from a sequence of smaller swaps of adjacent qubits. Consequently, many swaps may be needed.
 
-Quantum computer programming languages and quantum circuit diagrams work at a higher level of abstraction, where multi-qubit gates can be applied to arbitrary qubits, without worrying about such issues. Software then compiles these into sequences of lower-level operations for the quantum hardware, taking into account the qubit topology and primitive operations available.
+Quantum computer programming languages and quantum circuit diagrams work at a higher level of abstraction, where multi-qubit gates can be applied to arbitrary qubits, without the user needing to worry about such issues. Software then compiles these into sequences of lower-level operations for the quantum hardware, taking into account the qubit topology and primitive operations available.
 
 In a simulator, rather than real quantum hardware, the state vector can be rearranged by permutation before applying the multi-qubit operation. Another technique is to represent the state vector as a tensor, then the qubits can be rearranged simply by permuting the tensor indices, rather than rearranging the data.
 
@@ -598,8 +629,8 @@ When applied to the basis states $\ket{0}$ or $\ket{1}$, it reduces to the class
 
 ```math
 \begin{align*}
- X \ket{0} = \begin{bmatrix}0 & 1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix}1 \\ 0 \end{bmatrix} = \begin{bmatrix}0 \\ 1 \end{bmatrix} = \ket{1}\\[1ex]
-X \ket{1} = \begin{bmatrix}0 & 1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix}0 \\ 1 \end{bmatrix} = \begin{bmatrix}1 \\ 0 \end{bmatrix}= \ket{0}
+ X \ket{0} = \ket{1}\\[1ex]
+ X \ket{1} = \ket{0}
  \end{align*}
 ```
 
@@ -714,6 +745,8 @@ S &= P(\frac{\pi}{2})= \sqrt{Z}\\[0.3em]
 T &= P(\frac{\pi}{4})= \sqrt{S}
 \end{align*}
 ```
+
+The term *Phase gate* is sometimes used to refer specifically to the S gate, which is a special case of the P gate.
 
 ### Controlled-X (CX) Gate
 

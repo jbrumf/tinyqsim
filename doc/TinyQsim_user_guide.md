@@ -18,13 +18,15 @@
       - [1: In a Jupyter Notebook](#1-in-a-jupyter-notebook)
       - [2: Run from a Python Script](#2-run-from-a-python-script)
     - [Labelling the Qubits](#labelling-the-qubits)
-    - [Inspecting the State (without collapse)](#inspecting-the-state-without-collapse)
+    - [Inspecting the State](#inspecting-the-state)
       - [Quantum State Vector](#quantum-state-vector)
       - [Components of State](#components-of-state)
       - [Probabilities](#probabilities)
-      - [Measurement Counts](#measurement-counts)
-    - [Quantum Measurement (with collapse)](#quantum-measurement-with-collapse)
+    - [Quantum Measurement](#quantum-measurement)
+      - [General Approach](#general-approach)
       - [Measure](#measure)
+      - [Counts with Measurements](#counts-with-measurements)
+      - [Conditional Execution](#conditional-execution)
       - [Reset](#reset)
     - [Bloch Sphere](#bloch-sphere)
 
@@ -38,7 +40,7 @@
 
 This guide provides a short introduction to using TinyQsim. The companion [TinyQsim Gates](TinyQsim_gates.md) Guide describes the circuit symbols and the different kinds of gates that can be used to build a quantum circuit.
 
-The Jupyter notebooks in the 'examples' directory contain some more-detailed examples.
+For more-complex examples, see the Jupyter notebooks in the 'examples' directory.
 
 ### Installation
 
@@ -118,11 +120,11 @@ The probability distribution can be plotted as follows:
 <img src="assets/bell_probs.png" alt="bell_probs" width=350/>
 </div>
 
-With a real quantum computer, the only way to get a result is to perform a quantum measurement that collapses the state to one of the basis states. Probabilities are estimated by running the program many times and looking at the frequencies of the various outcomes.
+The 'probabilities' and 'plot_probabilities' methods should normally be used for circuits that do *not* contain any measurement operations, since these would collapse the state.
 
-With a simulation, we have direct access to the quantum state and can simply calculate the probabilities. Consequently, it is often not necessary to make collapse measurements.
+These methods can be given a list of arguments specifying the qubits to be considered. The default is to use all qubits.
 
-However, if required, we can sample the probability distribution to see the kind of spread of counts we might get if we made quantum measurements and ran the experiment many times.
+Measurement counts may be generated using the 'counts' and 'plot_counts' methods:
 
 ```
   qc.plot_counts(runs=1000)
@@ -132,30 +134,27 @@ However, if required, we can sample the probability distribution to see the kind
 <img src="assets/bell_counts.png" alt="bell_counts" width=350/>
 </div>
 
-Note that the counts on a real quantum computer may also fluctuate as a result of noise and decoherence, but these effects are not modelled by TinyQsim.
+The default mode simply resamples the probability distribution from a single run. This is suitable when the circuit contains no measurement operations.
 
-In its default mode, the plot_counts function does not re-execute measurements in the circuit, so it is assumed that this function is used *instead of* adding measurements to the circuit.
-
-If collapse measurements are required, they can be performed by adding measurements to the circuit as follows:
+There are two other modes that build the measurement counts by running the circuit multiple times, so that they can handle circuits containing measurements:
 
 ```
-  qc.measure()
-  print(qc.results())
-  qc.draw()
+  qc.plot_counts(runs=1000, mode='repeat')
 ```
-Output: {0:0, 1:1}
 
-<div style="text-align: center;">
-<img src="assets/bell_2.png" alt="bell_1" height=120/>
-</div>
+The *repeat* mode performs multiple executions of a circuit, measuring the outputs once on each run. The circuit may contain measurement operations, including in-circuit measurements. The results are samples of the output distribution rather than the measurement outcomes.
 
-For more-complex examples, see the Jupyter notebooks in the 'examples' directory. 
+```
+  qc.plot_counts(runs=1000, mode='measure')
+```
+
+The *measure* mode performs multiple executions of a circuit containing measurement operations. The results are counts of the measurement outcomes which are not necessarily on the circuit outputs.
+
+The above features are described in more detail in the following sections.
 
 ---
 
 ## Further Details
-
-The following sections provide some more detail on the functions introduced by the simple example above.
 
 Documentation of the QCircuit API can be found in the [TinyQSim API](api/index.html). In particular, refer to the API of the QCircuit class in the 'qcircuit' submodule.
 
@@ -166,7 +165,7 @@ A quantum circuit is created using the QCircuit constructor. For example, to cre
 ```
   qc = QCircuit(2)
 ```
-See the qcircuit module in the API documentation for full details, including all parameters, options, types and defaults.
+See the qcircuit module in the API documentation for further details, including all parameters, options, types and defaults.
 
 By default the quantum state is initialized to $\ket{00\dots 0}$. If a different initial state is required, it may be configured using quantum gates.
 
@@ -199,7 +198,7 @@ The quantum circuit can be drawn using the QCircuit 'draw' method. The following
   qc.draw(show=False, save='image.png')
 ```
 
-See the qcircuit module in the API documentation for full details, including all parameters, options, types and defaults.
+See the qcircuit module in the API documentation for further details, including all parameters, options, types and defaults.
 
 If the circuit has a large number of gates, it may get reduced in size to fit in the window. The following sections explain how to zoom and pan the view.
 
@@ -232,11 +231,15 @@ By default, the qubit lines in the schematic are labelled q0, q1, q2, etc. It is
 <img src="assets/qubit_labels.png" alt="qubit_labels" height=180/>
 </div>
 
-The labels are defined as a Python dictionary. This need only contain entries for qubits that require a custom label. Other qubits will just get the default labels q0, q1,...
+The labels are defined as a Python dictionary. This need only contain entries for qubits that require a custom label. Other qubits will just get the default labels q0, q1,... The example also shows how the ket symbol $\ket{0}$ can be defined and used in a label.
 
-The example shows how the ket symbol $\ket{0}$ can be defined and used in a label.
+If required, the default labels q0,q1... can be suppressed by adding the option 'numbers=False' to the 'qubit_labels' call. For example:
 
-### Inspecting the State (without collapse)
+```
+qc.qubit_labels({0:"Alice", 1:"Bob"}, numbers=False)
+```
+
+### Inspecting the State
 
 On a real quantum computer, it is not possible to examine the quantum state without collapsing it to one of the basis states of the measurement basis. Consequently, quantum algorithms usually end with a measurement of the quantum state, yielding the result as a classical state. The program is often run many times and the frequencies of the various outcomes are used to estimate their probabilities.
 
@@ -316,7 +319,7 @@ Examples:
   qc.components(include_zeros=True)
 ```
 
-See the qcircuit module in the API documentation for full details, including all parameters, options, types and defaults.
+See the qcircuit module in the API documentation for further details, including all parameters, options, types and defaults.
 
 Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$ :
 
@@ -337,7 +340,7 @@ Examples:
   qc.probabilities(1,2, include_zeros=True)
 ```
 
-See the qcircuit module in the API documentation for full details, including all parameters, options, types and defaults.
+See the qcircuit module in the API documentation for further details, including all parameters, options, types and defaults.
 
 Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$ :
 
@@ -353,71 +356,84 @@ p(\ket{01}) = 0.5, \quad p(\ket{10})= 0.5
 
 The 'probabilities' method is normally used *instead of* placing measurements at the end of the circuit. If it is used *after* output measurements, the state will have already been collapsed, so the result will be a single state with probability 1.0, if all the requested qubits have been measured. If only some have been measured, the probabilities returned will be the probabilities of the possible outcomes still remaining after the measurement.
 
-Occasionally, a circuit may include a mid-circuit measurement or qubit reset operation. In this case, the probabilities are with respect to the initial outcome of the mid-circuit measurement. In this situation, it may be better to use the 'counts' method instead of 'probabilities', since this has an option to re-run the whole circuit.
+Occasionally, a circuit may include a mid-circuit measurement or qubit reset operation. In this case, the probabilities are with respect to the initial outcome of the mid-circuit measurement. In this situation, it is better to use the 'counts' method instead of 'probabilities', since this has an option to re-run the whole circuit many times instead of just resampling the output of a single run.
 
 In addition to the 'probabilities' method, which returns a dictionary, there is a similar 'plot_probabilities' method that plots the results as a histogram.
+
+```
+  qc.plot_probabilities()
+```
 
 <div style="text-align: center;">
 <img src="assets/bell_probs.png" alt="bell_probs" width=350/>
 </div>
 
-Examples:
+Other examples:
 
 ```
   qc.plot_probabilities()
   qc.plot_probabilities(1,2)
+  qc.plot_probabilities(height=0.5)
   qc.plot_probabilities(save='probabilities.png')
 ```
 See the QCircuit API documentation for further details.
 
-#### Measurement Counts
+### Quantum Measurement
 
-The quantum state cannot be observed on a real quantum computer, so it is common to perform measurements at the end of the quantum circuit and run the program many times to find the frequency with which each outcome occurs. This provides an approximation to the true probabilities that improves as the number of test runs is increased.
+#### General Approach
 
-TinyQsim provides the following method that simulates such a sequence of test runs and returns a dictionary of the counts for each basis state. It does not affect the state (except when the 'rerun' option is used). If you want the state to be updated, just follow it with a call to 'measure'.
+With a real quantum computer, the only way to get a result is to perform a quantum measurement that collapses the state to one of the basis states. Consequently, quantum circuits typically include measurements on the final state of each qubit. Probabilities are estimated by running the program many times and looking at the frequencies of the various measurement outcomes.
 
-The arguments specify the qubits to be measured. If they are omitted, all qubits are measured.
+The preferred approach for simulation with TinyQsim is to have quantum circuits that do not contain any measurements. This makes it possible to calculate the probabilities of the various measurement outcomes without having to run the circuit more than once. This gives a large performance advantage over a circuit containing measurements, which must be run hundreds of times to build up measurement counts to approximate the probabilities.
 
-Examples:
+Measurements at the end of a circuit can simply be removed. Mid-circuit measurements are more tricky, but the circuit can in principle always be rearranged into an equivalent circuit with all measurements at the end, using the *Principle of deferred measurement*. These measurements can then be removed.
+
+Sometimes, it is useful to see measurement counts, instead of just probabilities. If the circuit contains no measurements, then we can efficiently resample the probability distribution many times without rerunning the circuit. This operation is provided by the 'counts' and 'plot_counts' methods in their default 'resample' mode:
+
 ```
   qc.counts()
-  qc.counts(1,2)
-  qc.counts(1,2, runs=500)
-  qc.counts(1,2, rerun=True)
-  qc.counts(1,2, include_zeros=True)
 ```
 
-See the qcircuit module in the API documentation for full details, including all parameters, options, types and defaults.
-
-Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}$ :
+Output:  {'01': 503, '10': 497}
 
 ```
-  {'01': 503, '10': 497}
+  qc.plot_counts()
 ```
-
-Bu default, 'counts' simply computes the probability distribution for the various outcomes and takes multiple samples from that distribution. Like the probabilites method, it is intended to be used *instead of* placing measurements on the outputs of the circuit. This is sufficient if the circuit contains no (mid-circuit) measurement.
-
-If mid-circuit measurements (or resets) are present, the option 'rerun=True' can be used to force re-execution of the whole circuit. This also works if there are measurements on the outputs.
-
-If there are no measurements, then the default approach is faster as the circuit is only executed once. This may be important when the circuit has many qubits.
-
-In addition to the 'counts' method, which returns a dictionary, there is a similar 'plot_counts' method that plots the results as a histogram.
 
 <div style="text-align: center;">
 <img src="assets/bell_counts.png" alt="bell_counts" width=350/>
 </div>
 
-Examples:
+Note that the measurement counts on a real quantum computer may also fluctuate as a result of noise and decoherence, but these effects are not modelled by TinyQsim.
+
+Other examples:
+
 ```
+  qc.counts()
+  qc.counts(1,2)
+  qc.counts(runs=1000)
+  qc.counts(mode='resample')
+  qc.counts(1,2, include_zeros=True)
+  
   qc.plot_counts()
-  qc.plot_counts(1,2)
-  qc.plot_counts(1,2, runs=500)
-  qc.plot_counts(1,2, rerun=True)
+  qc.plot_counts(runs=1000)
+  qc.plot_counts(mode='resample')
+  qc.plot_counts(height=0.6)
   qc.plot_counts(save='counts.png')
 ```
-See the QCircuit API documentation for further details.
 
-### Quantum Measurement (with collapse)
+If the 'runs' option is omitted, a value of 1000 is used by default.
+
+In cases where the circuit contains measurement operations, the 'counts' method provides two other modes for generating measurement counts from multiple runs of the circuit:
+
+```
+  qc.counts(1,2, mode='repeat')
+  qc.counts(1,2, mode='measure')
+```
+
+Theses are discussed below.
+
+In its default 'resample' mode, the 'counts' function does not re-execute measurements in the circuit, so this is intended for circuits containing no measurements.
 
 #### Measure
 
@@ -427,17 +443,50 @@ The arguments specify the qubits to be measured. If they are omitted, all qubits
 
 Examples:
 ```
-  print(qc.measure())       # Measure all qubits
-  m0, m1 = qc.measure(0,1)  # Measure qubits 0 and 1
+  qc.measure()
+  qc.measure(1,2)
 ```
 
 <div style="text-align: center;">
 <img src="assets/measure01.png" alt="measure01" height="115"/>
 </div>
 
-See the qcircuit module in the API documentation for full details, including all parameters, options, types and defaults.
+The results may be accessed from the return value of the 'measure' call:
 
-The 'measure' method returns the result of the measurement so that it can be printed or saved, as required.
+```
+  m0, m1 = qc.measure(0,1)
+```
+
+Alternatively, the 'results' method can be used to get a dictionary of the latest measured values for each measured qubit:
+
+```
+  print(qc.results())
+```
+Output: {0:0, 1:1}
+
+See the qcircuit module in the API documentation for further details, including all parameters, options, types and defaults.
+
+#### Counts with Measurements
+
+If the circuit contains measurements, either the option mode='repeat' or mode='measure' can be used to force re-execution of the whole circuit. If there are no measurements, then the default approach is faster as the circuit is only executed once. This may be important when the circuit has many qubits.
+
+- The *repeat* mode performs multiple executions of a circuit which may contain measurement operations, measuring the outputs once on each run. The results are samples of the outputs rather than the measurement results.
+
+- The *measure* mode performs multiple executions of a circuit containing measurement operations. The results are counts of the measurement outcomes which are not necessarily on the circuit outputs. If there are measurement operations on any qubits that are not requested, then their outcomes are not included in the output.
+
+The default mode is 'resample':
+
+- The *resample* mode performs a single execution of the circuit and then samples the resulting probability distribution multiple times. The circuit should not contain any measurement operations. This mode is much faster than the 'repeat' and 'measure' modes.
+
+See the QCircuit API documentation for further details.
+
+#### Conditional Execution
+
+Some quantum simulators support classical bits as well as quantum bits. These allow a quantum circuit to contain gates whose execution is dependant on the outcome of a preceding measurement. TinyQsim does not support classical bits, but the same effect can be achieved using Python code to perform the conditional operations. In this case, the quantum circuit diagram shows the gates actually executed in a particular run, rather than including the full control logic.
+
+Another way to achieve conditional operations in TinyQsim is to perform a mid-circuit measurement using a CX gate instead of a measurement operation, with an ancilla qubit for the measurement result. This can then be used to control a subsequent quantum operation. This allows the control logic to be included in the circuit diagram.
+
+Mid-circuit measurements were not considered very important for the kind of use-case that was envisaged for TinyQsim. As a result, they were not included, since one of the aims of TinyQsim was to 'keep it simple'.
 
 #### Reset
 
@@ -451,9 +500,7 @@ Example:
 <img src="assets/reset.png" alt="reset" height="65"/>
 </div>
 
-See the qcircuit module in the API documentation for full details, including all parameters, options, types and defaults.
-
-An alternative to a reset is to "uncompute" a qubit by executing the inverse of the preceding operations on the qubit in reverse order to return it to its initial state. This has the advantage that it is a proper unitary operation.
+See the qcircuit module in the API documentation for further details, including all parameters, options, types and defaults.
 
 The behaviour of reset is equivalent to a measurement of the qubit followed by an X operation conditional on the measurement result being 1. This forces the qubit into the $\ket{0}$ state. Any other qubits that were entangled with the reset qubit are affected in the same way as if the reset were a measurment.
 

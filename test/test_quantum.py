@@ -12,11 +12,10 @@ from numpy import kron
 from numpy.testing import assert_array_equal, assert_allclose
 from pytest import approx
 
+from test.config import ENABLE_STATS_TESTS
 from tinyqsim.gates import ID, CX, X, SWAP
 from tinyqsim.quantum import *
 from tinyqsim.utils import kron_n, normalize
-
-ENABLE_STATS_TESTS = True  # Enable stochastic tests that may occasionally fail
 
 CX_BIG = np.array([[1, 0, 0, 0],  # Big-endian CX gate
                    [0, 0, 0, 1],

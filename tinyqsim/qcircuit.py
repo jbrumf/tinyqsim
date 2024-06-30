@@ -17,7 +17,7 @@ from tinyqsim.schematic import Schematic
 from tinyqsim.simulator import Simulator
 from tinyqsim.utils import round_complex
 
-EPS = 1e-12  # Threshold for ignoring small values
+EPSSILON = 1e-12  # Threshold for ignoring small values
 
 
 class QCircuit(object):
@@ -158,7 +158,8 @@ class QCircuit(object):
            :return: Dictionary of state components
         """
         comp = quantum.components_dict(self._simulator.state_vector)
-        return {k: round_complex(v, decimals) for k, v in comp.items() if include_zeros or abs(v) > EPS}
+        return {k: round_complex(v, decimals) for k, v in comp.items()
+                if include_zeros or abs(v) > EPSSILON}
 
     def probabilities(self, *qubits: int, decimals: int = 5,
                       include_zeros: bool = False) -> dict[str, float]:
@@ -171,33 +172,64 @@ class QCircuit(object):
         if not qubits:
             qubits = range(self._nqubits)
         probs = quantum.probability_dict(self._simulator.state_vector, qubits)
-        return {k: round(v, decimals) for k, v in probs.items() if include_zeros or v > EPS}
+        return {k: round(v, decimals) for k, v in probs.items()
+                if include_zeros or v > EPSSILON}
 
-    def counts(self, *qubits: int, runs: int = 1000, rerun: bool = False,
+    def _final_counts(self, qubits: range | list[int], runs: int):
+        """Return counts of measuring circuit outputs.
+        :param qubits: qubits to be measured
+        :param runs: number of runs
+        """
+        sim = self._simulator
+        names = quantum.basis_names(len(qubits))
+        count = np.zeros(2 ** len(qubits), dtype=int)
+        for run in range(runs):
+            sim.execute(self._model)
+            probs = quantum.probabilities(sim.state_vector, qubits)
+            key = np.random.choice(len(probs), None, p=probs)
+            count[key] += 1
+        return dict(zip(names, count))
+
+    def _measurement_counts(self, qubits: range | list[int], runs) -> dict:
+        """Return counts for specified qubits.
+        :param qubits: qubits to be measured
+        :param runs: number of runs
+        """
+        nbits = len(qubits)
+        count = dict(zip(quantum.basis_names(nbits), [0] * 2 ** nbits))
+        for run in range(runs):
+            self._simulator.execute(self._model)
+            r = self._simulator.results()
+            k = 2 ** (nbits - 1)
+            n = 0
+            for i, qi in enumerate(qubits):
+                n += k * r.get(qi, 0)
+                k //= 2
+            key = ''.join([i for i in bin(n)[2:].zfill(nbits)])
+            count[key] += 1
+        return count
+
+    def counts(self, *qubits: int, runs: int = 1000, mode: str = 'resample',
                include_zeros: bool = False) -> dict[str, int]:
         """ Return measurement counts for repeated experiment.
-            Any measurements within the circuit will be re-run if rerun=True.
-            :param qubits: qubits (None => all)
-            :param runs: Number of test runs (default=1000)
-            :param rerun: True to re-run the whole experiment (default=False)
-            :param include_zeros: True to include zero values (default=False)
-            :return: frequencies of outcomes as a dictionary
+        :param qubits: qubits (None => all)
+        :param runs: Number of test runs (default=1000)
+        :param mode: 'resample' | 'repeat' | 'measure'
+        :param include_zeros: True to include zero values (default=False)
+        :return: frequencies of outcomes as a dictionary
         """
         if not qubits:
             qubits = range(self.n_qubits)
-        if not rerun:
-            dic = quantum.counts_dict(self._simulator.state_vector, list(qubits), runs)
-        else:
-            sim = self._simulator
-            names = quantum.basis_names(len(qubits))
-            count = np.zeros(2 ** len(qubits), dtype=int)
-            for run in range(runs):
-                sim.execute(self._model)
-                probs = quantum.probabilities(sim.state_vector, qubits)
-                k = np.random.choice(len(probs), None, p=probs)
-                count[k] += 1
-            dic = dict(zip(names, count))
-        return {k: v for k, v in dic.items() if include_zeros or v > EPS}
+
+        dic = {}
+        match mode:
+            case 'resample':
+                dic = quantum.counts_dict(self._simulator.state_vector, list(qubits), runs)
+            case 'repeat':
+                dic = self._final_counts(qubits, runs)
+            case 'measure':
+                dic = self._measurement_counts(qubits, runs)
+        return {k: v for k, v in dic.items() if include_zeros or v > EPSSILON}
 
     # ------------------ Measurement ------------------
 
@@ -234,10 +266,11 @@ class QCircuit(object):
     def plot_probabilities(self, *qubits: int, show=True, save: str | None = False,
                            height: float = 1) -> None:
         """Plot histogram of probabilities of measurement outcomes.
-            :param qubits: qubits (None => all)
-            :param show: show the plot
-            :param save: file to save image if required
-            :param height: Scaling factor for plot height
+        See the 'counts' method for further details.
+        :param qubits: qubits (None => all)
+        :param show: show the plot
+        :param save: file to save image if required
+        :param height: Scaling factor for plot height
         """
         if not qubits:
             qubits = range(self._nqubits)
@@ -245,17 +278,18 @@ class QCircuit(object):
         plotting.plot_histogram(probs, show=show, save=save, ylabel='Probability',
                                 height=height)
 
-    def plot_counts(self, *qubits: int, runs: int = 1000, rerun: bool = False,
+    def plot_counts(self, *qubits: int, runs: int = 1000, mode: str = 'resample',
                     show=True, save: str | None = False, height: float = 1) -> None:
         """Plot histogram of measurement counts.
+        See the 'probabilities' method for further details.
         :param qubits: qubits (None => all)
         :param runs: number of test runs (default=1000)
-        :param rerun: True to re-run the whole experiment (default=False)
+        :param mode: 'resample' | 'repeat' | 'measure'
         :param show: show the plot
         :param save: file to save image if required
         :param height: Scaling factor for plot height
         """
-        freq = self.counts(*qubits, runs=runs, rerun=rerun, include_zeros=True)
+        freq = self.counts(*qubits, runs=runs, mode=mode, include_zeros=True)
         plotting.plot_histogram(freq, show=show, save=save, ylabel='Counts', height=height)
 
     # ------------------ Wrapper methods for gates ------------------

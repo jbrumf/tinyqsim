@@ -122,7 +122,8 @@ def probabilities(state: ndarray, qubits: Iterable[int]) -> ndarray:
     nq = n_qubits(state)
     assert 0 <= min(qubits) <= max(qubits) < nq, 'qubit out of range'
 
-    probs = np.array([norm(a) ** 2 for a in state])
+    # probs = np.array([norm(a) ** 2 for a in state])
+    probs = np.absolute(state) ** 2
     return tensor_to_state(np.einsum(state_to_tensor(probs),
                                      range(nq), list(qubits)))
 
