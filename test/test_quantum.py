@@ -7,15 +7,19 @@ Copyright (c) 2024 Jon Brumfitt
 
 from math import sqrt
 
+import numpy as np
 import pytest
-from numpy import kron
+from numpy import kron, ndarray
+from numpy.linalg import norm
 from numpy.testing import assert_array_equal, assert_allclose
 from pytest import approx
 
 from test.config import ENABLE_STATS_TESTS
 from tinyqsim.gates import ID, CX, X, SWAP
-from tinyqsim.quantum import *
-from tinyqsim.utils import kron_n, normalize
+from tinyqsim.quantum import (n_qubits, basis_names, random_state, zeros_state,
+                              random_unitary, unitary_to_tensor, tensor_to_state,
+                              state_to_tensor, apply_tensor, components_dict, probabilities)
+from tinyqsim.utils import kron_n, normalize, is_unitary
 
 CX_BIG = np.array([[1, 0, 0, 0],  # Big-endian CX gate
                    [0, 0, 0, 1],
@@ -32,9 +36,18 @@ def test_zeros_state():
     assert_array_equal(zeros_state(3), [1, 0, 0, 0, 0, 0, 0, 0])
 
 
+def test_random_state_norm():
+    """ Test random state has expected norm."""
+    nruns = 10
+    nqubits = 8
+    for _ in range(nruns):
+        psi = random_state(nqubits)  # / sqrt(2)
+        assert (norm(psi) == approx(1.0, abs=1e-10))
+
+
 @pytest.mark.skipif(not ENABLE_STATS_TESTS, reason='Skipping Statistical Test')
-def test_random_state():
-    """ Test random state has expected norm and standard deviation."""
+def test_random_state_stddev():
+    """ Test random state has expected standard deviation."""
     nruns = 10
     nqubits = 8
     zmax = 0.15  # Test threshold
@@ -49,6 +62,18 @@ def test_random_state():
         zi = np.std(psi.imag) / sigma
         assert abs(1 - zr) < zmax
         assert abs(1 - zi) < zmax
+
+
+def test_random_unitary():
+    u1 = random_unitary(1)
+    assert u1.shape == (2, 2)
+    assert is_unitary(u1)
+    u2 = random_unitary(2)
+    assert u2.shape == (4, 4)
+    assert is_unitary(u2)
+    u3 = random_unitary(3)
+    assert u3.shape == (8, 8)
+    assert is_unitary(u3)
 
 
 def test_n_qubits():

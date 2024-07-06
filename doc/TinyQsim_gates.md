@@ -11,6 +11,7 @@ This document describes the quantum gates implemented by TinyQsim.
   - [Imports and Definitions](#imports-and-definitions)
   - [Symbols and Notation](#symbols-and-notation)
   - [Controlled Gates](#controlled-gates)
+  - [Anti-Controlled Gates](#anti-controlled-gates)
   - [Angle Parameters](#angle-parameters)
   - [Custom Gates](#custom-gates)
   - [Parameterized Custom Gates](#parameterized-custom-gates)
@@ -35,17 +36,18 @@ This document describes the quantum gates implemented by TinyQsim.
   - [S Gate](#s-gate)
   - [Sdg Gate](#sdg-gate)
   - [SWAP Gate](#swap-gate)
-  - [SX (aka SQRTX) Gate](#sx-aka-sqrtx-gate)
+  - [SX (aka V, SQRTX) Gate](#sx-aka-v-sqrtx-gate)
   - [T Gate](#t-gate)
   - [Tdg Gate](#tdg-gate)
   - [U Gate](#u-gate)
   - [X (aka NOT) Gate](#x-aka-not-gate)
   - [Y Gate](#y-gate)
   - [Z Gate](#z-gate)
-- [Other Circuit Elements](#other-circuit-elements)
-  - [Barrier](#barrier)
+- [Non-Unitary Operations](#non-unitary-operations)
   - [Measure](#measure)
   - [Reset](#reset)
+- [Other Symbols](#other-symbols)
+  - [Barrier](#barrier)
 
 <!-- TOC -->
 
@@ -74,7 +76,7 @@ This document describes the quantum gates implemented by TinyQsim.
 | qc.s(t)                           | pi/2 phase (S = sqrt(Z))                 |
 | qc.sdg(t)                         | -pi/2 phase (S-dagger)                   |
 | qc.swap(t1, t2)                   | Swap 2 qubits                            |
-| qc.sx(t)                          | Sqrt(X)                                  |
+| qc.sx(t)                          | Sqrt(X) (aka V, SQRTX)                   |
 | qc.t(t)                           | pi/4 phase (T = sqrt(S))                 |
 | qc.tdg(t)                         | -pi/4 phase (T dagger)                   |
 | qc.u(matrix, label, *t)           | Use unitary matrix as a gate             |
@@ -225,6 +227,16 @@ TinyQsim provides controlled versions of many of the common gates. For example, 
 
 A generic U gate is provided that allows a unitary matrix $U$ to be applied as a gate. This has CU and CCU variants. See the sections on the U, CU and CCU gates below for details.
 
+### Anti-Controlled Gates
+
+Anti-controlled gates are ones where the control is inverted, so that it disables the operation instead of enabling it. These are sometimes drawn like a controlled gate but with a hollow (white) control dot instead of a solid (black) one.
+
+TinyQsim does not have specific support for them, but the same effect can be created by sandwiching a control between two X gates, as shown here:
+
+<div style="text-align: center;">
+<img src="assets/anti_control.png" alt="anti_control" height="110"/>
+</div>
+
 ### Angle Parameters
 
 One-qubit gates typically implement rotations of the state vector on the Bloch sphere. Some of these are fixed-angle rotations, such as X, Y, Z, S, T, etc. Others allow a user-specified rotation angle.
@@ -236,12 +248,12 @@ The following examples show how to specify the label using a simple ASCII 'pi' o
 ```
   PI = '\u03C0'  # PI unicode character
   
-  qc.p(pi/2, 'pi/2', 1)      # ASCII 'pi/4'
-  qc.p(pi/2, f'{PI}/2', 1)   # Unicode PI
+  qc.p(pi/3, 'pi/3', 1)      # ASCII 'pi/3'
+  qc.p(pi/3, f'{PI}/3', 1)   # Unicode PI/3
 ```
 
 <div style="text-align: center;">
-<img src="assets/p_gate.png" alt="p_gate" width="80"/>
+<img src="assets/p_gate_pi3.png" alt="p_gate_pi3" width="80"/>
 </div>
 
 ### Custom Gates
@@ -814,7 +826,7 @@ The SWAP gate is described by the following matrix:
 SWAP =\begin{bmatrix}1&0&0&0 \\ 0&0&1&0 \\ 0&1&0&0 \\ 0&0&0&1 \end{bmatrix}
 ```
 
-### SX (aka SQRTX) Gate
+### SX (aka V, SQRTX) Gate
 
 The SX gate can be thought of as the square-root of the X gate. Applying it twice is equivalent to an X gate:
 
@@ -840,6 +852,8 @@ The SX gate is described by the following matrix:
 ```math
 SX =\frac{1}{\sqrt{2}}\begin{bmatrix}1+i & 1-i \\ 1-i & 1+i \end{bmatrix}
 ```
+
+Note that $V^\dagger$ is the other square-root of X.
 
 ### T Gate
 
@@ -988,25 +1002,9 @@ The Z gate is described by the following matrix:
 Z =\begin{bmatrix}1&0 \\ 0&-1 \end{bmatrix}
 ```
 
-## Other Circuit Elements
+## Non-Unitary Operations
 
 This section covers circuit elements that are not considered to be quantum gates because they are not reversible unitary operations.
-
-### Barrier
-
-A barrier is drawn in the circuit as a vertical dotted line, like a fence separating sections of the circuit. Its main use is to prevent circuit optimizations crossing boundaries. This does not apply to TinyQsim since it currently does no circuit optimization. However, a barrier can still be useful for separating parts of the circuit for clarify, for example to separate initialization from processing.
-
-<div style="text-align: center;">
-<img src="assets/barrier.png" alt="barrier" width="80"/>
-</div>
-
-```
-Example:
-   qc.barrier()
-   
-API:
-   barrier()
-```
 
 ### Measure
 
@@ -1038,3 +1036,21 @@ The 'reset' operation resets a qubit to the $\ket{0}$ state.
 </div>
 
 It is equivalent to a measurement of the qubit, followed by an X operation conditional on the measurement result being 1.
+
+## Other Symbols
+
+### Barrier
+
+A barrier is drawn in the circuit as a vertical dotted line, like a fence separating sections of the circuit. Its main use is to prevent circuit optimizations crossing boundaries. This does not apply to TinyQsim since it currently does no circuit optimization. However, a barrier can still be useful for separating parts of the circuit for clarify, for example to separate initialization from processing.
+
+<div style="text-align: center;">
+<img src="assets/barrier.png" alt="barrier" width="80"/>
+</div>
+
+```
+Example:
+   qc.barrier()
+   
+API:
+   barrier()
+```

@@ -426,14 +426,15 @@ class Schematic:
             self._ax.annotate(text, (x, y), color=text_color,
                               fontsize=fontsize, ha='center', va='center')
 
-    def draw_dot(self, x: float, qubit: int, r: float) -> None:
+    def draw_dot(self, x: float, qubit: int, r: float, color=G_COLOR) -> None:
         """ Draw dot.
             :param: x: x position
             :param: qubit: qubit index
             :param: r: radious
+            :param: color: fill color
         """
         y = -self._qubit_pitch * qubit
-        p = Circle((x, y), r, edgecolor=G_COLOR, facecolor=G_COLOR)
+        p = Circle((x, y), r, edgecolor=G_COLOR, facecolor=color)
         self._ax.add_patch(p)
 
     def draw_cross(self, x: float, qubit: int) -> None:

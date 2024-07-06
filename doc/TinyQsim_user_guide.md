@@ -241,11 +241,11 @@ qc.qubit_labels({0:"Alice", 1:"Bob"}, numbers=False)
 
 ### Inspecting the State
 
-On a real quantum computer, it is not possible to examine the quantum state without collapsing it to one of the basis states of the measurement basis. Consequently, quantum algorithms usually end with a measurement of the quantum state, yielding the result as a classical state. The program is often run many times and the frequencies of the various outcomes are used to estimate their probabilities.
+On a real quantum computer, it is not possible to examine the quantum state without collapsing it to one of the basis states. Consequently, quantum algorithms usually end with a measurement of the quantum state, yielding the result as a classical state. The program is often run many times and the frequencies of the various outcomes are used to estimate their probabilities.
 
 The situation is different with a quantum simulator like TinyQsim. We have direct access to the quantum state and can calculate the probabilities without performing any collapse measurements.
 
-Four methods and properties are provided that allow you to access the state in different ways:
+Four methods and properties are provided that allow the state to be accessed in various ways:
 
 ```
   qc.state_vector
@@ -287,7 +287,7 @@ For example, to print the state components to 4 decimal places:
 The state vector may have many thousands or millions of elements so, by default, only the first and last few are printed. This behaviour can be controlled as follows:
 
 ```
-  with np.printoptions(threshold=100, edgeitems=10):
+  with np.printoptions(threshold=1000, edgeitems=3):
       print(qc.state_vector)
 ```
 
@@ -485,8 +485,6 @@ See the QCircuit API documentation for further details.
 Some quantum simulators support classical bits as well as quantum bits. These allow a quantum circuit to contain gates whose execution is dependant on the outcome of a preceding measurement. TinyQsim does not support classical bits, but the same effect can be achieved using Python code to perform the conditional operations. In this case, the quantum circuit diagram shows the gates actually executed in a particular run, rather than including the full control logic.
 
 Another way to achieve conditional operations in TinyQsim is to perform a mid-circuit measurement using a CX gate instead of a measurement operation, with an ancilla qubit for the measurement result. This can then be used to control a subsequent quantum operation. This allows the control logic to be included in the circuit diagram.
-
-Mid-circuit measurements were not considered very important for the kind of use-case that was envisaged for TinyQsim. As a result, they were not included, since one of the aims of TinyQsim was to 'keep it simple'.
 
 #### Reset
 

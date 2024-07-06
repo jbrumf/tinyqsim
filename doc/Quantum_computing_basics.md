@@ -437,7 +437,7 @@ A quantum circuit has a fixed number of qubits, as required by unitarity and the
 
 The qubit on the left side of a tensor product is refered to as the *most-significant* qubit. Hence, in the quantum state $\ket{011}$, the most-significant qubit is $\ket{0}$ and the least-significant qubit is $\ket{1}$:
 
-This document uses the *big-endian* qubit numbering convention in which the most-significant qubit is called qubit 0. Note that some books and papers use the *little-endian* convention in which the least significant qubit is qubit 0. This can lead to confusion when comparing examples from different sources. It also leads to different matrix representation of multi-qubit gates, such as CX, which can be a further source of confusion.
+This document uses the *big-endian* qubit numbering convention in which the most-significant qubit is called qubit 0. Note that some books and papers use the *little-endian* convention in which the least significant qubit is qubit 0. This can lead to confusion when comparing examples from different sources. It also leads to different matrix representation of some multi-qubit gates, such as CX, which can be a further source of confusion.
 
 If quantum circuits are drawn with qubit 0 at the top, tensor products are applied in a downward direction for the big-endian convention and in an upward direction for the little-endian convention. The circuits in this document are drawn with the most-significant qubit at the top, so tensor products are applied in a downward direction.
 
@@ -1108,9 +1108,27 @@ For an example, see the section on [Exploring the Teleportation Example](#explor
 
 ### Principle of Deferred Measurement
 
-The *principle of deferred measurement* states that a quantum circuit with mid-circuit measurements can always be replaced by a circuit which has all the measurements at the end. If the intermediate measurements are used to control (i.e. enable) operations later in the circuit, then the classically-controlled operations can be replaced by ones with quantum controls.
+The *principle of deferred measurement* states that a quantum circuit with mid-circuit measurements can always be replaced by an equivalent one which has all the measurements at the end, without affecting the measurement probabilities.
 
-In particular, measurement commutes with controls. For example, consider the following circuit:
+If the mid-circuit measurements are used to control (i.e. enable) operations later in the circuit, then the classically-controlled operations can be replaced by ones with quantum controls.
+
+One way to move a mid-circuit measurement to the end is to replace it by a CX gate that entangles the qubit with an ancilla qubit initialized to $\ket{0}$. This can be  measured giving the basis state $\ket{0}$ or $\ket{1}$, corresponding to the binary 0 or 1 result of the original measurement. The measurement on the ancilla qubit can be moved to the end of the circuit.
+
+For example, in the following circuit, the first measurement cannot simply be moved to the end as measurement does not commute with an arbitrary unitary operator:
+
+<div style="text-align: center;">
+<img src="assets/ancilla_measure1.png" alt="ancilla_measure" height="65"/>
+</div>
+
+However, the first measurement can be replaced by a CX gate that entangles the qubit with an ancilla bit initialized to $\ket{0}$ that can subsequently be measured at the end of the circuit:
+
+<div style="text-align: center;">
+<img src="assets/ancilla_measure2.png" alt="ancilla_measure" height="120"/>
+</div>
+
+If mid-circuit measurements are used to control (i.e. enable) operations later in the circuit, then the classically-controlled operations can be replaced by ones with quantum controls. For example, the ancilla qubit in the above example could be used to control subsequent quantum operations.
+
+Another way to move measurements to the end is to use commutativity properties. In particular, measurement commutes with controls. For example, consider the following circuit:
 
 <div style="text-align: center;">
 <img src="assets/defer_before.png" alt="defer_before" height="120"/>
@@ -1122,21 +1140,9 @@ This can be be replaced by:
 <img src="assets/defer_after.png" alt="defer_after" height="120"/>
 </div>
 
-In other cases, measurement can be replaced by a CX gate that entangles the qubit with an ancilla qubit initialized to $\ket{0}$. This can subsequently be measured at the end of the circuit giving the result that the intermediate measurement would have given.
+Once all measurements are at the end, the circuit becomes a single unitary operator that is followed by final measurements of its outputs. This simplifies analysis and optimization of the circuit by allowing only pure states to be considered.
 
- In the following circuit, the first measurement cannot simply be moved to the end:
-
-<div style="text-align: center;">
-<img src="assets/ancilla_measure1.png" alt="ancilla_measure" height="65"/>
-</div>
-
-However, the first measurement can be replaced by a CX gate that entangles the qubit with an ancilla bit initialized to $\ket{0}$ that can subsequently be measured at the end of the circuit.
-
-<div style="text-align: center;">
-<img src="assets/ancilla_measure2.png" alt="ancilla_measure" height="120"/>
-</div>
-
-Adding an ancilla bit may not be appropriate as qubits are in short supply with today's quantum computers.
+Expressing the circuit as a single unitary also makes it faster to simulate. Instead of estimating outcome probabilities by performing many runs, it is possible to simply omit the final measurements completely and calculate the probabilities directly. If measuurement counts are needed to see examples of statistical fluctuations, it is possible to sample the probability distribution many times without needing to run the circuit more than once.
 
 ### Mid-Circuit Measurement
 

@@ -221,7 +221,6 @@ class QCircuit(object):
         if not qubits:
             qubits = range(self.n_qubits)
 
-        dic = {}
         match mode:
             case 'resample':
                 dic = quantum.counts_dict(self._simulator.state_vector, list(qubits), runs)
@@ -229,6 +228,8 @@ class QCircuit(object):
                 dic = self._final_counts(qubits, runs)
             case 'measure':
                 dic = self._measurement_counts(qubits, runs)
+            case _:
+                raise ValueError(f'Invalid mode: {mode}')
         return {k: v for k, v in dic.items() if include_zeros or v > EPSSILON}
 
     # ------------------ Measurement ------------------
@@ -309,7 +310,7 @@ class QCircuit(object):
     def ccx(self, c1: int, c2: int, t: int) -> None:
         """Add a controlled-controlled-X (CCX, aka Tofolli) gate.
         :param c1: control qubit
-        :param c2: target qubit
+        :param c2: control qubit
         :param t: target qubit
         """
         self._add_gate('CCX', [c1, c2, t], {'controls': 2})

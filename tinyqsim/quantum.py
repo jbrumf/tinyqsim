@@ -43,6 +43,20 @@ def random_state(nqubits: int) -> np.ndarray:
     return z / n
 
 
+def random_unitary(nq: int):
+    """Return a random unitary matrix.
+    :param nq: number of qubits
+    """
+    while True:
+        # Create matrix of independent Gaussian random complex variables
+        m = random_state(nq * 2).reshape(2 ** nq, 2 ** nq)
+        if abs(np.linalg.det(m)) > 1E-6:  # Check non-singular
+            break
+    # Orthonormalize using QR factorization
+    q, r = np.linalg.qr(m)
+    return q
+
+
 def n_qubits(a: ndarray) -> int:
     """Return the number of qubits of a state or unitary matrix.
        :param a: state or unitary matrix
@@ -87,21 +101,21 @@ def unitary_to_tensor(u: ndarray):
     return u.reshape([2] * nqu * 2)
 
 
-def apply_tensor(tv: ndarray, tu: ndarray, qubits: list[int]) -> ndarray:
+def apply_tensor(ts: ndarray, tu: ndarray, qubits: list[int]) -> ndarray:
     """ Apply tensor of unitary to specified qubits of state tensor.
-        :param tv: state tensor
+        :param ts: state tensor
         :param tu: tensor of unitary
         :param qubits: list of qubits
         :return: updated state tensor
     """
-    nq = int.bit_length(tv.size - 1)
+    nq = int.bit_length(ts.size - 1)
 
     # Tensor subscripts as lists of integers
     a = range(nq)
     b = [q + nq for q in qubits] + qubits
     c = [i + nq if i in qubits else i for i in a]
 
-    return np.einsum(tv, a, tu, b, c, optimize=True)
+    return np.einsum(ts, a, tu, b, c, optimize=True)
 
 
 def components_dict(state: ndarray) -> dict:
@@ -122,7 +136,6 @@ def probabilities(state: ndarray, qubits: Iterable[int]) -> ndarray:
     nq = n_qubits(state)
     assert 0 <= min(qubits) <= max(qubits) < nq, 'qubit out of range'
 
-    # probs = np.array([norm(a) ** 2 for a in state])
     probs = np.absolute(state) ** 2
     return tensor_to_state(np.einsum(state_to_tensor(probs),
                                      range(nq), list(qubits)))
