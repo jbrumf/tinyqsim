@@ -25,6 +25,7 @@ setup(
         'more-itertools',
         'numpy',
         'matplotlib',
+        'ipython',
         'ipympl',
         'scipy',
         'notebook',

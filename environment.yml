@@ -8,6 +8,7 @@ dependencies:
   - scipy
   - matplotlib
   - notebook
+  - ipython
   - ipympl
   - pytest
   - pip

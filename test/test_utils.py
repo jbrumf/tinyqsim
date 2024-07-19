@@ -85,5 +85,3 @@ def test_kron_n():
 def test_kron_all():
     assert_equal(kron_all([X]), X)
     assert_equal(kron_all([X, Y, Z]), kron(X, kron(Y, Z)))
-
-# test_print_array(self):

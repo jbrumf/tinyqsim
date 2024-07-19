@@ -82,9 +82,3 @@ def kron_all(xs: list[ndarray]) -> ndarray:
     for i in range(1, len(xs)):
         p = kron(p, xs[i])
     return p
-
-
-def print_array(m: ndarray):
-    """ Print matrix or vector in fixed-point with rounding """
-    with np.printoptions(precision=5, suppress=True):
-        print(m)

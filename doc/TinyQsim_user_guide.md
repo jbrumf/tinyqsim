@@ -327,6 +327,19 @@ Example output for state $\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10
   {'01': (0.7071+0j), '10': (0.7071+0j)}
 ```
 
+The dictionaries returned by 'components', 'probabilities' and 'counts' functions can be printed using a 'print' command as follows:
+
+```
+  print(qc.components())
+```
+
+The 'print' function prints all the dictionary item on a single line, which may be hard to read if there are many items. Alternatively, when there are more than a few items, the dictionary many be printed with one item per line by using the 'display' function in a Jupyter notebook or the 'pprint' (pretty-print) function in a Python module. In a notebook, the 'display' call may be omitted entirely for the last line in a notebook cell.
+
+```
+  display(qc.components())
+```
+
+
 #### Probabilities
 
 The probabilities of a measurement returning each of the basis states can be obtained as follows. This is not a measurement, so the state is not collapsed. 
@@ -520,33 +533,18 @@ where $0 \le\theta\le\pi\,$ and $\,0\le\phi\le2\pi$.
 
 The Bloch sphere is mostly useful for single qubits because the qubits of a multi-qubit system can become *entangled* such that the qubits no longer have individual pure states. However, the sphere is a useful way to visualize and learn about the effects of single-qubit gates, which can then be used as part of a multi-qubit system.
 
-The support for the Bloch Sphere in TinyQsim is at the prototype stage, so the details are likely to change. At present, it can display the Bloch sphere for a pair of angles, $\phi$ and $\theta$. For example:
-
-```
-  from tinyqsim.plot_bloch import plot_bloch
-  phi = pi / 2
-  theta = pi / 2
-  plot_bloch(phi, theta)
-```
-
-The sphere can be rotated with the mouse when run from a Python program. When run from a Jupyter notebook, the orientation is fixed. However, the view point can be set using the optional parameters azimuth and elevation in degrees:
-
-```
-  plot_bloch(phi, theta, azimuth=35, elevation=10)
-```
-
 The following example shows how to create a one-qubit quantum circuit, use gates to configure the state and then plot the state on the Bloch sphere.
 
 For example:
 
 ```
-  from tinyqsim.bloch import plot_bloch, qubit_to_bloch
+  from tinyqsim.bloch import plot_bloch
 
   qc = QCircuit(1)  # This must be 1 qubit
   qc.h(0)
   qc.p(pi/3, f'{PI}/3', 0)
   qc.draw()
-  plot_bloch(*qubit_to_bloch(qc.state_vector))
+  plot_bloch(qc.state_vector)
 ```
 
 <div style="text-align: center;">
@@ -558,3 +556,20 @@ For example:
 </div>
 
 The Hadamard gate rotates the state vector from its initial +Z direction $\ket{0}$ to the +X direction $\ket{+}$. Then the P($\pi$/3) gate rotates it by $\pi/3$ radians clockwise about the Z axis to the position shown by the red arrow.
+
+The sphere can be rotated with the mouse when run from a Python program. When run from a Jupyter notebook, the orientation is fixed. However, the view point can be set using the optional parameters azimuth and elevation in degrees as follows:
+
+```
+  plot_bloch(psi, azimuth=35, elevation=10)
+```
+
+It is also possible to display the Bloch sphere for a pair of angles, $\phi$ and $\theta$. For example:
+
+```
+  from tinyqsim.plot_bloch import plot_bloch_angles
+  phi = pi / 2
+  theta = pi / 2
+  plot_bloch_angles(phi, theta)
+```
+
+The support for the Bloch Sphere in TinyQsim is at the prototype stage, so the details may change.

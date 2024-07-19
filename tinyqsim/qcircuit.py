@@ -8,16 +8,17 @@ Copyright (c) 2024 Jon Brumfitt
 from math import isclose
 
 import numpy as np
+from IPython.display import Math
 from numpy import ndarray
 from numpy.linalg import norm
 
-from tinyqsim import gates, quantum, utils, plotting
+from tinyqsim import gates, quantum, utils, plotting, latex
 from tinyqsim.model import Model
 from tinyqsim.schematic import Schematic
 from tinyqsim.simulator import Simulator
-from tinyqsim.utils import round_complex
 
-EPSSILON = 1e-12  # Threshold for ignoring small values
+EPSILON = 1e-12
+"""Threshold for ignoring small values"""
 
 
 class QCircuit(object):
@@ -158,8 +159,8 @@ class QCircuit(object):
            :return: Dictionary of state components
         """
         comp = quantum.components_dict(self._simulator.state_vector)
-        return {k: round_complex(v, decimals) for k, v in comp.items()
-                if include_zeros or abs(v) > EPSSILON}
+        return {k: np.round(v, decimals) for k, v in comp.items()
+                if include_zeros or abs(v) > EPSILON}
 
     def probabilities(self, *qubits: int, decimals: int = 5,
                       include_zeros: bool = False) -> dict[str, float]:
@@ -173,7 +174,7 @@ class QCircuit(object):
             qubits = range(self._nqubits)
         probs = quantum.probability_dict(self._simulator.state_vector, qubits)
         return {k: round(v, decimals) for k, v in probs.items()
-                if include_zeros or v > EPSSILON}
+                if include_zeros or v > EPSILON}
 
     def _final_counts(self, qubits: range | list[int], runs: int):
         """Return counts of measuring circuit outputs.
@@ -230,7 +231,19 @@ class QCircuit(object):
                 dic = self._measurement_counts(qubits, runs)
             case _:
                 raise ValueError(f'Invalid mode: {mode}')
-        return {k: v for k, v in dic.items() if include_zeros or v > EPSSILON}
+        return {k: v for k, v in dic.items() if include_zeros or v > EPSILON}
+
+    def latex_state(self, prefix: str = '', decimals: int = 5, include_zeros=False) -> Math:
+        """Format quantum state in LaTeX for display in notebook.
+        Note: This is a prototype which may change.
+        :param prefix: prefix string
+        :param decimals: number of decimal places
+        :param include_zeros: whether to include zero values
+        :return: IPython Math object representing state as kets
+        """
+        dic = quantum.components_dict(self._simulator.state_vector)
+        return latex.latex_dict(dic, prefix=prefix, decimals=decimals,
+                                include_zeros=include_zeros)
 
     # ------------------ Measurement ------------------
 

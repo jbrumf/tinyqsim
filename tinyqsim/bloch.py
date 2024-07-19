@@ -19,9 +19,11 @@ TEXT_FONTSIZE = 10
 
 def bloch_to_qubit(phi: float, theta: float) -> np.ndarray:
     """Convert Bloch sphere angles to a qubit.
-        :param phi: Bloch sphere 'phi' angle in radians
-        :param theta: Bloch sphere 'theta' angle in radians
-        :return: A qubit
+    The result has a real amplitude for the |0> term, with all the
+    phase accounted for by the |1> term.
+    :param phi: Bloch sphere 'phi' angle in radians
+    :param theta: Bloch sphere 'theta' angle in radians
+    :return: A qubit
     """
     assert 0 <= phi < 2 * pi
     assert 0 <= theta <= pi
@@ -31,8 +33,8 @@ def bloch_to_qubit(phi: float, theta: float) -> np.ndarray:
 
 def qubit_to_bloch(psi: np.ndarray) -> tuple[float, float]:
     """Convert qubit to Bloch sphere angles (phi, theta).
-        :param psi: qubit state
-        :return: Bloch sphere angles (phi, theta) in radians
+    :param psi: qubit state
+    :return: Bloch sphere angles (phi, theta) in radians
     """
     alpha, beta = psi
 
@@ -44,8 +46,15 @@ def qubit_to_bloch(psi: np.ndarray) -> tuple[float, float]:
     return phi, theta
 
 
-def plot_bloch(phi: float, theta: float, scale=1, azimuth=35, elevation=10,
+def plot_bloch(psi: np.ndarray, scale=1, azimuth=35, elevation=10,
                show: bool = True, show_angles=True, save: str = None) -> None:
+    phi, theta = qubit_to_bloch(psi)
+    plot_bloch_angles(phi, theta, scale=scale, azimuth=azimuth, elevation=elevation,
+                      show=show, show_angles=show_angles, save=save)
+
+
+def plot_bloch_angles(phi: float, theta: float, scale=1, azimuth=35, elevation=10,
+                      show: bool = True, show_angles=True, save: str = None) -> None:
     """ Plot bloch sphere.
         :param phi: State vector 'phi' angle in radians
         :param theta: State vector 'theta' angle in radians
