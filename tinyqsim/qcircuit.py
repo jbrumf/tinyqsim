@@ -8,7 +8,7 @@ Copyright (c) 2024 Jon Brumfitt
 from math import isclose
 
 import numpy as np
-from IPython.display import Math
+from IPython.display import Math, display
 from numpy import ndarray
 from numpy.linalg import norm
 
@@ -233,17 +233,15 @@ class QCircuit(object):
                 raise ValueError(f'Invalid mode: {mode}')
         return {k: v for k, v in dic.items() if include_zeros or v > EPSILON}
 
-    def latex_state(self, prefix: str = '', decimals: int = 5, include_zeros=False) -> Math:
-        """Format quantum state in LaTeX for display in notebook.
-        Note: This is a prototype which may change.
+    def display_state(self, prefix: str = '', decimals: int = 5, include_zeros=False) -> None:
+        """Display state in notebook in ket notation.
         :param prefix: prefix string
         :param decimals: number of decimal places
         :param include_zeros: whether to include zero values
-        :return: IPython Math object representing state as kets
         """
-        dic = quantum.components_dict(self._simulator.state_vector)
-        return latex.latex_dict(dic, prefix=prefix, decimals=decimals,
-                                include_zeros=include_zeros)
+        ltx = latex.latex_state(self._simulator.state_vector, prefix=prefix,
+                                decimals=decimals, include_zeros=include_zeros)
+        display(Math(ltx))
 
     # ------------------ Measurement ------------------
 

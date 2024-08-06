@@ -28,6 +28,9 @@
       - [Counts with Measurements](#counts-with-measurements)
       - [Conditional Execution](#conditional-execution)
       - [Reset](#reset)
+    - [LaTeX Formatting](#latex-formatting)
+      - [Displaying the State](#displaying-the-state)
+      - [Displaying Arrays and Matrices](#displaying-arrays-and-matrices)
     - [Bloch Sphere](#bloch-sphere)
 
 <!-- TOC -->
@@ -516,6 +519,67 @@ See the qcircuit module in the API documentation for further details, including 
 The behaviour of reset is equivalent to a measurement of the qubit followed by an X operation conditional on the measurement result being 1. This forces the qubit into the $\ket{0}$ state. Any other qubits that were entangled with the reset qubit are affected in the same way as if the reset were a measurment.
 
 Although 'reset' effectively performs a measurement, it is not included in the output of the 'results' call. If this is needed, the 'reset' should be preceded by an explicit measurement.
+
+### LaTeX Formatting
+
+Some support is provided for pretty-printing states and arrays using LaTeX, primarily for use in Jupyter notebooks. The raw LaTeX output is also available, which could be useful for pasting the results into LaTeX or Markdown documents.
+
+#### Displaying the State
+
+The state may be displayed using the QCircuit 'display_state' method. For example:
+```
+  qc.display_state()
+```
+$\qquad 0.70711\,\ket{01} + 0.70711\,\ket{10}$
+
+A LaTeX prefix can be included and the number of decimal places can be specified:
+```
+  qc.display_state(r'\ket{\psi} = ', decimals=4)
+```
+$\qquad\ket{\psi} = 0.7071\,\ket{01} + 0.7071\,\ket{10}$
+
+If required, the raw LaTeX can be obtained as follows. For example, this may be useful for inclusion in a LaTeX or Markdown document.
+```
+  from tinyqsim.latex import latex_state
+  print(latex_state(qc.state_vector, r'\ket{\psi} = ', decimals=4))
+```
+Output:
+```
+  \ket{\psi} = 0.7071\,\ket{01} + 0.7071\,\ket{10}
+```
+LaTeX math strings can be displayed in a notebook using the IPython Math class:
+
+```
+  Math(latex_state(qc.state_vector, decimals=4))
+```
+$\qquad 0.7071\,\ket{01} + 0.7071\,\ket{10}$
+
+The IPython 'display' function is called automatically for the last line in a notebook cell, otherwise it needs to be called explicitly:
+
+```
+  display(Math(latex_state(qc.state_vector, decimals=4)))
+```
+The QCircuit 'display_state' method provides a more convenient way to do this for a quantum circuit.
+```
+  qc.display_state(decimals=4)
+```
+
+#### Displaying Arrays and Matrices
+
+The 'latex_array' function can be used to format a numpy 1D or 2D array in LaTeX. The IPython 'Math' class can then be used to display it in a notebook:
+
+```
+  from tinyqsim.latex import latex_array
+  Math(latex_array(qc.state_vector, decimals=4)
+```
+$\qquad\begin{bmatrix}0.0&0.7071&0.7071&0.0 \end{bmatrix}$
+
+```
+  from tinyqsim.gates import CX
+  Math(latex_array(CX, r'\text{CX} = '))
+```
+
+$\qquad\text{CX} = \begin{bmatrix}1&0&0&0\\0&1&0&0\\0&0&0&1\\0&0&1&0 \end{bmatrix}$
 
 ### Bloch Sphere
 
