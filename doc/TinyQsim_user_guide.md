@@ -572,14 +572,16 @@ The 'latex_array' function can be used to format a numpy 1D or 2D array in LaTeX
   from tinyqsim.latex import latex_array
   Math(latex_array(qc.state_vector, decimals=4)
 ```
-$\qquad\begin{bmatrix}0.0&0.7071&0.7071&0.0 \end{bmatrix}$
-
+```math
+\begin{bmatrix}0.0&0.7071&0.7071&0.0 \end{bmatrix}
+```
 ```
   from tinyqsim.gates import CX
   Math(latex_array(CX, r'\text{CX} = '))
 ```
-
-$\qquad\text{CX} = \begin{bmatrix}1&0&0&0\\0&1&0&0\\0&0&0&1\\0&0&1&0 \end{bmatrix}$
+```math
+\text{CX} = \begin{bmatrix}1&0&0&0\\0&1&0&0\\0&0&0&1\\0&0&1&0 \end{bmatrix}
+```
 
 ### Bloch Sphere
 

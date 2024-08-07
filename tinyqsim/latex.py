@@ -36,7 +36,7 @@ def latex_array(array: ndarray, prefix: str = '', decimals: int = DEFAULT_DECIMA
     return f'{prefix}\\begin{{bmatrix}}{s} \\end{{bmatrix}}'
 
 
-def latex_state(state: ndarray, prefix: str = '', decimals: int | None = None,
+def latex_state(state: ndarray, prefix: str = '', decimals: int = DEFAULT_DECIMALS,
                 include_zeros=False) -> str:
     """Format quantum state as LaTeX string.
     :param state: quantum state
@@ -45,12 +45,7 @@ def latex_state(state: ndarray, prefix: str = '', decimals: int | None = None,
     :param include_zeros: whether to include zero values
     :return: LaTeX representation of the state
     """
-    if not decimals:
-        decimals = DEFAULT_DECIMALS
     dic = components_dict(state)
-
-    items = (rf'{np.round(v, decimals)}\,\ket{{{k}}}'
+    items = (rf'{np.round(v, decimals)}\ \ket{{{k}}}'
              for k, v in dic.items() if include_zeros or abs(v) > EPSILON)
     return prefix + ' + '.join(items)
-
-    # return latex_state(state, prefix=prefix, decimals=decimals, include_zeros=include_zeros)
