@@ -530,13 +530,13 @@ The state may be displayed using the QCircuit 'display_state' method. For exampl
 ```
   qc.display_state()
 ```
-$\qquad 0.70711\,\ket{01} + 0.70711\,\ket{10}$
+$\qquad 0.70711\ \ket{01} + 0.70711\ \ket{10}$
 
 A LaTeX prefix can be included and the number of decimal places can be specified:
 ```
   qc.display_state(r'\ket{\psi} = ', decimals=4)
 ```
-$\qquad\ket{\psi} = 0.7071\,\ket{01} + 0.7071\,\ket{10}$
+$\qquad\ket{\psi} = 0.7071\ \ket{01} + 0.7071\ \ket{10}$
 
 If required, the raw LaTeX can be obtained as follows. For example, this may be useful for inclusion in a LaTeX or Markdown document.
 ```
@@ -545,14 +545,14 @@ If required, the raw LaTeX can be obtained as follows. For example, this may be 
 ```
 Output:
 ```
-  \ket{\psi} = 0.7071\,\ket{01} + 0.7071\,\ket{10}
+  \ket{\psi} = 0.7071\ \ket{01} + 0.7071\ \ket{10}
 ```
 LaTeX math strings can be displayed in a notebook using the IPython Math class:
 
 ```
   Math(latex_state(qc.state_vector, decimals=4))
 ```
-$\qquad 0.7071\,\ket{01} + 0.7071\,\ket{10}$
+$\qquad 0.7071\ \ket{01} + 0.7071\ \ket{10}$
 
 The IPython 'display' function is called automatically for the last line in a notebook cell, otherwise it needs to be called explicitly:
 
