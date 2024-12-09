@@ -47,6 +47,12 @@ def test_nqubits():
     assert qc.n_qubits == 3
 
 
+def test_basis_names():
+    qc = QCircuit(3)
+    bases = qc.basis_names()
+    assert bases == ['000', '001', '010', '011', '100', '101', '110', '111']
+
+
 def test_check_qubits():
     qc = QCircuit(3)
     qc._check_qubits([0])
@@ -57,19 +63,20 @@ def test_check_qubits():
         qc._check_qubits([-1])
 
 
-def test_components():
+def test_format_state():
     qc = QCircuit(3)
     qc.x(1)
     qc.h(2)
-    c1 = qc.components()
-    # Values are rounded so equality is exact
-    assert_equal(c1, {'010': (0.70711 + 0j), '011': (0.70711 + 0j)})
+    c1 = qc.format_state(mode='table', decimals=5)
+    exp = '|010⟩  0.70711\n|011⟩  0.70711'
+    assert_equal(c1, exp)
 
     # Test 'include_zeros' option
     qc = QCircuit(2)
     qc.x(1)
-    c2 = qc.components(include_zeros=True)
-    assert_equal(c2, {'00': 0, '01': 1, '10': 0, '11': 0})
+    c2 = qc.format_state(mode='table', include_zeros=True)
+    exp = '|00⟩  0\n|01⟩  1\n|10⟩  0\n|11⟩  0'
+    assert_equal(c2, exp)
 
 
 def test_counts():
@@ -88,21 +95,32 @@ def test_counts():
     assert_equal(c3, {'00': 0, '01': 100, '10': 0, '11': 0})
 
 
-def test_probabilities():
-    qc = QCircuit(3)
-    qc.x(1)
-    qc.h(2)
-    p1 = qc.probabilities()
-    assert_equal(p1, {'010': 0.5, '011': 0.5})
+def test_format_probabilities():
+    qc = QCircuit(2)
+    qc.h(0)
+    qc.p(pi / 4, 'phi', 0)
+    qc.h(0)
+    qc.cx(0, 1)
+    s = qc.format_probabilities(0, 1, decimals=4)
+    exp = '|00⟩  0.8536\n|11⟩  0.1464'
+    assert_equal(s, exp)
 
-    p2 = qc.probabilities(0, 2)
-    assert_equal(p2, {'00': 0.5, '01': 0.5})
+
+def test_probability_dict():
+    qc = QCircuit(2)
+    qc.h(0)
+    qc.cx(0, 1)
+    p1 = qc.probability_dict(0, 1)
+    assert p1 == pytest.approx({'00': 0.5, '01': 0, '10': 0, '11': 0.5})
 
 
-# ----- Test gates -----
+def test_probability_array():
+    qc = QCircuit(2)
+    qc.h(0)
+    qc.cx(0, 1)
+    probs = qc.probability_array(0, 1)
+    assert_almost_equal(probs, [0.5, 0, 0, 0.5])
 
-# The gates are tested in the test_gates module.
-# This is just to check the wrappers in QCircuit.
 
 def test__gate():
     qc = QCircuit(1)

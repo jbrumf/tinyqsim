@@ -65,6 +65,12 @@ def is_hermitian(m: ndarray) -> bool:
     return np.allclose(m.conj().T, m)
 
 
+def is_square_matrix(m: ndarray) -> bool:
+    """Return True if 'm' is a square matrix."""
+    s = m.shape
+    return len(s) == 2 and s[0] == s[1]
+
+
 def kron_n(n: int, u: ndarray) -> ndarray:
     """Return tensor product of 'n' instances of 'u' """
     assert n > 0, 'kron-n requires n>0'

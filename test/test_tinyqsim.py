@@ -90,7 +90,7 @@ def test_qpe11():
     qc = QCircuit(k + 1)
     qc.x(k)
     qpe(qc, k, phi)
-    probs = qc.probabilities(*range(k))
+    probs = qc.probability_dict(*range(k))
     assert probs['1011'] == approx(1.0)
 
 
@@ -101,6 +101,6 @@ def test_qpe_mid():
     qc = QCircuit(k + 1)
     qc.x(k)
     qpe(qc, k, phi)
-    probs = qc.probabilities(*range(k))
+    probs = qc.probability_dict(*range(k))
     assert probs['0011'] == approx(0.4, abs=0.01)
     assert probs['0100'] == approx(0.4, abs=0.01)

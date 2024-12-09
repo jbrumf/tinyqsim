@@ -13,7 +13,7 @@ from numpy.testing import (assert_equal, assert_array_equal, assert_almost_equal
 from tinyqsim.gates import ID, X, Y, Z, S, T
 from tinyqsim.utils import (int_to_bits, bits_to_int, kron_n, kron_all, normalize,
                             is_normalized, is_hermitian, is_unitary, complete,
-                            round_complex)
+                            round_complex, is_square_matrix)
 
 
 def test_int_to_bits():
@@ -74,6 +74,13 @@ def test_is_hermitian():
     assert not is_hermitian(T)
     assert not is_hermitian(S)
     assert not is_hermitian(T)
+
+
+def test_is_square_matrix():
+    assert is_square_matrix(np.array([[1, 2], [3, 4]]))
+    assert is_square_matrix(np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]]))
+    assert not is_square_matrix(np.array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]))
+    assert not is_square_matrix(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]))
 
 
 def test_kron_n():

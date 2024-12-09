@@ -12,13 +12,11 @@ from IPython.display import Math, display
 from numpy import ndarray
 from numpy.linalg import norm
 
-from tinyqsim import gates, quantum, utils, plotting, latex
+from tinyqsim import gates, quantum, utils, plotting, format, unitary_sim
+from tinyqsim.format import state_kets, format_table
 from tinyqsim.model import Model
 from tinyqsim.schematic import Schematic
 from tinyqsim.simulator import Simulator
-
-EPSILON = 1e-12
-"""Threshold for ignoring small values"""
 
 
 class QCircuit(object):
@@ -73,8 +71,22 @@ class QCircuit(object):
         """
         return self._nqubits
 
+    # --------------- Miscellaneous ---------------
+
+    def basis_names(self, nqubits: int = 0, kets: bool = False) -> list[str]:
+        """Return a list of basis names.
+        :param nqubits: number of qubits (default is for current state)
+        :param kets: format as ket symbol
+        :return: list of basis names
+        """
+        nq = self.n_qubits
+        if nqubits != 0:
+            nq = nqubits
+        return quantum.basis_names(nq, kets)
+
     def results(self) -> dict[int, int]:
-        """Return the most recent results of measurements."""
+        """Return the most recent results of measurements.
+        :return: results of most recent measurements"""
         return self._simulator.results()
 
     # ----------------- Add components to the model -----------------
@@ -109,13 +121,15 @@ class QCircuit(object):
             u = self._gates[name](params['args'])
             self._simulator.apply(u, qubits)
 
-    def _add_measure(self, qubits: list[int]) -> ndarray:
+    def _add_measure(self, qubits: list[int]) -> ndarray | None:
         """ Add a measurement to the model.
             :param qubits: list of qubits
         """
         self._model.add_gate('measure', qubits)
         if self._auto_exec:
             return self._simulator.measure(qubits)
+        else:
+            return None
 
     def _add_reset(self, qubit: int) -> None:
         """ Add a reset to the model.
@@ -146,35 +160,97 @@ class QCircuit(object):
 
     # ----------------- Execution of quantum circuit ----------------
 
-    def execute(self) -> None:
-        """Execute/re-execute the circuit."""
-        self._simulator.execute(self._model)
+    def execute(self, init='zeros') -> None:
+        """Execute/re-execute the circuit.
+        The init='none' option skips the initialization.
+        :param init: Initial state - 'zeros' | 'random' | 'none'
+        """
+        self._simulator.execute(self._model, init)
+
+    def to_unitary(self):
+        """Return unitary matrix of this circuit.
+        The circuit must not contain measurements or resets.
+        :return: unitary matrix
+        """
+        return unitary_sim.UnitarySimulator().execute(self._model)
 
     # -------------- Obtain information about the state -------------
 
-    def components(self, decimals: int = 5, include_zeros: bool = False) -> dict:
-        """Return complex components of state vector as a dictionary.
-           :param decimals: number of decimal places (default=5)
-           :param include_zeros: True to include zero values (default=False)
-           :return: Dictionary of state components
+    def format_state(self, mode='kets', decimals: int = 5, include_zeros: bool = False,
+                     trim: bool = True, edge: int = 4) -> str:
+        """Return state vector formatted for printing.\n
+        The 'edge' option includes any results excluded by 'include_zeros'.
+        :param mode: 'kets' | 'table'| 'latex'
+        :param decimals: number of decimal places (default=5)
+        :param include_zeros: True to include zero values (default=False)
+        :param trim: trim trailing fractional zeros
+        :param edge: Number of items before and after ellipsis (table only)
+        :return: Formatted string
         """
-        comp = quantum.components_dict(self._simulator.state_vector)
-        return {k: np.round(v, decimals) for k, v in comp.items()
-                if include_zeros or abs(v) > EPSILON}
+        match mode:
+            case 'kets':
+                return state_kets(self._simulator.state_vector, decimals=decimals,
+                                  include_zeros=include_zeros, trim=trim, latex=False)
+            case 'latex':
+                return state_kets(self._simulator.state_vector, decimals=decimals,
+                                  include_zeros=include_zeros, trim=trim, latex=True)
 
-    def probabilities(self, *qubits: int, decimals: int = 5,
-                      include_zeros: bool = False) -> dict[str, float]:
-        """ Return dictionary of the probabilities of each outcome.
+            case 'table':
+                return format_table(self._simulator.state_vector,
+                                    decimals=decimals, include_zeros=include_zeros,
+                                    trim=trim, edge=edge)
+            case _:
+                raise ValueError(f'Invalid mode: {mode}')
+
+    def display_state(self, prefix: str = '', decimals: int = 5,
+                      include_zeros=False, trim=True) -> None:
+        """Display state in notebook in ket notation using LaTeX.\n
+        This method is equivalent to 'display(Math(format_state('latex', \\<args\\>))).
+        :param prefix: prefix string
+        :param decimals: number of decimal places
+        :param include_zeros: whether to include zero values
+        :param trim: trim trailing fractional zeros
+        """
+        ltx = format.latex_state(self._simulator.state_vector, prefix=prefix,
+                                 decimals=decimals, include_zeros=include_zeros, trim=trim)
+        display(Math(ltx))
+
+    def format_probabilities(self, *qubits: int, decimals: int = 5,
+                             include_zeros: bool = False, trim: bool = True,
+                             edge: int = 4) -> dict[str, str]:
+        """ Return probabilities of each outcome formatted for printing.
             :param qubits: qubits (None => all)
             :param decimals: number of decimal places (default=5)
             :param include_zeros: True to include zero values (default=False)
-            :return: dictionary of outcome->probability
+            :param trim: trim trailing fractional zeros
+            :param edge: Number of items before and after ellipsis
+            :return: basis-state->probability string
         """
         if not qubits:
             qubits = range(self._nqubits)
-        probs = quantum.probability_dict(self._simulator.state_vector, qubits)
-        return {k: round(v, decimals) for k, v in probs.items()
-                if include_zeros or v > EPSILON}
+
+        probs = quantum.probabilities(self._simulator.state_vector, qubits)
+        return format_table(probs, decimals=decimals, include_zeros=include_zeros,
+                            trim=trim, edge=edge)
+
+    def probability_dict(self, *qubits: int) -> dict[str, float]:
+        """ Return dictionary of the probabilities of each outcome.
+            :param qubits: qubits (None => all)
+            :return: dictionary mapping basis-state->probability value
+        """
+        if not qubits:
+            qubits = range(self._nqubits)
+        return quantum.probability_dict(self._simulator.state_vector, qubits)
+
+    # FIXME: Return type might change to be like state_vector (TBC)
+    def probability_array(self, *qubits) -> ndarray:
+        """ Return array of probabilities of each outcome.
+            :param qubits: qubits (None => all)
+            :return: array of probabilities for each basis state
+        """
+        if not qubits:
+            qubits = range(self._nqubits)
+        return quantum.probabilities(self._simulator.state_vector, qubits)
 
     def _final_counts(self, qubits: range | list[int], runs: int):
         """Return counts of measuring circuit outputs.
@@ -189,7 +265,7 @@ class QCircuit(object):
             probs = quantum.probabilities(sim.state_vector, qubits)
             key = np.random.choice(len(probs), None, p=probs)
             count[key] += 1
-        return dict(zip(names, count))
+        return dict(zip(names, count.tolist()))
 
     def _measurement_counts(self, qubits: range | list[int], runs) -> dict:
         """Return counts for specified qubits.
@@ -231,17 +307,7 @@ class QCircuit(object):
                 dic = self._measurement_counts(qubits, runs)
             case _:
                 raise ValueError(f'Invalid mode: {mode}')
-        return {k: v for k, v in dic.items() if include_zeros or v > EPSILON}
-
-    def display_state(self, prefix: str = '', decimals: int = 5, include_zeros=False) -> None:
-        """Display state in notebook in ket notation.
-        :param prefix: prefix string
-        :param decimals: number of decimal places
-        :param include_zeros: whether to include zero values
-        """
-        ltx = latex.latex_state(self._simulator.state_vector, prefix=prefix,
-                                decimals=decimals, include_zeros=include_zeros)
-        display(Math(ltx))
+        return {k: v for k, v in dic.items() if include_zeros or v > 0}
 
     # ------------------ Measurement ------------------
 

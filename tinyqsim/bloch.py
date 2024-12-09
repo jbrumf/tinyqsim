@@ -110,19 +110,19 @@ def plot_bloch_angles(phi: float, theta: float, scale=1, azimuth=35, elevation=1
                            shrinkA=0, shrinkB=0)
     arrow = Arrow3D([0, 1], [0, 0], [0, 0], **arrow_prop_dict)
     ax.add_artist(arrow)
-    ax.text(1.1, 0, 0, r'$X$', **text_options)
+    ax.text(1.1, 0, 0, r'$X$', **text_options)  # type: ignore
 
     arrow_prop_dict = dict(mutation_scale=head_size, arrowstyle='-|>', color='b',
                            shrinkA=0, shrinkB=0)
     arrow = Arrow3D([0, 0], [0, 1], [0, 0], **arrow_prop_dict)
     ax.add_artist(arrow)
-    ax.text(0, 1.1, 0, r'$Y$', **text_options)
+    ax.text(0, 1.1, 0, r'$Y$', **text_options)  # type: ignore
 
     arrow_prop_dict = dict(mutation_scale=head_size, arrowstyle='-|>', color='b',
                            shrinkA=0, shrinkB=0)
     arrow = Arrow3D([0, 0], [0, 0], [0, 1], **arrow_prop_dict)
     ax.add_artist(arrow)
-    ax.text(0, 0, 1.1, r'$Z$', **text_options)
+    ax.text(0, 0, 1.1, r'$Z$', **text_options)  # type: ignore
 
     # Draw arrow for state
     arrow_prop_dict = dict(mutation_scale=head_size, arrowstyle='-|>', color='r', lw=2,

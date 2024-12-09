@@ -2,44 +2,67 @@
 
 TinyQsim is a tiny quantum circuit simulator based on the quantum gate model.
 
+Note: TinyQSim should not be confused with the Tiny-Q project that has subsequently appeared in the PyPI software repository with the name TinyQSim. The two are not related.
+
+---
+
 <!-- TOC -->
 
 - [TinyQsim: Tiny Quantum Circuit Simulator](#tinyqsim-tiny-quantum-circuit-simulator)
   - [Overview](#overview)
   - [Installation](#installation)
   - [Jupyter Notebooks](#jupyter-notebooks)
-  - [Documentation](#documentation)
-  - [Examples](#examples)
+  - [Documentation and Examples](#documentation-and-examples)
+  - [Known Issues](#known-issues)
+  - [Release Notes](#release-notes)
   - [License](#license)
 
 <!-- TOC -->
 
 ### Overview
 
-TinyQsim was originally started as a fun project to learn about quantum computation and as a framework to explore new ideas. The aim was to 'keep it simple', rather than worrying about optimization. Nevertheless, it is capable of simulating a 20-qubit Quantum Fourier Transform in about one second (tested on a Mac Mini M2). This is sufficient for most textbook examples.
+TinyQsim was originally started as a fun project to learn about quantum computation and as a framework to explore new ideas. The aim was to 'keep it simple', rather than worrying about optimization. Nevertheless, it is capable of simulating a 20-qubit Quantum Fourier Transform in about one second (tested on a Mac Mini M2). This should make it sufficient for most textbook examples and learning about quantum computing.
 
 ### Installation
 
-These instructions apply to macOS or Linux systems, although the software can also be installed on Windows.
+These instructions apply to macOS and Linux systems, although the software can also be installed on Windows.
 
-It is recommended to install the software in a virtual environment, using an environment manager such as Conda:
+First, download TinyQSim using the "Code" button on the GitHub page:
+
+- https://github.com/jbrumf/tinyqsim
+ 
+The resulting folder will be called tinyqsim or tinyqsim-main.
+
+It is recommended to install the software in a virtual environment, using an environment manager such as Conda or venv.
+
+For example, to create and activate a Python virtual environment using conda:
 
 ```
-  cd tinyqsim
-  conda env create -f environment.yml
+  conda create -n tinyqsim python=3.12
   conda activate tinyqsim
-  conda update --all
-  python setup.py install
 ```
 
-Create a working directory on your computer for your own files. Then copy the TinyQsim examples folder there, so you have a copy to work with.
+Then install tinyqsim in that environment:
+
+```
+  cd tinyqsim  # The downloaded folder
+  pip install .
+```
+
+Create a working directory somewhere on your computer for your own files. For example:
+
+```
+  mkdir mywork  # Not in the tinyqsim directory
+```
+
+If you wish to delete the downloaded source files, it is recomended to first copy the TinyQsim examples and API documentation folder to your work directory.
 
 For example:
 
 ```
-  mkdir mywork  # Not in the tinyqsim directory
   cd mywork
   cp -r <path_to_tinyqsim>/examples .
+  cp -r <path_to_tinyqsim>/doc/api .
 ```
 
 ### Jupyter Notebooks
@@ -56,39 +79,35 @@ A notebook session can be started as follows:
 
 Then navigate to the 'examples' folder.
 
-### Documentation
+Markdown versions of the Jupyter notebook examples can be found in the 'doc' directory to allow easy browsing without running the notebook server.
+
+### Documentation and Examples
 
 The TinyQsim documentation can be viewed online on GitHub:
 
 - https://github.com/jbrumf/tinyqsim/tree/main/doc/index.md
 
-The Markdown files for the documentation can also be found in the `tinyqsim/doc` directory. These files require a Markdown viewer with LaTeX support.
+It can also be found as Markdown files in your downloaded copy at:
+`tinyqsim/tree/main/doc/index.md`. A Markdown viewer that supports LaTeX is required.
 
-API document is located in the `tinyqsim/doc/api` directory. This cannot be viewed on GitHub as GitHub does not render HTML pages. Instead, open your downloaded copy of `tinyqsim/doc/api/index.html` in a browser. 
+To view the API documentation, open the downloaded file `tinyqsim/doc/api/index.html` in a browser. The API files cannot be viewed online because the HTML is not rendered in the online GitHub pages.
 
-### Examples
+### Known Issues
 
-Examples are provided in the form of Jupyter notebooks. These are located in the `tinyqsim/examples` directory. Alternatively, a rendered version of the notebooks including their output can be found on GitHub:
+**1: Warning Messages on macOS Sequoia**
 
-- https://github.com/jbrumf/tinyqsim/tree/main/examples/
+On macOS Sequoia, the following warning messages may appear when drawing circuits and plots from a Python script:
+```
+python[70884:21253510] +[IMKClient subclass]: chose IMKClient_Modern
+python[70884:21253510] +[IMKInputSession subclass]: chose IMKInputSession_Modern
+```
 
-The examples currently include:
+This appears to be a problem with macOS Sequoia as other software is also affected.
 
-- Example 1: Tutorial introduction to TinyQsim:
-    - https://github.com/jbrumf/tinyqsim/blob/main/examples/example_1_tutorial.ipynb
-- Example 2: 4-Qubit Quantum Fourier Transform
-    - https://github.com/jbrumf/tinyqsim/blob/main/examples/example_2_QFT4.ipynb
-- Example 3: Parameterized N-qubit QFT
-    - https://github.com/jbrumf/tinyqsim/blob/main/examples/example_3_QFT.ipynb
-- Example 4: Quantum Phase Estimation
-    - https://github.com/jbrumf/tinyqsim/blob/main/examples/example_4_QPE.ipynb
+### Release Notes
+
+See the companion [RELEASE_NOTES.md](RELEASE_NOTES.md) file for information on recent changes.
 
 ### License
 
 MIT License (see the [LICENSE](LICENSE) file)
-
-
-
-
-
-

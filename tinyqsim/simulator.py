@@ -69,8 +69,7 @@ class Simulator:
         """
         m, self.state_vector = quantum.measure_qubits(self.state_vector, qubits)
         for i, q in enumerate(qubits):
-            self._results[q] = m[i]
-        # print(f'Measured qubits{qubits} -> {m}')
+            self._results[q] = m[i].item()
         return m
 
     def reset(self, qubit: int) -> None:
@@ -83,15 +82,22 @@ class Simulator:
             tu = unitary_to_tensor(self._gates['X'])
             self._state = apply_tensor(self._state, tu, [qubit])
 
-    def execute(self, model: Model) -> None:
-        """Execute the circuit.
+    def execute(self, model: Model, init='zeros') -> None:
+        """Initialize the state and execute the circuit.
+        The init='none' option skips the initialization.
         :param model: Model to execute
+        :param init: Initial state - 'zeros' | 'random' | 'none'
         """
-        if self._init == 'random':
-            self._state = state_to_tensor(quantum.random_state(self._nqubits))
-        else:
-            self._state = state_to_tensor(quantum.zeros_state(self._nqubits))
-        # self._results = np.zeros(self._nqubits, dtype=int)
+        match init:
+            case 'none':
+                pass
+            case 'zeros':
+                self._state = state_to_tensor(quantum.zeros_state(self._nqubits))
+            case 'random':
+                self._state = state_to_tensor(quantum.random_state(self._nqubits))
+            case _:
+                raise ValueError(f'Invalid init state: {init}')
+
         self._results = {}
 
         for (name, qubits, params) in model.items:

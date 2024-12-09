@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 
 # Constants for 1D Histogram
 WIDTH_1D = 5.0  # Min plot width (inches)
-HEIGHT_1D = 2.0  # Default plot height (inches)
+HEIGHT_1D = 1.5  # Default plot height (inches)
 
 
 def plot_histogram(data: dict, show=True, save: str = False, ylabel=None, height=1) -> None:

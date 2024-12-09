@@ -14,6 +14,8 @@ from numpy.linalg import norm
 
 from tinyqsim.utils import (is_normalized, normalize)
 
+RANGLE = '\u27E9'  # Unicode right bracket for ket
+
 
 def zeros_state(nqubits: int) -> ndarray:
     """Return a quantum state initialized to |000...0>.
@@ -66,12 +68,17 @@ def n_qubits(a: ndarray) -> int:
     return 0 if n == 0 else int.bit_length(n - 1)
 
 
-def basis_names(nqubits: int) -> list[str]:
+def basis_names(nqubits: int, kets: bool = False) -> list[str]:
     """Return list of integers < 2**nqubits as binary strings.
         :param nqubits: number of qubits
+        :param kets: forma names as ket symbols
         :return: list of integers as binary strings
     """
-    return [bin(i)[2:].zfill(nqubits) for i in range(2 ** nqubits)]
+
+    def wrap(s):
+        return '|' + s + RANGLE if kets else s
+
+    return [wrap(bin(i)[2:].zfill(nqubits)) for i in range(2 ** nqubits)]
 
 
 def state_to_tensor(a: ndarray) -> ndarray:
@@ -84,7 +91,7 @@ def state_to_tensor(a: ndarray) -> ndarray:
 
 
 def tensor_to_state(t: ndarray) -> ndarray:
-    """Convert tensor into a state vector.
+    """Convert tensor representation of state into a state vector.
         :param t: tensor representation of state
         :return: state vector
     """
@@ -99,6 +106,15 @@ def unitary_to_tensor(u: ndarray):
     """
     nqu = int.bit_length(len(u) - 1)
     return u.reshape([2] * nqu * 2)
+
+
+def tensor_to_unitary(t: ndarray) -> ndarray:
+    """Convert tensor representation of square matrix (e.g. unitary) to a matrix.
+    :param t: tensor representation of matrix
+    :return: unitary matrix
+    """
+    k = 2 ** (len(t.shape) // 2)
+    return t.reshape([k, k])
 
 
 def apply_tensor(ts: ndarray, tu: ndarray, qubits: list[int]) -> ndarray:
@@ -118,7 +134,28 @@ def apply_tensor(ts: ndarray, tu: ndarray, qubits: list[int]) -> ndarray:
     return np.einsum(ts, a, tu, b, c, optimize=True)
 
 
-def components_dict(state: ndarray) -> dict:
+def compose_tensor(tu: ndarray, tg: ndarray, qubits: list[int]) -> ndarray:
+    """ Compose gate operator 'tg', applied to specified qubits, with unitary 'tu'.
+        The gate operator and unitary are in the form of tensors.
+       :param tu: unitary tensor
+       :param tg: gate tensor
+       :param qubits: list of qubits to wich gate is applied
+       :return: resulting unitary tensor
+    """
+    nq = int.bit_length(tu.size - 1) // 2
+
+    # Tensor subscripts as lists of integers
+    inputs = list(range(nq))  # Input indices of 'tu'
+    outputs = [i + nq for i in inputs]  # Output indices of 'tu'
+
+    a = inputs + outputs  # tu indices
+    b = [q + nq for q in qubits] + [q + 2 * nq for q in qubits]  # tg indices
+    c = inputs + [i + nq if i - nq in qubits else i for i in outputs]  # new tu indices
+
+    return np.einsum(tu, a, tg, b, c, optimize=True)
+
+
+def state_dict(state: ndarray) -> dict:
     """Return components of the state vector as a dictionary.
        :param state: State vector
        :return: Dictionary of state components
@@ -148,9 +185,11 @@ def probability_dict(state: ndarray, qubits: Iterable[int] | None = 0) \
         :param qubits: List of qubits
         :return: dictionary of outcome->probability
     """
+    nq = n_qubits(state)
     if not qubits:
-        qubits = range(n_qubits(state))
-    probs = probabilities(state, qubits)
+        qubits = range(nq)
+    assert 0 <= min(qubits) <= max(qubits) < nq, 'qubit out of range'
+    probs = probabilities(state, qubits).tolist()
     return dict(zip(basis_names(len(qubits)), probs))
 
 
@@ -183,7 +222,7 @@ def measure_qubit(state: ndarray, qubit: int) -> tuple[int, ndarray]:
     # Choose a state according to probabilities
     assert is_normalized(state), f'norm={norm(state)}'
     probs = probabilities(state, [qubit])
-    measured = np.random.choice([0, 1], None, p=probs)
+    measured = int(np.random.choice([0, 1], None, p=probs))
 
     # Create the new state
     n = len(state)

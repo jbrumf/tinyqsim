@@ -15,10 +15,12 @@ from numpy.testing import assert_array_equal, assert_allclose
 from pytest import approx
 
 from test.config import ENABLE_STATS_TESTS
-from tinyqsim.gates import ID, CX, X, SWAP
+from tinyqsim.gates import ID, CX, X, H, SWAP
 from tinyqsim.quantum import (n_qubits, basis_names, random_state, zeros_state,
                               random_unitary, unitary_to_tensor, tensor_to_state,
-                              state_to_tensor, apply_tensor, components_dict, probabilities)
+                              tensor_to_unitary, state_to_tensor, apply_tensor,
+                              compose_tensor, state_dict, probabilities,
+                              probability_dict)
 from tinyqsim.utils import kron_n, normalize, is_unitary
 
 CX_BIG = np.array([[1, 0, 0, 0],  # Big-endian CX gate
@@ -93,6 +95,36 @@ def test_basis_names():
     assert_array_equal(basis_names(3), ['000', '001', '010', '011', '100', '101', '110', '111'])
 
 
+def test_state_to_tensor():
+    assert_array_equal(state_to_tensor(np.array([1, 2])), [1, 2])
+    assert_array_equal(state_to_tensor(np.array([1, 2, 3, 4, 5, 6, 7, 8])),
+                       np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]))
+
+
+def test_tensor_to_state():
+    assert_array_equal(tensor_to_state(np.array([1, 2])), [1, 2])
+    assert_array_equal(tensor_to_state(np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])),
+                       [1, 2, 3, 4, 5, 6, 7, 8])
+
+
+def test_unitary_to_tensor():
+    t = unitary_to_tensor(CX)
+    exp = np.array([[[[1, 0], [0, 0]],
+                     [[0, 1], [0, 0]]],
+                    [[[0, 0], [0, 1]],
+                     [[0, 0], [1, 0]]]])
+    assert_allclose(t, exp)
+
+
+def test_tensor_to_unitary():
+    t = np.array([[[[1, 0], [0, 0]],
+                   [[0, 1], [0, 0]]],
+                  [[[0, 0], [0, 1]],
+                   [[0, 0], [1, 0]]]])
+    m = tensor_to_unitary(t)
+    assert_allclose(m, CX)
+
+
 def test_apply_tensor():
     u = kron(X, CX)
     state = random_state(5)
@@ -105,20 +137,20 @@ def test_apply_tensor():
                     u2 @ state)
 
 
-def test_to_tensor():
-    assert_array_equal(state_to_tensor(np.array([1, 2])), [1, 2])
-    assert_array_equal(state_to_tensor(np.array([1, 2, 3, 4, 5, 6, 7, 8])),
-                       np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]))
+def test_compose_tensor():
+    nq = 2
+    tu1 = unitary_to_tensor(np.eye(2 ** nq))
+    th = unitary_to_tensor(H)
+    tcx = unitary_to_tensor(CX)
+    tu2 = compose_tensor(tu1, th, [0])
+    tu3 = compose_tensor(tu2, tcx, [0, 1])
+    m = tensor_to_unitary(tu3)
+    exp = np.array([[1, 0, 0, 1], [0, 1, 1, 0], [1, 0, 0, -1], [0, 1, -1, 0]])
+    assert_allclose(m * sqrt(2), exp)
 
 
-def test_from_tensor():
-    assert_array_equal(tensor_to_state(np.array([1, 2])), [1, 2])
-    assert_array_equal(tensor_to_state(np.array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])),
-                       [1, 2, 3, 4, 5, 6, 7, 8])
-
-
-def test_components_dict():
-    assert components_dict(np.array([1, 2, 3, 4])) == {'00': 1, '01': 2, '10': 3, '11': 4}
+def test_state_dict():
+    assert state_dict(np.array([1, 2, 3, 4])) == {'00': 1, '01': 2, '10': 3, '11': 4}
 
 
 def test_probabilities():
@@ -127,7 +159,12 @@ def test_probabilities():
     assert_allclose(probabilities(a, [0]), [5 / 18, 13 / 18])
     assert_allclose(probabilities(a, [1]), [4 / 9, 5 / 9])
 
-# def test_probability_dict():
-# def test_counts_dict
+
+def test_probability_dict():
+    a = np.array([-2, 1j, 2, 3]) / sqrt(18)
+    dic = probability_dict(a)
+    exp = {'00': 2 / 9, '01': 5 / 90, '10': 2 / 9, '11': 0.5}
+    for k in (list(set(exp.keys()).union(dic.keys()))):
+        assert_allclose(dic[k], exp[k])
 
 # Note: Measurement tests are now in a separate module

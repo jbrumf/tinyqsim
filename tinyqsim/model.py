@@ -17,6 +17,10 @@ class Model:
         self._items: list[(str, list[int], list)] = []
 
     @property
+    def n_qubits(self):
+        return self._nqubits
+
+    @property
     def items(self):
         return self._items
 
