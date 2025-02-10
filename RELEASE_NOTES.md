@@ -25,7 +25,7 @@ These two forms of documentation have now been merged into Jupyter notebooks and
 
 This restructuring has the added benefit that errors in the examples are more easily detected since the example code in the notebooks is actually executed.
 
-### General
+### Other Updates
 
 - Numpy was recently upgraded to version 2. Numpy arrays now print with the type of each element prefixing the scalar values. This made the output from some the TinyQsim methods difficult to read, so some changes were needed to the code.
 

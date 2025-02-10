@@ -1,5 +1,3 @@
-$\newcommand{\bra}[1]{\left\langle{#1}\right|}
-\newcommand{\ket}[1]{\left|{#1}\right\rangle}$
 ## Tutorial 2: Exploring Further
 
 ### Contents
@@ -110,7 +108,7 @@ qc.display_state(decimals=4)
 ```
 
 
-$\displaystyle (0.0695+0.5648j)\ \ket{00} + (-0.3076+0.1935j)\ \ket{01} + (-0.4872-0.4658j)\ \ket{10} + (-0.2975+0.0363j)\ \ket{11}$
+$\displaystyle (-0.2186+0.583j)\ \ket{00} + (-0.4655-0.0775j)\ \ket{01} + (-0.0232-0.5989j)\ \ket{10} + (0.1297-0.1166j)\ \ket{11}$
 
 
 Another possible way to initialize the state is to set the `state_vector` property. For example:
@@ -397,13 +395,13 @@ qc1 = QCircuit(4, init='random')
 print(qc1.format_state('table', edge=3))
 ```
 
-    |0000⟩  (-0.28141-0.18465j)
-    |0001⟩  (0.00729+0.11895j)
-    |0010⟩  (0.18316+0.07809j)
+    |0000⟩  (0.14504-0.16297j)
+    |0001⟩  (0.26536+0.10254j)
+    |0010⟩  (0.06401+0.23826j)
     ...
-    |1101⟩  (-0.044-0.00517j)
-    |1110⟩  (-0.10498-0.22845j)
-    |1111⟩  (-0.10862-0.23692j)
+    |1101⟩  (-0.30096+0.33375j)
+    |1110⟩  (0.28523+0.114j)
+    |1111⟩  (0.23281-0.09632j)
 
 
 ### Probabilities
@@ -550,7 +548,7 @@ qc.counts()
 
 
 
-    {'01': 505, '10': 495}
+    {'01': 515, '10': 485}
 
 
 
@@ -564,7 +562,7 @@ qc.counts()
 
 
 
-    {'01': 478, '10': 522}
+    {'01': 462, '10': 538}
 
 
 
@@ -611,7 +609,7 @@ qc.results()
 
 
 
-    {0: 1, 1: 0}
+    {0: 0, 1: 1}
 
 
 
@@ -623,7 +621,7 @@ qc.display_state()
 ```
 
 
-$\displaystyle 1\ \ket{10}$
+$\displaystyle 1\ \ket{01}$
 
 
 #### Measurement Counts
@@ -656,7 +654,7 @@ qc.counts(mode='measure')
 
 
 
-    {'01': 491, '10': 509}
+    {'01': 509, '10': 491}
 
 
 
@@ -681,7 +679,7 @@ qc.counts(mode='repeat')
 
 
 
-    {'01': 507, '10': 493}
+    {'01': 489, '10': 511}
 
 
 

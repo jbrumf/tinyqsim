@@ -25,7 +25,7 @@ TinyQsim was originally started as a fun project to learn about quantum computat
 
 ### Installation
 
-These instructions apply to macOS and Linux systems, although the software can also be installed on Windows.
+These instructions apply to macOS and Linux systems, but the software should also run on Windows.
 
 First, download TinyQSim using the "Code" button on the GitHub page:
 
@@ -49,25 +49,15 @@ Then install tinyqsim in that environment:
   pip install .
 ```
 
-Create a working directory somewhere on your computer for your own files. For example:
+Create a working directory somewhere on your computer for your own files (e.g. Jupyter notebooks). For example:
 
 ```
   mkdir mywork  # Not in the tinyqsim directory
 ```
 
-If you wish to delete the downloaded source files, it is recomended to first copy the TinyQsim examples and API documentation folder to your work directory.
-
-For example:
-
-```
-  cd mywork
-  cp -r <path_to_tinyqsim>/examples .
-  cp -r <path_to_tinyqsim>/doc/api .
-```
-
 ### Jupyter Notebooks
 
-The example programs are in the form of Jupyter Notebooks. Notebooks provide a nice environment for experimenting with quantum algorithms. Documentation can be integrated with the code and include equations etc.
+The example programs are in the form of Jupyter Notebooks. These provide a nice environment for experimenting with quantum algorithms. Documentation can be integrated with the code and include equations etc.
 
 A notebook session can be started as follows:
 
@@ -77,20 +67,23 @@ A notebook session can be started as follows:
   jupyter notebook
 ```
 
-Then navigate to the 'examples' folder.
+If you wish to run the notebooks in the `examples` folder, it is suggested that you first copy them to the `mywork` folder, so that you can experiment with them without modifying the original downloaded copy.
 
 Markdown versions of the Jupyter notebook examples can be found in the 'doc' directory to allow easy browsing without running the notebook server.
 
 ### Documentation and Examples
 
-The TinyQsim documentation can be viewed online on GitHub:
+The TinyQsim documentation and examples can be viewed online on GitHub:
 
 - https://github.com/jbrumf/tinyqsim/tree/main/doc/index.md
 
-It can also be found as Markdown files in your downloaded copy at:
-`tinyqsim/tree/main/doc/index.md`. A Markdown viewer that supports LaTeX is required.
+They can also be found as Markdown files in your downloaded copy at:
 
-To view the API documentation, open the downloaded file `tinyqsim/doc/api/index.html` in a browser. The API files cannot be viewed online because the HTML is not rendered in the online GitHub pages.
+- [doc/index.md](doc/index.md)
+
+A Markdown viewer that supports LaTeX is required.
+
+Clicking the [TinyQsim API](doc/api/index.html) link should open the HTML API documentation in your web browser. The API files cannot be viewed online because the HTML is not rendered in the online GitHub pages. The most important section in the API documentaton is the `qcircuit' module.
 
 ### Known Issues
 
@@ -103,6 +96,10 @@ python[70884:21253510] +[IMKInputSession subclass]: chose IMKInputSession_Modern
 ```
 
 This appears to be a problem with macOS Sequoia as other software is also affected.
+
+**2: Markdown Rendering Errors on GitHub**
+
+There are a few rendering errors when viewing the Markdown documentation files on the GitHub web site. These are due to minor incompatibilities between different implementations of Markdown.
 
 ### Release Notes
 

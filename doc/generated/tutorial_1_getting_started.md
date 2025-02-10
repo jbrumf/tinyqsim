@@ -1,6 +1,3 @@
-$\newcommand{\bra}[1]{\left\langle{#1}\right|}
-\newcommand{\ket}[1]{\left|{#1}\right\rangle}$
-
 ## Tutorial 1: Getting Started with TinyQsim
 
 ### Contents
@@ -89,7 +86,7 @@ qc.draw()
 
 
     
-![png](tutorial_1_getting_started_files/tutorial_1_getting_started_18_0.png)
+![png](tutorial_1_getting_started_files/tutorial_1_getting_started_17_0.png)
     
 
 
@@ -227,7 +224,7 @@ qc.plot_probabilities()
 
 
     
-![png](tutorial_1_getting_started_files/tutorial_1_getting_started_39_0.png)
+![png](tutorial_1_getting_started_files/tutorial_1_getting_started_38_0.png)
     
 
 
@@ -248,7 +245,7 @@ qc.plot_counts(runs=1000)
 
 
     
-![png](tutorial_1_getting_started_files/tutorial_1_getting_started_43_0.png)
+![png](tutorial_1_getting_started_files/tutorial_1_getting_started_42_0.png)
     
 
 
@@ -260,7 +257,7 @@ qc.counts(runs=1000)
 
 
 
-    {'01': 527, '10': 473}
+    {'01': 506, '10': 494}
 
 
 
@@ -274,7 +271,7 @@ qc.counts(runs=1000)
 
 
 
-    {'01': 491, '10': 509}
+    {'01': 493, '10': 507}
 
 
 
@@ -290,7 +287,7 @@ qc.draw()
 
 
     
-![png](tutorial_1_getting_started_files/tutorial_1_getting_started_49_0.png)
+![png](tutorial_1_getting_started_files/tutorial_1_getting_started_48_0.png)
     
 
 
@@ -302,7 +299,7 @@ qc.display_state()
 ```
 
 
-$\displaystyle 1\ \ket{01}$
+$\displaystyle 1\ \ket{10}$
 
 
 The 'counts' or 'plot_counts' methods can be called using the 'repeat' or 'measure' mode so that they actually run the circuit many times to generate measurement counts, rather than just resampling the output state of a single run. The difference between 'repeat' and 'measure' is discussed in the next tutorial. For this simple example, either can be used.
@@ -314,7 +311,7 @@ qc.plot_counts(mode='measure', runs=1000)
 
 
     
-![png](tutorial_1_getting_started_files/tutorial_1_getting_started_53_0.png)
+![png](tutorial_1_getting_started_files/tutorial_1_getting_started_52_0.png)
     
 
 
@@ -335,7 +332,7 @@ qc.draw()
 
 
     
-![png](tutorial_1_getting_started_files/tutorial_1_getting_started_56_0.png)
+![png](tutorial_1_getting_started_files/tutorial_1_getting_started_55_0.png)
     
 
 
@@ -368,7 +365,7 @@ qc1.display_state()
 
 
     
-![png](tutorial_1_getting_started_files/tutorial_1_getting_started_60_0.png)
+![png](tutorial_1_getting_started_files/tutorial_1_getting_started_59_0.png)
     
 
 
@@ -385,7 +382,7 @@ plot_bloch(qc1.state_vector, scale=1.0)
 
 
     
-![png](tutorial_1_getting_started_files/tutorial_1_getting_started_62_0.png)
+![png](tutorial_1_getting_started_files/tutorial_1_getting_started_61_0.png)
     
 
 

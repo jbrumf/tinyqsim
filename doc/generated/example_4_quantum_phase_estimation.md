@@ -1,4 +1,3 @@
-$\newcommand{\ket}[1]{\left|{#1}\right\rangle}$
 ## Example 4: Quantum Phase Estimation
 
 ### Purpose
