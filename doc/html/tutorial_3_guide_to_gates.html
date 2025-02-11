@@ -1,0 +1,3055 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>tutorial_3_guide_to_gates</title><style>html{font-size:16.000000px;}</style><style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
+
+html,body{background-color: #feffff;}
+
+.markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  color: #333333;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+  font-size: 1rem;
+  word-wrap: break-word;
+}
+
+.markdown-body .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.markdown-body figure{margin:0;padding:0; display:table;}
+.markdown-body figure figcaption{font-size:92%; text-align:center; color:#09844f;}
+
+.markdown-body .anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -1.25rem;
+  padding-right: 0.25rem;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #0595bf;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body details {
+  display: block;
+}
+
+.markdown-body summary {
+  display: list-item;
+}
+
+.markdown-body a {
+  background-color: initial;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline-width: 0;
+}
+
+.markdown-body strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+.markdown-body strong{
+  color: #333333;
+}
+.markdown-body em{
+  color: #333333;
+}
+
+.markdown-body img {
+  border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace,monospace;
+  font-size: 0.9rem;
+}
+
+.markdown-body hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+.markdown-body input {
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body input {
+  overflow: visible;
+}
+
+.markdown-body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body * {
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown-body a {
+  color: #0366dd;
+  text-decoration: none;
+}
+.markdown-body mjx-container[jax="SVG"] > svg a{fill:#0366dd;stroke: #0366dd;}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body hr:after,
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body details summary {
+  cursor: pointer;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 0.1875rem 0.3125rem;
+  font: 0.75rem SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 0.75rem;
+  color: #09844f;
+  vertical-align: middle;
+  background-color: #f7f8f8;
+  border: 1px solid #e1e2e2;
+  border-radius: 0.1875rem;
+}
+
+.markdown-body p {
+  margin-top: 0;
+  margin-bottom: 0.625rem;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ol ol ol,
+.markdown-body ol ul ol,
+.markdown-body ul ol ol,
+.markdown-body ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 0.75rem;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body input::-webkit-inner-spin-button,
+.markdown-body input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.markdown-body:after,
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  clear: both;
+}
+
+.markdown-body>:first-child {
+  margin-top: 0!important;
+}
+
+.markdown-body>:last-child {
+  margin-bottom: 0!important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body blockquote,
+.markdown-body details,
+.markdown-body dl,
+.markdown-body ol,
+.markdown-body p,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body ul {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.markdown-body hr {
+  height: .25rem;
+  padding: 0;
+  margin: 1.5rem 0;
+  background-color: #e1e2e2;
+  border: 0;
+}
+
+.markdown-body blockquote {
+  padding: 0 1rem;
+  color: #636363;
+  border-left: .25rem solid #bbbbbb;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  padding-bottom: .3rem;
+  border-bottom: 1px solid #e7e8e8;
+  color: #0595bf;
+}
+
+.markdown-body h2 {
+  font-size: 1.5rem;
+  color: #0595bf;
+}
+
+.markdown-body h3 {
+  font-size: 1.25rem;
+  color: #0595bf;
+}
+
+.markdown-body h4 {
+  font-size: 1rem;
+  color: #0595bf;
+}
+
+.markdown-body h5 {
+  font-size: .875rem;
+  color: #0595bf;
+}
+
+.markdown-body h6 {
+  font-size: .85rem;
+  color: #0595bf;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 2rem;
+}
+
+.markdown-body ol ol,
+.markdown-body ol ul,
+.markdown-body ul ol,
+.markdown-body ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li {
+  word-wrap: break-all;
+}
+
+.markdown-body li>p {
+  margin-top: 1rem;
+}
+
+.markdown-body li+li {
+  margin-top: .25rem;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.markdown-body dl dd {
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+.markdown-body table th {
+  font-weight: 600;
+}
+
+.markdown-body table td,
+.markdown-body table th {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #b9baba;
+}
+
+.markdown-body table tr {
+  background-color: #feffff;
+  border-top: 1px solid #b9baba;
+}
+
+.markdown-body table th {
+  background-color: #e7e8e8;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f9f9;
+}
+
+.markdown-body img,.markdown-body video {
+  max-width: 100%;
+  box-sizing: initial;
+}
+
+.markdown-body img[align=right] {
+  padding-left: 1.25rem;
+}
+
+.markdown-body img[align=left] {
+  padding-right: 1.25rem;
+}
+
+.markdown-body code {
+  padding: .2rem .4rem;
+  margin: 0;
+  font-size: 85%;
+  background-color: #f7f8f8;
+  color: #09844f;
+  border-radius: 0.1875rem;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+   font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 1rem;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 1rem;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f8f8;
+  border-radius: 0.1875rem;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+  color: #09844f;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 0.1875rem;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 .2rem .25rem -1.6rem;
+  vertical-align: middle;
+}
+
+.markdown-body .task-list-item input[type="checkbox"]{
+-webkit-appearance: none;-moz-appearance: none;appearance: none;
+width: 0.875rem; height: 0.875rem;outline: none;
+border: 1px solid #0366dd;border-radius: 2px; 
+}
+.markdown-body .task-list-item input[type="checkbox"]:checked {
+  background:no-repeat center/80% url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Cpath%20fill%3D%22%230366dd%22%20d%3D%22M173.898%20439.404l-166.4-166.4c-9.997-9.997-9.997-26.206%200-36.204l36.203-36.204c9.997-9.998%2026.207-9.998%2036.204%200L192%20312.69%20432.095%2072.596c9.997-9.997%2026.207-9.997%2036.204%200l36.203%2036.204c9.997%209.997%209.997%2026.206%200%2036.204l-294.4%20294.401c-9.998%209.997-26.207%209.997-36.204-.001z%22%2F%3E%3C%2Fsvg%3E") ;
+}
+
+.markdown-body section.footnotes{
+    margin-top:3rem;
+    border-top:solid 1px #e1e2e2;
+    padding-top:0px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .markdown-body mark{color: #111;}
+}
+
+/* PrismJS 1.23.0
+https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript */
+/**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+
+
+code[class*="language-"],
+pre[class*="language-"] {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+
+@media print {
+    code[class*="language-"],
+    pre[class*="language-"] {
+        text-shadow: none;
+    }
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+    padding: 1rem;
+    margin: .5rem 0;
+    overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+    background-color: #f7f8f8;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+    padding: .1rem;
+    border-radius: .3rem;
+    white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #8e9c92;
+}
+
+.token.punctuation {
+    color: #2834ce;
+}
+
+.token.namespace {
+    opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: #2834ce;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    color: #d32d26;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: #$$codeBlockColor$$;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+    color: #bc319c;
+}
+
+.token.function,
+.token.class-name {
+    color: #967d41;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+    color: #784830;
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+.token.italic {
+    font-style: italic;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+
+pre[class*="language-"].line-numbers {
+  position: relative;
+  padding-left: 3.8rem;
+  counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers > code {
+  position: relative;
+  white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  font-size: 100%;
+  left: -3.8rem;
+  width: 3rem; /* works for line-numbers below 1000 lines */
+  letter-spacing: -1px;
+  border-right: 1px solid #bfc0c0;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+  .line-numbers-rows > span {
+    display: block;
+    counter-increment: linenumber;
+  }
+
+    .line-numbers-rows > span:before {
+      content: counter(linenumber);
+      color: #bfc0c0;
+      display: block;
+      padding-right: 0.8rem;
+      text-align: right;
+    }
+
+
+</style><script>(n=>{"use strict";let s,r,e;const l=["cdn.jsdelivr.net","fastly.jsdelivr.net","gcore.jsdelivr.net","cdn.zenless.top","testingcf.jsdelivr.net"],t="//",i=l[0],o=Date.now(),a=2e3,c="jsdelivr-auto-fallback",f="/gh/PipecraftNet/jsdelivr-auto-fallback@main/empty.css?",d=e=>e&&e.includes(t+i),m=e=>e.replace(t+i,t+s),u=window.setTimeout,v=n.querySelectorAll.bind(n),b=()=>{let e,t;for(e of v('link[rel="stylesheet"]'))t=e.href,d(t)&&!t.includes(f)&&(e.href=m(t));for(e of v("script"))if(t=e.src,d(t)){const s=n.createElement("script");s.src=m(t),e.defer=!0,e.src="",e.before(s),e.remove()}for(e of v("img"))t=e.src,d(t)&&(e.src="",e.src=m(t));for(e of v("*[style]"))t=e.getAttribute("style"),d(t)&&e.setAttribute("style",m(t));for(e of v("style"))t=e.innerHTML,d(t)&&(e.innerHTML=m(t))},h=()=>{!e&&r&&s&&(console.warn(i+" is not available. Use "+s),e=!0,u(b,0),u(b,20),setInterval(b,500))},g=(()=>{try{return Object.assign({},JSON.parse(localStorage.getItem(c)||"{}"))}catch{return{}}})(),y=()=>{g.time=o,g.failed=!1,g.fastNode=null;for(const t of l)((e,t)=>{let s;const r=n.createElement("link"),l=e=>{s&&(clearTimeout(s),s=0,e||(r.href="data:text/css;base64,"),r.remove(),t(e))};s=u(l,a),r.addEventListener("error",()=>l(!1)),r.addEventListener("load",()=>l(!0)),r.rel="stylesheet",r.text="text/css",r.href=e+f+o,n.head.insertAdjacentElement("afterbegin",r)})("https://"+t,e=>{e||t!==i||(r=!0,g.failed=!0),e&&!s&&(s=t),e&&!g.fastNode&&(g.fastNode=t),h()});u(()=>{r&&!s&&(s=l[1],h()),localStorage.setItem(c,JSON.stringify(g))},a+100)};if(g.time&&o-g.time<36e5&&g.failed&&g.fastNode)r=!0,s=g.fastNode,h(),u(y,1e3);else if(n.head)y();else{const j=new MutationObserver(()=>{n.head&&(j.disconnect(),y())});j.observe(n,{childList:!0,subtree:!0})}})(document);</script>
+<style>.mweb-charts{background:#fff;}
+body{ box-sizing: border-box;
+    margin: 0 auto;}
+@media print{
+    pre, code, pre code {
+     overflow: visible !important;
+     white-space: pre-wrap !important;       /* css-3 */
+     white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+     white-space: -pre-wrap !important;      /* Opera 4-6 */
+     white-space: -o-pre-wrap !important;    /* Opera 7 */
+     word-wrap: break-word !important;       /* Internet Explorer 5.5+ */
+    }
+    html,body{margin:0;padding:4px;}
+}
+
+
+
+div.code-toolbar {
+  position: relative;
+}
+
+div.code-toolbar > .toolbar {
+  position: absolute;
+  z-index: 10;
+  top: .3em;
+  right: .2em;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+}
+
+div.code-toolbar:hover > .toolbar {
+  opacity: 1;
+}
+
+/* Separate line b/c rules are thrown out if selector is invalid.
+   IE11 and old Edge versions don't support :focus-within. */
+div.code-toolbar:focus-within > .toolbar {
+  opacity: 1;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item {
+  display: inline-block;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > a {
+  cursor: pointer;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > button {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 0;
+  -webkit-user-select: none; /* for button */
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > a,
+div.code-toolbar > .toolbar > .toolbar-item > button,
+div.code-toolbar > .toolbar > .toolbar-item > span {
+  color: inherit;
+  font-size: .8em;
+  padding: 4px .5em;
+  background: #f5f2f0;
+  background: rgba(224, 224, 224, 0.4);
+  box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
+  border-radius: .5em;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > a:hover,
+div.code-toolbar > .toolbar > .toolbar-item > a:focus,
+div.code-toolbar > .toolbar > .toolbar-item > button:hover,
+div.code-toolbar > .toolbar > .toolbar-item > button:focus,
+div.code-toolbar > .toolbar > .toolbar-item > span:hover,
+div.code-toolbar > .toolbar > .toolbar-item > span:focus {
+  color: inherit;
+  text-decoration: none;
+}
+</style><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>!function(){if("undefined"!=typeof Prism&&"undefined"!=typeof document){var e=[],t={},n=function(){};Prism.plugins.toolbar={};var a=Prism.plugins.toolbar.registerButton=function(n,a){var r;r="function"==typeof a?a:function(e){var t;return"function"==typeof a.onClick?((t=document.createElement("button")).type="button",t.addEventListener("click",(function(){a.onClick.call(this,e)}))):"string"==typeof a.url?(t=document.createElement("a")).href=a.url:t=document.createElement("span"),a.className&&t.classList.add(a.className),t.textContent=a.text,t},n in t?console.warn('There is a button with the key "'+n+'" registered already.'):e.push(t[n]=r)},r=Prism.plugins.toolbar.hook=function(a){var r=a.element.parentNode;var l=a.element.classList;if(l.contains('language-mermaid') || l.contains('language-echarts') || l.contains('language-plantuml')){return;} if(r&&/pre/i.test(r.nodeName)&&!r.parentNode.classList.contains("code-toolbar")){var o=document.createElement("div");o.classList.add("code-toolbar"),r.parentNode.insertBefore(o,r),o.appendChild(r);var i=document.createElement("div");i.classList.add("toolbar");var l=e,d=function(e){for(;e;){var t=e.getAttribute("data-toolbar-order");if(null!=t)return(t=t.trim()).length?t.split(/\s*,\s*/g):[];e=e.parentElement}}(a.element);d&&(l=d.map((function(e){return t[e]||n}))),l.forEach((function(e){var t=e(a);if(t){var n=document.createElement("div");n.classList.add("toolbar-item"),n.appendChild(t),i.appendChild(n)}})),o.appendChild(i)}};a("label",(function(e){var t=e.element.parentNode;if(t&&/pre/i.test(t.nodeName)&&t.hasAttribute("data-label")){var n,a,r=t.getAttribute("data-label");try{a=document.querySelector("template#"+r)}catch(e){}return a?n=a.content:(t.hasAttribute("data-url")?(n=document.createElement("a")).href=t.getAttribute("data-url"):n=document.createElement("span"),n.textContent=r),n}})),Prism.hooks.add("complete",r)}}();</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.css"><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><style>div.code-toolbar > .toolbar > .toolbar-item > a, div.code-toolbar > .toolbar > .toolbar-item > button, div.code-toolbar > .toolbar > .toolbar-item > span {padding: 4px .5em; background: #f5f2f0; background: rgba(224, 224, 224, 0.4);}</style><script>window.MathJax = {     tex: { tags: 'ams', inlineMath: [ ['$','$'], ['\\(','\\)'] ] } ,     startup: {     pageReady() {       return MathJax.startup.defaultPageReady().then(function () {          window.mweb_mathjax_ready_val = 'yes';          if(window.mweb_mathjax_ready !== undefined){ mweb_mathjax_ready(); }       });     }   }};document.addEventListener('DOMContentLoaded', function(event) {    if (typeof Prism != 'undefined') {         Prism.highlightAll();     }});window.mweb_mathjax_ready_val = '';function theMWebMathJaxRenderIsReady(key){ return window.mweb_mathjax_ready_val; }</script><script>window.MathJax = { tex: { tags: 'ams', inlineMath: [ ['$','$'], ['\\(','\\)'] ] } }; </script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script> <style>body{max-width:808px; padding:24px;}</style></head><body><div id='markdown_content' class='markdown-body'><h2><a id="tutorial-3-guide-to-gates" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tutorial 3: Guide to Gates</h2>
+<h3><a id="contents" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contents</h3>
+<ul>
+<li><a href="#tutorial-3-guide-to-gates">Tutorial 3: Guide to Gates</a>
+<ul>
+<li><a href="#contents">Contents</a></li>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#imports-and-definitions">Imports and Definitions</a></li>
+<li><a href="#symbols-and-notation">Symbols and Notation</a></li>
+<li><a href="#controlled-gates">Controlled Gates</a></li>
+<li><a href="#anti-controlled-gates">Anti-Controlled Gates</a></li>
+<li><a href="#angle-parameters">Angle Parameters</a></li>
+<li><a href="#custom-gates">Custom Gates</a></li>
+<li><a href="#parameterized-custom-gates">Parameterized Custom Gates</a></li>
+<li><a href="#global-phase">Global Phase</a></li>
+</ul>
+</li>
+<li><a href="#summary-of-gates">Summary of Gates</a></li>
+<li><a href="#alphabetical-list-of-gates">Alphabetical List of Gates</a>
+<ul>
+<li><a href="#ccu">CCU</a></li>
+<li><a href="#ccx-aka-toffoli-gate">CCX (aka Toffoli) Gate</a></li>
+<li><a href="#ch-gate">CH Gate</a></li>
+<li><a href="#cp-gate">CP Gate</a></li>
+<li><a href="#cs-gate">CS Gate</a></li>
+<li><a href="#cswap-aka-fredkin-gate">CSWAP (aka Fredkin) Gate</a></li>
+<li><a href="#ct-gate">CT Gate</a></li>
+<li><a href="#cu">CU</a></li>
+<li><a href="#cx-aka-cnot-gate">CX (aka CNOT) Gate</a></li>
+<li><a href="#cy-gate">CY Gate</a></li>
+<li><a href="#cz-gate">CZ Gate</a></li>
+<li><a href="#h-gate">H Gate</a></li>
+<li><a href="#i-aka-id-gate">I (aka ID) Gate</a></li>
+<li><a href="#p-gate">P Gate</a></li>
+<li><a href="#rx-gate">RX Gate</a></li>
+<li><a href="#ry-gate">RY Gate</a></li>
+<li><a href="#s-gate">S Gate</a></li>
+<li><a href="#sdg-gate">Sdg Gate</a></li>
+<li><a href="#swap-gate">SWAP Gate</a></li>
+<li><a href="#sx-aka-v-sqrtx-gate">SX (aka V, SQRTX) Gate</a></li>
+<li><a href="#t-gate">T Gate</a></li>
+<li><a href="#tdg-gate">Tdg Gate</a></li>
+<li><a href="#u-gate">U Gate</a></li>
+<li><a href="#x-aka-not-gate">X (aka NOT) Gate</a></li>
+<li><a href="#y-gate">Y Gate</a></li>
+<li><a href="#z-gate">Z Gate</a></li>
+</ul>
+</li>
+<li><a href="#non-unitary-operations">Non-Unitary Operations</a>
+<ul>
+<li><a href="#measure">Measure</a></li>
+<li><a href="#reset">Reset</a></li>
+</ul>
+</li>
+<li><a href="#other-symbols">Other Symbols</a>
+<ul>
+<li><a href="#barrier">Barrier</a></li>
+</ul>
+</li>
+</ul>
+<h3><a id="introduction" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
+<p>The first part of this tutorial discusses some general features of gates, including the circuit notataion, symbols, controlled gates, parameterized gates and the creation of custom gates.</p>
+<p>The second part is an alphabetical list of gates of the supported gates with detailed descriptions.</p>
+<h3><a id="imports-and-definitions" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Imports and Definitions</h3>
+<p>The following imports and definition are used for the examples in this tutorial:</p>
+<pre><code class="language-python">import cmath
+from math import pi
+
+import numpy as np
+
+from tinyqsim import gates
+from tinyqsim.qcircuit import QCircuit
+
+PI = '\u03C0'  # Unicode PI
+PHI = '\u03d5'  # Unicode PHI
+</code></pre>
+<h3><a id="symbols-and-notation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Symbols and Notation</h3>
+<p>A quantum circuit is created using the QCircuit constructor and can be drawn with the 'draw' method:</p>
+<pre><code class="language-python">qc = QCircuit(2)  # 2 qubits
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAB4CAYAAAB2OTUCAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA9lJREFUeJzt3E9IFGEcxvFn
+bFmWPdWhooO4WAfrEq0QXUSqQwZBBHuQvKwQdalDx+gqBJ5FAoXx1CkQYcsgyFt/
+qCVPuhcPghBq2KmFIvt1eBnGMcF9bR7acZ8PyO5Mu87rt3F0FX+BmRmEput/L+Cw
+U2AyBSZTYDIFJlNgMgUmU2AyBSZTYDIFJlNgMgUmU2AyBSZTYDIFJlNgMgUmU2Ay
+WuCXL4ELF4BCAThzBpicZB2pvVECv3sH3LwJlMvA/DxQrQIPHgDT04yjtbeA8Wv7
+69eBrS3gw4d43927QK0GrK0BXR10YTrQhzo1BZRKQLEIXL0KvH8PBAEwMwP8+AG8
+eQMMDyefMzICfPkCfP7874vOEu/AtZo7Gy9fBmZngStXkjFXVoCfP4GzZ5PPO3fO
+3S4v/8tysyfn+4SxMWBgAAhDt33tGvD9O/Dkidv+9s3dHj2afN6xY+52a+uAK80o
+r8Db20C9DoyPJ/dXKnHgSBDs/T527282m2g0Gj7LaAvlcrmlx3kF3twEfv0CTpxI
+7j95Mr4fnanRmRyJtqN/jzQaDfT39/ssoy20+r2BV+Djx4FcDtjYSO5fX4/vnz4N
+5PPuWjs0FO9fWnK3u6/NfX19qNfrPsvIFvN08aLZwEBy36NHZoBZGLrtoSGzS5eS
+j7l3z+zUKbPtbd8jZpt34Lk5F7NaNXv1ymxszKynJxn47VuzXM7szh2zhQX3mK4u
+s6mpVNeeCd6BzcyePjXr7jYrFMwGB13QnYHNzF68MDt/3iyfN+vtNZuYSGW9mZPK
+K7mvX931OQzdy2KJddCL1v9DgckoP+yRmM5gMgUmU2AyBSZTYDIFJlNgMgUmU2Ay
+BSZTYDIFJlNgMgUmU2AyBSZTYDIFJlNgMgUmU2AyBSZTYDIFJlNgMgUmU2AyBSZT
+YDIFJlNgMgUmU2AyBSZTYDIFJlNgMgUmowR+/Rq4fdv95X0QAPfvM46SDZTA8/PA
+4iIwOPj35JNOQ/lDxN+/48lSpRJw4wYwMZH2UbIh9alTQGeN7dpP6lOnJCn1qVOS
+5HUGR1Onbt1K7q9U0lzS4ZL61ClfGuu1QytTp3xprNcOR464iaqzs8DDh/H+58+9
+1pZw2Md6eX+Re/zYja4dHXXfPXz6BDx7lnzM6irw8aO732y6eZbRf8Lu63WxWGz5
+0y2TDjJJab+pU2Hotvd66zSaOkWm11xkCkymqVNkOoPJFJhMgckUmEyByRSYTIHJ
+FJhMgckUmEyByRSYTIHJFJhMgckUmEyByRSYTIHJFJhMgckUmEyByRSYTIHJFJhM
+gckUmEyByf4AadAA/CMZgf8AAAAASUVORK5CYII=" alt="png" /></p>
+<p>The horizontal lines represent the qubits of the quantum circuit. So far, this is just an empty circuit with two qubits, q0 and q1. TinyQsim uses the Big-Endian qubit convention, so q0 is the most-significant qubit.</p>
+<p>An instance of a quantum gate (e.g. the CX gate) can be added to the circuit by calling the corresponding method, with the the arguments specifying the qubits to which the gate is applied. CX is a controlled-NOT gate with 2 qubits. The first qubit in the parameter list is the control and the second qubit is the target. A control is indicated by a dar</p>
+<pre><code class="language-python">qc.cx(0, 1)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAB4CAYAAAB2OTUCAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAB+hJREFUeJztnW1sU2UUx//t
+xhwLU6aDTQiZOiM4YzZWBL7wMkQh+gFNiNHEhJn4AoGZYNAESfy0ZNHwYswkRIRB
+jH5AE6ICM2qcicI0rkbH0DpdEI1GwQADV17W9u+HY9Perd1623s2upxf0tz2vjzP
+09997nPPves985EkDDX8492AiY4JVsYEK2OClTHByphgZUywMiZYGROsjAlWxgQr
+Y4KVMcHKmGBlTLAyJlgZE6yMCVbGBCtjgpVRE3zkCDB3LlBcDNx+O7Bzp1ZN1zYq
+gjs7gVWrgPp6oL0daGwEmpqAN9/UqC01AwPAP/8AkcjY1ZkSKrByJTl/vnPeU0+R
+N99MRqMaNSY4fJhsaCABeU2dSj7/PPnXX7r1piMrwW+8QVZVkZMnk8uWkZ2d8mXa
+2sjLl8miInL7duc2n38u63R15d7odLS0SB0FBQnB8c8zZpAnT+rVnQ7XQ8ShQ8DT
+TwMNDcDBg8CyZcCjjyaW9/UBV68Cd97p3K6mRqY//pjL8ZaeL74ANm+W99Goc1k0
+Cpw+7WznWFHodoPmZmDRIqCtTT6vWCHjXUuLfD53TqZTpzq3KyuT6dmzWbZ0FF57
+DSgsTD/mRiLA118D334r54axwpXgaBQIBoFXXnHOX706ITiOz5e6jKHzw+EwQqGQ
+m2ak5MiRWkQiBSOu4/cTbW1/Avg75/rqM9xLrgSfOSM9Yfp05/yKisT7eE+N9+Q4
+8c/x5XFCoRACgYCbZqQhDGDyiGvEYhG0tu5Ca2tzzrUxw5/0uRI8bZochqdPO+f/
+ndQhqquBoiIZa1euTMz/4QeZDh2b58yZg2Aw6KYZKXn88RhCIYJMc+gAACZh69ZG
+NDQ8nHN9GeP2rDh/PrlokXPe5s2JKIKUMG3hQuc6zzyjG6bt2+eMHIa+fD6yooIc
+HNSpPx2uBb//vjS4sZH86COyuVlCtmTBx46RhYXkk0+SHR2yjt9P7t7tadsdXL0q
+8a/fn1qu309+8IFe/enIKg7etYucNYssLiaXLBGhyYJJCfhrayUmvu02srXVk/aO
+SDhMrltHXnedU/Add5Dt7fr1p8KTK7kzZ4YLHk/OniVbWvoIrOGePSHGYuPXlgl5
+N62sDLj//vMA9qOubiBtyDgWTEjB1xKur+RSUV4uo50xHOvByphgZUywMiZYGROs
+jAlWxgQrY4KVMcHKmGBlTLAyJlgZE6yMCVbGBCtjgpUxwcqYYGVMsDImWBkTrIwJ
+VsYEK2OClTHByphgZUywMiZYGROsjAlWxgQrY4KVmZCCo1Hg3LlCAJUYGBjfr+gj
+J8Zv03/6Cdi7F/jyS+C774BwOLGsqgoIBCSHxSOPSJKQsSLvBZ84AWzcCHzyCXDT
+TcB994nM6mpg0iTg/HkR/tVXwNGjss7GjcALL8hydcbvAafciEYlP0RRETl7NvnW
+W5KrYiR6e8lnn5X8EXV15PHj+u3MS8GRiDxp6vNJNpNLl9xt39VF3nUXef315NGj
+Om2Mk5eCN2yQR2Pffjv7Mi5cIBcvFsk9Pd61bSgqgj/+mHzsMXmEFiDXr/eu7EOH
+pMzXX8+9rAsXyJoacu5cedZZA5UYpr1dTixLlgzPfJILFy9KOpsVK4B163Ivr7QU
+2L8f6O4Gtm7NvbyUaOy15JQFVVXe9eCdO2VoyDS5UUeH9PaOjpHXW7+eLC8f/SSZ
+DVn14N27gVtuAUpKgHvvlRDI5wP27ZPlfoXjgpTkdqtWSd1e0tQkOdbefdfbcoEs
+ruRGyzqlxa+/Aj09wJo13pc9ezawcCHw4Yfel+151ikt4llnFizQKX/BAuk8XuOq
+B8ezTj08JOXN6tVeNik1PT2SjKmyMvXyWEwO8+RXf78s6+8fviwWc25fVyc535Iv
+sb3A86xTbsk0rVdf30zccMM0pOsTv/0G3Hpr6m0femj4vJMnnWN5PNrp7OxGWdno
+CS9V0nplknXKLZmn9WrBzJnPAShKubSyUu5HJPP998CmTRKC1dYOXz+ZwUGZLl++
+GED/qK2hRlqvggLJmnfwoNwwifPee25KcZJpWq8DB8qxbdskXL6c+m5YcTGwfLlz
+XuH/3y4QAJYuHbn8n38GpkyJoqPjM0+jINcnuS1bJFR64gmJHrq6gHfeca5z6hTw
+zTfyPhyWsS2+E4aO1yUlJRkdboODwMsvA8ePA/fc47bVoxMMAvPmFWDePI/zLmYT
+PI+WdaqtLX3+smy5dImcMoV86aXMt8n0QmNgQNLgbtmSffvSkVdZp9auleR2md43
+yFTwnj1yZ66vL9cWDievBHd3Sz2vvupdmf/+S1ZXkw8+6F2ZyeTV3+TuvhvYsEHy
+BP/yizdlvvgi8McfwI4d3pQ3DJ39psfFi3IbtKZGjpxc2LtXjogdOzxpWkryTjBJ
+hkLk9OkiubfX/fbRKLltm4y7a9dSNTNgXgomRXJ1teSR376dvHIls+16e8mlS6Xn
+btqkn7Q/bwWTcoJqahJZFRUSZh07JmFXnFiMPHWKPHCAfOAB6bVVVeSnn45NG/Na
+cJwTJ+TvdKWlif86MGuWjNU33piIwevrJSRL3gHa5P3vIpK5ckXuugWDwO+/y9Vf
+aalEH4EAMGNG+tzyWkwowdcieRUH5yMmWBkTrIwJVsYEK2OClTHByphgZUywMiZY
+GROsjAlWxgQrY4KVMcHKmGBlTLAyJlgZE6yMCVbGBCtjgpUxwcr8B0cNNVH7noJm
+AAAAAElFTkSuQmCC" alt="png" /></p>
+<p>Gate names are upper case (e.g. 'CX') whereas the corresponding QCircuit method names are lower case (e.g. 'cx') to comply with Python naming conventions.</p>
+<p>See the QCircuit class in the API documentation for details of the API of the gates.</p>
+<pre><code class="language-plain_text">cx(c: int, t: int)
+   c : the control qubit
+   t : the target qubit
+</code></pre>
+<p>The call <code>qc.cx(0,1)</code> creates an instance of the gate with the control connected to qubit q0 and the target connected to q1.</p>
+<p>If the arguments had been in the reverse order, q1 would have been the control and q0 the target, as shown here:</p>
+<pre><code class="language-python">qc = QCircuit(2)
+qc.cx(1, 0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+<p>In a quantum circuit the gates are often applied to non-consective qubits, such as q0 and q2. For example:</p>
+<pre><code class="language-python">qc = QCircuit(3)
+qc.cx(0, 2)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+<p>The vertical line passes over q1 without a dot, as q1 plays no role. If there were a dot on q1, it would indicate a gate with two controls, which would make it a CCX (controlled-controlled-NOT) gate. For example:</p>
+<pre><code class="language-python">qc = QCircuit(3)
+qc.ccx(0, 1, 2)  # CCX with 3 arguments
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+<p>Since swapping the two controls of a CCX gates makes no difference, the symbol does not distinguish between them.</p>
+<p>TinyQsim supports creation of custom gates, which may have both parameters and controls. In order to allow automatic generation of symbols for custom gates, a generic rectangle is used for the gate body.</p>
+<p>The following example illustrates a custom gate with two control qubits and two target qubits:</p>
+<pre><code class="language-python">mygate = np.eye(4)  # Dummy custom gate
+
+qc = QCircuit(5)
+qc.ccu(mygate, 'U1', 0, 3, 1, 4)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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
+QmCC" alt="png" /></p>
+<p>The following points should be noted about this example:</p>
+<ul>
+<li>
+<p>The dotted line on qubit q2 indicates that it just passes through without playing a role.</p>
+</li>
+<li>
+<p>The first two arguments (0, 3) of the call are the control qubits, which are indicated by a dot. The control qubits may be inside or outside the box as shown here.</p>
+</li>
+<li>
+<p>The numbers (0, 1) in the symbol indicate that these are arguments 0 and 1 for the unitary U (excluding controls). In the example, these are connected to qubits q1 and q4.</p>
+</li>
+</ul>
+<h3><a id="controlled-gates" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Controlled Gates</h3>
+<p>Gates can have a <em>controlled</em> variant. The control enables the operation of the gate. It is drawn as a dark dot in the gate symbol.</p>
+<p>The controlled version CU of a gate U applies the gate if the control is \(\ket{1}\). For example, for a one-qubit gate defined by the unitary matrix \(U\):</p>
+\[CU = \ket{0}\bra{0} \otimes I + \ket{1}\bra{1} \otimes U
+\]
+<p>Since the input may be in a superposition of \(\ket{0}\) and \(\ket{1}\), the result is the superposition of the results for the gate applied to the two cases.</p>
+<p>TinyQsim provides controlled versions of many of the common gates. For example, CX is a controlled version of the X gate. Controls are denoted by a solid dot in the symbol, as shown in the earlier examples of the CX gate. It is possible for a gate to have multiple controls, such as the CCX gate.</p>
+<p>A generic U gate is provided that allows a unitary matrix \(U\) to be applied as a gate. This has CU and CCU variants. See the sections on the U, CU and CCU gates below for details.</p>
+<h3><a id="anti-controlled-gates" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Anti-Controlled Gates</h3>
+<p>Anti-controlled gates are ones where the control is inverted, so that it disables the operation instead of enabling it. These are sometimes drawn like a controlled gate but with a hollow (white) control dot instead of a solid (dark) one.</p>
+<p>TinyQsim does not have specific support for them, but the same effect can be created by sandwiching a control between two X gates, as shown here:</p>
+<pre><code class="language-python">u = np.eye(2)  # Dummy gate
+
+qc = QCircuit(2)
+qc.x(0)
+qc.cu(u, 'U', 0, 1)
+qc.x(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALIAAAB4CAYAAABW+ai6AAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACSNJREFUeJzt3W1sFNUeBvBn
++wJ0MYBJK3oN+IJCF9OYthGR2CAlkSYmJSZcg95+aKPSL/pBiTFQhcRQG9HwwWAl
+orSNBTUYmxigGCM2KmJCt3Cj7TRGvNAYTUvFT2y1dPu/H/7s3Tu0xZ3tzs7M2eeX
+bLY9M51zevLs2TM7LxsSEQFRwOV53QCiTGCQyQgMMhmBQSYjMMhkBAaZjMAgkxEY
+ZDICg0xGYJDJCAwyGaHA6wb8naEhYHQ0+/UWFwNLl2a/Xi8Fua99HeShISASAWKx
+7NcdDgOWlTthDnpf+zrIo6PasZ2d2snZYllAXZ3WnytBDnpf+zrICZEIUFHhdSty
+Q1D7mjt7ZAQGmYzAIJMRGGQyAoNMRnAtyMeOAeXlwLx5wF13Aa2tbtVE5FKQT50C
+Nm7Uj3G6u4H6euDZZ4F333WjNnNMTOjnqZcve92S4HElyK+8oiF+7z1g3TrgpZeA
+J58EduwAJifdqFFt3w6EQsCBA9Mvf/hhoLAQ6Otzrw3pGB4GXnwRKCnRxw03aL8d
+Pep1y2bmu76WNLzzjshtt4kUFYlUV4ucOiUCiLS1ifz5p8icOSJ79tj/pqdH1+nt
+Tb2eaFT/JhpNbf2//hIpKxNZsEDkwgX7stZW3dbOnZmvdzbOnxe59VaR/HytM/FI
+/N7c7H4bRILf145H5CNHgC1bdMTo6gKqq4HNm5PLz50DxsenHuZcuVKfLWs2L7vr
+mzMH6OgAxsaAhgaNBAD8/DPwwgs6Z29qcq/+dDz+uI7I8bi9PPF7UxPw1VfZb9ff
+8VtfOw7yrl1AVRXQ1gZs2KCNfeKJ5PI//tDnRYvsf3fjjfp86VKaLU1RogNPnADe
+ekunMvX1wJUr2vGFhe7W78SZM7o/MTEx8zoFBcCbb2avTU74qa8dnWsRjwPRKLB7
+t7180yagpcVeFgpNv41ry2OxGAYHB6dd17KKADg/g6WpCfj0U513/vgj8PXXwKuv
+AmVlzrZjWRaAMcf1p6qjYzHy8v6ByckZOgsa8mPH4ujr+7dr7QD83dcVqZz84WQe
+8ttvOp/p7LSX//JLco7c368/d3fb1xkZ0fL337eXR6NRATDDozzt+dP33+tcHRBZ
+tUpkYiL1v03M27T+mdqWicd2AcZtc+PpH2Mut8PffZ0KRyNySYm+1Y2M2MuHh5M/
+L1um8yfLAmpqkuUDA/p87dy5tLQU0Wh02vosqwh1dU5amLRgATB3rs7Xa2qA/Hzn
+2+jsPIhIxL0RuadnIbZuvf77bygkWLEijoMHp++jTAl8Xzt99a1aJVJVZS/bti05
+IouI1NSIrF5tX6exUeSWW0Ti8dTrSnePdnJSZP16kcJCkZUrRebOFRkYcL9ep65c
+Ebn5ZpFQ6PojcqJf3RT0vna8s9fUpPOghgbgs8+A5mbg0CH7Ojt2AL29wNNPAz09
+us7+/fr5cl4WDoq3tgJffAG8/DLwySc6L6+vn/rJgNcKCvQgUSg0/T5FXh7w0EP2
+nWm/8U1fp5P+fftEliwRmTdPZO1akW+/nTpyHD0qcu+9One6806RvXud15POq/Wn
+n0TmzxeprNQRT0Tk9dd1Oy0t7tU7G8ePiyxfbh+FCwvj0tgoEotlpw1B7+u0gnyt
+ixfdeQt0+k/G4yIPPqhvbz/8YC9/4AEt7+/PfL2ZMDkpcvKkyM6d/xHgn3LixNns
+VS7B72ujzn7bswf45hudwtxzT7I8Lw9ob9dnP04xAH1LXrMGqK29BOAwFi70YSP/
+j9/62pggW5bO01avBrZunbp8+XI9mHP6NPDaa9lvn0n82NcZufi0uDh5iNIrkYge
+Lr2e55/XB82OH/vamBGZchuDTEZgkMkIDDIZgUEmIwTilllunozvh/r8JKh97esg
+FxfrnRrTPStrNsJhrT9XBL2vfR3kpUv1FRvUe/YGSdD72tdBBvQfzKVAeSnIfc2d
+PTICg0xGYJDJCAwyGYFBJiMwyGQEBpmMwCCTERhkMgKDTEZgkMkIDDIZgUEmIzDI
+ZAQGmYzAIJMRGGQyAoNMRmCQyQgMMhmBQSYj+P4q6qAaGkrv0nr9vrvyq8/O5dpt
+DBJCIl7f2dg8Q0N6D+FYLPt1h8N6f4pcCzNHZBeMjmqIOzunfq+gmyxL7xQ0Osog
+UwZFIkAq3z5Ls8edPTICg0xGYJDJCAwyGcGVIH/+uX5/8rJl+kWIzzzjRi1ESa4E
+ubsbOHsWWLsWWLTIjRqI7FwJ8htvAAMDwIEDwMKFbtRAZJdWkPfvB26/XY8irV8P
+fPedTiHa269ulDPvlLW32/vuWufP6/L6+uy1KYgcR+7IEWDLFmDdOqCrC6iuBjZv
+dqNpRKlzfGRv1y6gqgpoa9PfN2wALl8GWloy3TSi1DkakeNxIBoFHn3UXr5pUyab
+ROScoxH54kVgYgK46SZ7+eLF6TcgFothcHAw/Q34kJ6CmcWzhabUbwEY86z+TKtI
+4YQVR0EuKQEKCoCREXv58LCjdtkMDg6isrIy/Q34UjmAPs9qr6v7F4AzntWfaamc
+aewoyPn5ejZXVxfw3HPJ8o8/dty2/yktLUU0Gk1/Az5kWUWefPFiQmfnQUQi5ozI
+qXC8s9fUBGzcCDQ06KcVvb3AoUP2dS5cAE6f1p9jMeDcuWTYr51Ph8PhlN46cl0o
+lPq6kUgk504fdRzk2lpg3z6guRn48EPg/vuBDz4A1qxJrvPllxr0hOPH9QEAvB7F
+rujqFU1jMwygiatMitK78ilnpHXoorFRL+cZGwN6eoC777Yvr6/XwE73ILs77tDn
+gYHplyfKE+vR9HgMzmMVFcCSJfru9uuv9mXj48DevTqtqK31pn1BwUudPFZQALz9
+tn42X1YGPPWUnjU4PAx89BHQ3w9s2wasWOF1S/0tI0EuLua0YTYeeQQ4eRLYvRvo
+6AB+/x2YPx8oL9cwP/aY1y30P47IPnHffcDhw163Irg4RyYjMMhkBAaZjMAgkxEY
+ZDICP7VwkWWZXZ+fMMguKC7W6xm9OAMuHNb6cw1vK+uSdO+PPFu8PzJRgHFnj4zA
+IJMRGGQyAoNMRmCQyQgMMhmBQSYjMMhkBAaZjMAgkxEYZDICg0xGYJDJCAwyGYFB
+JiMwyGQEBpmMwCCTERhkMsJ/AZw2RABOzUzuAAAAAElFTkSuQmCC" alt="png" /></p>
+<h3><a id="angle-parameters" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Angle Parameters</h3>
+<p>One-qubit gates implement rotations of the state vector on the Bloch sphere. Some of these are fixed-angle rotations, such as X, Y, Z, S, T, etc. Others allow a user-specified rotation angle.</p>
+<p>The P, CP, RX and RY gates have two parameters for the angle. The first is the angle in radians and the second is a label for the circuit symbol that shows the angle in a convenient form, such as a multiple of \(\pi\).</p>
+<p>The following examples show how to specify the label using a simple ASCII 'pi' or a Unicode \(\pi\).</p>
+<pre><code class="language-python">PI = '\u03C0'  # PI unicode character
+
+qc = QCircuit(1)
+qc.p(pi / 3, 'pi/3', 0)  # ASCII 'pi/3'
+qc.p(pi / 3, f'{PI}/3', 0)  # Unicode PI/3
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+<h3><a id="custom-gates" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Custom Gates</h3>
+<p>Custom gates are possible using the U gate that takes a unitary matrix as an argument. For example:</p>
+<pre><code class="language-python">u1 = np.array([[1, 0, 0, 0],  # Define a unitary matrix
+               [0, 0, 1, 0],
+               [0, 1, 0, 0],
+               [0, 0, 0, 1]])
+
+qc = QCircuit(2)
+qc.u(u1, 'U1', 0, 1)  # Apply the matrix as a gate
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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
+SUVORK5CYII=" alt="png" /></p>
+<p>This automatically generates a symbol which is labelled with the string given as the second argument.</p>
+<p>There are also CU and CCU variants for controlled-U and controlled-controlled-U gates. For example:</p>
+<pre><code class="language-python">u2 = np.array([[0, 1],  # Define a unitary matrix
+               [1, 0]])
+
+qc = QCircuit(2)
+qc.cu(u2, 'U2', 0, 1)  # Apply the matrix as a gate
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAB4CAYAAAB2OTUCAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABxdJREFUeJztnVtIVGsUx/+O
+c6zxJT1ZUlDZzZwiSqMLgZhdTAq64UN0jKboQlQPBT1ED70YQlRQDSXd9ICnm0EU
+pWaUQZBdnE4QNdNDdINIDTsRTWHqOg+rYdzjzOSemTWprR8Me2Z/35719fObb3/7
+tkogIoIihuVXN6C/o4KFUcHCqGBhVLAwKlgYFSyMChZGBQujgoVRwcKoYGFUsDAq
+WBgVLIwKFkYFC6OChVHBwqhgYcQEV1cD2dnAwIHAuHHA0aNSkXo3IoIbGoClS4Gc
+HKCmBnA4gG3bgJMnJaIF58sX4MMHoL09fjGDQgIUFhLNmGFct2ED0bBhRB0dEhH9
+XLtGlJ9PBPArJYVo506i9+9l44YiIsHHjxONGkVksxHNnUvU0MD/mPJyom/fiJKS
+iA4eNG5z+zbXaWyMvtGhKC3lGImJfsG+z8OHE718KRc7FKaHiKtXgY0bgfx84NIl
+YO5cYOVKf/mLF0BbG2C3G7ebOJGXbnc0v7fQ3LkD7NrF7zs6jGUdHUBzs7Gd8cJq
+doOSEiA3Fygv588LF/J4V1rKnz9+5GVKinG71FRetrZG2NKfcPgwYLWGHnPb24H7
+94FHj3jfEC9MCe7oAFwuYN8+4/qiIr9gHwkJwb8jcL3X64XH4zHTjKBUV09Be3ti
+2DoWC6G8/B2Apqjj5fTwr2RKcEsL94ShQ43r09P973091deTffg++8p9eDweTJs2
+zUwzQuAFYAtbo7OzHU5nGZzOkqijUQ9v6TMleMgQ/hk2NxvXN3XpEGPHAklJPNYW
+FvrXP3vGy8CxOSsrCy6Xy0wzglJc3AmPh0AU4qcDAPgD+/c7kJ+/POp4PcbsXnHG
+DKLcXOO6Xbv8swginqbNmmWss2mT7DStosI4cwh8JSQQpacTff8uEz8UpgVfvswN
+djiIamuJSkp4ytZV8N27RFYr0fr1RPX1XMdiITpxIqZtN9DWxvNfiyW4XIuF6MoV
+ufihiGgeXFZGNGIE0cCBRHl5LLSrYCKe8E+ZwnPiMWOInM6YtDcsXi/R5s1EAwYY
+BWdmEtXUyMcPRkyO5Fpaugv+lbS2EpWWviBgDZ065aHOzl/Xln55Ni01FSgo+A/A
+35g69UvIKWM86JeCexOmj+SCkZbGo53SHe3BwqhgYVSwMCpYGBUsjAoWRgULo4KF
+UcHCqGBhVLAwKlgYFSyMChZGBQujgoVRwcKoYGFUsDAqWBgVLIwKFkYFC6OChVHB
+wqhgYVSwMCpYGBUsjAoWJia3r0ry5g0/1G0Wt9sGIPvH0jxpacDIkRFtaiCBqPfe
+2fvmDT/25fXGP3ZyMj+KFq3kXt2DP3xguZWV3Z+vk8TtBoqLOX6/FuzDbo/v88Wx
+RHdywqhgYVSwMCpYGBHBN24Aq1bxk/cJCcDWrRJR+gYigmtqgMePgby87plPfjdE
+BO/fz/khTp8GBg2SiNB3iEjwiRNARgYf7cybB9y7x0NBRcWPLxUe2SsqjPECefWK
+yx0O/vzxI3DoEFBQAIwYAdhswIQJnNzp7VvZtsY861Rv5P59YMcOftx3yxbgyBFg
+0SI+Qpw82Z+NRYKYZ53qjWRlAc+fc4rHrixeDCxYAOzZA1RVycQ21YN9WaeWB6S8
+KSqKZZNiT0ZGd7kAMH8+8OefwJMncrFjnnXKLOHSevGpRrmzPJ8+AZ8/A5MmBS93
+u90AvgYtE0nr1ZOsU2YJn9YrG8CjyL/8J5SUAN+/A2vWBC8vLv4LwL9By3p6lteU
+4MREPqt16RKwfbt//cWLZr7FSLi0Xm63DcXFkX93OC5cAA4c4DF47drgdSor/4Hd
+HrwH9xTTO7nduzl17dq1PHtobATOnDHWef0aePiQ33u9nM/S90cIHK+Tk5N7/HMz
+S6hUMtXVwOrVnN+4qir0tNJut0d9mtS04CVLgLIyYO9e4Nw5YOZM4OxZYPZsf536
+emOvqK3lFxCbzCi2H1eBvoboXL4rILYgV4tqa4EVK3hmUVcnfyAU0SHBpk18Oefr
+V+D2bWD8eGO5wxE6RVwsGD2al6Hmr771vno+rl/nGVBmJnDzJjB4cGzaE44+eTYt
+J4ePyM6dA969M5a1tQFOJw8PS5b419fVAcuWcWe4dYsvasaDPnHJKBCrFTh2jHvj
+5MnA+vV85q6pCTh/Hnj6lHMJT5jA9Rsbeb9BBKxb5x+uuiK1MxVJMR4rXC4eWFyu
+4OUPHhAVFXFOSquVaNAgojlziM6fN9YrLw+f1zLQws/imqFP9mAf06f37BDX4fCf
++Ik3fXIM7kuoYGFUsDAqWBgVLEyfmEVI/d8b8YjXqwWnpfF1P7GDgDAkJ8fmaK9X
+374KRH5/cLT8FvcH9wd0JyeMChZGBQujgoVRwcKoYGFUsDAqWBgVLIwKFkYFC6OC
+hVHBwqhgYVSwMCpYGBUsjAoWRgUL8z9TqGmHrRLmFgAAAABJRU5ErkJggg==" alt="png" /></p>
+<p>The matrix in this case only defines the operation that is to be controlled but not the control itself. It could have been defined as a 'U' gate with a 4x4 matrix that included the control action. However, this would have been more complicated and the circuit symbol would not have shown which qubit was the control.</p>
+<p>For further details see the 'U', 'CU' and 'CCU' gates later in this guide.</p>
+<h3><a id="parameterized-custom-gates" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parameterized Custom Gates</h3>
+<p>A parameterized gate can be defined as a function that returns a unitary matrix.</p>
+<p>For example, suppose that we wish to create the following custom parameterized phase gate.</p>
+\[\text{RK}(k) =\begin{bmatrix}1 &amp; 0 \\ 0 &amp; e^{\large\frac{2\pi i}{2^k}}\end{bmatrix}
+\]
+<p>One way to define it is:</p>
+<pre><code class="language-python">def rk(k: int):
+    return np.array([[1, 0], [0, cmath.exp(1j * 2 * pi / 2 ** k)]])
+</code></pre>
+<p>Alternatively, we could define it in terms of the existing P (phase) gate, as follows:</p>
+<pre><code class="language-python">def rk(k: int):
+    return gates.P(2 * pi / 2 ** k)
+</code></pre>
+<p>If we call this function with the argument 3 it returns a unitary matrix:</p>
+<pre><code class="language-python">rk(3)
+</code></pre>
+<pre><code class="language-plain_text">array([[1.        +0.j        , 0.        +0.j        ],
+       [0.        +0.j        , 0.70710678+0.70710678j]])
+</code></pre>
+<p>In either case, the gate can be added to the circuit like this:</p>
+<pre><code class="language-python">qc = QCircuit(1)
+qc.u(rk(3), 'RK', 0)  # Add rk(3) to qubit 0
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABBCAYAAABVTGNnAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABLpJREFUeJztm09IVF8Yht8x
+MdON4YzSwooycFahkhUkRYrNroKiwiGEkiBo0yKIoBYJQkGrKMnASIW2IalRZBA4
+beZXRnWFsIUuKsf+QU7FaO9v8XEZr86Mc0c/HeU8MNw73z33fMfH45w/c/WQJAxq
+5Cx3A1Y7RrAyRrAyRrAyRrAyRrAyRrAyRrAyRrAyRrAyRrAyucvdgPkYHQUmJpY+
+r9cLbNy48HqyWvDoKOD3A9Ho0ucuKAAsa+GSs1rwxITI7eoS0UuFZQHBoORf1YJt
+/H6gqmq5W5EZZpBTxghWxghWxghWxghWRk1wby9QWQnk5wPl5cCtW1qZshsVwaEQ
+cPCgTK36+oCmJuDcOeDuXY1sWQ4VCATImhpnrLmZ3LCBnJ5Ov55wmATkOJOBAYnP
+fBUWkpWV5I0bZCzmLL93L7l27dz6YzGysVHuP3063rZkeTMhox7c3g5s3izLybo6
+4OVLwOMB7t0D/v4Fnj0Djh933tPYCHz6BLx6tfBOYXPsGNDZCdy/D1y5AsRiwPnz
+wNmz89/75w9w+DDQ3Q1cuCA/U47G37Pb30hPj/x2m5rI/n6ypYXctEliHR3ku3dy
+3tfnvG98XOKdnennmq8Ht7Y6479+kWVlpMcj+Wxm9+CfPyWWqI5UeTPB9VK5pQWo
+rQU6OuT9gQPA5CTQ2irvv3+XY1GR87716+X47VuGPSENCguBnTuBsTFgZATw+eaW
+iUSAQAB4/Rq4cwdobtZrD+ByL2J6GgiHgWvXnPEjR+KCbTyexHXMjkejUQwPDycs
+a1nrALjb5RkZkWNx8dxrY2NAQwPw8SPw4AFw9GjquizLAvA74bWqNDdHXAmORICp
+KaCkxBkvLY2f2z3V7sk29nv7us3w8DCqq6uTZKwE8F/S9kSjsuNFAp8/A21t8hm/
+YwewbZuz7NQUsGcP8PUr0NMjoucjGGwEkHjQYJqP9LkS7PMBubnA+Lgz/uVL/Hzr
+ViAvT7b8AoF4/P17Oc7edqyoqEA4HE6Yz7LWIRhM3p6rV+U1k0OHgNu355b990/a
+WVQElJUlr3MmXV3d8PsT9+C0cfuhXVND1tY6Yxcvxgc5UqZpu3Y5y5w5s/jTtFOn
+yCdPZEC9fp0sLiZ37yZ//HCWtwe5R4/kWFoqg7HbvJngWvDDh6lnESQ5OEjm5src
+cmBAyuTkkO3t7nK5nUWEQpLnxAlnfOYsordXzktKyLdv3eXNhIwWGm1tMh3Kz5fG
+Dw46BZPSW7ZvJ/PyyC1byJs33edxK5gkT56Ua6FQPDZ7mtbfL233+cg3b9LPmwmL
+spKLROYKXgwyEfzhA7lmDVlfH48lWsk9fiySvV5yaCi9vJmw6nbTystlFfn0KfDi
+RfJyDQ0ym5icBPbvB4aGdNqz6gQDwKVLsuy9fDl1ufp6kRyNiuTFXMbbLMqXnl6v
+zEWXin37Uufz+2VRZPP8efKydXW6jwWsyh6cTRjByhjByhjByhjByqyIR6csa+Xm
+y2rBXq98LZVqR02LggLJv1A8ZHb/r/JKfz446wWvdMwgp4wRrIwRrIwRrIwRrIwR
+rIwRrIwRrIwRrIwRrIwRrIwRrIwRrIwRrIwRrIwRrIwRrIwRrIwRrMz/5IFBuw02
+p7wAAAAASUVORK5CYII=" alt="png" /></p>
+<p>Note that the unitary matrix definitions of the gates are defined in the tinyqsim 'gates' package. For example, the matrix of the CX gates is:</p>
+<pre><code class="language-python">gates.CX
+</code></pre>
+<pre><code class="language-plain_text">array([[1, 0, 0, 0],
+       [0, 1, 0, 0],
+       [0, 0, 0, 1],
+       [0, 0, 1, 0]])
+</code></pre>
+<h3><a id="global-phase" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Global Phase</h3>
+<p>Some gates may appear to be equivalent, but actually differ in a subtle way.</p>
+<p>For example, the RX(theta) gate performs a rotation by 'theta' radians about the X axis, whilst the X gate performs a rotation by \(\pi\) about the X axis. So it might seem that \(RX(\pi) = X\).</p>
+<p>However, because of the way they are defined:</p>
+\[RX(\pi) = \begin{bmatrix}
+0 &amp; -i \\ -i  &amp; 0
+\end{bmatrix}\quad\textrm{and}\quad
+X = \begin{bmatrix}
+0 &amp; 1 \\ 1  &amp; 0
+\end{bmatrix}
+\]
+<p>Hence \(X=i\,RX(\pi)\).</p>
+<p>A global phase term has no effect on any experiment we can perform. Consider a quantum state with a global phase term \(e^{i\phi}\):</p>
+<p>\(\ket{\psi} = e^{i\phi}(\alpha_0 \ket{0} + \alpha_1 \ket{1})\)</p>
+<p>Then the probability of the measurement outcome \(\ket{0}\), for example, is:</p>
+\[\begin{align*}
+p(\ket{0}) &amp;= (e^{i\phi}\alpha_0)^*\, (e^{i\phi}\alpha_0)\\
+&amp;=\alpha_0^*\,\alpha_0\\
+&amp;=|\alpha_0|^2
+\end{align*}
+\]
+<p>where \(^*\) denotes complex conjugation.</p>
+<p>Consequently, the global phase term has no effect on the measurement outcome.</p>
+<p>This extends to a multi-qubit system since:</p>
+<p>\((e^{i\phi} \ket{\psi}) \otimes \ket{\chi} = e^{i\phi}(\ket{\psi} \otimes \ket{\chi})\)</p>
+<hr />
+<h2><a id="summary-of-gates" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary of Gates</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left">API</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">qc.ccu(matrix, label, c1, c2, *t)</td>
+<td style="text-align: left">Controlled-controlled-U gate</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.ccx(c1, c2, t)</td>
+<td style="text-align: left">Controlled-controlled-X (aka Toffoli)</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.ch(c, t)</td>
+<td style="text-align: left">Controlled-H</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.cp(phi, label, c, t)</td>
+<td style="text-align: left">Controlled-P</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.cs(c, t)</td>
+<td style="text-align: left">Controlled-S</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.cswap(c, t1, t2)</td>
+<td style="text-align: left">Controlled SWAP (aka Fredkin)</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.ct(c, t)</td>
+<td style="text-align: left">Controlled-T</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.cu(matrix, label, c, *t)</td>
+<td style="text-align: left">Controlled-U gate</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.cx(c, t)</td>
+<td style="text-align: left">Controlled-X (aka CNOT)</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.cy(c, t)</td>
+<td style="text-align: left">Controlled-Y</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.cz(c, t)</td>
+<td style="text-align: left">Controlled-Z</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.h(t)</td>
+<td style="text-align: left">Hadamard</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.i(t)</td>
+<td style="text-align: left">Identity (aka ID)</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.p(phi, label, t)</td>
+<td style="text-align: left">Phase: 'phi' radians about Z axis</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.rx(theta, label, t)</td>
+<td style="text-align: left">Rotation by 'theta' radians about X axis</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.ry(theta, label, t)</td>
+<td style="text-align: left">Rotation by 'theta' radians about Y axis</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.s(t)</td>
+<td style="text-align: left">pi/2 phase (S = sqrt(Z))</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.sdg(t)</td>
+<td style="text-align: left">-pi/2 phase (S-dagger)</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.swap(t1, t2)</td>
+<td style="text-align: left">Swap 2 qubits</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.sx(t)</td>
+<td style="text-align: left">Sqrt(X) (aka V, SQRTX)</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.t(t)</td>
+<td style="text-align: left">pi/4 phase (T = sqrt(S))</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.tdg(t)</td>
+<td style="text-align: left">-pi/4 phase (T dagger)</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.u(matrix, label, *t)</td>
+<td style="text-align: left">Use unitary matrix as a gate</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.x(t)</td>
+<td style="text-align: left">Pauli X (aka NOT)</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.y(t)</td>
+<td style="text-align: left">Pauli Y</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.z(t)</td>
+<td style="text-align: left">Pauli Z</td>
+</tr>
+</tbody>
+</table>
+<p>The argument names are abbreviations for:</p>
+<pre><code class="language-plain_text">  c      Control qubit
+  t      Target qubit
+  *t     One or more target qubits
+  label  Text label
+  phi    Angle in radians
+  theta  Angle in radians
+</code></pre>
+<p>The following are additional circuit elements that are strictly not gates because they are not reversible unitary operations.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left">API</th>
+<th style="text-align: left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">qc.barrier()</td>
+<td style="text-align: left">Insert barrier in circuit (not a gate)</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.measure(*t)</td>
+<td style="text-align: left">Measurement operation (not a gate)</td>
+</tr>
+<tr>
+<td style="text-align: left">qc.reset(t)</td>
+<td style="text-align: left">Reset qubit to</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2><a id="alphabetical-list-of-gates" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Alphabetical List of Gates</h2>
+<h3><a id="ccu" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>CCU</h3>
+<p>The CCU gate is a controlled-controlled custom unitary gate. See the U gate for further details.</p>
+<p>It applies unitary matrix U to the target qubit if both the controls are \(\ket{1}\).</p>
+<pre><code class="language-python">u = np.eye(2)  # Dummy gate
+
+qc = QCircuit(3)
+qc.ccu(u, 'U', 0, 1, 2)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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
+wWRUMJn/A8oCCi0K7xUXAAAAAElFTkSuQmCC" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   ccu(u: ndarray, name: str, c1: int, c2: int, *t: int)
+      u    : unitary numpy matrix
+      name : Name of gate   
+      c1   : the first control qubit
+      c2   : the second control qubit
+      *t   : the target qubits
+</code></pre>
+<p>The unitary matrix is of size \(2^k \times 2^k\) for \(k\) target qubits.</p>
+<h3><a id="ccx-aka-toffoli-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>CCX (aka Toffoli) Gate</h3>
+<p>The CCX gate is a controlled-controlled-X gate. See the X gate for further details.</p>
+<p>It applies an X (NOT) operation to the target qubit if both the controls are \(\ket{1}\).</p>
+<pre><code class="language-python">qc = QCircuit(3)
+qc.ccx(0, 1, 2)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   ccx(c1: int, c2: int, t: int)
+      c1 : the first control qubit
+      c2 : the second control qubit
+      t  : the target qubit
+</code></pre>
+<h3><a id="ch-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>CH Gate</h3>
+<p>The CH gate is a controlled version of the Hadamard (H) gate. See the H gate for further details.</p>
+<pre><code class="language-python">qc = QCircuit(2)
+qc.ch(0, 1)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   ch(c: int, t: int)
+      c : the control qubit
+      t : the target qubit
+</code></pre>
+<h3><a id="cp-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>CP Gate</h3>
+<p>The CP gate is a controlled version of the P gate. See the P gate for further details.</p>
+<p>The first argument is the phase angle in radians. The second argument is the phase angle as a string that is used to label the circuit symbol. The phase angles are typically multiples of 'pi', so it is convenient to use the unicode 'pi' in the text string. See the P gate for further details.</p>
+<pre><code class="language-python">qc = QCircuit(2)
+qc.cp(pi / 2, f'{PI}/2', 0, 1)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAB/CAYAAABrPAW6AAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAB71JREFUeJztnWlsTF0Yx/8z
+LdGJXRGJImobH1ClIbFWYgvxRRBrpUUkJIQQREiQxhJ5hYgqKuLtByHSxZL40Ara
+JjrvS4QpQRhvrA2iTEVMn/fDYzKdzmLuTJ/O4vklkztzt3PmN+eee+6Zc59rIiKC
+IoY52hlIdFSwMCpYGBUsjAoWRgULo4KFUcHCqGBhVLAwKlgYFSyMChZGBQujgoVR
+wcKoYGFUsDAqWBgVLIyY4KtXgYwMoEMHYNAg4PhxqZRim2SJnVZXA/PmAcuXA4cP
+A3fuAOvXA+3bA3l5Eil6IOL0SksBp5N/3GXLgB49ZNMNkqHWZ+ZMoqws73mrVhH1
+6UPkckmkyDgcRBkZRABRcjJRu3ZEZjNP8/OJmprk0g5EWIJPniTq358oJYUoO5uo
+upq/VFER0ffvRO3bEx0+7L1NZSWvU1sbeab98ekT0YABLJbLse/r0CGZtINhuA4u
+LwdWrwamTgUuXways4FFizzLnz0DfvwArFbv7YYP56ndHsnxFpjCQsDhAH7+DLzO
+rl3A168y6QfCsOC9e4GJE4GiImDGDGDHDmDxYs/yT5942rWr93bduvH048cwc/ob
+CgqApqbg6zidwMWLMukHwtBJzuUCbDbgwAHv+fPnA/n53vNMJv/7aDnf6XSirq7O
+SDb84nCMwu/KS1JSE2pq3mLEiLcRpzd69OiQ1jMk+MMHPgR79fKe37u35727pLpL
+shv3Z/dyN3V1dcjMzDSSjQDUAwjeVPj5k1BQcBAFBX9FnBqFOKTPkOCePYHkZOD9
+e+/579553qenc3PMbgdmzvTMf/SIpy3r5mHDhsFmsxnJhl/273fh0iWCyxXg0AFg
+MplRVpaLPn2WRZxeyBg9K2ZlEU2c6D1v2zZPK4KIm2njxnmvs2aNbDPNbufmmMnk
+vwWRlES0YIFM2sEwLLikhDOck0N0/TrR3r3cZGsuuKqKm0t5eUQVFbyO2UxUWNiq
+efehtJSbiElJHrFmcxMBRBMmEDU0yKbvj7DawSdOEKWlEXXoQDR5MgttLpiI6MoV
+opEj+QsPHEh07Fir5Pe3vHjBR1RaWiMB/9GYMV/owgWiHz/aJv2WtMqV3IcPvoKj
+jc1mIwBks9mimg/tTRNGBQvTKr1pqal8SlF80RIsjAoWRgULo4KFUcHCqGBhVLAw
+KlgYFSyMChZGBQujgoVRwcKoYGFUsDAqWBgVLIwKFkYFC6OChVHBwqhgYVSwMCpY
+GBUsjAoWRgULo4KFUcHCiNyr3Jo4HEB9vfHt7PYUABm/psZJTQX69QtrUy9MRLE7
+8NTh4LuSnM62T9ti4TulIpUc0yW4vp7lnj/ve/uXJHY7sHQpp5/Qgt1YrUCIN1bG
+HHqSE0YFC6OChVHBwqhgYUQE37jBQTrS0zk+xLp1EqnEByKCr10D7t0DJk/2jXzy
+pyEi+NAhjg9x5gzQpYtECvFDWIILC4EBA/hycto0oKaGq4KzZ3/tNIo1e2Ul56X5
+q2NHIDMTOHKEw+K0JYav5NxRp3JyONpUba131KlYYeFCYM4cvsX39Wv+8TdsAB4+
+BE6ebLt8GBbcPOoUwJGnvn3zDYoUbUaN4v4EN2vX8iX3qVPAnj3ecYYkEYs6FSrB
+ok5xV2Pr9PJ07gyMHw9cugQ8fx6aYLvdDqDR77KoRZ0ySvCoUxkA/gl/580gAp4+
+5fepqaFts3TpEgD/BthflKJOGSVY1Cm7PcXrMDeC08ndjUTAmzfA0aPA/fvA2LHA
+4MGh7eP8+b9htfovwaFiSHBSEncbXr4MbNzomR9JND2LxRLy4WaEPXv45cZkAmbN
+4jo4VKxWa8TdpIZPcjt2cOjalSs9rYjiYu91Xr4E7t7l904nx7N0/wjz50eW4VDJ
+zeX8mUzcnBwyJEohbsMJ9PO7qFNFRYEjoBrBZuNtjMQ1qqjgbfLzjaUVabqBCOuS
+YM0a/r+ssZEb9i3rtJycQHojLxDxhvamCaOChdGoU8LExb/KRpgyJbZ+bK0ihFHB
+wqhgYVSwMHFxkpN6NERbpBfTglNTuR8h3B61SLBYQu/WDEZMD18Fwh8fHCl/xPjg
+REBPcsKoYGFUsDAJLfjJE/5H49Ur/oclN5f7ri0WfpDfpk3Aly+yeYjpZlqklJUB
+I0YAaWk8qufxY2DzZmDoUJa/cyc/PbGqSnA0UuR/isQuU6YQbd/O79+/913ufqpN
+ZaVcHuKuiti923fsWfPX7t283ufPwO3bwNy5/LlnT999ZWTw9PVrufzGXRWRl8cP
+/Tt6lB/O6iY7m8ckux/Kev06P1otKyvwvm7d4qnkLWJxJ7hvX88V1rhxnvlmMy/r
+25c/l5cDs2cHrls/f+YhCNOm8Tg2KeKuiggFl4tLsLt68Ld8yRIetHj6tGxe4q4E
+h0JVFdDQAEyf7n/56tXAzZtARQXQv79sXhJScHk5MGkS0KmT77ItW4Bz54CSEh6n
+Jk3CVBHN69rycv/Vw4EDfHvDqVNcP7cFCVOCu3fnUUYPHvD9IXPmeC8vLga2buXx
+akOH8m0PbpqfHFsduSa2HAcP+o5z27ePx8qZTERWq+82K1YEHi+3a5dcXhOuP3j6
+dG52tRyFHy0STnCskTAnuVhFBQujgoVRwcKoYGFUsDAqWBgVLIwKFkYFC/M/xyUx
+ZGfJ4bsAAAAASUVORK5CYII=" alt="png" /></p>
+<pre><code class="language-API:">   cp(phi: float, phi_text: str, c: int, t: int)
+      phi      : the phase angle in radians
+      phi_text : Text annotation for the angle
+      c        : the control qubit
+      t        : the target qubit
+</code></pre>
+<h3><a id="cs-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>CS Gate</h3>
+<p>The CS gate is a controlled version of the S gate. See the S gate for further details.</p>
+<pre><code class="language-python">qc = QCircuit(2)
+qc.cs(0, 1)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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
+92AAAAAASUVORK5CYII=" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   cs(c: int, t: int)
+      c : the control qubits
+      t : the target qubit
+</code></pre>
+<h3><a id="cswap-aka-fredkin-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>CSWAP (aka Fredkin) Gate</h3>
+<p>The CSWAP gate is a controlled version of the SWAP gate. See the SWAP gate for further details.</p>
+<pre><code class="language-python">qc = QCircuit(3)
+qc.cswap(0, 1, 2)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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
+RK5CYII=" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   cswap(c: int, t1: int, t2: int)
+      c  : the control qubits
+      t1 : the first target qubit
+      t2 : the second target qubit
+</code></pre>
+<h3><a id="ct-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>CT Gate</h3>
+<p>The CT gate is a controlled version of the T gate. See the T gate for further details.</p>
+<pre><code class="language-python">qc = QCircuit(2)
+qc.ct(0, 1)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   ct(c: int, t: int)
+      c : the control qubit
+      t : the target qubit
+</code></pre>
+<h3><a id="cu" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>CU</h3>
+<p>The CU gate is a controlled custom unitary gate. See the U gate for further details.</p>
+<p>It applies unitary matrix U to the target qubit if the control is \(\ket{1}\).</p>
+<pre><code class="language-python">u = np.eye(2)  # Dummy gate
+
+qc = QCircuit(2)
+qc.cu(u, 'U', 0, 1)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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
+sDAqWJj/AfoL99VcA0H6AAAAAElFTkSuQmCC" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   cu(u: ndarray, name: str, c: int, *t: int)
+      u    : unitary numpy matrix
+      name : Name of gate   
+      c    : the control qubit
+      *t    : the target qubits
+</code></pre>
+<p>The unitary matrix is of size \(2^k \times 2^k\) for \(k\) target qubits.</p>
+<h3><a id="cx-aka-cnot-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>CX (aka CNOT) Gate</h3>
+<p>The CX gate is a controlled version of the X gate. It is also known as the CNOT gate. It plays an important role in quantum algorithms.</p>
+<pre><code class="language-python">qc = QCircuit(2)
+qc.cx(0, 1)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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
+AAAAAElFTkSuQmCC" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   cx(c: int, t: int)
+      c : the control qubit
+      t : the target qubit
+</code></pre>
+<h3><a id="cy-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>CY Gate</h3>
+<p>The CY gate is a controlled version of the Y gate. See the Y gate for further details.</p>
+<pre><code class="language-python">qc = QCircuit(2)
+qc.cy(0, 1)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAB4CAYAAAB2OTUCAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABlNJREFUeJztnV9Ik3sYx7/b
+PKa7ScWShP7QP1o3ZoH9AREN1Kuy8iJqcGakEtRFFwXirSGEdFGjTCs94KkuAilK
+jQKNIoujna7aCCLy4lAqdm6cYZvPuXga89XNs3fbM6c+Hxjb+/u97/v8/Ozd7/3t
+t/d9tBARQRHDutgNWO6oYGFUsDAqWBgVLIwKFkYFC6OChVHBwqhgYVSwMCpYGBUs
+jAoWRgULo4KFUcHCqGBhVLAwKlgYMcE9PUBhIZCRAWzdCly/LhUptRERPDgIHD4M
+7N4N9PYCLhdw7hxw65ZEtPBMTgLj44Dfn7yYYSEBKiuJioqMZbW1ROvWEQUCEhFD
+PHlCVFpKBPAjK4vowgWir19l40YiJsFtbUQbNxJlZhKVlRENDvIf09FB9OMHUXo6
+0ZUrxm0GBnidoaH4Gx2J5maOYbOFBAeX8/OJPn+Wix0J013E48dAXR1QWgp0dwNl
+ZcDx46H6T5+A6WnA4TBut3MnP3s88XzeIvPyJdDQwK8DAWNdIACMjhrbmSzSzG7Q
+1AQUFwMdHbxcUcH9XXMzL3//zs9ZWcbtsrP5eWIixpb+D1evAmlpkftcvx94+xZ4
+947PDcnClOBAABgeBi5fNpZXV4cEB7FYwu9jbrnP54PX6zXTjLD09BTA77ctuI7V
+Sujo+AfAt7jj7Y7yXTIleGyMj4S1a43leXmh18EjNXgkBwkuB+uDeL1e7Nmzx0wz
+IuADkLngGjMzfrjdrXC7m+KORlFe0mdK8Jo1/DEcHTWWf5t1QGzZAqSnc19bWRkq
+//CBn+f2zTt27MDw8LCZZoTF6ZyB10sgivDRAQD8hpYWF0pLj8QdL2rMnhWLioiK
+i41lDQ2hUQQRD9P27TOuU18vO0zr7DSOHOY+LBaivDyinz9l4kfCtOCHD7nBLhdR
+Xx9RUxMP2WYLfv2aKC2N6PRpov5+XsdqJWpvT2jbDUxP8/jXag0v12olevRILn4k
+YhoHt7YSrV9PlJFBVFLCQmcLJuIBf0EBj4k3byZyuxPS3gXx+YjOnCFatcooePt2
+ot5e+fjhSMg3ubGx+YIXk4kJoubmTwT8Trdve2lmZvHasixn07KzgfLyfwH8gV27
+JiMOGZPBshScSpj+JheO3Fzu7ZT56BEsjAoWRgULo4KFUcHCqGBhVLAwKlgYFSyM
+ChZGBQujgoVRwcKoYGFUsDAqWBgVLIwKFkYFC6OChVHBwqhgYVSwMCpYGBUsjAoW
+RgULo4KFUcHCqGBhEnL5qiQjI3xTt1k8nkwAhb+ezZObC2zYENOmBixEqXtl78gI
+3/bl8yU/tt3Ot6LFKzmlj+DxcZbb1TX//jpJPB7A6eT4y1pwEIcjufcXJxI9yQmj
+goVRwcKoYGFEBD97Bpw4wXfeWyzA2bMSUZYGIoJ7e4H374GSkvmZT1YaIoJbWjg/
+xJ07wOrVEhGWDjEJbm8HNm3ibzsHDwJv3nBX0Nn5a6eL1LNXVQE2G/DqVfj6wUGu
+r6pKXpsSnnVqMbl5E8jJ4UR4k5PGuqkpLs/JAdraktcm04JnZ52qqAAaG/mElgrk
+5QGtrZxa7OJFY11DA/DxI78Jc3MOSWJKcDDr1JE5KW+qqxPZpPg4dgw4eRK4cQN4
+/pzLXrzgtF9OJ3D0aHLbk/CsU2ZZKK0XTzWan+Vxu4GBAeDUKT4/1NQA+fnAtWvm
+9uPxeABMha0TSesVTdYpsyyc1qsQwDvT+8zK4hFMRQVQUMCzYk+fmh8yOp0nAfwd
+ti7aWV5Tgm02ntXq7gbOnw+VP3hgZi9GFkrr5fFkwumMbb/l5UBtLY946up42Sxd
+XX/C4Qh/BEeL6enKxkZOXVtTw6OHoSHg7l3jOl++AH/9xa99Pj7pBN+Euf213W6P
++uNmlgMHWPD+/bFt73A44p4mNS340CE+U1+6BNy/D+zdC9y7x39MkP5+fgOC9PXx
+A1h5mVFi+kpQX88/50xN8clk2zZjvcsVOUXcSkNn04RRwcJo1ilhlsSPnrHicvFj
+MdEuQhgVLIwKFkYFC6OChVkSowip/72RjHgpLTg3l3/3i3VGLR7sdo4fLyl9+SoQ
++/XB8bIirg9eDuhJThgVLIwKFkYFC6OChVHBwqhgYVSwMCpYGBUsjAoWRgULo4KF
+UcHCqGBhVLAwKlgYFSyMChbmPx/X/xmAnzsVAAAAAElFTkSuQmCC" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   cy(c: int, t: int)
+      c : the control qubit
+      t : the target qubit
+</code></pre>
+<h3><a id="cz-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>CZ Gate</h3>
+<p>The CZ gate is a controlled version of the Z gate. See the Z gate for further details.</p>
+<pre><code class="language-python">qc = QCircuit(2)
+qc.cz(0, 1)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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
+wWT+Aapw5SwqI1tqAAAAAElFTkSuQmCC" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   cz(c: int, t: int)
+      c : the control qubit
+      t : the target qubit
+</code></pre>
+<h3><a id="h-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>H Gate</h3>
+<p>The Hadamard (H) gate is an important gate in quantum computing because it can create a superposition from a basis state. It can also be used to switch between the Z basis and the X basis.</p>
+<pre><code class="language-python">qc = QCircuit(1)
+qc.h(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABBCAYAAABVTGNnAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA7JJREFUeJztm09IVEEcgL9N
+SV0IijalDiIU5IsgXE8dStKD4qE8dIgUKio7dejUodiDCEHHDqJpZZB/kEAi0UNY
+dIiC2rr1tigID4m61EEyk9btMG3bi7e0b7ff+jZ/HyzvvZk385v9mN2Z2TcbSCaT
+SRQxNqx1A/53VLAwKlgYFSyMChZGBQujgoVRwcKoYGFUsDAqWJjStW7A35iZgXi8
+8HFDIaiuzr8eXwuemYHdtQmWv5YUPHZ5RYI3sZK8JftacDyOkdvZDjvswgX+aLF8
+fYh4PP9e7GvBv9hhQ82rtW5FTuggJ4wKFkYFC6OChVHBwogJnpyEujooL4ddu6Cn
+RyqSvxER/PQpHDkC4TBMTcHJk3D+PAwMSETzNyKCu7qM3Bs34NAhuHwZTp+GSARW
+VyUiQkNVA8kTSS7uvZjxnsXjizxqfiTTgAzkJLi/H2pqIBiEpiZ49gwCARgchG/f
+4OFDOHbMWaa9HWZn4VVxrhdyxrPgiQno7DQ9c3wcGhudMt+/h5UVsCxnuT17zNEu
+4IrXD3heKnd3w4EDcOuWuW5uhi9f4MoVc/35szlu3uwst2WLOX76lGNLixRPghMJ
+iEbh6lVn+tGjacEpAgH3Ov5MX1paIhaLud5r2xWA5ZqXiWBpkK1lWz2VyYRt28BX
+17xwOJxVHZ4ELyzA9+9QWelMr6pKn6d6aqonp0hdp/JTxGIx6uvrM0SsA156aSKR
+fREi+yKeymSio6MdcB80st3S50nwtm1QWgrz8870ubn0+c6dsHGj+a5taUmnv35t
+jn9+N9fW1hKNRl3j2XYFHR1eWggDbwcY/TDqmne/8b6nuu7cGcKy3HtwtngSXFJi
+pl/j43DhQjr97t30eVmZGfjGxpz3jIzA9u1m8fE7wWAw649bNrxbfMf07LRrXiKZ
+8FSXZVnk2zTPg9ylS2YRceqUmT28eAHDw857IhE4eBDOnjXTsydPzNSurw82rLPF
+uee3e/gw9PbC9DS0tcGDB6Z3/s7+/XDvHjx/bmYZN2/CtWtw5sw/anURkdMTjXPn
+zCuF20PJ1lbzWu+ssw9s4VHBwvyTh56hEKz1Pz0ezz0mcDvD6uYnm4Y3Fag1abQH
+C6OChVHBwqhgYVSwMMWxdeqjt58s/RTP14JDIbPLcfn6UMFjl1ckCIXy39UZ8Pt/
+lYt9f7DvBRc7OsgJo4KFUcHCqGBhVLAwKlgYFSyMChZGBQujgoVRwcKoYGFUsDAq
+WBgVLIwKFkYFC6OChVHBwvwArfbgjz1e91oAAAAASUVORK5CYII=" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   h(t: int)
+      t : the target qubit
+</code></pre>
+<p>The H gate is described by the following matrix:</p>
+\[H = \frac{1}{\sqrt{2}}\begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1 \end{bmatrix}
+\]
+<h3><a id="i-aka-id-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>I (aka ID) Gate</h3>
+<p>The I gate is the identity gate. The physical implementation in a quantum computer is simply 'do nothing'. Although it has no effect, it can be useful when analysing circuits. It is usually just drawn as a line, but may occasionally be made explicit as follows:</p>
+<pre><code class="language-python">qc = QCircuit(1)
+qc.i(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABBCAYAAABVTGNnAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA1VJREFUeJztmz1IG2EYgJ9U
+UZvJQlrJIoU6eG4qCA4tVQeDgzp0EMygUNupg7PgJAQ6OhRFsQ5WQYQglDpI6yQt
+aOrmZXHJIm3FTk1RDNfh44hnU5ozefOj7wPhu/tyd++bhy/5fu4ScBzHQRHjTrkT
+uOmoYGFUsDAqWBgVLIwKFkYFC6OChVHBwqhgYVSwMLXlTuB/pFJwclL6uKEQNDcX
+fp2KFpxKgWVBOl362MEg2Hbhkita8MmJkbuyYkSXCtuGaNTEv9GCXSwLOjrKncX1
+0E5OGBUsjAoWRgULo4KFERP84QO0t0NDA7S0wJs3UpEqGxHBnz/D0JAZWm1twdgY
+vHoFi4sS0SocR4BIxHG6urx1ExOOEw47TiaT/3USCccBU/plZ8ecG4v5P7eQuFe5
+VgteWICHD810sq8PvnyBQACWl+HsDD59gpER7zmjo3B8DAcHhTeKasK34Pfv4cUL
+6OmBeBx6e70yj47g/PzvqW1bmyltu5B0qw/fU+WZGXj8GN6+Nfv9/fDrF8RiZv/n
+T1M2NnrPu3fPlKen18y0SvElOJOBRAJev/bWP3uWFewSCOS+xtX6dDpNMpnMeaxt
+3wVKuMrzV3wb+J3zvY48F0d8Cf7xAy4u4MEDb31TU3bbbaluS3Zx9933XZLJJJ2d
+nf+I2A589ZNiUYlGR4HcnYaT5yN9vgTfvw+1tfD9u7f+27fs9qNHUFdnfmsjkWz9
+4aEpr/42t7a2kkgkcsaz7btEo34yLC4rK++wrNwtOF98Ca6pMWPbeBwmJ7P1GxvZ
+7fp60/Gtr3uPWVuDcNhMPi4TDAbz/rqVGsuyCl4m9d3JTU2ZScT4uBk97O/D6qr3
+mOlpePIEJibM8Gx31wzt5ufhzi2bnPv+uIODMDcHHz/C8DBsb5vWeZnubtjchL09
+M8pYWoLZWXj+vEhZVxHXuqPx8qV5ueS6KTkwYF63nVv2hS09KliYotz0DIWg0v7p
+8fRpZeSkLVgYFSyMChZGBQujgoWpikenSr1IX8x4FS04FDK3pcqxohYMmviFEnDy
+XdgsE9X+fHDFC652tJMTRgULo4KFUcHCqGBhVLAwKlgYFSyMChZGBQujgoVRwcKo
+YGFUsDAqWBgVLIwKFkYFC6OChfkDglEIKEAgE+YAAAAASUVORK5CYII=" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   i(t: int)
+      t : the target qubit
+</code></pre>
+<p>The I gate is described by the identity matrix:</p>
+\[I = \begin{bmatrix}1 &amp; 0 \\ 0 &amp; 1 \end{bmatrix}
+\]
+<h3><a id="p-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>P Gate</h3>
+<p>The phase gate P rotates the phase of a qubit around the Z axis in the Bloch sphere.</p>
+<pre><code class="language-python">qc = QCircuit(1)
+qc.p(pi / 2, f'{PI}/2', 0)  # For phi = pi/2
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+<p>The P gate is described by the following matrix:</p>
+\[P(\phi) =\begin{bmatrix}1 &amp; 0 \\ 0 &amp; e^{i\phi} \end{bmatrix}
+\]
+<pre><code class="language-plain_text">API:
+   p(phi: float, label: str, t: int)
+      phi   : the phase angle in radians
+      label : text label for the angle
+      t     : the target qubit
+</code></pre>
+<p>The first argument is the phase angle in radians. The second argument is the phase angle as a string. The phase angles are typically multiples of \(\pi\), so it is convenient to use unicode \(\pi\) in the text string.</p>
+<p>When the phase gate is applied to a qubit \(\alpha_0\ket{0} + \alpha_1\ket{1}\), the result is:</p>
+\[\begin{bmatrix}1 &amp; 0 \\ 0 &amp; e^{i\phi} \end{bmatrix}\begin{bmatrix}\alpha_0 \\ \alpha_1 \end{bmatrix}=\begin{bmatrix}\alpha_0 \\ \alpha_1 e^{i\phi}\end{bmatrix}
+\]
+<p>Note that all the phase is applied to the \(\ket{1}\) state. It is not necessary to apply separate phases to the two basis states as only the relative phase matters. The global phase does not affect the measurement outcome.</p>
+<p>The following are special cases of the phase gate that have their own names as they are frequently used:</p>
+\[\begin{align*}
+Z &amp;= P(\pi)\\[0.3em]
+S &amp;= P(\frac{\pi}{2})= \sqrt{Z}\\[0.3em]
+T &amp;= P(\frac{\pi}{4})= \sqrt{S}
+\end{align*}
+\]
+<h3><a id="rx-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>RX Gate</h3>
+<p>The RX gate performs a rotation by 'theta' radians about the X axis of the Bloch Sphere.</p>
+<pre><code class="language-python">qc = QCircuit(1)
+qc.rx(pi / 4, f'{PI}/4', 0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   rx(theta: float, t: int)
+      theta : the angle in radians
+      label : text label for the angle
+      t     : the target qubit
+</code></pre>
+<p>The RX gate is described by the following matrix:</p>
+\[RX(\theta) = \begin{bmatrix}
+\cos(\frac{\theta}{2}) &amp; -i\sin(\frac{\theta}{2}) \\
+ -i \sin(\frac{\theta}{2}) &amp; \cos(\frac{\theta}{2}) \end{bmatrix}
+\]
+<p>Note: RX(\(\pi\)) and X differ by a global phase of \(i\):</p>
+\[RX(\pi) = \begin{bmatrix}
+0 &amp; -i \\ -i  &amp; 0
+\end{bmatrix}\quad\textrm{whereas}\quad
+X = \begin{bmatrix}
+0 &amp; 1 \\ 1  &amp; 0
+\end{bmatrix}
+\]
+<p>Hence \(X=i\,RX(\pi)\).</p>
+<h3><a id="ry-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>RY Gate</h3>
+<p>The RY gate performs a rotation by 'theta' radians about the Y axis of the Bloch Sphere.</p>
+<pre><code class="language-python">qc = QCircuit(1)
+qc.ry(pi / 4, f'{PI}/4', 0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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
+/gcdLjBd0qt7JgAAAABJRU5ErkJggg==" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   ry(theta: float, t: int)
+      theta : the angle in radians
+      label : text label for the angle
+      t     : the target qubit
+</code></pre>
+<p>The RY gate is described by the following matrix:</p>
+\[RY(\theta) =  \begin{bmatrix}
+\cos(\frac{\theta}{2}) &amp; -\sin(\frac{\theta}{2}) \\
+ \sin(\frac{\theta}{2}) &amp; \cos(\frac{\theta}{2}) \end{bmatrix}
+\]
+<p>Note: RY(\(\pi\)) and Y differ by a global phase:</p>
+\[RY(\pi) = \begin{bmatrix}
+0 &amp; -1 \\ 1  &amp; 0
+\end{bmatrix}\quad\textrm{whereas}\quad
+Y = \begin{bmatrix}
+0 &amp; -i \\ i  &amp; 0
+\end{bmatrix}
+\]
+<p>Hence \(Y=i\,RY(\pi)\).</p>
+<h3><a id="s-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>S Gate</h3>
+<p>The S gate performs a phase rotation by \(\pi/2\) radians. It can be thought of as the square-root of the Z gate. Applying it twice is equivalent to a Z gate.</p>
+\[S=\sqrt{Z}
+\]
+<pre><code class="language-python">qc = QCircuit(1)
+qc.s(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABBCAYAAABVTGNnAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABEVJREFUeJztm0toE1sYgL+U
+ILaKD4gvEJXaRaMotMWSClkUFwYf1YVgpVl0Ue1CBBFdCC6LilIEQREirWCrC+mi
+KiqKFgQfoKm4cYLgpj6jVVfmolj/uziEOt7EO5P0T9NyPhjOzJnJ+U8+Zs78cyYJ
+iIhgUaNisjsw3bGClbGClbGClbGClbGClbGClbGClbGClbGClbGClQlOdgf+j5ER
+GB0tfdxQCJYtK76dshY8MgLhMGQypY9dVQWOU7zkshY8Omrk9vUZ0aXCcSAeN/Gn
+teAs4TDU1092LwrD3uSUsYKVsYKVsYKVsYKVURN84wbU1cHMmVBTA2fPakUqb1QE
+P3oE27aZ1OrmTWhvh3374Px5jWhljigQi4k0Nrrrdu8WWbJEZGzMezvJpAiY0ivp
+tMihQyKrV4vMni0yZ45ITY3Izp0iAwN6cfNR0BmcSMCKFeZxcsMGePwYAgG4cAG+
+f4d796C11f2ZtjZ4/x6ePSv+pMjH69ewdi2cOQPr18Px43D0KGzZAsPD0NOjFzsf
+vp/krl+HPXvMZd/aCk+fumW+egU/fvz30XbVKlM6DjQ0FNHjv3DyJKTTcPUqbN3q
+3nfqFLx5oxP3b/gW3NUF0Sj09prtjRvh2zc4dsxsf/1qynnz3J+bP9+UX74U2FMP
+vHxpyubm3PuXLtWLnQ9fgsfGIJmEEyfc9Tt2jAvOEgjkbuPP+kwmQyqVynms41QC
+3md5qqtNmUjA/v35++AVx3GAf3Luq/c4OeJL8KdP8PMnLFzorl+0aHw9e6Zmz+Qs
+2e3s/iypVIqGvGNGHTDsuX8HD0J/Pxw4YIaEaBTWrTNlIcNSPN4G5L5piMef9PkS
+vGABBIPw8aO7Pp0eX1+5EmbMMGNtLDZe/+KFKf8cm2tra0kmkznjOU4l8bj3/lVX
+w/PnZiweHIRLl8wCsGaNGdb8iO7r6ycczn0Ge8Zv2tHYKBKNuusOHzZpTW+v2Y7F
+RCIR9zGdnaVJ037n3TuTmrW0mHYWLxb5/Fk/7u/4Fjw4aIK3t4vcuiXS1SWyfLlb
+8MOHIsGgSEeHyNCQOaaiQiSR8BdrIr/orl2mrYsXSxvXdx7c0gLnzsHdu7B9O9y5
+A5cvu49pajKX6JMnJsvo6YHTp6Gjo7irrRiamkz59m1p4xb0RqOz0yxZcr2U3LTJ
+LKVkaAgiEaisdNf/+gXXrpn1bD5eKqbEKyOvdHfDgwfmya2hAebOhQ8fYGDApJfN
+zbB5c2n7NK0EHzkCV67A/ftw+7Z5qJk1y2Qu3d2wdy9UlHiCdkIEh0JQDv/0iETM
+Uk7YCXdlrGBlrGBlrGBlrGBlpkSa5jhTN15ZCw6FzGspPzNqE0VVlYlfLAGRcshg
+8zPVfx9c9oKnOvYmp4wVrIwVrIwVrIwVrIwVrIwVrIwVrIwVrIwVrIwVrIwVrIwV
+rIwVrIwVrIwVrIwVrIwVrIwVrMy/GDGy+agptjgAAAAASUVORK5CYII=" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   s(t: int)
+      t : the target qubit
+</code></pre>
+<p>The S gate is described by the following matrix:</p>
+\[S =\begin{bmatrix}1 &amp; 0 \\ 0 &amp; i \end{bmatrix}
+\]
+<h3><a id="sdg-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Sdg Gate</h3>
+<p>The Sdg (S-dagger) \(S^\dagger\) gate is the conjugate transpose of the S gate. It performs a phase rotation by \(-\pi/2\) radians.</p>
+<pre><code class="language-python">qc = QCircuit(1)
+qc.sdg(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABBCAYAAABVTGNnAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABHtJREFUeJztm0toE1EUhv+U
+UGpFqhBf1BdVoRFF2qLURdDgwuITxEWlWRQpFhVBRARRXEhFUIobESFKhTa4kAo+
+quLCgmB10ejOCaII9VmtulAjivW4OA7ppJOaSXqSmXo+uNyZO3fm3HyZ3Ll3ZuIj
+IoIiRkmxGzDRUcHCqGBhVLAwKlgYFSyMChZGBQujgoVRwcKoYGH8xW7AvxgYAIaG
+Ch83EADmzcv/OK4WPDAABINAMln42OXlgGHkL9nVgoeGWG5XF4suFIYBRCIcf0IL
+NgkGgdraYrciN/QiJ4wKFkYFC6OChVHBwogJvnkTqKkBysqARYuAs2elIrkbEcEP
+HgBbtvDQ6tYtoLkZ2LsXOH9eIpq7ERkHHzvGci9c4PVwmGdlR48CO3YAJf9Rx5TT
+R41GgQULeDq5di3w8CHg8wEXLwI/fgB37wKNjdZ9mpqAt2+Bx4/zb7TJ+/fAwYPA
+0qXAlClARQWweDHHvnJldP01azgVEsdn8I0bwM6d/LNvbAT6+60ynz8Hfv4cPbVd
+soRzwwDq6vJo8V9evgRWrAC+fOEvb9cuLn/2DOjpAb5+BbZuzT9OvjgW3NYGhEJA
+Rwevr1sHfPsGnDjB658/cz51qnW/adM4//Qpx5amceoUMDgIXLsGbNpk3Xb6NPDq
+1fjEyRdHgoeHgXgcOHnSWr5tW0qwic9nf4z08mQyiUQiYVvXMCYBsL/L8/Qp5+Gw
+fZw5czK3Y2TZWC+OGYYB4Lvtttosb444EvzhA/DrFzBjhrV85szUsnmmmmeyiblu
+bjdJJBKoy9hn1AB4ZLulqorzaBTYty/zF9rZmVo+fpzzw4czhEsjEmkCYH/RyPaV
+PkeCp08H/H6+uIxkcDC1vHAhUFrKfW1DQ6r8yRPO0/vm6upqxONx23iGMQmRiH1b
+DhwAYjFg/37uEkIh7pNDIWsfP3J/c5iY6ZjpdHXFEAzan8FZQw5ZuZIoFLKWHTpE
+BBB1dPB6QwNRfb21Tmsr0ezZRMPD2ceKx/m48bj99hcviHbvJqqs5HpmWraMqL9/
+dP3VqznlG9cJjgVfvcrBm5uJbt8mamsjmj/fKrivj8jvJ2ppIert5TolJUTRqLNY
+Tj7omzdE3d1EmzfzPrNmEX38aK3jCcFEROfOEc2dS1RWxg3u67MKJiLq6SFavpyo
+tJSoqorozBnncXL9oNu3836dndbyYgjOaSbX2srJxO6h5Pr1nIrBqlXApUvA69fF
+iT8Sz05ae3uB7zbXn9+/gevXedmc3BQTTzyTs6O9Hbh/H9i4kUcNFRXAu3dAdzeP
+1cNhYMOGYrdynAQHAmMP2CU4cgS4fBm4dw+4c4dniJMn8zCwvR3Ys8cdN5U8ewbX
+13NyQmWlTFvGwrOCcyEWK3xMF/yIJjYqWBgVLIwn+mDD8G48VwsOBPixVLZ3v8aT
+8nKOny8+Inf/V9nr7we7XrDX0YucMCpYGBUsjAoWRgULo4KFUcHCqGBhVLAwKlgY
+FSyMChZGBQujgoVRwcKoYGFUsDAqWBgVLMwf85ej/cO+GqsAAAAASUVORK5CYII=" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   sdg(t: int)
+      t : the target qubit
+</code></pre>
+<p>The Sdg gate is described by the following matrix:</p>
+\[Sdg =\begin{bmatrix}1 &amp; 0 \\ 0 &amp; -i \end{bmatrix}
+\]
+<h3><a id="swap-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SWAP Gate</h3>
+<p>The SWAP gate swaps the state of two qubits.</p>
+<pre><code class="language-python">qc = QCircuit(2)
+qc.swap(0, 1)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAB4CAYAAAB2OTUCAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABgZJREFUeJztnU1IVGsYx/9+
+INYNQs0isMyUi0n0oWJtRLIWClEELvq4C4nsg4Jo0aJNG70VEUERUQrppm5REElW
+EJVFZJJjxSWbmyhuU/xY3CQy57mLt9N4jjPjHD3/meby/GCYc955Z97H33nnnecM
+cx6TRESg0EiOdwD/d1QwGRVMRgWTUcFkVDAZFUxGBZNRwWRUMBkVTEYFk1HBZFQw
+GRVMRgWTUcFkVDAZFUwm4QVPTAB9fdH3FwE+feLF44Qm+MEDYP16ID0dKCgALl/2
+foyJCWD3bmDNGuDGjZn7iwDl5cC6dcCTJ97HE2ZQ73n1SiQ1VWTvXpGnT0Xq60WS
+k0WamrwdZ2xMJDdXxKgTuX49fN9AINgPEGls9DaWcFAEV1WJlJXZ2+rqRJYuFZmc
+9Has/n67uFCSnXJLS72NIRKzEtzYaGbOvHkilZUiHR0m8OZmka9fRdLSRM6ftz+n
+vd306eqae9BOIkmOp1wREddr8P37wP79wKZNwN27QGUlsHNn8PG+PuDbN2DVKvvz
+iorM/cePc1nQQpOXB/T3B/f37DFrsgiQPOUvLC0F3rzxfvyIuD0iGzaIlJfb206c
+CM7gly/NdkeHvc/EhGm/cGEO02EGnDM5njPXItXNwZicBHw+4OxZe3tNDXD6tL0t
+KSn0azjbx8fH4ff73YQRkdbWNGzbttrWVlT0BVev/oPubs+GQXFxcVT9XAkeGgK+
+fwcWL7a3L1kS3M7IMPejo/Y+1r71uIXf70dJSYmbMKLA/nO7np46lJT85e0IUf6k
+z5Xg7GwgNRUYHLS3f/4c3M7PB9LSzFpbVRVs7+kx9861ubCwED6fz00YYREBSktD
+zawbaGj4E9XVoyEeI+N2TSkri7wGi5g0beNGe58DBzhpmoUzWygq+leAFTOmcGxc
+C753zwRbWyvy6JFIQ0Mw2bcEWyca+/aJPHtm+jBONCxCpWI+n08ASGvr33GVPKs8
++MoVkWXLRNLTRSoqjNCpgkVE2tpE1q41OfHKlSKXLnkS7zTC5bmWYJ/PF9XJCAtP
+zuSGhqYLjgWBgMjWraFTsamCRaancO/fxybGhP42bWQE+PDBbM90EuE8GWlr48Zm
+4SqL+NXIygLa24EXL4A//pi5f16eOSg3bwIHD9LDA+CR4EWLzBsvHixfHp1ci4wM
+4NAhXjxOEnqJSARUMBkVTEYFk1HBZFQwGRVMRgWTUcFkVDAZFUxGBZNRwWRUMBkV
+TEYFk1HBZFQwGRVMRgWTUcFkVDAZFUxGBZNRwWRUMBkVTEYFk1HBZFQwGRVMRgWT
+UcFkVDAZFUxGBZNRwWRUMBmK4MePTTWo/HxTH+LIEcYohrdvgfr66C8jGxgAjh83
+tS9iAeVCxIcPgXfvgIoKc+Efi+FhYMsWM8bJk0AgEL4QCGAuWKyoMNspKcCZM7zY
+LCgz+Nw5Ux/i2jVg4ULGCIasLFOfxyI5OfxMnioX4L6rpjIrwU1NwIoVwPz5wObN
+wOvXZua0tPx40Riu7BcvmsJ3FqEkO+V2dgI5ObGJz/OqU/Ggtze85O7uBdPklpXF
+MDi3l+fPVHXKSW6uyOHDsysF4JaCAme1qXLbfmdnbOKYiqsZbFWd2rHD3l5T4+Uh
+nz3OmQy8+LkV85n7A8+rTrnF67Jet24B1dWrMTiY9rOtpcWP1NTxX7+sVzRVp9zi
+fVmvckyduQBQW1sIIEL+NguEUdYrJQUoLjYfbseOBdvv3HEVmw0vy3p1dy9AXd3v
+P/czM79gZOS3H3uCrq7uiHkyBbeLdjRVpwYGRG7fNrfsbFPmy9pn8fy5hPxAc37w
+BQK8GEJBqTrV3By+hiSDcHIt4ik5oatOicws1yJekhP627ThYWDXruB+pFTMmcKd
+OsWNzSKhBWdmGsE5OdHlub29wNGjJs3cvj02MSaJJPZ/BhcBxsamV3WNxOiou/5z
+IeEF/+ok9BKRCKhgMiqYjAomo4LJqGAyKpiMCiajgsmoYDIqmIwKJqOCyahgMiqY
+jAomo4LJqGAyKpiMCiajgsmoYDIqmIwKJqOCyahgMiqYjAom8x+9hzILaM1VqgAA
+AABJRU5ErkJggg==" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   swap(c: int, t1: int, t2: int)
+      t1 : the first target qubit
+      t2 i: the second target qubit
+</code></pre>
+<p>The SWAP gate is described by the following matrix:</p>
+\[SWAP =\begin{bmatrix}1&amp;0&amp;0&amp;0 \\ 0&amp;0&amp;1&amp;0 \\ 0&amp;1&amp;0&amp;0 \\ 0&amp;0&amp;0&amp;1 \end{bmatrix}
+\]
+<h3><a id="sx-aka-v-sqrtx-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SX (aka V, SQRTX) Gate</h3>
+<p>The SX gate can be thought of as the square-root of the X gate. Applying it twice is equivalent to an X gate:</p>
+\[SX=\sqrt{X}
+\]
+<pre><code class="language-python">qc = QCircuit(1)
+qc.sx(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABBCAYAAABVTGNnAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABOFJREFUeJztm01IVF0Yx/8j
+g+gQDcRYVvQ1GSkRpYW5kSiIDMMgi1AkpC/bSBK0aC8UhUUiIRlJNK+bkLBIq0WJ
+VLNpFi3qumkzReZHYRhTEMP/XTzJdHVmvDP66BjnB5e583jOec753es5Z66jiyRh
+UCNroTvwr2MEK2MEK2MEK2MEK2MEK2MEK2MEK2MEK2MEK2MEK+Ne6A7MRDgMjI3N
+f16fD1i7dvbtZLTgcBgoKgIikfnP7fEAljV7yRkteGxM5AYCInq+sCygrk7y/9OC
+JykqAkpKFroX6WEWOWWMYGWMYGWMYGWMYGXUBPf2AsXFQE4OUFAA3LyplSmzUREc
+DAKHDsnWqq8PqK8HGhuB27c1smU4VKCigiwttcdOnyZXriSjUefthEIkIK9TGR4m
+L1wgt2whlywhly4lCwrIY8fI7m4pMzRELltGbt5MRiLT2xgYILOyyMOHnedNlbQE
+37pFrltH5uaSe/eSwaB0qLOT/PWLzM4mr12z1+nvlzJv3jjPk2ig4TC5YgXp8ciF
+a2uTo6mJ3LSJrKyMle3qkjbOnbO38eMH6feTeXlysZzkTYeUBT96JMnr68knT8jm
+ZpE9KfjdOznv67PXGxmR+L17znMlGmhjo8QfPoxf7+NH+/vqatLlIl+8iMXOnpU2
+7t93njcdUha8axdZXm6PXbwYE/zypZwHg/Yyv39L/MYN57kSDXT/folPTDhrZ2RE
+7tT166XOs2dSv6YmtbzpkNKziGgUCIWAK1fs8SNHgEuX7DGXK34bU+ORSASDg4Nx
+y1pWLoDpT3n8fnnt6ACamhLnmiQvD2hvB6qrgYYGYGAAyM8H2tqS17MsC8DPuD8r
+cfpwJJWrMTQkVzYQsMc/fUp/igiFQgSQ4CiOeyd9+CCLGkCuWUPW1pLXr888v9fW
+Sp1k04v0abJcccK+OSWlOzgvD3C7gZERe3x4OHa+cSOQnS2P/CoqYvH37+V16mPH
+wsJChEKhuPksKxd1ddPjfj/w9i1w9SrQ0wN0dckBAFu3Ap2dwI4d8fsPAF4vUF6e
+ZKB/CAT+Q1FR/DvYMY4vxR9KS5PPwaRs08rK7GUaGuZ2m/Y3nz/L1qyqSsrn55Nf
+v9rL9PfLQrd9u5Q5fnz2eZ2QsuCenuS7CJJ8/Zp0u8lTp2Tlbm6W/WZHR2q50hlo
+Tc30qWhigtywgVy+nBwdlb4DsiOaq7yJSGsf3N4uc19ODrl7twj9WzBJPn5Mbtsm
+e2K/X/apqZLOQFtbpc7ly7HYmTMSe/BA3o+Pk6tXy2/Ut29zkzcRc/JJbnR0uuC5
+INFAnz+P/8ksGiX37bMvYk+fyvu6OnvZ3t748WR502FR/MloKi0twKtXwMGDsph5
+vcCXL0B3t2wj9+wBKiuB79+BkyeBVauA1lZ7GwcOACdOAHfuAEePAlVVSp2d/TWa
+/zs4GCTPnyd37pR51e0mvV5ZWFta5OM6KQsZINNVPMbHZaqbuihm3B3s88mucb4o
+K5NjJu7elSMRXq98NUAT88BdGSNYGSNYGSNYGSNYmUWxD7asxZsvowX7fPItx3hP
+1LTxeCT/bHGRmf2/yov9+8EZL3ixYxY5ZYxgZYxgZYxgZYxgZYxgZYxgZYxgZYxg
+ZYxgZYxgZYxgZYxgZYxgZYxgZYxgZYxgZYxgZYxgZf4HTorUqHmvJRoAAAAASUVO
+RK5CYII=" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   sx(t: int)
+     t : the target qubit
+</code></pre>
+<p>The SX gate is described by the following matrix:</p>
+\[SX =\frac{1}{\sqrt{2}}\begin{bmatrix}1+i &amp; 1-i \\ 1-i &amp; 1+i \end{bmatrix}
+\]
+<p>Note that \(V^\dagger\) is the other square-root of X.</p>
+<h3><a id="t-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>T Gate</h3>
+<p>The T gate performs a phase rotation by \(\pi/4\) radians. It can be thought of as the square-root of the S gate. Applying it twice is equivalent to a S gate:</p>
+\[T = \sqrt{S}
+\]
+<pre><code class="language-python">qc = QCircuit(1)
+qc.t(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABBCAYAAABVTGNnAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA2pJREFUeJztmjtIHEEYgD8f
+aLzKwJ1iY2MKN4WgQuAKRWw8LIyGFAavUPBRpbAOWCUqKVOIomiRSwIiBCHEIiTY
+iEVysXOvEcHOB7HKBSTHphiWc+OJt3r/PfT/YJndmd395z5mZ2fmtsxxHAdFjPJC
+V+C2o4KFUcHCqGBhVLAwKlgYFSyMChZGBQujgoVRwcJUFroCV3FwACcn+Y8bDEJj
+483vU9SCDw7AsiCZzH/sQABs++aSi1rwyYmRG4sZ0fnCtiEaNfFvtWAXy4K2tkLX
+4nroS04YFSyMChZGBQujgoURE/z5M7S2wr178OABzM1JRSpuRARvb8Pjx2ZotbEB
+w8Pw/DksLUlEK3IcASIRx3n0yJs3NuY4DQ2Ok0plf5943HHApFcB2W/7+7mLexXX
+mmgsLsKrV3B0BOGw2Q+HYWUFnj2Db99gdtZ7zdCQuW5nB9rbc9E0vLx96z22bZie
+hoEBePLEWxYK5T7+ZfgW/OkTjI+bx35wEH78MKnL3h6cnV2c2j58aFLblhEcjXqP
+NzeN4JaWi2X5xLfgly+ho8O0VoCeHvj9G2ZmzPHpqUlra73X3b9v0l+/rlnTEsWX
+4FQK4nF4/dqb//RpWrBLWVnme/yfn0wmSSQSGc+17Rogj6s8F+LbwJ+MZW1ZLo74
+Enx8DH//Ql2dN7++Pr3vtlS3Jbu4x265SyKRoP3SPqMV+OmnijklGh0CdjKWOVl+
+0udLcCgElZXm5Xaew8P0flMTVFWZvjYSSefv7pr0/765ubmZeDyeMZ5t1xS0/4zF
+3mFZmVtwtvgSXFFhxrYfP8LkZDp/bS29X10N3d2wuuo958MHaGgwk4/zBAKBrB+3
+fGNZ1o2XSX2/5F68MJOIkZH0KOL9e+85U1PQ2QljY2Z4trVlhmgLC1B+xybnvn9u
+Xx/Mz8PXr9DfD1++mNZ5nnAY1tfh+3czylhehjdvYHQ0R7UuIa410ZiYMJtLpj8l
+e3vNdte5Yw9s/lHBwuTkT89g0CyjFBNdXcVRJ23BwqhgYVSwMCpYGBUsTEl8OmXb
+pRuvqAUHg+Yrx0KsqAUCJv5NKXOyXdgsEKX+fXDRCy519CUnjAoWRgULo4KFUcHC
+qGBhVLAwKlgYFSyMChZGBQujgoVRwcKoYGFUsDAqWBgVLIwKFkYFC/MPQXMBjhZN
+j0QAAAAASUVORK5CYII=" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   t(t1: int)
+      t1 : the target qubit
+</code></pre>
+<p>The T gate is described by the following matrix:</p>
+\[T =\begin{bmatrix}1 &amp; 0 \\ 0 &amp; e^{i\frac{\pi}{4}} \end{bmatrix}
+\]
+<p>Somewhat confusingly, the T gate is sometimes known as the \(\pi/8\) gate. This because it can be written in a symmetrical form (up to global phase) as:</p>
+\[T =\begin{bmatrix} e^{i\frac{\pi}{8}}&amp; 0 \\ 0 &amp; e^{i\frac{\pi}{8}} \end{bmatrix}
+\]
+<h3><a id="tdg-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tdg Gate</h3>
+<p>The Tdg (T-dagger) \(T^\dagger\) gate is the conjugate transpose of the T gate. It performs a phase rotation by \(-\pi/4\) radians.</p>
+<pre><code class="language-python">qc = QCircuit(1)
+qc.tdg(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABBCAYAAABVTGNnAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA7RJREFUeJztmztoFEEYgL/T
++LpCFC6KCEGMRdZCSFKliPgoDBZ5iEUgB3rio7JIHUgRQoSUKUTxFTAaEEEEMUUw
+2EgCeto5VyiENKIeWnmiGGLxs27WXPDu1v8eyf/Bsjuzuzd/vszMzszexZaWlpYw
+1NhQ6QDWOiZYGROsjAlWxgQrY4KVMcHKmGBlTLAyJlgZE6xMXaUD+BcLC5DNlr/c
+RAIaGqJ/TlULXlgAz4Ncrvxlx+PgXHTJVS04mxW5ExMiulw4B8mklL+mBft4HrS0
+VDqK0rCHnDImWBkTrIwJVsYEK6Mm+OlTaG6GrVvhwAG4elWrpOpGRfDsLHR1ydBq
+agrOnoXLl+HmTY3SqhuVcfDQkMi9dUvSR4/KrGxwEM6dgw3rqGMq6U+9cQP27ZPp
+5PHjMDcHsRiMj8OPHzAzA7294Xv6+uDDB3jzJnrQsVjh2/x8cN/8fBBnuSi6Bj95
+AhcvSrPv7YVXr8Iy37+Hnz9XTm0PHpS9c9DaGiFi4O7dcNo5GBmBnh44dSp8rr4+
+WllRKVrw8DC0t8OdO5I+cQK+fYMrVyT99avsd+wI37dzp+y/fCkx0mUkk+H08+ci
++NChlecqTVGCFxchnYbR0XD+6dOBYJ9YLP9n/J2fy+XIZDJ5r3VuGxBtlWd8HFKp
+cF4qFeSdObN6l+GcA77nPddS4OJIUYI/f4Zfv2DXrnD+7t3BsV9T/Zrs46f98z6Z
+TIbWVfuMZuB1MSGu4PDhoEvJZqG/X7q49nbJa2xc/d5ksg/I/9Ao9Ct9RQmur4e6
+Ovj0KZz/8WNw3NgImzdLv9jREeS/fSv7v/vmpqYm0ul03vKc2xa5ye/fLxvIQ66/
+H9raCutKJibu4Xn5a3ChFCV440YZfj16JIH6PHwYHG/ZAseOwYMH4WsmJ2HPHpl8
+LCcejxfc3MqN53mRl0mLfsgNDMgkIpUKRhH374evGRyUpnnhggzPXryQod316+tr
+DAwljIM7O+HaNXj2DLq7YXpaaudy2trg8WN4+VJGGbdvw9gYnD//n6KuIUqayV26
+JJtPvpeSJ0/Ktt5ZZw22/JhgZf7LYk8iAfZLj/zUxFvlf3HkSGH/4E2bZJy+fbt6
+SH9YE4ILZe9eePeuvGVaH6yMCVbGBCtTE32wc7VbXlULTiTktVQlFtHjcSk/KrFq
+/61yrX8/uOoF1zr2kFPGBCtjgpUxwcqYYGVMsDImWBkTrIwJVsYEK2OClTHByphg
+ZUywMiZYGROsjAlWxgQrY4KV+Q24B+ECQ1xVTQAAAABJRU5ErkJggg==" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   tdg(t: int)
+      t : the target qubit
+</code></pre>
+<p>The Tdg gate is described by the following matrix:</p>
+\[Tdg =\begin{bmatrix}1 &amp; 0 \\ 0 &amp; e^{-i\frac{\pi}{4}} \end{bmatrix}
+\]
+<h3><a id="u-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>U Gate</h3>
+<p>The U gate takes a \(2^N \times 2^N\) unitary matrix and applies it as an N-qubit gate. The simplest case is a single-qubit gate, which has a 2x2 matrix.</p>
+<pre><code class="language-python">u = np.eye(2)  # Dummy gate
+
+qc = QCircuit(1)
+qc.u(u, 'U', 0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABBCAYAAABVTGNnAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA9VJREFUeJztm09IFFEYwH+r
+S+l2KdgUD0VhkBN0UFHwYFEdEoL+QETgQgnZrUPHCDoFgkcPlShtgRVWIEHUIeoW
+BbV1qtmLCEKEf8qTG1byOjyGbXTMHXe/2d34fpc38+btfJ8/3s77M2vMGGNQxKgp
+dwL/OypYGBUsjAoWRgULo4KFUcHCqGBhVLAwKlgYFSxMvNwJrMf0NMzPRx83mYSd
+O4u/T0ULnp4Gx4FcLvrYiQS4bvGSK1rw/LyVOzZmRUeF60IqZeP/14I9HAfa2sqd
+xcbQQU4YFSyMChZGBQujgoURE/zsGbS2Ql0d7NkDN25IRapsRAS/eQMnTtip1fPn
+cP48XLoEo6MS0SocI0BPjzGdnf66/n5jmpqMWV4u/D6ZjDFgy/VIp23bdDr4+tSU
+vX7uXGnjrseGevDICOzaZZeTR47A27cQi8GdO7C0BK9ewdmz/s/09sLXr/DxY/Gd
+opoILfjpU7h4EQ4dgokJOHzYL3NyEn7+XL203bfPlq5bTLrVR+il8vXr0N0N6bQ9
+P3oUFhdhYMCeLyzYcutW/+e2bbPl9+8bzLRKCSV4eRkyGRgc9NefPp0X7BGLBd9j
+ZX0ulyObzQa2dd16IMJdnlXxXeBH4LW2AjdHQgmem4Pfv6GhwV/f2Jg/9nqq15M9
+vHPvukc2m6W9vX2NiK3AhzAplpRUqhcIHjRMgT/pCyV4+3aIx2F21l8/M5M/bm6G
+TZvss7anJ1//+bMtVz6bW1payGQygfFct55UKkyGpWVs7B6OE9yDCyWU4NpaO7ed
+mIDLl/P1jx/njzdvtgPfw4f+Ng8eQFOTXXz8TSKRKPjrVgrWenQF4ThO0dukoQe5
+q1ftIqKvz84e3r+H+/f9ba5dgwMHoL/fTs9ev7ZTu+FhqBFaO9bX2/LHGh3Oeyvi
+tYuK0H/u8eNw6xa8fAknT8KLF7Z3/k1XFzx5Au/e2VnG7dswNAQXLpQo6wB277al
+9yhaiVfvtYuM4tcqxszN/XsVtVHCrKh+/TJmxw5jkkljvnzxX1taMubgQWNiMWOy
+2dLGXY+qeGVUCPE43LwJp07B/v3229LcbAfg8XH49AmuXIG9eyPOK9pwshw7Zp/3
+g4Nw9y58+wZbttiBdXwczpyJPqeSCE4moVL+06OjAx49KncWeXTDXRgVLIwKFkYF
+C6OChamKaVrUm/SljFfRgpNJ+1qqHDtqiYSNXywxYyplBhtMtf8+uOIFVzs6yAmj
+goVRwcKoYGFUsDAqWBgVLIwKFkYFC6OChVHBwqhgYVSwMCpYGBUsjAoWRgULo4KF
+UcHC/AEbbGfBXPSKgAAAAABJRU5ErkJggg==" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   u(u: ndarray, name: str, *t: int)
+      u    : unitary numpy matrix
+      name : Name of gate   
+      *t    : the target qubits
+</code></pre>
+<p>The unitary matrix is of size \(2^k \times 2^k\) for \(k\) target qubits.</p>
+<h3><a id="x-aka-not-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>X (aka NOT) Gate</h3>
+<p>The X gate is the quantum NOT operator. It is a rotation by \(\pi\) about the X axis of the Bloch sphere.</p>
+<pre><code class="language-python">qc = QCircuit(1)
+qc.x(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABBCAYAAABVTGNnAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABFJJREFUeJztmk1oE10Uht/W
+/gtFISouVFCRplKkDYQKFrEiZufGhfhlEcGflRtFRYoIpVhU6EYt4g9R6LcWxb+V
+CopdaL5vo50gKtidtuiuVdv0dXEY4rRjzCQ9SVrOA+Um587cc+fhZu6d26kiSRhq
+VJe7A4sdE6yMCVbGBCtjgpUxwcqYYGVMsDImWBkTrIwJVqam3B34G6OjwPh46fOG
+QsDatcW3U9GCR0eBcBiYmCh97qYmwHGKl1zRgsfHRe7QkIguFY4DxOOSf1ELdgmH
+gY6OcveiMGySU8YEK2OClTHByphgZdQEP3wItLcDDQ3Axo3A4KBWpspGRfDwMLBn
+jyytHj0CEgng6FHgxg2NbBUOFYjFyGjUGzt0iFy9msxk8m8nlSIBKfPh9Gk5/uZN
+//pdu8iamr+3FzRvLgoSfO0auW4d2dhIdneTw8PSoWSS/P6drKsjBwa85zx7Jse8
+fp1/nqAX+uMH2dZGNjeTnz556wYHpa2zZ+c/by4C3yLu3wcOHwZ27ADu3AG6u4F9
++7L1Hz4AP3/OfbRtbZXScYr5veWmrg64fRuYnAQOHADcV2o+fgROnJA5oadHL78f
+gQX39QFdXUAyCezeLR3evz9b/+2blMuWec9bvlzKr18L7GmeuBKfPAGuXAFmZmQO
+mJoS+bW1uvlnE2gvIpMBUingwgVvfO9eoL/fG6uq8m9jdnxiYgLpdNr3WMdpBBB8
+l6enB7h3Dzh1Cnj3Dnj+HDh3DmhrC9aO4zgAJn3rOvLcHAkkeGwMmJ4GVq70xlet
+yn52R6o7kl3c7269SzqdRiQS+UPGdgD/BekiAKCmRkZrJAJcugREo8DJk4GbQTz+
+D4D/feuY5yt9gQSvWCGd//LFG//8Oft5wwa5FzoOEItl4yMjUs6+N7e0tCCVSvnm
+c5xGxONBepiluRmor5f5IBYDliwJ3sbQ0L8Ih/1HcN4EnRWjUbKryxtzl0fJpHyP
+xcjOTu8xR47oL9NcZmbInTvJ2lqytZWsrydHRvTz+hFY8N27kjyRIB8/Jvv6ZMn2
+u+CXL2W9efAg+fSpHFNdTV6/HixXoRd6+bKc19tLptNkQ4MMjOlp3bx+FLQOvnqV
+XLNGOr59uwj9XTBJPnhAbtkia+L16+Wig1LIhb5/Ty5dSkYi5NSUxC5elHb6+/Xy
+/ol5eZIbG5sreD4IeqGZDLltm9wS3rzxxrdulfjbt/OfNxeLajdtYAB48QLo7QU2
+b87Gq6uBW7ekTCRkuVkqFo1gxwHOnAE6O4Hjx+fWb9okD0mvXgHnz5euX/PyT89Q
+KPtYWi7CYXlEzsWxY/JXShbNCK5UTLAyJlgZE6yMCVZmQbw6pblJr52vogWHQvKW
+Y6E7asXQ1CT5i6WKLPcKNjcL/f3gihe80LFJThkTrIwJVsYEK2OClTHByphgZUyw
+MiZYGROsjAlWxgQrY4KVMcHKmGBlTLAyJlgZE6yMCVbmFxzTV+G3wagwAAAAAElF
+TkSuQmCC" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   x(t: int)
+      t : the target qubit
+</code></pre>
+<p>The X gate is described by the following matrix:</p>
+\[X =\begin{bmatrix}0 &amp; 1 \\ 1 &amp; 0 \end{bmatrix}
+\]
+<h3><a id="y-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Y Gate</h3>
+<p>The Y gate It is a rotation by \(\pi\) about the Y axis of the Bloch sphere.</p>
+<pre><code class="language-python">qc = QCircuit(1)
+qc.y(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABBCAYAAABVTGNnAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA89JREFUeJztm01oE1sUgL+U
+UmxXCtGiC11UpHEjbaHqQsEuanFhXLgQkkUr1q7cCkVwK7gQ/EGsSrupuhRBFClC
+wJ8INr6dEwQ3XVktuJE8UctxcQhx2nl9maQnTe35YJiZe2/m3Hy5c+fOnUlCRATH
+jJa1rsDfjgs2xgUb44KNccHGuGBjXLAxLtgYF2yMCzbGBRvTutYV+D/m5mBhofFx
+k0nYubP+4zS14Lk5SKWgVGp87I4OCIL6JTe14IUFlTs9raIbRRBANqvx/2rBZVIp
+6O1d61rUhl/kjHHBxrhgY1ywMS7YGDPBT55ATw9s2gS7d8PNm1aRmhsTwfk8pNM6
+tHr6FIaH4dw5uHvXIlqTIwYMDYn094fTRkdFtm8XWVys/jiFggjouhrSaZGWFpEX
+L6LzX7/W/HR6deOuRE2Cb98W2bVLpL1dZGBAJJ/XCk1NiXz/LtLWJnLlSvgzuZyW
+mZ2tPk7cL/rpk0gyKdLVJfLtWzivVBLZs0fz5+dXN+5KxO4iHj+Gs2fhyBF4+BAG
+BuDUqUr+x4/w48fyW9u9e3UdBPWcbyvT2Qm3bmkdzp8P542Pw4cPMDEB27bZ1WEZ
+cX+R/ftFDh0Kp42PV1rwy5e6nc+Hy/z8qelXr1Yfq9aWlMmIJBIiMzO6n8vpfjZr
+GzeKWHMRi4tQKMDly+H0kyfh0qVwWiIRfYyl6aVSiWKxGFk2CNqB+LM8N25ALgen
+T8ObNzAyAjt2wPXr8Y4TBAHwb2Reb5WTI7EEf/kCv34tP8U6OyvbW7bo+uvXcJny
+fjm/TLFYpK+v7z8i9gDv4lQRgM2bYXISjh6Ffft0VuzZM02PQzabAf6JzJMqX+mL
+JXjrVmhthc+fw+nz85Xtri5oa9O+dmiokv7+va6X9s3d3d0UCoXIeEHQTjYbp4YV
+BgdhdBTu3NFrxuBg/GNMT98jlYpuwVUTt0/p71+5DxbRYdqBA+EyY2P2w7SlTE2F
+69WouH8Sez74wgW9iRgZ0dHD7Czcvx8uc/EiHD6sLSiTgVevtCVNTEDLBrs5j/11
+jx/XodDz53DiBMzMwIMH4TIHD8KjR/D2rfaDk5Nw7RqcObNKtV5H1PREY2xMlzJR
+DyWPHdNlo7PBTtjG44KNWZWHnskkNOM/PYaHdVlLvAUb44KNccHGuGBjXLAx6+LV
+KctJeut4TS04mdS3HGudUauHjg6NXy8JkWYcwVZY7+8HN73g9Y5f5Ixxwca4YGNc
+sDEu2BgXbIwLNsYFG+OCjXHBxrhgY1ywMS7YGBdsjAs2xgUb44KNccHGuGBjfgPe
+1spoJpCqXwAAAABJRU5ErkJggg==" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   y(t: int)
+      t : the target qubit
+</code></pre>
+<p>The Y gate is described by the following matrix:</p>
+\[Y = \begin{bmatrix}0 &amp; -i \\ i &amp; 0 \end{bmatrix}
+\]
+<h3><a id="z-gate" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Z Gate</h3>
+<p>The Z gate It is a rotation by \(\pi\) about the Z axis of the Bloch sphere.</p>
+<pre><code class="language-python">qc = QCircuit(1)
+qc.z(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABBCAYAAABVTGNnAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA/dJREFUeJztmjtoFEEYgL/o
+EWJsFC5KCi1UMGcRSaLRFNF0XieI4CNBIxKttA9CbOIDsRFFDAopjBYK2vhqVCzU
+xjNg4V4KFdKISdBCcooYf4thOVf3zO3d/fcI/wfH7M7O7D/33ezuzNzWiYhgqLGo
+0g1Y6JhgZUywMiZYGROsjAlWxgQrY4KVMcHKmGBlTLAysUo3YD4mJ2Fmpvxx43FY
+vbr481S14MlJSCQgkyl/7MZG8LziJVe14JkZJ3dszIkuF54HfX0u/oIW7JNIQHt7
+pVtRGPaQU8YEK2OClTHByphgZdQEP3gAbW3Q0ADr1sHly1qRqhsVwS9fws6dbmj1
+8CH098OxY3Dtmka0KkcUSCZFOjuDeQMDIs3NInNz+Z8nlRIBl87Hhw+ubD6fp09L
+F3c+CppoXL0Kp07B1BR0dbntri4YHYV9++DJEzh7Nlint9fVGx+Hjo5SdI0gTU1w
+/Xru4xMTMDzsyq1fX/r4uYgs+N49OHLEXfZ798KrVy71efcOfvz4d2q7YYNLPU9H
+8NKlbnobxtevsGULxGJw6xY0N5c+fi4iCx4ehu5u11sBduyA2Vk4c8btf/ni0mXL
+gvWWL3fp588FtrRARODgQffDXrgAPT3ljR9J8NwcpFJw7lwwf/furGCfurrwc/yd
+n8lkSKfToWU9bwlQ3CrP6dNw9y4cOADHj0er63ke8C30WHueiyORBE9Pw8+fsGJF
+MH/lyuy231P9nuzj7/vHfdLpNB057xltwOsoTQzw6BEMDcGmTTAyEr1+X18vMB56
+TPJ8pS+S4KYmdx+bmgrmf/qU3V67Furr3SWZTGbz37516d/35paWFlKpVGg8z1uS
+8746H+/fw/79buH8zh03Ho/K2NgNEonwHpw3UYcdnZ0i3d3BvMFBN6wZHXX7yaTI
+1q3BMkeP6g7T/mR2VqS1VSQWE3n2LFrdYuKGEfkhd+KEm0QcOpQdRdy8GSwzNATb
+tsHAgBuePX/uhmgjI7CoDJPzw4fhzRu4eNG1o6IU8qtcuSKyapVIQ4PI9u0iL14E
+e7CIyP37Ihs3itTXi6xZI3LpUvQ4hfSk8+ddnf7+6PGKiZuLkszkpqf/FVwKon7R
+x49FFi8W2bxZ5Pv38sX9HzXxl1E+fPwIe/bAr1+waxfcvp27bGur+5SDBSN4YiL7
+9/7g4P/LnjxZY4LjcTdjqiQ9PZVvQxi24K6MCVbGBCtjgpUxwcrUxDDN82o3XlUL
+jsfdW46FrqgVQ2Oji18sdSLVOHrMUuvvB1e94FrHHnLKmGBlTLAyJlgZE6yMCVbG
+BCtjgpUxwcqYYGVMsDImWBkTrIwJVsYEK2OClTHByphgZUywMr8BdxjoaNIzM+YA
+AAAASUVORK5CYII=" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   z(t: int)
+      t : the target qubit
+</code></pre>
+<p>The Z gate is described by the following matrix:</p>
+\[Z =\begin{bmatrix}1&amp;0 \\ 0&amp;-1 \end{bmatrix}
+\]
+<h2><a id="non-unitary-operations" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Non-Unitary Operations</h2>
+<p>This section covers circuit elements that are not considered to be quantum gates because they are not reversible unitary operations.</p>
+<h3><a id="measure" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Measure</h3>
+<p>The 'measure' operation performs a quantum measurement on one or more qubits.</p>
+<pre><code class="language-python">qc = QCircuit(2)
+qc.measure(0, 1)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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
+HKVfGwAAAABJRU5ErkJggg==" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   measure(t1, t2, ... : int)
+      t1, t2, ... : the qubits to be measured
+</code></pre>
+<p>If the argument list is left blank, then all qubits will be measured.</p>
+<h3><a id="reset" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reset</h3>
+<p>The 'reset' operation resets a qubit to the \(\ket{0}\) state.</p>
+<pre><code class="language-python">qc = QCircuit(1)
+qc.reset(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAABBCAYAAABVTGNnAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABJ5JREFUeJztmk1IVF0YgB/L
+TCeIjLHQaOhHyHFRqNCqkn4gw2JaRGS6yIUuohZBO6FVEbSW7EfQyE8pApFSkaJW
+lUXztfMORCCCRCoZLUb6kfdbHIb5rjPa3NFXZ+Q8IHd858x5Xx7PPeeeM+aIiGBR
+Y81KF7DasYKVsYKVsYKVsYKVsYKVsYKVsYKVsYKVsYKVsYKVyV3pAv7G2BhMTS1/
+Xr8fAoHF95PRgsfGIBiEaHT5c/t84DiLl5zRgqemjNyuLiN6uXAcaGgw+Ve14BjB
+IFRWrnQV6WEXOWWsYGWsYGWsYGWsYGXUBA8MQEUF5OdDaSncvq2VKbNREfz2LYRC
+5tFqcBAuXIDLl6G9XSNbhiMK1NSI7N/vjjU1iRQXi8zOpt5POCwC5poMEHn1yh37
+8UOkuVlk82aRDRtETp0SGR11t2ltFXn4MP28XkhrBN+/Dzt2mO3k0aMwPAw5OdDZ
+CT9/wsuXcO6c+zP19fDlC3z8uPhBsRB1dfD0KbS2wqNHMD4Ox47BzEy8ze/fcOOG
+bh0xPAt+9gyam+HwYejthSNH3DI/f4ZfvxK3tuXl5uo4iyl3Yd69g/5+MxXV1UFt
+ralxdBQePIi3C4UgEoFPn/RqieFZ8PXrcPAgdHTA8ePQ0gLnz8ffn542102b3J8r
+LDTXb9/SrDQFBgZM3hMn4rFAAA4cMOJj7NwJe/dCX59eLTE8nUXMzkI4DLduueNn
+zsDNm+5YTk7yPubGo9EokUgkaVvHKQBSP+VxHNizJzFHeTkMDbljoZARfPXqQv05
+wEzS9ypTPBzxJHhyEv78gS1b3PGtW+OvYyM1NpJjxH6PvR8jEolQVVU1T8YK4N+U
+65ueTrxzYjnn3jmnT5t5eHISioqS99fQUA8kXzQkxX/p8yS4qAhyc2Fiwh3/+jX+
+evduyMszo6mmJh4fGTHXuXNzWVkZ4XA4aT7HKaChwUuFye8ckcR4ZSVs22bWlMbG
+5H11df1DMJh8BKeKJ8Fr15rCenvhypV4/MmT+Ov1683C9/ixu01PDxQXm83H//H5
+fCnfbn+jsNAc0s/l+/fEOweM4PHx+fsLBoOLPib1fB7c0mLmr8ZG8/Tw4QN0d7vb
+XLsGhw5BU5N5PHv92jza3b0LaxQ358EgPH+eOGJHRhLvnIkJeP8e2tr06gHS22jc
+uSOyfbtIfr5IdbXImzfmwbyjI96mv19k3z6RvDyRXbvMw71XvG40hodNbHAwHhsb
+E8nNFWlrc3+2vV0kEEgvrxeWZCc3OZkoeClIZydXWytSUiLS02P+yFVVIqWlItGo
+u93JkyKXLqWX1wur7jStu9tsMC5ehLNnoaQEXryAgoJ4m2jUxEIh/Xqy4js5L2zc
+CPfumZ/5GBoyi3F1tX49SyLY7zcLS7bQ12d2e+vW6edadSM4FTo7ly/XqpuDM42s
+HsHZMC3ZEayMFaxMVkwRmof02vkyWrDfb76W8nqithT4fCb/YskxW87MJdv/Pzjj
+BWc7dpFTxgpWxgpWxgpWxgpWxgpWxgpWxgpWxgpWxgpWxgpWxgpWxgpWxgpWxgpW
+xgpWxgpWxgpWxgpW5j85LMhoCixgDQAAAABJRU5ErkJggg==" alt="png" /></p>
+<p>It is equivalent to a measurement of the qubit, followed by an X operation conditional on the measurement result being 1.</p>
+<pre><code class="language-plain_text">API:
+   reset(t: int)
+      t : the target qubit
+</code></pre>
+<h2><a id="other-symbols" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other Symbols</h2>
+<h3><a id="barrier" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Barrier</h3>
+<p>A barrier is drawn in the circuit as a vertical dotted line, like a fence separating sections of the circuit. Its main use is to prevent circuit optimizations crossing boundaries. This does not apply to TinyQsim since it currently does no circuit optimization. However, a barrier can still be useful for separating parts of the circuit for clarify, for example to separate initialization from processing.</p>
+<pre><code class="language-python">qc = QCircuit(2)
+qc.barrier()
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAB4CAYAAAB2OTUCAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABUtJREFUeJztnE9IFG8Yx7/r
+rOviqaQ/epC0OlgdJBUVRSRDUhAy9BB12SDqUoeO0VUIOksEBtupU6LB1gaK3aws
+qYPUXjyIiVhpeFB2BneeDvPb1teVn07Nw7v79nxg2Z2vu87jx91n591hnxAREQQ2
+SnQXYDoimBkRzIwIZkYEMyOCmRHBzIhgZkQwMyKYGRHMTFh3AUGTTqcxOjqqZAMD
+A4hGo1rqMU4wAGxtbeku4TfSIpgRwcyETPs82HVdrK2tKVlFRQVKSvQ8l4wTXGhI
+i2BGBDMjgplhE/zyJXD2LBCNAidPAg8fcu2psGER/OYNcPEi0NAAJJNALAbcvg08
+fsyxt8KG5SiitxdYWwPevctlN24AiQTw9SvAecSUTqcxPj6uZP39/dqWyn/0p46M
+ADU1QHk5cP488PYtEAoBT54Atg1MTQGXL6uPuXoVWF4GPn78+6L3wrZt5aIT34IT
+Ce/ZeO4cMDYGdHWpMufnAccBTp1SH3f6tHf95cvflFt8+P6wZ2gI6OgA4nFv+8IF
+YGMDuH/f2/7507s+cEB93MGD3vWORZbx+BKcyQCzs8CDB2o+OJgTnCUU2v137Mw3
+NzeRSqX8lPG/uK6L2tpaJZubmwt8qdzQ0LCv+/kS/P07sLUFHDmi5keP5m5nn6nZ
+Z3KW7Hb251lSqRQaGxv9lFEQ7PfYwJfgw4eBcBj49k3NV1Zyt0+cACIRr9f29OTy
+z5+96529ua6uDrOzs37KKC7IJ83NRB0danb3LhFAFI972z09RK2t6n1u3iSqqiLK
+ZPzusbjxLfj5c09mLEb06hXR0BDRsWOq4OlponCY6Pp1otevvfuUlBCNjARae1Hg
+WzAR0aNHRNXVRNEoUWenJ3S7YCKiFy+I6uuJIhGi48eJhocDqbfoCGQl9+OH15/j
+cW9ZLOQw7qRnOp1GIpFQsr6+PjmrHCQbGxu6S/hNIIIPHQLkxNPuyAfuzBh30jOT
+yWB5eVnJqqqqYFmWlnqME1xoSItgRgQzI4KZEcHMiGBmjFvJ2baNZDKpZL29vSgr
+K9NSj3GCiQjr6+t5mS6kRTAjgpkxbiWXyWSwuLioZNXV1bJUNhVpEcyIYGZEMDMi
+mBkRzIxxKznbtjExMaFk3d3dslQOCiLC6upqXqYLaRHMiGBmjGsRpaWlaG9vz8t0
+IUtlZqRFMCOCmRHBzIhgZkQwM8YdpjmOg6mpKSXr6upCJBLRUo9xgl3Xxcr275X9
+l+lCWgQzIpgZ41pEOBxGS0tLXqYLWSozIy2CGRHMDIvgiQngyhXvm/ehEHDrFsde
+igMWwckk8OkT0NmZP/nkX4PlTc51c5OlamqAvj5geDjovRQHgU+dAnjHdu2F4ziY
+nJxULo7jaKvH9wFidupULOZNm/rwIX+El05c18XS0lJepovAp04JKr5ezNmpU5cu
+qfngYJAlmUXgU6f8wjHWq7KyUsmKZqzXfqZO+UXGem3DsryJqmNjwJ07ufzZM1+1
+KZg+1sv3m9y9e97o2mvXckcRT5+q91lYAN6/925vbnrzLLP/hJ39ury8fN8vt6Lk
+TyYp7TV1Kh73tne7/GvI1Clm5NM0Zow7o+E4Dqanp5Wsra2tuM8qF9LUKdd1sbCw
+oGStra2aqpEWwY4IZsa4HmxZFurr6/MyXchZZWakRTAjgpkRwcyIYGZEMDPGHaY5
+joOZmRkla25uLu6lciHhui7m5+eVrKmpSVM10iLYEcHMGNciLMvCmTNn8jJdyFKZ
+GWkRzIhgZkQwMyKYGRHMjAhmRgQzI4KZEcHMiGBmRDAzIpgZEcyMCGbmF6kuxcrv
+ONkKAAAAAElFTkSuQmCC" alt="png" /></p>
+<pre><code class="language-plain_text">API:
+   barrier()
+</code></pre>
+<pre><code class="language-python">
+</code></pre>
+</div></body></html>

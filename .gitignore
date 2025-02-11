@@ -1,8 +1,9 @@
 # OS X
 .DS_Store
 
-# Debugging files - not checked in
+# Debugging and build files - not checked in
 non_git/
+release/
 
 # Jupyter notebooks
 nbsignatures.db
