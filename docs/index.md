@@ -1,6 +1,20 @@
-## TinyQsim Documentation
+## Introduction
 
-The tutorials and examples listed below are Markdown files generated from Jupyter Notebooks in the 'examples' directory so that they can be read without using Jupyter.
+TinyQsim is a tiny quantum circuit simulator based on the quantum gate model.
+
+It was originally started as a fun project to learn about quantum computation and as a framework to explore new ideas. The aim was to 'keep it simple', rather than worrying about optimization. Nevertheless, it is capable of simulating a 20-qubit Quantum Fourier Transform in about one second (tested on a Mac Mini M2). This should make it sufficient for most textbook examples and learning about quantum computing.
+
+Note: TinyQSim should not be confused with the Tiny-Q project that has subsequently appeared in the PyPI software repository with the name TinyQSim. The two are not related.
+
+## Installation
+
+TinyQsim can be downloaded from https://github.com/jbrumf/tinyqsim.
+
+For installation instructions, see the README.md file in the source distribution.
+
+## Documentation
+
+The tutorials and examples are also available in the 'examples' directory in the form of Jupyter Notebooks.
 
 ### Tutorials
 
@@ -17,13 +31,13 @@ The tutorials and examples listed below are Markdown files generated from Jupyte
 
 ### API Documentation
 
-API documentation can be found in the 'tinyqsim/doc/api' directory as HTML files. These must be browsed locally as GitHub does not render HTML pages on their server.
+The API documentation covers all the Python modules in TinyQsim. For new users, the most important section is the 'qcircuit' module.
 
 - [TinyQsim API](api/index.html)
 
-Browse to the 'qcircuit' module for details of the QCircuit API.
-
 ### Design Notes
+
+The Design Notes provide some details about the design of TinyQsim.
 
 - [TinyQsim Design Notes](html/TinyQsim_design_notes.html)
 

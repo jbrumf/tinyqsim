@@ -1,6 +1,6 @@
 #/bin/bash
 
-# Generates Markdown and/or HTML versions of Juppyter Notebooks.
+# Generates Markdown and/or HTML versions of Jupyter Notebooks.
 
 if [[ "$PWD" != */tinyqsim ]]
 then
