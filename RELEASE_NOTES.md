@@ -1,6 +1,4 @@
-## Release Notes
-
-No formal releases of TinyQsim have yet been made, but here a few comments on the latest updates. See the API documentation for further details.
+## Release Notes (12 February 2025)
 
 ### Changes to QCircuit Class
 
@@ -19,11 +17,13 @@ Some API changes have been made to create a cleaner separation of concerns betwe
 
 ### Documentation and Examples
 
+The documentation was previously in the form of Markdown files. This led to some compatibility issues with different Markdown viewers and tools, particularly where there was embedded LaTeX. Consequently, the documentation has been converted into HTML and placed on GitHub Pages:
+
+- [https://jbrumf.github.io/tinyqsim/](https://jbrumf.github.io/tinyqsim/)
+
 There was previously a lot of overlap and unnecessary duplication between the Markdown documentation and Jupyter notebook examples. This resulted in extra work maintaining two versions.
 
-These two forms of documentation have now been merged into Jupyter notebooks and brought up to date. The 'nbconvert' tool is used to create copies in Markdown for the 'doc' directory. This approach would also make it easy to generate an HTML version of the documentation and examples if required at a later date.
-
-This restructuring has the added benefit that errors in the examples are more easily detected since the example code in the notebooks is actually executed.
+The master copy of the tutorials and examples are now in the form of Jupyter notebooks in the 'examples' directory. This has the benefit that errors in the example code are more easily detected as they are actually executed. HTML files are generated from the notebooks for inclusion in the documentation.
 
 ### Other Updates
 
