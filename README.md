@@ -10,9 +10,9 @@ Note: TinyQSim should not be confused with the Tiny-Q project that has subsequen
 
 - [TinyQsim: Tiny Quantum Circuit Simulator](#tinyqsim-tiny-quantum-circuit-simulator)
   - [Overview](#overview)
+  - [Documentation and Examples](#documentation-and-examples)
   - [Installation](#installation)
   - [Jupyter Notebooks](#jupyter-notebooks)
-  - [Documentation and Examples](#documentation-and-examples)
   - [Known Issues](#known-issues)
   - [Release Notes](#release-notes)
   - [License](#license)
@@ -22,6 +22,12 @@ Note: TinyQSim should not be confused with the Tiny-Q project that has subsequen
 ### Overview
 
 TinyQsim was originally started as a fun project to learn about quantum computation and as a framework to explore new ideas. The aim was to 'keep it simple', rather than worrying about optimization. Nevertheless, it is capable of simulating a 20-qubit Quantum Fourier Transform in about one second (tested on a Mac Mini M2). This should make it sufficient for most textbook examples and learning about quantum computing.
+
+### Documentation and Examples
+
+The TinyQsim documentation and examples can be found at:
+
+- [https://jbrumf.github.io/tinyqsim/](https://jbrumf.github.io/tinyqsim/)
 
 ### Installation
 
@@ -69,21 +75,7 @@ A notebook session can be started as follows:
 
 If you wish to run the notebooks in the `examples` folder, it is suggested that you first copy them to the `mywork` folder, so that you can experiment with them without modifying the original downloaded copy.
 
-Markdown versions of the Jupyter notebook examples can be found in the 'doc' directory to allow easy browsing without running the notebook server.
-
-### Documentation and Examples
-
-The TinyQsim documentation and examples can be viewed online on GitHub:
-
-- https://github.com/jbrumf/tinyqsim/tree/main/doc/index.md
-
-They can also be found as Markdown files in your downloaded copy at:
-
-- [doc/index.md](doc/index.md)
-
-A Markdown viewer that supports LaTeX is required.
-
-Clicking the [TinyQsim API](doc/api/index.html) link should open the HTML API documentation in your web browser. The API files cannot be viewed online because the HTML is not rendered in the online GitHub pages. The most important section in the API documentaton is the `qcircuit' module.
+The examples are also included in the documentation, so that they can be browsed without installing the software or running a Jupyter server.
 
 ### Known Issues
 
@@ -96,10 +88,6 @@ python[70884:21253510] +[IMKInputSession subclass]: chose IMKInputSession_Modern
 ```
 
 This appears to be a problem with macOS Sequoia as other software is also affected.
-
-**2: Markdown Rendering Errors on GitHub**
-
-There are a few rendering errors when viewing the Markdown documentation files on the GitHub web site. These are due to minor incompatibilities between different implementations of Markdown.
 
 ### Release Notes
 

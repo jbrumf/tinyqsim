@@ -1,4 +1,4 @@
-## Introduction
+## TinyQSim: A Tiny Quantum Simulator
 
 TinyQsim is a tiny quantum circuit simulator based on the quantum gate model.
 
@@ -8,7 +8,7 @@ Note: TinyQSim should not be confused with the Tiny-Q project that has subsequen
 
 ## Installation
 
-TinyQsim can be downloaded from https://github.com/jbrumf/tinyqsim.
+TinyQsim can be downloaded from [https://github.com/jbrumf/tinyqsim](https://github.com/jbrumf/tinyqsim).
 
 For installation instructions, see the README.md file in the source distribution.
 
