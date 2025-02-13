@@ -1,3 +1,9 @@
+## Release Notes (14 February 2025)
+
+- A change has been made to the numbering of gate arguments shown in the gate symbol of custom gates. These now include control qubits in the count. This change only affects the graphics, not the behaviour of the gates.
+
+- Minor corrections and updates to documentation.
+
 ## Release Notes (12 February 2025)
 
 ### Changes to QCircuit Class

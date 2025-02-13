@@ -283,9 +283,10 @@ class Schematic:
 
         # Label connections with argument numbers
         if len(qubits) > 1:
+            ncntrl = len(cqubits)
             for i, q in enumerate(qubits):
                 y1 = -self._qubit_pitch * q
-                self._ax.annotate(str(i), (x, y1), color=G_COLOR,
+                self._ax.annotate(str(i + ncntrl), (x, y1), color=G_COLOR,
                                   fontsize=10, ha='center', va='center')
 
         # Add text for name of the gate

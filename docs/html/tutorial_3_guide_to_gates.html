@@ -855,115 +855,139 @@ YDIFJlNgMgUmU2AyBSZTYDIFJlNgMgUmowR+/Rq4fdv95X0QAPfvM46SDZTA8/PA
 FJhMgckUmEyByRSYTIHJFJhMgckUmEyByRSYTIHJFJhMgckUmEyByRSYTIHJFJhM
 gckUmEyByf4AadAA/CMZgf8AAAAASUVORK5CYII=" alt="png" /></p>
 <p>The horizontal lines represent the qubits of the quantum circuit. So far, this is just an empty circuit with two qubits, q0 and q1. TinyQsim uses the Big-Endian qubit convention, so q0 is the most-significant qubit.</p>
-<p>An instance of a quantum gate (e.g. the CX gate) can be added to the circuit by calling the corresponding method, with the the arguments specifying the qubits to which the gate is applied. CX is a controlled-NOT gate with 2 qubits. The first qubit in the parameter list is the control and the second qubit is the target. A control is indicated by a dar</p>
-<pre><code class="language-python">qc.cx(0, 1)
+<p>An instance of a quantum gate can be added to the circuit by calling the corresponding QCircuit method. Gates are assigned to particular qubits by supplying the qubit numbers as arguments.</p>
+<p>The simplest case is for one-qubit gates assigned to single qubits. For example:</p>
+<pre><code class="language-python">qc.x(0)
+qc.y(1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,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
-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
-AAAAAElFTkSuQmCC" alt="png" /></p>
-<p>Gate names are upper case (e.g. 'CX') whereas the corresponding QCircuit method names are lower case (e.g. 'cx') to comply with Python naming conventions.</p>
-<p>See the QCircuit class in the API documentation for details of the API of the gates.</p>
-<pre><code class="language-plain_text">cx(c: int, t: int)
-   c : the control qubit
-   t : the target qubit
-</code></pre>
-<p>The call <code>qc.cx(0,1)</code> creates an instance of the gate with the control connected to qubit q0 and the target connected to q1.</p>
-<p>If the arguments had been in the reverse order, q1 would have been the control and q0 the target, as shown here:</p>
-<pre><code class="language-python">qc = QCircuit(2)
+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
+QmCC" alt="png" /></p>
+<h3><a id="controlled-gates" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Controlled Gates</h3>
+<p>Gates can have a <em>controlled</em> variant. The control enables the operation of the gate. It is drawn as a dark dot in the gate symbol.</p>
+<p>The controlled version CU of a gate U applies the gate if the control is \(\ket{1}\). For example, for a one-qubit gate defined by the unitary matrix \(U\):</p>
+\[CU = \ket{0}\bra{0} \otimes I + \ket{1}\bra{1} \otimes U
+\]
+<p>Since the control input may be in a superposition of \(\ket{0}\) and \(\ket{1}\), the result is the superposition of the results for the gate applied to the two cases.</p>
+<p>TinyQsim provides controlled versions of many of the common gates. For example, CX is a controlled version of the X gate. Controls are denoted by a solid dot in the symbol,. It is possible for a gate to have multiple controls, such as the CCX gate.</p>
+<p>The following example shows a circuit with two Controlled-NOT (CX) gates. The controls are indicated by dark dots.</p>
+<pre><code class="language-python">qc = QCircuit(2)  # 2 qubits
+qc.cx(0, 1)
 qc.cx(1, 0)
 qc.draw()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAB4CAYAAAB2OTUCAAAAOnRFWHRTb2Z0d2Fy
+<p><img src="data:image/png;base64,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
-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" alt="png" /></p>
-<p>In a quantum circuit the gates are often applied to non-consective qubits, such as q0 and q2. For example:</p>
+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
+QmCC" alt="png" /></p>
+<p>Controls qubits always occur first in the argument list, so in this example:</p>
+<ul>
+<li>The first CX gate 'cx(0,1)' has qubit 0 as the control and qubit 1 as the target.</li>
+<li>The second CX gate 'cx(1,0)' has qubit 1 as the control and qubit 0 as the target.</li>
+</ul>
+<p>Most basic gates operate on a single qubit, possibly with an additional control qubit. The API is then largely self-explanatory. For more complex cases, refer to the QCircuit API documentation for details.</p>
+<p>The gates in a quantum circuit are often applied to non-consecutive qubits. For example:</p>
 <pre><code class="language-python">qc = QCircuit(3)
 qc.cx(0, 2)
 qc.draw()
@@ -1087,117 +1111,6 @@ V2CKWFQkU7LgF0CblP9dRDB37shVN7cb+Ptvub7QrZvMPoqLgQEDIn9k16JDCb4f
 Sal5cCpigpUxwcqYYGVMsDImWBkTrIwJVsYEK2OClTHByphgZUywMiZYGROsjAlW
 xgQrY4KVMcHKmGBlTLAyJlgZE6zM/wA/+WeAO6liNwAAAABJRU5ErkJggg==" alt="png" /></p>
 <p>Since swapping the two controls of a CCX gates makes no difference, the symbol does not distinguish between them.</p>
-<p>TinyQsim supports creation of custom gates, which may have both parameters and controls. In order to allow automatic generation of symbols for custom gates, a generic rectangle is used for the gate body.</p>
-<p>The following example illustrates a custom gate with two control qubits and two target qubits:</p>
-<pre><code class="language-python">mygate = np.eye(4)  # Dummy custom gate
-
-qc = QCircuit(5)
-qc.ccu(mygate, 'U1', 0, 3, 1, 4)
-qc.draw()
-</code></pre>
-<p><img src="data:image/png;base64,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
-QmCC" alt="png" /></p>
-<p>The following points should be noted about this example:</p>
-<ul>
-<li>
-<p>The dotted line on qubit q2 indicates that it just passes through without playing a role.</p>
-</li>
-<li>
-<p>The first two arguments (0, 3) of the call are the control qubits, which are indicated by a dot. The control qubits may be inside or outside the box as shown here.</p>
-</li>
-<li>
-<p>The numbers (0, 1) in the symbol indicate that these are arguments 0 and 1 for the unitary U (excluding controls). In the example, these are connected to qubits q1 and q4.</p>
-</li>
-</ul>
-<h3><a id="controlled-gates" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Controlled Gates</h3>
-<p>Gates can have a <em>controlled</em> variant. The control enables the operation of the gate. It is drawn as a dark dot in the gate symbol.</p>
-<p>The controlled version CU of a gate U applies the gate if the control is \(\ket{1}\). For example, for a one-qubit gate defined by the unitary matrix \(U\):</p>
-\[CU = \ket{0}\bra{0} \otimes I + \ket{1}\bra{1} \otimes U
-\]
-<p>Since the input may be in a superposition of \(\ket{0}\) and \(\ket{1}\), the result is the superposition of the results for the gate applied to the two cases.</p>
-<p>TinyQsim provides controlled versions of many of the common gates. For example, CX is a controlled version of the X gate. Controls are denoted by a solid dot in the symbol, as shown in the earlier examples of the CX gate. It is possible for a gate to have multiple controls, such as the CCX gate.</p>
-<p>A generic U gate is provided that allows a unitary matrix \(U\) to be applied as a gate. This has CU and CCU variants. See the sections on the U, CU and CCU gates below for details.</p>
 <h3><a id="anti-controlled-gates" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Anti-Controlled Gates</h3>
 <p>Anti-controlled gates are ones where the control is inverted, so that it disables the operation instead of enabling it. These are sometimes drawn like a controlled gate but with a hollow (white) control dot instead of a solid (dark) one.</p>
 <p>TinyQsim does not have specific support for them, but the same effect can be created by sandwiching a control between two X gates, as shown here:</p>
@@ -1313,106 +1226,275 @@ UVgY0cCBRDYb0evXwdW/dy8PSd3ZsYMoPJzIYjGWVtOsp7DZOJj52TPf8mdm8uuC
 2rLz6CtG02qq5kMPV660tQLfMZpWU3U0hdBgmuZDCB1SUwgKYgpBQUwhKIgpBAUx
 haAgphAUxBSCgphCUPgHUAb5Ko00F9EAAAAASUVORK5CYII=" alt="png" /></p>
 <h3><a id="custom-gates" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Custom Gates</h3>
-<p>Custom gates are possible using the U gate that takes a unitary matrix as an argument. For example:</p>
+<p>Custom gates can be defined using the U gate which takes a unitary matrix as an argument. The following example shows a circuit that uses two instances of a custom gate 'U1'.</p>
 <pre><code class="language-python">u1 = np.array([[1, 0, 0, 0],  # Define a unitary matrix
                [0, 0, 1, 0],
                [0, 1, 0, 0],
                [0, 0, 0, 1]])
 
-qc = QCircuit(2)
-qc.u(u1, 'U1', 0, 1)  # Apply the matrix as a gate
+qc = QCircuit(3)
+qc.u(u1, 'U1', 0, 1)
+qc.u(u1, 'U1', 2, 1)
 qc.draw()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAB4CAYAAAB2OTUCAAAAOnRFWHRTb2Z0d2Fy
+<p><img src="data:image/png;base64,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
-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
-SUVORK5CYII=" alt="png" /></p>
-<p>This automatically generates a symbol which is labelled with the string given as the second argument.</p>
+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
+RK5CYII=" alt="png" /></p>
+<p>The gate symbol is generated automatically and labelled with the string 'U1' given as the second argument.</p>
+<p>The numbers '0' and '1' in the symbol show the assignment of the qubit arguments to the qubits, as the symbol does not distinguish them.</p>
 <p>There are also CU and CCU variants for controlled-U and controlled-controlled-U gates. For example:</p>
 <pre><code class="language-python">u2 = np.array([[0, 1],  # Define a unitary matrix
                [1, 0]])
 
-qc = QCircuit(2)
-qc.cu(u2, 'U2', 0, 1)  # Apply the matrix as a gate
+qc = QCircuit(3)
+qc.cu(u2, 'U2', 0, 1)
+qc.ccu(u2, 'U2', 0, 1, 2)
 qc.draw()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAB4CAYAAAB2OTUCAAAAOnRFWHRTb2Z0d2Fy
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAACuCAYAAAAYsc7JAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABxdJREFUeJztnVtIVGsUx/+O
-c6zxJT1ZUlDZzZwiSqMLgZhdTAq64UN0jKboQlQPBT1ED70YQlRQDSXd9ICnm0EU
-pWaUQZBdnE4QNdNDdINIDTsRTWHqOg+rYdzjzOSemTWprR8Me2Z/35719fObb3/7
-tkogIoIihuVXN6C/o4KFUcHCqGBhVLAwKlgYFSyMChZGBQujgoVRwcKoYGFUsDAq
-WBgVLIwKFkYFC6OChVHBwqhgYcQEV1cD2dnAwIHAuHHA0aNSkXo3IoIbGoClS4Gc
-HKCmBnA4gG3bgJMnJaIF58sX4MMHoL09fjGDQgIUFhLNmGFct2ED0bBhRB0dEhH9
-XLtGlJ9PBPArJYVo506i9+9l44YiIsHHjxONGkVksxHNnUvU0MD/mPJyom/fiJKS
-iA4eNG5z+zbXaWyMvtGhKC3lGImJfsG+z8OHE718KRc7FKaHiKtXgY0bgfx84NIl
-YO5cYOVKf/mLF0BbG2C3G7ebOJGXbnc0v7fQ3LkD7NrF7zs6jGUdHUBzs7Gd8cJq
-doOSEiA3Fygv588LF/J4V1rKnz9+5GVKinG71FRetrZG2NKfcPgwYLWGHnPb24H7
-94FHj3jfEC9MCe7oAFwuYN8+4/qiIr9gHwkJwb8jcL3X64XH4zHTjKBUV09Be3ti
-2DoWC6G8/B2Apqjj5fTwr2RKcEsL94ShQ43r09P973091deTffg++8p9eDweTJs2
-zUwzQuAFYAtbo7OzHU5nGZzOkqijUQ9v6TMleMgQ/hk2NxvXN3XpEGPHAklJPNYW
-FvrXP3vGy8CxOSsrCy6Xy0wzglJc3AmPh0AU4qcDAPgD+/c7kJ+/POp4PcbsXnHG
-DKLcXOO6Xbv8swginqbNmmWss2mT7DStosI4cwh8JSQQpacTff8uEz8UpgVfvswN
-djiIamuJSkp4ytZV8N27RFYr0fr1RPX1XMdiITpxIqZtN9DWxvNfiyW4XIuF6MoV
-ufihiGgeXFZGNGIE0cCBRHl5LLSrYCKe8E+ZwnPiMWOInM6YtDcsXi/R5s1EAwYY
-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
+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
+8wmeo+RJklULlrcNpipR26DfX5D29yGSMW8ecP488Nhjsa+vqXkfpaX2rSl27CjC
+888nDoTLJejbN4j3389e22BKofB4zEfY69YBzz0XWb52bfoTKCwsTL5E1UIffmi2
++EeMAB5/PPZtSktLbf3IfsAA4I03zIsq3otYxIVZszpn9TlKeUNzzhxg3DjzRE6c
+COzZA6xeHX2bQ4eAr782vzc3m/7zcHAmTMh0ysmL16JcVwc88ggwcKDZwLR7Fzoe
+r9fUcVdUmH+3DYbbbTYwW9eGZ0U6xWPttQ0uXx6/jTcVPp+5T9uOtdpas3zx4tj3
+C7coP/mkvm7jRpHLLhMZMEDkxInUxrVLfb1Inz7Rz1OHDkGZPl2kuTk7c2gtrdfI
+9Onm+5OBALBjB3DDDdHXV1bGL2i2wnXXmct4xxfCy8O3C9u0Cbj3XqBPH2DrVuDK
+K62ZT6ZGjgQaGoCdO4G5c38F8AA2bfoe1dXmQFu2OfJT0rIyc2SythY4ciT6unPn
+gEWLzFtHeLUMAJs3A+PHmwBv22a+rZ1PXC7gzjuBioqTAD5CUVGw3fvYxRHf0WzL
+6wXeece86vv3B6ZONZ/IHj8OrFkD7N8PzJ5tDmUDZrtn3Dizppo8Gaiv149p516O
+0zi2bXDMGLO6nT8fWLkS+PNPoHNns/G4Zg3wwAOR2/7wA3DmjPm99V5TawxFhCPX
+FGG33Zbc4enKysiHY9Q+R25TkL0YClIYClIYClIcsaHp91/c4+WbvA5FcbH5yl8u
+dhcLC/PvAFe25HUoevY0r9p0zk+RKZ6fIo/17Hnp/ufkCjc0SWEoSGEoSGEoSGEo
+SGEoSGEoSGEoSGEoSGEoSGEoSGEoSGEoSGEoSGEoSGEoSGEoSGEoSGEoSGEoSGEo
+SMn7b3M7lZOrM10i2T6zxMUvs+rMzFhRnck1hQ2cXp3JUNjIqdWZ3NAkhaEghaEg
+haEghaEgxfJQBIPm3JZDhpgqiC5dzEnHt261eiSyi+WhCARMGdqtt5pKqdpa4Jpr
+TIXC+vVWj0Z2sDwUBQXAL7+Ydr+xY83JyFevNmfCXbDA6tGcw0kNiZZXUHo85i2j
+NZfLrDnanlyd4stlQ2LKRzTDFZSVlZESmPYqKEMhYNeu7B7ydbpcNiRmpYJy4ULz
+By5Zku40Lz3pNiRawfYKys8/B2bOBF54IXa3ZqIKSqeyqjozlvYaEs34sasz86KC
+8rvvTM/G+PHA66/Hvk3iCkqnsq86s72GRCB+dWay35KwrYLy4EHz1lJWBqxaFb/k
+LVEFpVPZVZ2ZTEMikHl1pi0VlMeOmV2p7t2Bjz8GOnaM/5i5qqDMV1Y0JGZanWl5
+BWUgAIwaZdYmVVV612nQoPQn62ThgrhAnBdw+FtasYrk6uuB++4zeySbNwNFRfbM
+MSzlUFRUANXVwMsvm6OVd9wBfPCBKUUDzFvJtxdquceP1/e/VL/856iGRCt6LJua
+ontJL3Wxek3PnzddrsXFIn/8EX37s2dNv6vLJdLQEFm+aZPpfu3f3zzH6YybDn4d
+L0uc1JDIUGSRUxoSHVtB6VROaEjkl2xIYShIYShIYShIYShI4S6pjZxanclQ2MDp
+1Zk8FYFN0j0/RaZ4fgqyBTc0SWEoSGEoSGEoSGEoSGEoSGEoSGEoSGEoSGEoSGEo
+SGEoSGEoSGEoSGEoSGEoSGEoSGEoSGEoSPkfrXxqglw6iiYAAAAASUVORK5CYII=" alt="png" /></p>
+<p>The first instance is a controlled-U2 gate, where U2 is the 1-qubit operation defined by the matrix.<br />
+The second instance is a controlled-controlled-U2 gate.</p>
+<p>The 2x2 matrix in this case only defines the operation that is to be controlled but not the controls themselves. These gates could have been defined as a 'U' gate with a larger matrix that included the control actions. However, this would have been more complicated and the circuit symbols would not have shown which qubits were controls.</p>
+<p>When a custom gate has 2 or more target qubits, the rectangular symbol may span another qubit that is not involved. For example:</p>
+<pre><code class="language-python">u3 = np.eye(4)  # Dummy custom 2-qubit gate matrix
+
+qc = QCircuit(3)
+qc.u(u3, 'U3', 0, 2)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAACuCAYAAACyXsowAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAChBJREFUeJztnX1MW+UXx7+M
+UnmxYZgKU4esInHVEEYbCVmc6FDEd93Itkyc6KZdoosvMcZlf/jPonFRYhQ3dVMw
+MsOiyTSZTiVmQyMzStW4SJm4sOEyYRD1Fx0s3brz++N4KYV27W17gI7zSZrb+9yH
+e55++nD79N6n56YREUERY850N+B8RwULo4KFUcHCqGBhVLAwKlgYFSyMChZGBQtj
+me4GRKO/Hxgenvq4djtw+eWJ72dGC+7vB5xOYGRk6mNnZwM+X+KSZ7Tg4WGW29rK
+oqcKnw+or+f457VgA6cTcLmmuxXxoR9ywqhgYVSwMCpYGBUsjAoWRkzwp58C5eVA
+ZiZw5ZXA1q1SkWY2IoIPHADuvpvHrnv3Ag0NwIYNwI4dEtHCs3Ur4HDwG+x2A19/
+PXWxQyABamuJKipCyx5+mOiSS4gCgdj34/USAbw0Q1sbUUYG0fbtRN3dRI8/TpST
+Q3T0qGzccMQl+K23iIqKiLKyiJYuJTpwgBvU3Ex06hSR1UrU2Bj6N/v3c52urtjj
+xPtCKyqI1q8PLVu4kOjZZ2XjhsP0IWLPHuCRR4AbbwR27waWLgVWrQpuP3wY8Psn
+nzu4+mpe+nyJ/L9Fx+8HvF6gpia0vKYG6OyUjR0O0+ciNm8GliwBmpt5/ZZbgJMn
+gRde4PW//uLl3Lmhf5eXx8s//4yzpTEyPAwEAkBBQWh5QQEwMCAbOxymBAcC3Du2
+bAktr6sLCjZISwu/j4nlIyMj6OnpCVvX58sCEN9ptIlxiCK3KRI+nw/AaNhtrhjP
+PpkSPDQEnDkD5OeHlo/vLUZPNXqygbFubDfo6emB2+2OELEcwA9mmgi7HUhPn9xb
+T5yY3KujUV9/H4Afw26jGKf0mRJ88cWAxcKNHc/gYPB5cTFgtfKxtrY2WN7dzcuJ
+x+aFCxfC6/WGjefzZaG+3kwLObbbDbS3A/feGyxvb+ehoxlaW3fC6Qzfg2PG7Kdi
+RQXRkiWhZRs3BkcRRDxMq6wMrePxTP0w7e23eZj2xBM8TDtyRDZuOEwL/vhjDt7Q
+QPTZZ0SbN/OQbbzgzk4ii4Vo3Tqiffu4zpw5PC41QyIv9PXXuV1WK5HLRdTRMTVx
+JxLXOPiNN4gKC4kyM4mqqljoeMFERJ98QlRWxi/wiiuImprMx0nmC52uuHFdMvJ4
++GEQ7qrvbbfxY7ajZ9OEUcHCJOWqst3OA3llMtqDhVHBwqhgYVSwMCpYGBUsjAoW
+RgULo4KFUcHCpKTglha+vtbSEn77kSO8vaGB10+fBtav5ysddjtwwQU8KWXlSuCn
+n2TbmhIz3BPF7we6uoDrrgPuvx+w2fj3H83NQEUFzz6qrpaJPSsE5+Sw4Il4PPwb
+jBdflBOckoeIZDFvHv+aaOIV8GQyK3qwQSDAMgMB4PffgcZG4J9/gNtvl4s5qwT7
+fEBpaXDdZgOeeQbYtEku5qwS7HDw/Ai/H/jtN+D993nal98PZGTIxDyvBU+cKpWT
+A9x0U3D9oYd4DnNvL/D55zJtSMkPuawsXo5GmHRj/PTWqBeJCy8Eli0DvviCZ4VK
+kJKCHQ5eGtOxJmKUG/XOhfEmSc36TEnBLhdQWAi0tQHHj4du8/uBpiY+PNx1F5cN
+DQFnz07ez8AA8MEH3JOvuUamrSl5DLZYgG3beHJfaSmwbh1POhwcBHbtAn75Bdi4
+EbjqKq6/cyfwyitc3+HgCYK//gq8+y4P23bs4PGwCIlPDpIj2hSm774jqqsjKijg
+uXC5uUQ33EC0a1dova4uotWriYqLeRJgRgbR/PlEK1YQffON+bhmSMkebHDttfwv
+Hg23m3vxdJCSx+BUQgULo4KFUcHCqGBhVLAwKlgYFSyMChZGBQujgoVRwcKoYGFU
+sDAigtvbgdWr+SR4Whrw2GMSUVIDEcF79/KkuqqqyZlPZhsigl96iS88vvMOkJsr
+ESF1iEvw9u3AggV8Hau6Gvj229DppHP0yD5G0rNOKaEkPeuUEopY1qlYiZ51ai56
+e4fhcvGsve7ubthsNhQWFuLUqVPo7u5GSUkJbDYbBgcHMTAwgLKyMgDAoUOHkJmZ
+iaKiIpw+fRoHDx5EcXExcnNzMTQ0hGPHjqG8vBwA0NvbC4vFAofDgUAgAOAEfL6/
+kWjWKVOX7f/4gy9nt7aGlh87NjnjiUFREdGjj0bep9frJQARHuUEPEf5+ZeN1S8t
+LaUNGzYQEVFvby8BoH379hER0ZYtWygvL2+sbmVlJa1du5aIiI4fP04AaM+ePURE
+1NTURFardaxudXU1rVq1ioiIOjr+R8Bz/8UP37ZYSXrWKbNEzzo1F6++unysrK2t
+DTabDQAwf/58eL1elJSUAADWrFmDmnEp/1paWpCZmQkAsNvt8Hq9KC4uBgCsWLEC
+ixcvHqu7bds2WCysIysrB4AHra0rZ2bWqfFE68HnYlbm7Nm0ifOPPfggjx66unie
+7XiOHgW+/56fj4zwzMUPP+T1urrEOkTKEc+7Ei3rVHMzr4d7mOF86MFxfSXwePhn
+UKOjwP79wH+HwDEaGiLpTbxDpBr6nUsYFSyMZp0SRnuwMCpYGBUsjAoWRgULo4KF
 UcHCqGBhVLAwKlgYFSyMChZGBQujgoVRwcKoYGFUsDAqWBgVLIwKFkYFC6OChVHB
-wqhgYVSwMCpYGBUsjAoWJia3r0ry5g0/1G0Wt9sGIPvH0jxpacDIkRFtaiCBqPfe
-2fvmDT/25fXGP3ZyMj+KFq3kXt2DP3xguZWV3Z+vk8TtBoqLOX6/FuzDbo/v88Wx
-RHdywqhgYVSwMCpYGBHBN24Aq1bxk/cJCcDWrRJR+gYigmtqgMePgby87plPfjdE
-BO/fz/khTp8GBg2SiNB3iEjwiRNARgYf7cybB9y7x0NBRcWPLxUe2SsqjPECefWK
-yx0O/vzxI3DoEFBQAIwYAdhswIQJnNzp7VvZtsY861Rv5P59YMcOftx3yxbgyBFg
-0SI+Qpw82Z+NRYKYZ53qjWRlAc+fc4rHrixeDCxYAOzZA1RVycQ21YN9WaeWB6S8
-KSqKZZNiT0ZGd7kAMH8+8OefwJMncrFjnnXKLOHSevGpRrmzPJ8+AZ8/A5MmBS93
-u90AvgYtE0nr1ZOsU2YJn9YrG8CjyL/8J5SUAN+/A2vWBC8vLv4LwL9By3p6lteU
-4MREPqt16RKwfbt//cWLZr7FSLi0Xm63DcXFkX93OC5cAA4c4DF47drgdSor/4Hd
-HrwH9xTTO7nduzl17dq1PHtobATOnDHWef0aePiQ33u9nM/S90cIHK+Tk5N7/HMz
-S6hUMtXVwOrVnN+4qir0tNJut0d9mtS04CVLgLIyYO9e4Nw5YOZM4OxZYPZsf536
-emOvqK3lFxCbzCi2H1eBvoboXL4rILYgV4tqa4EVK3hmUVcnfyAU0SHBpk18Oefr
-V+D2bWD8eGO5wxE6RVwsGD2al6Hmr771vno+rl/nGVBmJnDzJjB4cGzaE44+eTYt
-J4ePyM6dA969M5a1tQFOJw8PS5b419fVAcuWcWe4dYsvasaDPnHJKBCrFTh2jHvj
-5MnA+vV85q6pCTh/Hnj6lHMJT5jA9Rsbeb9BBKxb5x+uuiK1MxVJMR4rXC4eWFyu
-4OUPHhAVFXFOSquVaNAgojlziM6fN9YrLw+f1zLQws/imqFP9mAf06f37BDX4fCf
-+Ik3fXIM7kuoYGFUsDAqWBgVLEyfmEVI/d8b8YjXqwWnpfF1P7GDgDAkJ8fmaK9X
-374KRH5/cLT8FvcH9wd0JyeMChZGBQujgoVRwcKoYGFUsDAqWBgVLIwKFkYFC6OC
-hVHBwqhgYVSwMCpYGBUsjAoWRgUL8z9TqGmHrRLmFgAAAABJRU5ErkJggg==" alt="png" /></p>
-<p>The matrix in this case only defines the operation that is to be controlled but not the control itself. It could have been defined as a 'U' gate with a 4x4 matrix that included the control action. However, this would have been more complicated and the circuit symbol would not have shown which qubit was the control.</p>
-<p>For further details see the 'U', 'CU' and 'CCU' gates later in this guide.</p>
+wqhgYVSwMCpYGBUsjAoWRgULo4KFUcHCqGBhVLAwKlgYFSyMChZGBQujgoVRwcIk
+XXAgwAk7qqo4/UFeHnD99cCXXyY7UmqQdMGjo8DzzwOLFnHambY24LLLgJtv5nw/
+0nz1FXDnncCll3Kipo8+ko95LpJ+H42sLKCvj3uuQU0N33nl5ZeBO+5IdsRQTp4E
+yso43cLy5dHrS5P0tF7p6aFyAd62aNHk+w5JcOutnLhp2TL5WLEwJWm9zp4FOjsB
+pzPeZqYuU5LW67XXgEOHgDffjLeZqYt4Wq+ODr5v5tNP82hiItHTek1ft/f5fEg0
+rZcpwUNDwJkzQH5+aHlBQfj6P//M+X3uuYfvXRyOnp4euN3uCBHLAfxgpolJpb7+
+PgA/ht1GMeZvEEvrdfgwHz5cLuC99ybfX9MgelovMy1MLq2tOxNO62VKcHo6C9u9
+G3jyyWC5kVHKYGCAh2bz5vE41GqNvM/s7OzYs+jFwL//8h1nDfr6ONXuRRfxXcDN
+4HQ6kWjTkp7Wa3QUqK3lXt7YOPm+m5WViTU4Gl1dPMIxeOopXj7wQDA77JQST6qq
+c6X16uuLnNJrNqb1iuubnMfDD4Ph4eDzBQs0f8949GyaMCpYGE3rJYz2YGFUsDAq
+WBgVLIwKFiYlbr3u86VuvBkt2G7ny1LTcUYtO5vjJ0oa0cwewfb3h34VnyrsdvNn
+38Ix4wWnOvohJ4wKFkYFC6OChVHBwqhgYVSwMCpYGBUsjAoWRgULo4KFUcHCqGBh
+VLAwKlgYFSyMChZGBQvzf3Zcv50cKxW7AAAAAElFTkSuQmCC" alt="png" /></p>
+<p>In this case, the dotted line on qubit q1 indicates that it just passes through without playing a role.</p>
+<p>Another special situation is when there is a control between two target qubits. In this case, the dot symbol for the control may lie inside the gate rectangle, as shown here:</p>
+<pre><code class="language-python">mygate = np.eye(4)  # Dummy custom 2-qubit gate matrix
+
+qc = QCircuit(3)
+qc.cu(mygate, 'U1', 1, 0, 2)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAACuCAYAAACyXsowAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACUxJREFUeJztnWtsFFUUx//b
+NoWumlpSwBcPlQgraqHER4xYfCG+EKEhBDaxKIGYth8wxoSYaGKqGIN80AYwFbdq
+FSEmhURbEqNYJCjIYjHRqUasNkSoNKhRthHbHj8cJ8t0XzO7c2Z34PySyezemdlz
+++vded49N0BEBEWMonxX4FxHBQujgoVRwcKoYGFUsDAqWBgVLIwKFkYFC1OS7wpk
+oq8PGBjwPm5lJTB5cu6fU9CC+/qAUAiIxbyPHQwChpG75IIWPDDActvaWLRXGAYQ
+DnP8c1qwSSgEVFfnuxbZoQc5YVSwMCpYGBUsjAoWRgULIya4owOYPRsYOxaYNg3Y
+tEkqUmEjIviLL4CHH+Zz185OoK4OaGwE3nhDIpqVvXuBhx4CLrsMCASAnTvlY6ZD
+5ELj+edZ7tat/P6OO/iy99lngcceA4oEd0ynTwNVVcDKlcCSJXJx7JLVn9rSAkyd
+ytfrd90FfPklt5bWVuCff4BPPwWWLbNus2IFcPw48PXXuVc6HffdBzQ1AYsXy8ax
+i2PBH34IrF7NrbK9HbjzTqvMo0eBM2cS7x1cey3PDSOX6voPx7uIpiZg7lwgEuH3
+997LX8v16/n977/z/OKLrdtVVPD81Kksa+pTHAkeHgaiUeDll63ltbVxwSaBQPLP
+GF0ei8XQ09OTdF3DKAPg4W20hPgGgMGky6pt3n1yJPjkSWBoCJgwwVo+cWL8tdlS
+zZZsYr43l5v09PRgzpw5KSLOBnDYSRVdJRxeASD5QcNulz5HgsePB0pKgN9+s5b3
+98dfX301UFrK+9oFC+Ll333H89H75hkzZiAajSaNZxhlCIed1NBd2treRSiUvAXb
+xZHg4mI+/WpvB9aujZd/8EH89ZgxfODbscO6zrZtwKWX8sXH2QSDQdtfNzv8/Tfw
+44/x9729QHc3MG6c85vnoVAo9/vQ5JBdu4gAoro6ot27iZqaiKZM4bJIhNfZv5+o
+pIRo1SqiPXt4naIiopYWZ7GiUf7caNT+Nnv28Dajp0cflY2bCseCiYi2bCGaNIlo
+7FiimhoWerZgIqKPPiKqqiIqLSW66iqi5mbncdz8Q/MVN6sruTVreDJJ9tT3/vt5
+Ot/Ru2nCqGBhXLnZU1nJhxIlEW3BwqhgYVSwMCpYGBUsjAoWRgULo4KFUcHCqGBh
+fCm4tTXeTSAZP//My+vq4mU7dnBfiRtu4KcygQCvJ40vBWfDpk3A++9zX45p07yL
+e94Ifvtt4K+/uJPM3Xd7F9cXv9FwAzd+kpUN500LzhcqWBgVLMw5LThV9y0v8aXg
+sjKeD6bodGP+9NZcL5/4UvCVV/Lc7I41GrPcXC+f+FJwdTUwaRJfOPz6q3XZmTNA
+czPvHhYuzE/9zsaX58ElJcDmzcAjjwDXXw+sWsWdDvv7ge3bgW+/BdatA6ZPj2+z
+dy9PAHDoEM+bm+P9mBsbgfJygcrm3jlIjkxdmA4eJKqtJZo4kfvClZcTzZtHtH17
+4rrPPZe8z5o59fbaj+sEXwv2Q1xf7oP9hAoWRgULo4KFUcHCqGBhVLAwKlgYFSyM
+ChZGBQujgoVRwcKoYGFEBH/8MbB8Od8EDwSAhgaJKP5ARHBnJ//CvaYmMfOJV5w+
+zT/xHRrKT3wTEcEbNvCDxzffFHoMk4aODk6ncOGFnN9i/Hjg6aetOS28xPWsU4Bs
+2q50vPQS8MAD8WdvAPDHH8DGjfyg1IvuqqNxPetUvvj8c37QCXBuobMZHuYsLfmo
+p+tZp/LFq6/y0+ZU+9yhIeDAAeDwYW+zaYtlnbJLuqxT3d08t5NrraMj8wGtqCje
+MNJhxjPjJ8N2GhwnT0iPH+enrW1t1vJjxxIznphMmUJUX5/6M6PRKAFIMU1Ps8yL
+KXV8u7iedcop6bJOdXcDjz9ubxSCcBjo6cmcVmHDBj5+pMMchWDrVmDWrPTrZsT2
+v+J/brqJaO5ca9m6ddm34HQ46Z/Q2pq+Y0kgwB1U/v3X3biZcHyQe+YZTl27ciUf
+lQ8dAt57z7rOL78AX33Fr2Mxzmdppv6qrc2xRaRg+XLgrbeAri5gZMS6LBDgqaWF
+v4Geks1/JVPWqUgkdUtygtOWFIsRPfEE0Zgx1pjXXEPU2SkXNx2udJ06eTL1LiIX
+sv1DT53i/mmRCNG+fUQjI97ETYYve1dmoqICWLo037Vg9HalMJp1ShhtwcKoYGFU
+sDAqWBgVLIwKFkYFC6OChVHBwqhgYVSwMCpYGBUsjAoWRgULo4KFUcHCqGBhVLAw
+KlgYFSyMChZGBQujgoVRwcKoYGFUsDAqWBgVLIwKFkYFC6OChVHBwqhgYVSwMCpY
+GBUsjAoWRgUL47rg4WFO2FFTw+kPKiqA228HPvnE7Uj+wHXBg4PAiy9ynoVIhEdr
+ufxy4J57ON+PNOvXAzfeCFx0ETBhArBoEfD99/JxU+H6b5XLyoDeXm65JvPnAz/8
+ALzyCvDgg25HtNLVBdTXs+ShIU6/MH8+pxm74ALZ2MlwPa1XcbFVLsDLZs1KHHdI
+gt27eTTamTOBqir+FvX1ca6hfOBJWq+REWD//sxpYST480+ejxvnfWzAo7Rer73G
++8HXX8+2mtlBBDz5JHDbbcB113kb20Q8rVdXF6c2fOopPpsYTbq0XoZRBiD7Zt/Q
+AHzzDbBvX3bbG4YBIPmogAWR1uvIER4ha+nS1FlH0qf1mp115pGGBqIrriD66Sfn
+25oZTzh+gab1OnqUdx/V1cA776QeXzNdWi/DKEM47KSGrKWxkY8Pn32W26iIbW3v
+IhRKMa6lTRwJLi5mYe3twNq18XIzo5TJiRN8anTJJcDOnUBpaerPDAaD9r9uNqiv
+5yxYu3bxufCJE1xeXu58jM9QKJRzGkbX03oNDgILFnAr37gxcdzNW27JrcKZ2LyZ
+5/PmWcsjET598xrHghcuBLZsAV54ga/Sbr4Z2LYNuPVWXt7fDxw5wq8XLUrcXjr1
+TKGltsnqSm7NGp5MBgbir6dOLbw/Mp/o3TRhVLAwmtZLGG3BwqhgYVSwMCpYGBUs
+jC/S29oZhaBQ4xW04MpKfizl9I6aGwSDHD9XAkSFfQbb12e9FPeKykpg8uTcP6fg
+BfsdPcgJo4KFUcHCqGBhVLAwKlgYFSyMChZGBQujgoVRwcKoYGFUsDAqWBgVLIwK
+FkYFC6OChVHBwvwHY87yO3yI6WIAAAAASUVORK5CYII=" alt="png" /></p>
 <h3><a id="parameterized-custom-gates" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parameterized Custom Gates</h3>
 <p>A parameterized gate can be defined as a function that returns a unitary matrix.</p>
 <p>For example, suppose that we wish to create the following custom parameterized phase gate.</p>
@@ -1426,7 +1508,7 @@ hVHBwqhgYVSwMCpYGBUsjAoWRgUL8z9TqGmHrRLmFgAAAABJRU5ErkJggg==" alt="png" /></p>
 <pre><code class="language-python">def rk(k: int):
     return gates.P(2 * pi / 2 ** k)
 </code></pre>
-<p>If we call this function with the argument 3 it returns a unitary matrix:</p>
+<p>If, for example, we call this function with the argument 3 it returns a unitary matrix:</p>
 <pre><code class="language-python">rk(3)
 </code></pre>
 <pre><code class="language-plain_text">array([[1.        +0.j        , 0.        +0.j        ],
@@ -3049,7 +3131,5 @@ GWkRzIhgZkQwMyKYGRHMjAhmRgQzI4KZEcHMiGBmRDAzIpgZEcyMCGbmF6kuxcrv
 ONkKAAAAAElFTkSuQmCC" alt="png" /></p>
 <pre><code class="language-plain_text">API:
    barrier()
-</code></pre>
-<pre><code class="language-python">
 </code></pre>
 </div></body></html>
