@@ -4,6 +4,8 @@
 
 - Minor corrections and updates to documentation.
 
+---
+
 ## Release Notes (12 February 2025)
 
 ### Changes to QCircuit Class
