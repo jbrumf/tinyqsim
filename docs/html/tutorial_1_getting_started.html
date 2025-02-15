@@ -1,811 +1,1010 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>tutorial_1_getting_started</title><style>html{font-size:16.000000px;}</style><style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
-
-html,body{background-color: #feffff;}
-
-.markdown-body {
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  line-height: 1.5;
-  color: #333333;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
-  font-size: 1rem;
-  word-wrap: break-word;
-}
-
-.markdown-body .octicon {
-  display: inline-block;
-  fill: currentColor;
-  vertical-align: text-bottom;
-}
-
-.markdown-body figure{margin:0;padding:0; display:table;}
-.markdown-body figure figcaption{font-size:92%; text-align:center; color:#09844f;}
-
-.markdown-body .anchor {
-  float: left;
-  line-height: 1;
-  margin-left: -1.25rem;
-  padding-right: 0.25rem;
-}
-
-.markdown-body .anchor:focus {
-  outline: none;
-}
-
-.markdown-body h1 .octicon-link,
-.markdown-body h2 .octicon-link,
-.markdown-body h3 .octicon-link,
-.markdown-body h4 .octicon-link,
-.markdown-body h5 .octicon-link,
-.markdown-body h6 .octicon-link {
-  color: #0595bf;
-  vertical-align: middle;
-  visibility: hidden;
-}
-
-.markdown-body h1:hover .anchor,
-.markdown-body h2:hover .anchor,
-.markdown-body h3:hover .anchor,
-.markdown-body h4:hover .anchor,
-.markdown-body h5:hover .anchor,
-.markdown-body h6:hover .anchor {
-  text-decoration: none;
-}
-
-.markdown-body details {
-  display: block;
-}
-
-.markdown-body summary {
-  display: list-item;
-}
-
-.markdown-body a {
-  background-color: initial;
-}
-
-.markdown-body a:active,
-.markdown-body a:hover {
-  outline-width: 0;
-}
-
-.markdown-body strong {
-  font-weight: inherit;
-  font-weight: bolder;
-}
-.markdown-body strong{
-  color: #333333;
-}
-.markdown-body em{
-  color: #333333;
-}
-
-.markdown-body img {
-  border-style: none;
-}
-
-.markdown-body code,
-.markdown-body kbd,
-.markdown-body pre {
-  font-family: monospace,monospace;
-  font-size: 0.9rem;
-}
-
-.markdown-body hr {
-  box-sizing: initial;
-  height: 0;
-  overflow: visible;
-}
-
-.markdown-body input {
-  font: inherit;
-  margin: 0;
-}
-
-.markdown-body input {
-  overflow: visible;
-}
-
-.markdown-body [type=checkbox] {
-  box-sizing: border-box;
-  padding: 0;
-}
-
-.markdown-body * {
-  box-sizing: border-box;
-}
-
-.markdown-body input {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-}
-
-.markdown-body a {
-  color: #0366dd;
-  text-decoration: none;
-}
-.markdown-body mjx-container[jax="SVG"] > svg a{fill:#0366dd;stroke: #0366dd;}
-
-.markdown-body a:hover {
-  text-decoration: underline;
-}
-
-.markdown-body strong {
-  font-weight: 600;
-}
-
-.markdown-body hr:after,
-.markdown-body hr:before {
-  display: table;
-  content: "";
-}
-
-.markdown-body hr:after {
-  clear: both;
-}
-
-.markdown-body table {
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-
-.markdown-body td,
-.markdown-body th {
-  padding: 0;
-}
-
-.markdown-body details summary {
-  cursor: pointer;
-}
-
-.markdown-body kbd {
-  display: inline-block;
-  padding: 0.1875rem 0.3125rem;
-  font: 0.75rem SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-  line-height: 0.75rem;
-  color: #09844f;
-  vertical-align: middle;
-  background-color: #f7f8f8;
-  border: 1px solid #e1e2e2;
-  border-radius: 0.1875rem;
-}
-
-.markdown-body p {
-  margin-top: 0;
-  margin-bottom: 0.625rem;
-}
-
-.markdown-body blockquote {
-  margin: 0;
-}
-
-.markdown-body ol,
-.markdown-body ul {
-  padding-left: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body ol ol,
-.markdown-body ul ol {
-  list-style-type: lower-roman;
-}
-
-.markdown-body ol ol ol,
-.markdown-body ol ul ol,
-.markdown-body ul ol ol,
-.markdown-body ul ul ol {
-  list-style-type: lower-alpha;
-}
-
-.markdown-body dd {
-  margin-left: 0;
-}
-
-.markdown-body code,
-.markdown-body pre {
-  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-  font-size: 0.75rem;
-}
-
-.markdown-body pre {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body input::-webkit-inner-spin-button,
-.markdown-body input::-webkit-outer-spin-button {
-  margin: 0;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.markdown-body:after,
-.markdown-body:before {
-  display: table;
-  content: "";
-}
-
-.markdown-body:after {
-  clear: both;
-}
-
-.markdown-body>:first-child {
-  margin-top: 0!important;
-}
-
-.markdown-body>:last-child {
-  margin-bottom: 0!important;
-}
-
-.markdown-body a:not([href]) {
-  color: inherit;
-  text-decoration: none;
-}
-
-.markdown-body blockquote,
-.markdown-body details,
-.markdown-body dl,
-.markdown-body ol,
-.markdown-body p,
-.markdown-body pre,
-.markdown-body table,
-.markdown-body ul {
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-.markdown-body hr {
-  height: .25rem;
-  padding: 0;
-  margin: 1.5rem 0;
-  background-color: #e1e2e2;
-  border: 0;
-}
-
-.markdown-body blockquote {
-  padding: 0 1rem;
-  color: #636363;
-  border-left: .25rem solid #bbbbbb;
-}
-
-.markdown-body blockquote>:first-child {
-  margin-top: 0;
-}
-
-.markdown-body blockquote>:last-child {
-  margin-bottom: 0;
-}
-
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  line-height: 1.25;
-}
-
-.markdown-body h1 {
-  font-size: 2em;
-}
-
-.markdown-body h1,
-.markdown-body h2 {
-  padding-bottom: .3rem;
-  border-bottom: 1px solid #e7e8e8;
-  color: #0595bf;
-}
-
-.markdown-body h2 {
-  font-size: 1.5rem;
-  color: #0595bf;
-}
-
-.markdown-body h3 {
-  font-size: 1.25rem;
-  color: #0595bf;
-}
-
-.markdown-body h4 {
-  font-size: 1rem;
-  color: #0595bf;
-}
-
-.markdown-body h5 {
-  font-size: .875rem;
-  color: #0595bf;
-}
-
-.markdown-body h6 {
-  font-size: .85rem;
-  color: #0595bf;
-}
-
-.markdown-body ol,
-.markdown-body ul {
-  padding-left: 2rem;
-}
-
-.markdown-body ol ol,
-.markdown-body ol ul,
-.markdown-body ul ol,
-.markdown-body ul ul {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body li {
-  word-wrap: break-all;
-}
-
-.markdown-body li>p {
-  margin-top: 1rem;
-}
-
-.markdown-body li+li {
-  margin-top: .25rem;
-}
-
-.markdown-body dl {
-  padding: 0;
-}
-
-.markdown-body dl dt {
-  padding: 0;
-  margin-top: 1rem;
-  font-size: 1rem;
-  font-style: italic;
-  font-weight: 600;
-}
-
-.markdown-body dl dd {
-  padding: 0 1rem;
-  margin-bottom: 1rem;
-}
-
-.markdown-body table {
-  display: block;
-  width: 100%;
-  overflow: auto;
-}
-
-.markdown-body table th {
-  font-weight: 600;
-}
-
-.markdown-body table td,
-.markdown-body table th {
-  padding: 0.375rem 0.75rem;
-  border: 1px solid #b9baba;
-}
-
-.markdown-body table tr {
-  background-color: #feffff;
-  border-top: 1px solid #b9baba;
-}
-
-.markdown-body table th {
-  background-color: #e7e8e8;
-}
-
-.markdown-body table tr:nth-child(2n) {
-  background-color: #f8f9f9;
-}
-
-.markdown-body img,.markdown-body video {
-  max-width: 100%;
-  box-sizing: initial;
-}
-
-.markdown-body img[align=right] {
-  padding-left: 1.25rem;
-}
-
-.markdown-body img[align=left] {
-  padding-right: 1.25rem;
-}
-
-.markdown-body code {
-  padding: .2rem .4rem;
-  margin: 0;
-  font-size: 85%;
-  background-color: #f7f8f8;
-  color: #09844f;
-  border-radius: 0.1875rem;
-}
-
-.markdown-body pre {
-  word-wrap: normal;
-}
-
-.markdown-body pre>code {
-  padding: 0;
-  margin: 0;
-   font-size: 100%;
-  word-break: normal;
-  white-space: pre;
-  background: transparent;
-  border: 0;
-}
-
-.markdown-body .highlight {
-  margin-bottom: 1rem;
-}
-
-.markdown-body .highlight pre {
-  margin-bottom: 0;
-  word-break: normal;
-}
-
-.markdown-body .highlight pre,
-.markdown-body pre {
-  padding: 1rem;
-  overflow: auto;
-  font-size: 85%;
-  line-height: 1.45;
-  background-color: #f7f8f8;
-  border-radius: 0.1875rem;
-}
-
-.markdown-body pre code {
-  display: inline;
-  max-width: auto;
-  padding: 0;
-  margin: 0;
-  overflow: visible;
-  line-height: inherit;
-  word-wrap: normal;
-  background-color: initial;
-  border: 0;
-  color: #09844f;
-}
-
-.markdown-body .task-list-item {
-  list-style-type: none;
-}
-
-.markdown-body .task-list-item+.task-list-item {
-  margin-top: 0.1875rem;
-}
-
-.markdown-body .task-list-item input {
-  margin: 0 .2rem .25rem -1.6rem;
-  vertical-align: middle;
-}
-
-.markdown-body .task-list-item input[type="checkbox"]{
--webkit-appearance: none;-moz-appearance: none;appearance: none;
-width: 0.875rem; height: 0.875rem;outline: none;
-border: 1px solid #0366dd;border-radius: 2px; 
-}
-.markdown-body .task-list-item input[type="checkbox"]:checked {
-  background:no-repeat center/80% url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Cpath%20fill%3D%22%230366dd%22%20d%3D%22M173.898%20439.404l-166.4-166.4c-9.997-9.997-9.997-26.206%200-36.204l36.203-36.204c9.997-9.998%2026.207-9.998%2036.204%200L192%20312.69%20432.095%2072.596c9.997-9.997%2026.207-9.997%2036.204%200l36.203%2036.204c9.997%209.997%209.997%2026.206%200%2036.204l-294.4%20294.401c-9.998%209.997-26.207%209.997-36.204-.001z%22%2F%3E%3C%2Fsvg%3E") ;
-}
-
-.markdown-body section.footnotes{
-    margin-top:3rem;
-    border-top:solid 1px #e1e2e2;
-    padding-top:0px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .markdown-body mark{color: #111;}
-}
-
-/* PrismJS 1.23.0
-https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript */
-/**
- * prism.js default theme for JavaScript, CSS and HTML
- * Based on dabblet (http://dabblet.com)
- * @author Lea Verou
- */
-
-
-code[class*="language-"],
-pre[class*="language-"] {
-    color: black;
-    background: none;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
-}
-
-@media print {
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>tutorial_1_getting_started</title>
+    <style>html {
+        font-size: 16.000000px;
+    }</style>
+    <style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
+
+    html, body {
+        background-color: #feffff;
+    }
+
+    .markdown-body {
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+        line-height: 1.5;
+        color: #333333;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+        font-size: 1rem;
+        word-wrap: break-word;
+    }
+
+    .markdown-body .octicon {
+        display: inline-block;
+        fill: currentColor;
+        vertical-align: text-bottom;
+    }
+
+    .markdown-body figure {
+        margin: 0;
+        padding: 0;
+        display: table;
+    }
+
+    .markdown-body figure figcaption {
+        font-size: 92%;
+        text-align: center;
+        color: #09844f;
+    }
+
+    .markdown-body .anchor {
+        float: left;
+        line-height: 1;
+        margin-left: -1.25rem;
+        padding-right: 0.25rem;
+    }
+
+    .markdown-body .anchor:focus {
+        outline: none;
+    }
+
+    .markdown-body h1 .octicon-link,
+    .markdown-body h2 .octicon-link,
+    .markdown-body h3 .octicon-link,
+    .markdown-body h4 .octicon-link,
+    .markdown-body h5 .octicon-link,
+    .markdown-body h6 .octicon-link {
+        color: #0595bf;
+        vertical-align: middle;
+        visibility: hidden;
+    }
+
+    .markdown-body h1:hover .anchor,
+    .markdown-body h2:hover .anchor,
+    .markdown-body h3:hover .anchor,
+    .markdown-body h4:hover .anchor,
+    .markdown-body h5:hover .anchor,
+    .markdown-body h6:hover .anchor {
+        text-decoration: none;
+    }
+
+    .markdown-body details {
+        display: block;
+    }
+
+    .markdown-body summary {
+        display: list-item;
+    }
+
+    .markdown-body a {
+        background-color: initial;
+    }
+
+    .markdown-body a:active,
+    .markdown-body a:hover {
+        outline-width: 0;
+    }
+
+    .markdown-body strong {
+        font-weight: inherit;
+        font-weight: bolder;
+    }
+
+    .markdown-body strong {
+        color: #333333;
+    }
+
+    .markdown-body em {
+        color: #333333;
+    }
+
+    .markdown-body img {
+        border-style: none;
+    }
+
+    .markdown-body code,
+    .markdown-body kbd,
+    .markdown-body pre {
+        font-family: monospace, monospace;
+        font-size: 0.9rem;
+    }
+
+    .markdown-body hr {
+        box-sizing: initial;
+        height: 0;
+        overflow: visible;
+    }
+
+    .markdown-body input {
+        font: inherit;
+        margin: 0;
+    }
+
+    .markdown-body input {
+        overflow: visible;
+    }
+
+    .markdown-body [type=checkbox] {
+        box-sizing: border-box;
+        padding: 0;
+    }
+
+    .markdown-body * {
+        box-sizing: border-box;
+    }
+
+    .markdown-body input {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    .markdown-body a {
+        color: #0366dd;
+        text-decoration: none;
+    }
+
+    .markdown-body mjx-container[jax="SVG"] > svg a {
+        fill: #0366dd;
+        stroke: #0366dd;
+    }
+
+    .markdown-body a:hover {
+        text-decoration: underline;
+    }
+
+    .markdown-body strong {
+        font-weight: 600;
+    }
+
+    .markdown-body hr:after,
+    .markdown-body hr:before {
+        display: table;
+        content: "";
+    }
+
+    .markdown-body hr:after {
+        clear: both;
+    }
+
+    .markdown-body table {
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+
+    .markdown-body td,
+    .markdown-body th {
+        padding: 0;
+    }
+
+    .markdown-body details summary {
+        cursor: pointer;
+    }
+
+    .markdown-body kbd {
+        display: inline-block;
+        padding: 0.1875rem 0.3125rem;
+        font: 0.75rem SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+        line-height: 0.75rem;
+        color: #09844f;
+        vertical-align: middle;
+        background-color: #f7f8f8;
+        border: 1px solid #e1e2e2;
+        border-radius: 0.1875rem;
+    }
+
+    .markdown-body p {
+        margin-top: 0;
+        margin-bottom: 0.625rem;
+    }
+
+    .markdown-body blockquote {
+        margin: 0;
+    }
+
+    .markdown-body ol,
+    .markdown-body ul {
+        padding-left: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .markdown-body ol ol,
+    .markdown-body ul ol {
+        list-style-type: lower-roman;
+    }
+
+    .markdown-body ol ol ol,
+    .markdown-body ol ul ol,
+    .markdown-body ul ol ol,
+    .markdown-body ul ul ol {
+        list-style-type: lower-alpha;
+    }
+
+    .markdown-body dd {
+        margin-left: 0;
+    }
+
+    .markdown-body code,
+    .markdown-body pre {
+        font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+        font-size: 0.75rem;
+    }
+
+    .markdown-body pre {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .markdown-body input::-webkit-inner-spin-button,
+    .markdown-body input::-webkit-outer-spin-button {
+        margin: 0;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    .markdown-body:after,
+    .markdown-body:before {
+        display: table;
+        content: "";
+    }
+
+    .markdown-body:after {
+        clear: both;
+    }
+
+    .markdown-body > :first-child {
+        margin-top: 0 !important;
+    }
+
+    .markdown-body > :last-child {
+        margin-bottom: 0 !important;
+    }
+
+    .markdown-body a:not([href]) {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .markdown-body blockquote,
+    .markdown-body details,
+    .markdown-body dl,
+    .markdown-body ol,
+    .markdown-body p,
+    .markdown-body pre,
+    .markdown-body table,
+    .markdown-body ul {
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+
+    .markdown-body hr {
+        height: .25rem;
+        padding: 0;
+        margin: 1.5rem 0;
+        background-color: #e1e2e2;
+        border: 0;
+    }
+
+    .markdown-body blockquote {
+        padding: 0 1rem;
+        color: #636363;
+        border-left: .25rem solid #bbbbbb;
+    }
+
+    .markdown-body blockquote > :first-child {
+        margin-top: 0;
+    }
+
+    .markdown-body blockquote > :last-child {
+        margin-bottom: 0;
+    }
+
+    .markdown-body h1,
+    .markdown-body h2,
+    .markdown-body h3,
+    .markdown-body h4,
+    .markdown-body h5,
+    .markdown-body h6 {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        line-height: 1.25;
+    }
+
+    .markdown-body h1 {
+        font-size: 2em;
+    }
+
+    .markdown-body h1,
+    .markdown-body h2 {
+        padding-bottom: .3rem;
+        border-bottom: 1px solid #e7e8e8;
+        color: #0595bf;
+    }
+
+    .markdown-body h2 {
+        font-size: 1.5rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h3 {
+        font-size: 1.25rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h4 {
+        font-size: 1rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h5 {
+        font-size: .875rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h6 {
+        font-size: .85rem;
+        color: #0595bf;
+    }
+
+    .markdown-body ol,
+    .markdown-body ul {
+        padding-left: 2rem;
+    }
+
+    .markdown-body ol ol,
+    .markdown-body ol ul,
+    .markdown-body ul ol,
+    .markdown-body ul ul {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .markdown-body li {
+        word-wrap: break-all;
+    }
+
+    .markdown-body li > p {
+        margin-top: 1rem;
+    }
+
+    .markdown-body li + li {
+        margin-top: .25rem;
+    }
+
+    .markdown-body dl {
+        padding: 0;
+    }
+
+    .markdown-body dl dt {
+        padding: 0;
+        margin-top: 1rem;
+        font-size: 1rem;
+        font-style: italic;
+        font-weight: 600;
+    }
+
+    .markdown-body dl dd {
+        padding: 0 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .markdown-body table {
+        display: block;
+        width: 100%;
+        overflow: auto;
+    }
+
+    .markdown-body table th {
+        font-weight: 600;
+    }
+
+    .markdown-body table td,
+    .markdown-body table th {
+        padding: 0.375rem 0.75rem;
+        border: 1px solid #b9baba;
+    }
+
+    .markdown-body table tr {
+        background-color: #feffff;
+        border-top: 1px solid #b9baba;
+    }
+
+    .markdown-body table th {
+        background-color: #e7e8e8;
+    }
+
+    .markdown-body table tr:nth-child(2n) {
+        background-color: #f8f9f9;
+    }
+
+    .markdown-body img, .markdown-body video {
+        max-width: 100%;
+        box-sizing: initial;
+    }
+
+    .markdown-body img[align=right] {
+        padding-left: 1.25rem;
+    }
+
+    .markdown-body img[align=left] {
+        padding-right: 1.25rem;
+    }
+
+    .markdown-body code {
+        padding: .2rem .4rem;
+        margin: 0;
+        font-size: 85%;
+        background-color: #f7f8f8;
+        color: #09844f;
+        border-radius: 0.1875rem;
+    }
+
+    .markdown-body pre {
+        word-wrap: normal;
+    }
+
+    .markdown-body pre > code {
+        padding: 0;
+        margin: 0;
+        font-size: 100%;
+        word-break: normal;
+        white-space: pre;
+        background: transparent;
+        border: 0;
+    }
+
+    .markdown-body .highlight {
+        margin-bottom: 1rem;
+    }
+
+    .markdown-body .highlight pre {
+        margin-bottom: 0;
+        word-break: normal;
+    }
+
+    .markdown-body .highlight pre,
+    .markdown-body pre {
+        padding: 1rem;
+        overflow: auto;
+        font-size: 85%;
+        line-height: 1.45;
+        background-color: #f7f8f8;
+        border-radius: 0.1875rem;
+    }
+
+    .markdown-body pre code {
+        display: inline;
+        max-width: auto;
+        padding: 0;
+        margin: 0;
+        overflow: visible;
+        line-height: inherit;
+        word-wrap: normal;
+        background-color: initial;
+        border: 0;
+        color: #09844f;
+    }
+
+    .markdown-body .task-list-item {
+        list-style-type: none;
+    }
+
+    .markdown-body .task-list-item + .task-list-item {
+        margin-top: 0.1875rem;
+    }
+
+    .markdown-body .task-list-item input {
+        margin: 0 .2rem .25rem -1.6rem;
+        vertical-align: middle;
+    }
+
+    .markdown-body .task-list-item input[type="checkbox"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 0.875rem;
+        height: 0.875rem;
+        outline: none;
+        border: 1px solid #0366dd;
+        border-radius: 2px;
+    }
+
+    .markdown-body .task-list-item input[type="checkbox"]:checked {
+        background: no-repeat center/80% url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Cpath%20fill%3D%22%230366dd%22%20d%3D%22M173.898%20439.404l-166.4-166.4c-9.997-9.997-9.997-26.206%200-36.204l36.203-36.204c9.997-9.998%2026.207-9.998%2036.204%200L192%20312.69%20432.095%2072.596c9.997-9.997%2026.207-9.997%2036.204%200l36.203%2036.204c9.997%209.997%209.997%2026.206%200%2036.204l-294.4%20294.401c-9.998%209.997-26.207%209.997-36.204-.001z%22%2F%3E%3C%2Fsvg%3E");
+    }
+
+    .markdown-body section.footnotes {
+        margin-top: 3rem;
+        border-top: solid 1px #e1e2e2;
+        padding-top: 0px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .markdown-body mark {
+            color: #111;
+        }
+    }
+
+    /* PrismJS 1.23.0
+    https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript */
+    /**
+     * prism.js default theme for JavaScript, CSS and HTML
+     * Based on dabblet (http://dabblet.com)
+     * @author Lea Verou
+     */
+
+
     code[class*="language-"],
     pre[class*="language-"] {
-        text-shadow: none;
+        color: black;
+        background: none;
+        font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+        text-align: left;
+        white-space: pre;
+        word-spacing: normal;
+        word-break: normal;
+        word-wrap: normal;
+        -moz-tab-size: 4;
+        -o-tab-size: 4;
+        tab-size: 4;
+
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
     }
-}
 
-/* Code blocks */
-pre[class*="language-"] {
-    padding: 1rem;
-    margin: .5rem 0;
-    overflow: auto;
-}
+    @media print {
+        code[class*="language-"],
+        pre[class*="language-"] {
+            text-shadow: none;
+        }
+    }
 
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-    background-color: #f7f8f8;
-}
+    /* Code blocks */
+    pre[class*="language-"] {
+        padding: 1rem;
+        margin: .5rem 0;
+        overflow: auto;
+    }
 
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-    padding: .1rem;
-    border-radius: .3rem;
-    white-space: normal;
-}
+    :not(pre) > code[class*="language-"],
+    pre[class*="language-"] {
+        background-color: #f7f8f8;
+    }
 
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-    color: #8e9c92;
-}
+    /* Inline code */
+    :not(pre) > code[class*="language-"] {
+        padding: .1rem;
+        border-radius: .3rem;
+        white-space: normal;
+    }
 
-.token.punctuation {
-    color: #2834ce;
-}
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+        color: #8e9c92;
+    }
 
-.token.namespace {
-    opacity: .7;
-}
+    .token.punctuation {
+        color: #2834ce;
+    }
 
-.token.property,
-.token.tag,
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol,
-.token.deleted {
-    color: #2834ce;
-}
+    .token.namespace {
+        opacity: .7;
+    }
 
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
-    color: #d32d26;
-}
+    .token.property,
+    .token.tag,
+    .token.boolean,
+    .token.number,
+    .token.constant,
+    .token.symbol,
+    .token.deleted {
+        color: #2834ce;
+    }
 
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
-    color: #$$codeBlockColor$$;
-}
+    .token.selector,
+    .token.attr-name,
+    .token.string,
+    .token.char,
+    .token.builtin,
+    .token.inserted {
+        color: #d32d26;
+    }
 
-.token.atrule,
-.token.attr-value,
-.token.keyword {
-    color: #bc319c;
-}
+    .token.operator,
+    .token.entity,
+    .token.url,
+    .language-css .token.string,
+    .style .token.string {
+        color: # $ $ codeBlockColor $ $;
+    }
 
-.token.function,
-.token.class-name {
-    color: #967d41;
-}
+    .token.atrule,
+    .token.attr-value,
+    .token.keyword {
+        color: #bc319c;
+    }
 
-.token.regex,
-.token.important,
-.token.variable {
-    color: #784830;
-}
+    .token.function,
+    .token.class-name {
+        color: #967d41;
+    }
 
-.token.important,
-.token.bold {
-    font-weight: bold;
-}
-.token.italic {
-    font-style: italic;
-}
+    .token.regex,
+    .token.important,
+    .token.variable {
+        color: #784830;
+    }
 
-.token.entity {
-    cursor: help;
-}
+    .token.important,
+    .token.bold {
+        font-weight: bold;
+    }
+
+    .token.italic {
+        font-style: italic;
+    }
+
+    .token.entity {
+        cursor: help;
+    }
 
 
-pre[class*="language-"].line-numbers {
-  position: relative;
-  padding-left: 3.8rem;
-  counter-reset: linenumber;
-}
+    pre[class*="language-"].line-numbers {
+        position: relative;
+        padding-left: 3.8rem;
+        counter-reset: linenumber;
+    }
 
-pre[class*="language-"].line-numbers > code {
-  position: relative;
-  white-space: inherit;
-}
+    pre[class*="language-"].line-numbers > code {
+        position: relative;
+        white-space: inherit;
+    }
 
-.line-numbers .line-numbers-rows {
-  position: absolute;
-  pointer-events: none;
-  top: 0;
-  font-size: 100%;
-  left: -3.8rem;
-  width: 3rem; /* works for line-numbers below 1000 lines */
-  letter-spacing: -1px;
-  border-right: 1px solid #bfc0c0;
+    .line-numbers .line-numbers-rows {
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        font-size: 100%;
+        left: -3.8rem;
+        width: 3rem; /* works for line-numbers below 1000 lines */
+        letter-spacing: -1px;
+        border-right: 1px solid #bfc0c0;
 
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
 
-}
+    }
 
-  .line-numbers-rows > span {
-    display: block;
-    counter-increment: linenumber;
-  }
+    .line-numbers-rows > span {
+        display: block;
+        counter-increment: linenumber;
+    }
 
     .line-numbers-rows > span:before {
-      content: counter(linenumber);
-      color: #bfc0c0;
-      display: block;
-      padding-right: 0.8rem;
-      text-align: right;
+        content: counter(linenumber);
+        color: #bfc0c0;
+        display: block;
+        padding-right: 0.8rem;
+        text-align: right;
     }
 
 
-</style><script>(n=>{"use strict";let s,r,e;const l=["cdn.jsdelivr.net","fastly.jsdelivr.net","gcore.jsdelivr.net","cdn.zenless.top","testingcf.jsdelivr.net"],t="//",i=l[0],o=Date.now(),a=2e3,c="jsdelivr-auto-fallback",f="/gh/PipecraftNet/jsdelivr-auto-fallback@main/empty.css?",d=e=>e&&e.includes(t+i),m=e=>e.replace(t+i,t+s),u=window.setTimeout,v=n.querySelectorAll.bind(n),b=()=>{let e,t;for(e of v('link[rel="stylesheet"]'))t=e.href,d(t)&&!t.includes(f)&&(e.href=m(t));for(e of v("script"))if(t=e.src,d(t)){const s=n.createElement("script");s.src=m(t),e.defer=!0,e.src="",e.before(s),e.remove()}for(e of v("img"))t=e.src,d(t)&&(e.src="",e.src=m(t));for(e of v("*[style]"))t=e.getAttribute("style"),d(t)&&e.setAttribute("style",m(t));for(e of v("style"))t=e.innerHTML,d(t)&&(e.innerHTML=m(t))},h=()=>{!e&&r&&s&&(console.warn(i+" is not available. Use "+s),e=!0,u(b,0),u(b,20),setInterval(b,500))},g=(()=>{try{return Object.assign({},JSON.parse(localStorage.getItem(c)||"{}"))}catch{return{}}})(),y=()=>{g.time=o,g.failed=!1,g.fastNode=null;for(const t of l)((e,t)=>{let s;const r=n.createElement("link"),l=e=>{s&&(clearTimeout(s),s=0,e||(r.href="data:text/css;base64,"),r.remove(),t(e))};s=u(l,a),r.addEventListener("error",()=>l(!1)),r.addEventListener("load",()=>l(!0)),r.rel="stylesheet",r.text="text/css",r.href=e+f+o,n.head.insertAdjacentElement("afterbegin",r)})("https://"+t,e=>{e||t!==i||(r=!0,g.failed=!0),e&&!s&&(s=t),e&&!g.fastNode&&(g.fastNode=t),h()});u(()=>{r&&!s&&(s=l[1],h()),localStorage.setItem(c,JSON.stringify(g))},a+100)};if(g.time&&o-g.time<36e5&&g.failed&&g.fastNode)r=!0,s=g.fastNode,h(),u(y,1e3);else if(n.head)y();else{const j=new MutationObserver(()=>{n.head&&(j.disconnect(),y())});j.observe(n,{childList:!0,subtree:!0})}})(document);</script>
-<style>.mweb-charts{background:#fff;}
-body{ box-sizing: border-box;
-    margin: 0 auto;}
-@media print{
-    pre, code, pre code {
-     overflow: visible !important;
-     white-space: pre-wrap !important;       /* css-3 */
-     white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
-     white-space: -pre-wrap !important;      /* Opera 4-6 */
-     white-space: -o-pre-wrap !important;    /* Opera 7 */
-     word-wrap: break-word !important;       /* Internet Explorer 5.5+ */
+    </style>
+    <script>(n => {
+        "use strict";
+        let s, r, e;
+        const l = ["cdn.jsdelivr.net", "fastly.jsdelivr.net", "gcore.jsdelivr.net", "cdn.zenless.top", "testingcf.jsdelivr.net"],
+            t = "//", i = l[0], o = Date.now(), a = 2e3, c = "jsdelivr-auto-fallback",
+            f = "/gh/PipecraftNet/jsdelivr-auto-fallback@main/empty.css?", d = e => e && e.includes(t + i),
+            m = e => e.replace(t + i, t + s), u = window.setTimeout, v = n.querySelectorAll.bind(n), b = () => {
+                let e, t;
+                for (e of v('link[rel="stylesheet"]')) t = e.href, d(t) && !t.includes(f) && (e.href = m(t));
+                for (e of v("script")) if (t = e.src, d(t)) {
+                    const s = n.createElement("script");
+                    s.src = m(t), e.defer = !0, e.src = "", e.before(s), e.remove()
+                }
+                for (e of v("img")) t = e.src, d(t) && (e.src = "", e.src = m(t));
+                for (e of v("*[style]")) t = e.getAttribute("style"), d(t) && e.setAttribute("style", m(t));
+                for (e of v("style")) t = e.innerHTML, d(t) && (e.innerHTML = m(t))
+            }, h = () => {
+                !e && r && s && (console.warn(i + " is not available. Use " + s), e = !0, u(b, 0), u(b, 20), setInterval(b, 500))
+            }, g = (() => {
+                try {
+                    return Object.assign({}, JSON.parse(localStorage.getItem(c) || "{}"))
+                } catch {
+                    return {}
+                }
+            })(), y = () => {
+                g.time = o, g.failed = !1, g.fastNode = null;
+                for (const t of l) ((e, t) => {
+                    let s;
+                    const r = n.createElement("link"), l = e => {
+                        s && (clearTimeout(s), s = 0, e || (r.href = "data:text/css;base64,"), r.remove(), t(e))
+                    };
+                    s = u(l, a), r.addEventListener("error", () => l(!1)), r.addEventListener("load", () => l(!0)), r.rel = "stylesheet", r.text = "text/css", r.href = e + f + o, n.head.insertAdjacentElement("afterbegin", r)
+                })("https://" + t, e => {
+                    e || t !== i || (r = !0, g.failed = !0), e && !s && (s = t), e && !g.fastNode && (g.fastNode = t), h()
+                });
+                u(() => {
+                    r && !s && (s = l[1], h()), localStorage.setItem(c, JSON.stringify(g))
+                }, a + 100)
+            };
+        if (g.time && o - g.time < 36e5 && g.failed && g.fastNode) r = !0, s = g.fastNode, h(), u(y, 1e3); else if (n.head) y(); else {
+            const j = new MutationObserver(() => {
+                n.head && (j.disconnect(), y())
+            });
+            j.observe(n, {childList: !0, subtree: !0})
+        }
+    })(document);</script>
+    <style>.mweb-charts {
+        background: #fff;
     }
-    html,body{margin:0;padding:4px;}
-}
+
+    body {
+        box-sizing: border-box;
+        margin: 0 auto;
+    }
+
+    @media print {
+        pre, code, pre code {
+            overflow: visible !important;
+            white-space: pre-wrap !important; /* css-3 */
+            white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+            white-space: -pre-wrap !important; /* Opera 4-6 */
+            white-space: -o-pre-wrap !important; /* Opera 7 */
+            word-wrap: break-word !important; /* Internet Explorer 5.5+ */
+        }
+
+        html, body {
+            margin: 0;
+            padding: 4px;
+        }
+    }
 
 
+    div.code-toolbar {
+        position: relative;
+    }
 
-div.code-toolbar {
-  position: relative;
-}
+    div.code-toolbar > .toolbar {
+        position: absolute;
+        z-index: 10;
+        top: .3em;
+        right: .2em;
+        transition: opacity 0.3s ease-in-out;
+        opacity: 0;
+    }
 
-div.code-toolbar > .toolbar {
-  position: absolute;
-  z-index: 10;
-  top: .3em;
-  right: .2em;
-  transition: opacity 0.3s ease-in-out;
-  opacity: 0;
-}
+    div.code-toolbar:hover > .toolbar {
+        opacity: 1;
+    }
 
-div.code-toolbar:hover > .toolbar {
-  opacity: 1;
-}
+    /* Separate line b/c rules are thrown out if selector is invalid.
+       IE11 and old Edge versions don't support :focus-within. */
+    div.code-toolbar:focus-within > .toolbar {
+        opacity: 1;
+    }
 
-/* Separate line b/c rules are thrown out if selector is invalid.
-   IE11 and old Edge versions don't support :focus-within. */
-div.code-toolbar:focus-within > .toolbar {
-  opacity: 1;
-}
+    div.code-toolbar > .toolbar > .toolbar-item {
+        display: inline-block;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item {
-  display: inline-block;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > a {
+        cursor: pointer;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item > a {
-  cursor: pointer;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > button {
+        background: none;
+        border: 0;
+        color: inherit;
+        font: inherit;
+        line-height: normal;
+        overflow: visible;
+        padding: 0;
+        -webkit-user-select: none; /* for button */
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item > button {
-  background: none;
-  border: 0;
-  color: inherit;
-  font: inherit;
-  line-height: normal;
-  overflow: visible;
-  padding: 0;
-  -webkit-user-select: none; /* for button */
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > a,
+    div.code-toolbar > .toolbar > .toolbar-item > button,
+    div.code-toolbar > .toolbar > .toolbar-item > span {
+        color: inherit;
+        font-size: .8em;
+        padding: 4px .5em;
+        background: #f5f2f0;
+        background: rgba(224, 224, 224, 0.4);
+        box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2);
+        border-radius: .5em;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item > a,
-div.code-toolbar > .toolbar > .toolbar-item > button,
-div.code-toolbar > .toolbar > .toolbar-item > span {
-  color: inherit;
-  font-size: .8em;
-  padding: 4px .5em;
-  background: #f5f2f0;
-  background: rgba(224, 224, 224, 0.4);
-  box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
-  border-radius: .5em;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > a:hover,
+    div.code-toolbar > .toolbar > .toolbar-item > a:focus,
+    div.code-toolbar > .toolbar > .toolbar-item > button:hover,
+    div.code-toolbar > .toolbar > .toolbar-item > button:focus,
+    div.code-toolbar > .toolbar > .toolbar-item > span:hover,
+    div.code-toolbar > .toolbar > .toolbar-item > span:focus {
+        color: inherit;
+        text-decoration: none;
+    }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script>!function () {
+        if ("undefined" != typeof Prism && "undefined" != typeof document) {
+            var e = [], t = {}, n = function () {
+            };
+            Prism.plugins.toolbar = {};
+            var a = Prism.plugins.toolbar.registerButton = function (n, a) {
+                var r;
+                r = "function" == typeof a ? a : function (e) {
+                    var t;
+                    return "function" == typeof a.onClick ? ((t = document.createElement("button")).type = "button", t.addEventListener("click", (function () {
+                        a.onClick.call(this, e)
+                    }))) : "string" == typeof a.url ? (t = document.createElement("a")).href = a.url : t = document.createElement("span"), a.className && t.classList.add(a.className), t.textContent = a.text, t
+                }, n in t ? console.warn('There is a button with the key "' + n + '" registered already.') : e.push(t[n] = r)
+            }, r = Prism.plugins.toolbar.hook = function (a) {
+                var r = a.element.parentNode;
+                var l = a.element.classList;
+                if (l.contains('language-mermaid') || l.contains('language-echarts') || l.contains('language-plantuml')) {
+                    return;
+                }
+                if (r && /pre/i.test(r.nodeName) && !r.parentNode.classList.contains("code-toolbar")) {
+                    var o = document.createElement("div");
+                    o.classList.add("code-toolbar"), r.parentNode.insertBefore(o, r), o.appendChild(r);
+                    var i = document.createElement("div");
+                    i.classList.add("toolbar");
+                    var l = e, d = function (e) {
+                        for (; e;) {
+                            var t = e.getAttribute("data-toolbar-order");
+                            if (null != t) return (t = t.trim()).length ? t.split(/\s*,\s*/g) : [];
+                            e = e.parentElement
+                        }
+                    }(a.element);
+                    d && (l = d.map((function (e) {
+                        return t[e] || n
+                    }))), l.forEach((function (e) {
+                        var t = e(a);
+                        if (t) {
+                            var n = document.createElement("div");
+                            n.classList.add("toolbar-item"), n.appendChild(t), i.appendChild(n)
+                        }
+                    })), o.appendChild(i)
+                }
+            };
+            a("label", (function (e) {
+                var t = e.element.parentNode;
+                if (t && /pre/i.test(t.nodeName) && t.hasAttribute("data-label")) {
+                    var n, a, r = t.getAttribute("data-label");
+                    try {
+                        a = document.querySelector("template#" + r)
+                    } catch (e) {
+                    }
+                    return a ? n = a.content : (t.hasAttribute("data-url") ? (n = document.createElement("a")).href = t.getAttribute("data-url") : n = document.createElement("span"), n.textContent = r), n
+                }
+            })), Prism.hooks.add("complete", r)
+        }
+    }();</script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <style>div.code-toolbar > .toolbar > .toolbar-item > a, div.code-toolbar > .toolbar > .toolbar-item > button, div.code-toolbar > .toolbar > .toolbar-item > span {
+        padding: 4px .5em;
+        background: #f5f2f0;
+        background: rgba(224, 224, 224, 0.4);
+    }</style>
+    <script>window.MathJax = {
+        tex: {tags: 'ams', inlineMath: [['$', '$'], ['\\(', '\\)']]}, startup: {
+            pageReady() {
+                return MathJax.startup.defaultPageReady().then(function () {
+                    window.mweb_mathjax_ready_val = 'yes';
+                    if (window.mweb_mathjax_ready !== undefined) {
+                        mweb_mathjax_ready();
+                    }
+                });
+            }
+        }
+    };
+    document.addEventListener('DOMContentLoaded', function (event) {
+        if (typeof Prism != 'undefined') {
+            Prism.highlightAll();
+        }
+    });
+    window.mweb_mathjax_ready_val = '';
 
-div.code-toolbar > .toolbar > .toolbar-item > a:hover,
-div.code-toolbar > .toolbar > .toolbar-item > a:focus,
-div.code-toolbar > .toolbar > .toolbar-item > button:hover,
-div.code-toolbar > .toolbar > .toolbar-item > button:focus,
-div.code-toolbar > .toolbar > .toolbar-item > span:hover,
-div.code-toolbar > .toolbar > .toolbar-item > span:focus {
-  color: inherit;
-  text-decoration: none;
-}
-</style><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>!function(){if("undefined"!=typeof Prism&&"undefined"!=typeof document){var e=[],t={},n=function(){};Prism.plugins.toolbar={};var a=Prism.plugins.toolbar.registerButton=function(n,a){var r;r="function"==typeof a?a:function(e){var t;return"function"==typeof a.onClick?((t=document.createElement("button")).type="button",t.addEventListener("click",(function(){a.onClick.call(this,e)}))):"string"==typeof a.url?(t=document.createElement("a")).href=a.url:t=document.createElement("span"),a.className&&t.classList.add(a.className),t.textContent=a.text,t},n in t?console.warn('There is a button with the key "'+n+'" registered already.'):e.push(t[n]=r)},r=Prism.plugins.toolbar.hook=function(a){var r=a.element.parentNode;var l=a.element.classList;if(l.contains('language-mermaid') || l.contains('language-echarts') || l.contains('language-plantuml')){return;} if(r&&/pre/i.test(r.nodeName)&&!r.parentNode.classList.contains("code-toolbar")){var o=document.createElement("div");o.classList.add("code-toolbar"),r.parentNode.insertBefore(o,r),o.appendChild(r);var i=document.createElement("div");i.classList.add("toolbar");var l=e,d=function(e){for(;e;){var t=e.getAttribute("data-toolbar-order");if(null!=t)return(t=t.trim()).length?t.split(/\s*,\s*/g):[];e=e.parentElement}}(a.element);d&&(l=d.map((function(e){return t[e]||n}))),l.forEach((function(e){var t=e(a);if(t){var n=document.createElement("div");n.classList.add("toolbar-item"),n.appendChild(t),i.appendChild(n)}})),o.appendChild(i)}};a("label",(function(e){var t=e.element.parentNode;if(t&&/pre/i.test(t.nodeName)&&t.hasAttribute("data-label")){var n,a,r=t.getAttribute("data-label");try{a=document.querySelector("template#"+r)}catch(e){}return a?n=a.content:(t.hasAttribute("data-url")?(n=document.createElement("a")).href=t.getAttribute("data-url"):n=document.createElement("span"),n.textContent=r),n}})),Prism.hooks.add("complete",r)}}();</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.css"><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><style>div.code-toolbar > .toolbar > .toolbar-item > a, div.code-toolbar > .toolbar > .toolbar-item > button, div.code-toolbar > .toolbar > .toolbar-item > span {padding: 4px .5em; background: #f5f2f0; background: rgba(224, 224, 224, 0.4);}</style><script>window.MathJax = {     tex: { tags: 'ams', inlineMath: [ ['$','$'], ['\\(','\\)'] ] } ,     startup: {     pageReady() {       return MathJax.startup.defaultPageReady().then(function () {          window.mweb_mathjax_ready_val = 'yes';          if(window.mweb_mathjax_ready !== undefined){ mweb_mathjax_ready(); }       });     }   }};document.addEventListener('DOMContentLoaded', function(event) {    if (typeof Prism != 'undefined') {         Prism.highlightAll();     }});window.mweb_mathjax_ready_val = '';function theMWebMathJaxRenderIsReady(key){ return window.mweb_mathjax_ready_val; }</script><script>window.MathJax = { tex: { tags: 'ams', inlineMath: [ ['$','$'], ['\\(','\\)'] ] } }; </script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script> <style>body{max-width:808px; padding:24px;}</style></head><body><div id='markdown_content' class='markdown-body'><h2><a id="tutorial-1-getting-started-with-tinyqsim" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tutorial 1: Getting Started with TinyQsim</h2>
-<h3><a id="contents" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contents</h3>
-<ul>
-<li><a href="#tutorial-1-getting-started-with-tinyqsim">Tutorial 1: Getting Started with TinyQsim</a>
-<ul>
-<li><a href="#contents">Contents</a></li>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#documentation">Documentation</a></li>
-<li><a href="#a-simple-example">A Simple Example</a></li>
-<li><a href="#probabilities">Probabilities</a></li>
-<li><a href="#measurements">Measurements</a></li>
-<li><a href="#unitary-matrix">Unitary Matrix</a></li>
-<li><a href="#bloch-sphere">Bloch Sphere</a></li>
-<li><a href="#summary">Summary</a></li>
-</ul>
-</li>
-</ul>
-<h3><a id="introduction" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
-<p>This Getting Started tutorial provides a quick introduction to TinyQsim through the use of a simple example.</p>
-<p>TinyQsim is a quantum circuit simulator based on the quantum gate model. A 20-qubit Quantum Fourier Transform (QFT) takes about one second (running on a Mac Mini M2 Pro). The software is capable of simulating quantum circuits up to a maximum of 26 qubits, although this may take a couple of minutes, depending on the quantum circuit and computer.</p>
-<p>TinyQsim is a Python library that is intended to be called from a Jupyter notebook. Notebooks provide a nice environment for experimenting with quantum algorithms and documenting them since they can contain executable code, together with its graphical output, as well as documentation including equations in LaTeX.</p>
-<h3><a id="installation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
-<p>TinyQsim can be downloaded from <a href="https://github.com/jbrumf/tinyqsim">https://github.com/jbrumf/tinyqsim</a></p>
-<p>For installation instructions, see the README.md file in the source distribution.</p>
-<h3><a id="documentation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h3>
-<p>Once the software is downloaded, see the documentation at:</p>
-<ul>
-<li><a href="https://jbrumf.github.io/tinyqsim/">https://jbrumf.github.io/tinyqsim/</a></li>
-</ul>
-<p>This includes the following tutorials, as well as some more advanced examples and full API documentation.</p>
-<ul>
-<li>Tutorial 1 (this tutorial) is a Getting Started guide that provides a quick overview.</li>
-<li>Tutorial 2 looks at the features of TinyQsim in more detail.</li>
-<li>Tutorial 3 describes all the gates available as well as custom gates.</li>
-<li>Tutorial 4 describes the low-level API, which is not normally needed</li>
-</ul>
-<h3><a id="a-simple-example" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>A Simple Example</h3>
-<p>The first step is to import the QCircuit class:</p>
-<pre><code class="language-python">from tinyqsim.qcircuit import QCircuit
+    function theMWebMathJaxRenderIsReady(key) {
+        return window.mweb_mathjax_ready_val;
+    }</script>
+    <script>window.MathJax = {tex: {tags: 'ams', inlineMath: [['$', '$'], ['\\(', '\\)']]}}; </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+    <style>body {
+        max-width: 808px;
+        padding: 24px;
+    }</style>
+</head>
+<body>
+<div id='markdown_content' class='markdown-body'><h2><a id="tutorial-1-getting-started-with-tinyqsim" class="anchor"
+                                                        aria-hidden="true"><span
+        class="octicon octicon-link"></span></a>Tutorial 1: Getting Started with TinyQsim</h2>
+    <h3><a id="contents" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contents</h3>
+    <ul>
+        <li><a href="#tutorial-1-getting-started-with-tinyqsim">Tutorial 1: Getting Started with TinyQsim</a>
+            <ul>
+                <li><a href="#contents">Contents</a></li>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#installation">Installation</a></li>
+                <li><a href="#documentation">Documentation</a></li>
+                <li><a href="#a-simple-example">A Simple Example</a></li>
+                <li><a href="#probabilities">Probabilities</a></li>
+                <li><a href="#measurements">Measurements</a></li>
+                <li><a href="#unitary-matrix">Unitary Matrix</a></li>
+                <li><a href="#bloch-sphere">Bloch Sphere</a></li>
+                <li><a href="#summary">Summary</a></li>
+            </ul>
+        </li>
+    </ul>
+    <h3><a id="introduction" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction
+    </h3>
+    <p>This Getting Started tutorial provides a quick introduction to TinyQsim through the use of a simple example.</p>
+    <p>TinyQsim is a quantum circuit simulator based on the quantum gate model. A 20-qubit Quantum Fourier Transform
+        (QFT) takes about one second (running on a Mac Mini M2 Pro). The software is capable of simulating quantum
+        circuits up to a maximum of 26 qubits, although this may take a couple of minutes, depending on the quantum
+        circuit and computer.</p>
+    <p>TinyQsim is a Python library that is intended to be called from a Jupyter notebook. Notebooks provide a nice
+        environment for experimenting with quantum algorithms and documenting them since they can contain executable
+        code, together with its graphical output, as well as documentation including equations in LaTeX.</p>
+    <h3><a id="installation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation
+    </h3>
+    <p>TinyQsim can be downloaded from <a
+            href="https://github.com/jbrumf/tinyqsim">https://github.com/jbrumf/tinyqsim</a></p>
+    <p>For installation instructions, see the README.md file in the source distribution.</p>
+    <h3><a id="documentation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation
+    </h3>
+    <p>Once the software is downloaded, see the documentation at:</p>
+    <ul>
+        <li><a href="https://jbrumf.github.io/tinyqsim/">https://jbrumf.github.io/tinyqsim/</a></li>
+    </ul>
+    <p>This includes the following tutorials, as well as some more advanced examples and full API documentation.</p>
+    <ul>
+        <li>Tutorial 1 (this tutorial) is a Getting Started guide that provides a quick overview.</li>
+        <li>Tutorial 2 looks at the features of TinyQsim in more detail.</li>
+        <li>Tutorial 3 describes all the gates available as well as custom gates.</li>
+        <li>Tutorial 4 describes the low-level API, which is not normally needed</li>
+    </ul>
+    <h3><a id="a-simple-example" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>A
+        Simple Example</h3>
+    <p>The first step is to import the QCircuit class:</p>
+    <pre><code class="language-python">from tinyqsim.qcircuit import QCircuit
 </code></pre>
-<p>For the example, we will create a 2-qubit quantum circuit 'qc' that creates an entangled state:</p>
-<pre><code class="language-python">qc = QCircuit(2)
+    <p>For the example, we will create a 2-qubit quantum circuit 'qc' that creates an entangled state:</p>
+    <pre><code class="language-python">qc = QCircuit(2)
 </code></pre>
-<p>The state is initialized to \(\ket{00}\) by default, which we can confirm by printing it. The coefficient '1' is the associated complex amplitude.</p>
-<pre><code class="language-python">qc.display_state()
+    <p>The state is initialized to \(\ket{00}\) by default, which we can confirm by printing it. The coefficient '1' is
+        the associated complex amplitude.</p>
+    <pre><code class="language-python">qc.display_state()
 </code></pre>
-<p>\(\displaystyle 1\ \ket{00}\)</p>
-<p>Next, we will add some quantum gates:</p>
-<pre><code class="language-python">qc.x(1)  # Add an X gate on qubit 1
+    <p>\(\displaystyle 1\ \ket{00}\)</p>
+    <p>Next, we will add some quantum gates:</p>
+    <pre><code class="language-python">qc.x(1)  # Add an X gate on qubit 1
 qc.h(0)  # Add an H gate on qubit 0
 qc.cx(0, 1)  # Add a CX gate on qubits 0 and 1
 </code></pre>
-<p>Then we can draw the circuit:</p>
-<pre><code class="language-python">qc.draw()
+    <p>Then we can draw the circuit:</p>
+    <pre><code class="language-python">qc.draw()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAAB4CAYAAADc1jH7AAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAAB4CAYAAADc1jH7AAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACwFJREFUeJztnX1QVNUbx7+7
 vIhrSE4QRGWalaCmCWXZGyEVvRLNMKVCGZVvU/7BZGKRZIxpiTiOmlohyCRWWuNk
@@ -866,68 +1065,78 @@ yaGh/keOaCsEwGM0/UJKCg1C+vhjemj35JO0ftgwWmw24NQpahCHhwNPP00jv/UY
 3g+wFH7DZKJe4exs4ORJ6vWsrqbhdSEhwFVXUW/ouHHUXa8nLEUAcOWVtKSl+TsS
 ok9IYbH07/ICjYCWIjKSqllfn5T2BpOJyh+IGIRQe9inuvD8FPoT8FIw+sP9FIwE
 S8FIsBSMBEvBSLAUjARLwUiwFIwES8FIsBSMBEvBSLAUjARLwUiwFIwES8FIsBSM
-BEvBSLAUjARLwUiwFIzE/wCGVsn6Tcd8ogAAAABJRU5ErkJggg==" alt="png" /></p>
-<p>By default, the gates are executed as they are added to the circuit, so there is no need to run the simulator explicitly and we can print the state at any time.</p>
-<p>The various symbols and gates in the circuit diagram are explained in tutorial 3. This example has a Hadamard (H) gate, a NOT (X) gate and controlled-NOT (CX) gate. It creates the following entangled state:</p>
-<p>\(\ket{\psi}=\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}\)</p>
-<p>We can confirm this by displaying the state:</p>
-<pre><code class="language-python">qc.display_state()
+BEvBSLAUjARLwUiwFIzE/wCGVsn6Tcd8ogAAAABJRU5ErkJggg==" alt="png"/></p>
+    <p>By default, the gates are executed as they are added to the circuit, so there is no need to run the simulator
+        explicitly and we can print the state at any time.</p>
+    <p>The various symbols and gates in the circuit diagram are explained in tutorial 3. This example has a Hadamard (H)
+        gate, a NOT (X) gate and controlled-NOT (CX) gate. It creates the following entangled state:</p>
+    <p>\(\ket{\psi}=\frac{1}{\sqrt{2}}\ket{01} + \frac{1}{\sqrt{2}}\ket{10}\)</p>
+    <p>We can confirm this by displaying the state:</p>
+    <pre><code class="language-python">qc.display_state()
 </code></pre>
-<p>\(\displaystyle 0.70711\ \ket{01} + 0.70711\ \ket{10}\)</p>
-<p>The 'display_state' method displays the state using LaTeX for use in a Jupyter notebook. A LaTeX prefix can be included if required. For example:</p>
-<pre><code class="language-python">qc.display_state(prefix=r'\ket{\psi} = ')
+    <p>\(\displaystyle 0.70711\ \ket{01} + 0.70711\ \ket{10}\)</p>
+    <p>The 'display_state' method displays the state using LaTeX for use in a Jupyter notebook. A LaTeX prefix can be
+        included if required. For example:</p>
+    <pre><code class="language-python">qc.display_state(prefix=r'\ket{\psi} = ')
 </code></pre>
-<p>\(\displaystyle \ket{\psi} = 0.70711\ \ket{01} + 0.70711\ \ket{10}\)</p>
-<p>The format may be customised in various ways as shown in the following examples:</p>
-<pre><code class="language-python">qc.display_state(decimals=4, include_zeros=False, trim=True)
+    <p>\(\displaystyle \ket{\psi} = 0.70711\ \ket{01} + 0.70711\ \ket{10}\)</p>
+    <p>The format may be customised in various ways as shown in the following examples:</p>
+    <pre><code class="language-python">qc.display_state(decimals=4, include_zeros=False, trim=True)
 qc.display_state(decimals=4, include_zeros=True, trim=True)
 qc.display_state(decimals=4, include_zeros=True, trim=False)
 </code></pre>
-<p>\(\displaystyle 0.7071\ \ket{01} + 0.7071\ \ket{10}\)</p>
-<p>\(\displaystyle 0\ \ket{00} + 0.7071\ \ket{01} + 0.7071\ \ket{10} + 0\ \ket{11}\)</p>
-<p>\(\displaystyle 0.0000\ \ket{00} + 0.7071\ \ket{01} + 0.7071\ \ket{10} + 0.0000\ \ket{11}\)</p>
-<p>It is also possible to format the state as plain text using 'format_state' instead of 'display_state'. This is useful when using TinyQsim from a Python script instead of from a Jupyter notebook.</p>
-<pre><code class="language-python">print(qc.format_state())
+    <p>\(\displaystyle 0.7071\ \ket{01} + 0.7071\ \ket{10}\)</p>
+    <p>\(\displaystyle 0\ \ket{00} + 0.7071\ \ket{01} + 0.7071\ \ket{10} + 0\ \ket{11}\)</p>
+    <p>\(\displaystyle 0.0000\ \ket{00} + 0.7071\ \ket{01} + 0.7071\ \ket{10} + 0.0000\ \ket{11}\)</p>
+    <p>It is also possible to format the state as plain text using 'format_state' instead of 'display_state'. This is
+        useful when using TinyQsim from a Python script instead of from a Jupyter notebook.</p>
+    <pre><code class="language-python">print(qc.format_state())
 </code></pre>
-<pre><code class="language-plain_text">0.70711|01⟩ + 0.70711|10⟩
+    <pre><code class="language-plain_text">0.70711|01⟩ + 0.70711|10⟩
 </code></pre>
-<p>Once the output is longer than a few lines, the 'sum-of-kets' notation becomes hard to read. It is then better to display the results as a table, using the 'table' option (This option is not currently supported by 'display_state').</p>
-<pre><code class="language-python">print(qc.format_state('table', include_zeros=True))
+    <p>Once the output is longer than a few lines, the 'sum-of-kets' notation becomes hard to read. It is then better to
+        display the results as a table, using the 'table' option (This option is not currently supported by
+        'display_state').</p>
+    <pre><code class="language-python">print(qc.format_state('table', include_zeros=True))
 </code></pre>
-<pre><code class="language-plain_text">|00⟩  0
+    <pre><code class="language-plain_text">|00⟩  0
 |01⟩  0.70711
 |10⟩  0.70711
 |11⟩  0
 </code></pre>
-<p>The raw state vector is available from the 'state_vector' property as a numpy array:</p>
-<pre><code class="language-python">qc.state_vector
+    <p>The raw state vector is available from the 'state_vector' property as a numpy array:</p>
+    <pre><code class="language-python">qc.state_vector
 </code></pre>
-<pre><code class="language-plain_text">array([0.        , 0.70710678, 0.70710678, 0.        ])
+    <pre><code class="language-plain_text">array([0.        , 0.70710678, 0.70710678, 0.        ])
 </code></pre>
-<h3><a id="probabilities" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Probabilities</h3>
-<p>The probabilities of different measurement outcomes are the squares of the absolute values of the amplitudes of the state components:</p>
-<pre><code class="language-python">qc.probability_array()
+    <h3><a id="probabilities" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Probabilities
+    </h3>
+    <p>The probabilities of different measurement outcomes are the squares of the absolute values of the amplitudes of
+        the state components:</p>
+    <pre><code class="language-python">qc.probability_array()
 </code></pre>
-<pre><code class="language-plain_text">array([0. , 0.5, 0.5, 0. ])
+    <pre><code class="language-plain_text">array([0. , 0.5, 0.5, 0. ])
 </code></pre>
-<p>It is convenient to display the probabilities along with the ket labels of the associated basis states using the 'format_probabilities' method. This method should be called in a 'print' statement to ensure proper formatting.</p>
-<pre><code class="language-python">print(qc.format_probabilities())
+    <p>It is convenient to display the probabilities along with the ket labels of the associated basis states using the
+        'format_probabilities' method. This method should be called in a 'print' statement to ensure proper
+        formatting.</p>
+    <pre><code class="language-python">print(qc.format_probabilities())
 </code></pre>
-<pre><code class="language-plain_text">|01⟩  0.5
+    <pre><code class="language-plain_text">|01⟩  0.5
 |10⟩  0.5
 </code></pre>
-<p>Various formatting options may be specified. For example:</p>
-<pre><code class="language-python">print(qc.format_probabilities(decimals=3, include_zeros=True, trim=False))
+    <p>Various formatting options may be specified. For example:</p>
+    <pre><code class="language-python">print(qc.format_probabilities(decimals=3, include_zeros=True, trim=False))
 </code></pre>
-<pre><code class="language-plain_text">|00⟩  0.000
+    <pre><code class="language-plain_text">|00⟩  0.000
 |01⟩  0.500
 |10⟩  0.500
 |11⟩  0.000
 </code></pre>
-<p>The probability distribution can be plotted as follows:</p>
-<pre><code class="language-python">qc.plot_probabilities()
+    <p>The probability distribution can be plotted as follows:</p>
+    <pre><code class="language-python">qc.plot_probabilities()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcoAAACSCAYAAADFNoryAAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcoAAACSCAYAAADFNoryAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAGCRJREFUeJzt3XtU1GX+B/D3
 ADqQAcpV2UbA8oJSiRCKSoYGrJrKrkcxUzQxpS1JKVfRTZNa/bVL5nrBvF92y2U1
@@ -1058,15 +1267,23 @@ iYiICFy8eBG+vr6YPn06lixZInV5doPjYD10Oh2EEHB0dARwZ31df39/zJ8/H6tX
 r5a4Ovthb+PAoOwEPvvsM3z99dfw9/fHE088gUcffVT/B0odh+NgPYQQEEIgOzsb
 UVFRqKioMHolJrUPexkHBiURdVqffPIJzp49a1u3InRCtj4ODEoi6rSaZzR8pJa0
 bH0cGJRERERG2Gb8ExERWQiDkoiIyAgGJRERkREMSiIiIiMYlEREREYwKImIiIxg
-UBIRERnBoCQiIjKCQUlERGTE/wJY8JaksHrRugAAAABJRU5ErkJggg==" alt="png" /></p>
-<p>The 'format_probabilities' and 'plot_probabilities' methods are intended for use with circuits that do <em>not</em> contain any measurement operations, since these would collapse the state. The probabilities tell us the probabilities of different outcomes if we were to perform a measurement, but it does not perform a measurement so there is no collapse.</p>
-<h3><a id="measurements" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Measurements</h3>
-<p>A real quantum computer does not allow us to see the quantum state. Measuring the state causes it to collapse to one of the basis states according to the probabilities shown above. If we want to estimate the probabilities on a quantum computer, we have to run the circuit many times and look at the frequency of different outcomes.</p>
-<p>With a simulator, we have the advantage that we have access to the state and can directly calculate the probabilities of different measurement outcomes without actually performing a measurement. This provides a useful performance improvement when we don't actually need measurements.</p>
-<p>We can simulate this probabilistic outcome using the 'counts' or 'plot_counts' methods. For example:</p>
-<pre><code class="language-python">qc.plot_counts(runs=1000)
+UBIRERnBoCQiIjKCQUlERGTE/wJY8JaksHrRugAAAABJRU5ErkJggg==" alt="png"/></p>
+    <p>The 'format_probabilities' and 'plot_probabilities' methods are intended for use with circuits that do
+        <em>not</em> contain any measurement operations, since these would collapse the state. The probabilities tell us
+        the probabilities of different outcomes if we were to perform a measurement, but it does not perform a
+        measurement so there is no collapse.</p>
+    <h3><a id="measurements" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Measurements
+    </h3>
+    <p>A real quantum computer does not allow us to see the quantum state. Measuring the state causes it to collapse to
+        one of the basis states according to the probabilities shown above. If we want to estimate the probabilities on
+        a quantum computer, we have to run the circuit many times and look at the frequency of different outcomes.</p>
+    <p>With a simulator, we have the advantage that we have access to the state and can directly calculate the
+        probabilities of different measurement outcomes without actually performing a measurement. This provides a
+        useful performance improvement when we don't actually need measurements.</p>
+    <p>We can simulate this probabilistic outcome using the 'counts' or 'plot_counts' methods. For example:</p>
+    <pre><code class="language-python">qc.plot_counts(runs=1000)
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAc8AAACSCAYAAAAjH0G2AAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAc8AAACSCAYAAAAjH0G2AAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAFl5JREFUeJzt3X9UVGX+B/D3
 6CAiCwhoQ6wT4Iqsiu26ICaJhgiuwklOe0JXt+xEJ11FRXPdiK2ULdhKgWOAhZmy
@@ -1188,22 +1405,26 @@ g+NgPvR6PYQQGDlyJIAb9xP28PDAqlWrkJiYKHN11sMax4HhOQwdO3YMp0+fhoeH
 B2bOnInp06cbfmlp6HAczIcQAkIInDp1CsHBwWhubr7jClAaHNY0DgxPIrIYH330
 ET777DPLuyximLGGcWB4EpHF6J358PFj8rKGcWB4EhERSWS5XwuIiIgGCcOTiIhI
 IoYnERGRRAxPIiIiiRieREREEjE8iYiIJGJ4EhERScTwJCIikojhSUREJNH/ARrr
-V82XnrzHAAAAAElFTkSuQmCC" alt="png" /></p>
-<pre><code class="language-python">qc.counts(runs=1000)
+V82XnrzHAAAAAElFTkSuQmCC" alt="png"/></p>
+    <pre><code class="language-python">qc.counts(runs=1000)
 </code></pre>
-<pre><code class="language-plain_text">{'01': 515, '10': 485}
+    <pre><code class="language-plain_text">{'01': 515, '10': 485}
 </code></pre>
-<p>If we call 'counts' or 'plot_counts' again, it simulates another 1000 runs, so the counts are likely to be different:</p>
-<pre><code class="language-python">qc.counts(runs=1000)
+    <p>If we call 'counts' or 'plot_counts' again, it simulates another 1000 runs, so the counts are likely to be
+        different:</p>
+    <pre><code class="language-python">qc.counts(runs=1000)
 </code></pre>
-<pre><code class="language-plain_text">{'01': 529, '10': 471}
+    <pre><code class="language-plain_text">{'01': 529, '10': 471}
 </code></pre>
-<p>The default mode of 'counts' is to resample the probability distribution from a single run. This is suitable when the circuit contains no measurements. This is much more efficient than running the circuit many times and can be an important consideration for circuits containing more than a few qubits.</p>
-<p>If we want to simulate measurements that collapse the state, we must add measurement operations to the quantum circuit as follows:</p>
-<pre><code class="language-python">qc.measure()
+    <p>The default mode of 'counts' is to resample the probability distribution from a single run. This is suitable when
+        the circuit contains no measurements. This is much more efficient than running the circuit many times and can be
+        an important consideration for circuits containing more than a few qubits.</p>
+    <p>If we want to simulate measurements that collapse the state, we must add measurement operations to the quantum
+        circuit as follows:</p>
+    <pre><code class="language-python">qc.measure()
 qc.draw()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALIAAAB4CAYAAABW+ai6AAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALIAAAB4CAYAAABW+ai6AAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAADwRJREFUeJztnX9wFOUZxz8X
 QiCHErGBKCrgOEiOWjDE/rDUhkAVax2EllIMIKQKopZOxbZpTaGUglIFpqMIFGiQ
@@ -1286,15 +1507,19 @@ KuJIuKZpkUiMGSPRk+eek4lNP/mJHO/TR7ZgUCISDQ3ybN5dd8l8BX0VgDkq5Djh
 59eZSFRfd2ohp6dLFdzeGXAdweuV/LsKie5rj2E49ehi+0jkd/YmGons604vZEVp
 CxpHVlyBCllxBSpkxRWokBVXoEJWXIEKWXEFKmTFFaiQFVegQlZcgQpZcQUqZMUV
 qJAVV6BCVlyBCllxBSpkxRWokBVXoEJWXIEKWXEFKmTFFfwPaw3s2gThZqEAAAAA
-SUVORK5CYII=" alt="png" /></p>
-<p>If we display the state after the measurements, it will have collapsed to either \(\ket{01}\) or \(\ket{10}\):</p>
-<pre><code class="language-python">qc.display_state()
+SUVORK5CYII=" alt="png"/></p>
+    <p>If we display the state after the measurements, it will have collapsed to either \(\ket{01}\) or
+        \(\ket{10}\):</p>
+    <pre><code class="language-python">qc.display_state()
 </code></pre>
-<p>\(\displaystyle 1\ \ket{10}\)</p>
-<p>The 'counts' or 'plot_counts' methods can be called using the 'repeat' or 'measure' mode so that they actually run the circuit many times to generate measurement counts, rather than just resampling the output state of a single run. The difference between 'repeat' and 'measure' is discussed in the next tutorial. For this simple example, either can be used.</p>
-<pre><code class="language-python">qc.plot_counts(mode='measure', runs=1000)
+    <p>\(\displaystyle 1\ \ket{10}\)</p>
+    <p>The 'counts' or 'plot_counts' methods can be called using the 'repeat' or 'measure' mode so that they actually
+        run the circuit many times to generate measurement counts, rather than just resampling the output state of a
+        single run. The difference between 'repeat' and 'measure' is discussed in the next tutorial. For this simple
+        example, either can be used.</p>
+    <pre><code class="language-python">qc.plot_counts(mode='measure', runs=1000)
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAc8AAACSCAYAAAAjH0G2AAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAc8AAACSCAYAAAAjH0G2AAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAFk5JREFUeJzt3X1QVNf9BvBn
 dRGQAgKaJVSCWJGqmNaCGIloCIJVmEjTCVptXiZkolVUNDaV0CRoLDSJAqOACcYo
@@ -1416,17 +1641,21 @@ B+PR1tYmjh07Ji5fvqzX3tTUJFatWiVsbW2Fg4ODGD16tLhx44ZMVZo/jgMvVTEp
 8RBCQAiB06dPIygoCE1NTXdcAUpDw5LGgeFJRGbj448/xueff25+l0WYGEsYB4Yn
 EZmN3pkPHz8mL0sYB4YnERGRROb7tYCIiGiIMDyJiIgkYngSERFJxPAkIiKSiOFJ
 REQkEcOTiIhIIoYnERGRRAxPIiIiiRieREREEv0ffd1SqhZWquAAAAAASUVORK5C
-YII=" alt="png" /></p>
-<h3><a id="unitary-matrix" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unitary Matrix</h3>
-<p>Individual quantum gates implement unitary operators expressed as unitary matrices. Complete circuits built from gates can also be expressed as a unitary matrix, provided that the circuit contains no measurement operations.</p>
-<p>It is sometimes useful to obtain the unitary matrix corresponding to a circuit. The matrix can become very large if there are many qubits, so this is mostly of interest for simple circuits with a few qubits.</p>
-<pre><code class="language-python">qc = QCircuit(2)
+YII=" alt="png"/></p>
+    <h3><a id="unitary-matrix" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unitary
+        Matrix</h3>
+    <p>Individual quantum gates implement unitary operators expressed as unitary matrices. Complete circuits built from
+        gates can also be expressed as a unitary matrix, provided that the circuit contains no measurement
+        operations.</p>
+    <p>It is sometimes useful to obtain the unitary matrix corresponding to a circuit. The matrix can become very large
+        if there are many qubits, so this is mostly of interest for simple circuits with a few qubits.</p>
+    <pre><code class="language-python">qc = QCircuit(2)
 qc.x(1)
 qc.h(0)
 qc.cx(0, 1)
 qc.draw()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAAB4CAYAAADc1jH7AAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAAB4CAYAAADc1jH7AAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACwFJREFUeJztnX1QVNUbx7+7
 vIhrSE4QRGWalaCmCWXZGyEVvRLNMKVCGZVvU/7BZGKRZIxpiTiOmlohyCRWWuNk
@@ -1487,18 +1716,19 @@ yaGh/keOaCsEwGM0/UJKCg1C+vhjemj35JO0ftgwWmw24NQpahCHhwNPP00jv/UY
 3g+wFH7DZKJe4exs4ORJ6vWsrqbhdSEhwFVXUW/ouHHUXa8nLEUAcOWVtKSl+TsS
 ok9IYbH07/ICjYCWIjKSqllfn5T2BpOJyh+IGIRQe9inuvD8FPoT8FIw+sP9FIwE
 S8FIsBSMBEvBSLAUjARLwUiwFIwES8FIsBSMBEvBSLAUjARLwUiwFIwES8FIsBSM
-BEvBSLAUjARLwUiwFIzE/wCGVsn6Tcd8ogAAAABJRU5ErkJggg==" alt="png" /></p>
-<pre><code class="language-python">u = qc.to_unitary()
+BEvBSLAUjARLwUiwFIzE/wCGVsn6Tcd8ogAAAABJRU5ErkJggg==" alt="png"/></p>
+    <pre><code class="language-python">u = qc.to_unitary()
 print(u)
 </code></pre>
-<pre><code class="language-plain_text">[[ 0.          0.70710678  0.          0.70710678]
+    <pre><code class="language-plain_text">[[ 0.          0.70710678  0.          0.70710678]
  [ 0.70710678  0.          0.70710678  0.        ]
  [ 0.70710678  0.         -0.70710678  0.        ]
  [ 0.          0.70710678  0.         -0.70710678]]
 </code></pre>
-<h3><a id="bloch-sphere" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bloch Sphere</h3>
-<p>TinyQsim allows the state of a single qubit to be plotted on the Bloch sphere:</p>
-<pre><code class="language-python">from tinyqsim.bloch import plot_bloch
+    <h3><a id="bloch-sphere" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bloch
+        Sphere</h3>
+    <p>TinyQsim allows the state of a single qubit to be plotted on the Bloch sphere:</p>
+    <pre><code class="language-python">from tinyqsim.bloch import plot_bloch
 
 qc1 = QCircuit(1)  # This must be 1 qubit
 qc1.h(0)
@@ -1506,7 +1736,7 @@ qc1.t(0)
 qc1.draw()
 qc1.display_state()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAABBCAYAAAD/o2eeAAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAABBCAYAAAD/o2eeAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABFBJREFUeJzt3EtoU1kcx/Fv
 bLFtQFBMLbqQAQUbGZS2qyx8dVNx4QsXagOjqHXlwpULJQvxhUsX4qMqg20VEUQU
@@ -1532,12 +1762,12 @@ IxGo9S9nPZt4RujPMiNm/5k3Mi+gavxZv772nyOop5ASFAqxKBRiUSjEolCIpTEe
 G3wX8G3oCrXnBPj4ayXbq+tQRCLm6e+pS8OBt93aliMS8fe0eyRinv6uxZ3ScNi0
 Pxuhev9t7kb9nYdGrRsaIBQSPJ1oikWhEItCIRaFQiwKhVgUCrEoFGJRKMSiUIhF
 oRCLQiEWhUIsCoVYFAqxKBRiUSjEolCIRaEQi0Ihlh+bGBzvOKiy4AAAAABJRU5E
-rkJggg==" alt="png" /></p>
-<p>\(\displaystyle 0.70711\ \ket{0} + (0.5+0.5j)\ \ket{1}\)</p>
-<p>The state vector is plotted in red:</p>
-<pre><code class="language-python">plot_bloch(qc1.state_vector, scale=1.0)
+rkJggg==" alt="png"/></p>
+    <p>\(\displaystyle 0.70711\ \ket{0} + (0.5+0.5j)\ \ket{1}\)</p>
+    <p>The state vector is plotted in red:</p>
+    <pre><code class="language-python">plot_bloch(qc1.state_vector, scale=1.0)
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQwAAAErCAYAAAArJb0dAAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQwAAAErCAYAAAArJb0dAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAjt5JREFUeJztvXmYZElZL/w7
 ue+ZVVl7Ve97z/Qw092zMGwKFwZEBS+CyGUQPxnxAxUERkVQuHOvqFzkXtkeVPAR
@@ -2302,7 +2532,11 @@ yLIh5lEh4uQQh1sXDsFw4MCBbTg2LAcOHNiGQzAcOHBgGw7BcODAgW04BMOBAwe2
 4RAMBw4c2IZDMBw4cGAbDsFw4MCBbTgEw4EDB7bhEAwHDhzYhkMwHDhwYBsOwXDg
 wIFtOATDgQMHtuEQDAcOHNiGQzAcOHBgGw7BcODAgW04BMOBAwe24RAMBw4c2IZD
 MBw4cGAbDsFw4MCBbTgEw4EDB7bhEAwHDhzYxv8P+upI1EC7dbcAAAAASUVORK5C
-YII=" alt="png" /></p>
-<h3><a id="summary" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary</h3>
-<p>This has been a quick introduction to TinyQsim. The next tutorial goes into the various features in more detail. The API documentation, particularly of the QCircuit class, provides further details of all the methods including their arguments and defaults.</p>
-</div></body></html>
+YII=" alt="png"/></p>
+    <h3><a id="summary" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary</h3>
+    <p>This has been a quick introduction to TinyQsim. The next tutorial goes into the various features in more detail.
+        The API documentation, particularly of the QCircuit class, provides further details of all the methods including
+        their arguments and defaults.</p>
+</div>
+</body>
+</html>

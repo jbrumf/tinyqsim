@@ -1,766 +1,955 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>example_4_quantum_phase_estimation</title><style>html{font-size:16.000000px;}</style><style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
-
-html,body{background-color: #feffff;}
-
-.markdown-body {
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  line-height: 1.5;
-  color: #333333;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
-  font-size: 1rem;
-  word-wrap: break-word;
-}
-
-.markdown-body .octicon {
-  display: inline-block;
-  fill: currentColor;
-  vertical-align: text-bottom;
-}
-
-.markdown-body figure{margin:0;padding:0; display:table;}
-.markdown-body figure figcaption{font-size:92%; text-align:center; color:#09844f;}
-
-.markdown-body .anchor {
-  float: left;
-  line-height: 1;
-  margin-left: -1.25rem;
-  padding-right: 0.25rem;
-}
-
-.markdown-body .anchor:focus {
-  outline: none;
-}
-
-.markdown-body h1 .octicon-link,
-.markdown-body h2 .octicon-link,
-.markdown-body h3 .octicon-link,
-.markdown-body h4 .octicon-link,
-.markdown-body h5 .octicon-link,
-.markdown-body h6 .octicon-link {
-  color: #0595bf;
-  vertical-align: middle;
-  visibility: hidden;
-}
-
-.markdown-body h1:hover .anchor,
-.markdown-body h2:hover .anchor,
-.markdown-body h3:hover .anchor,
-.markdown-body h4:hover .anchor,
-.markdown-body h5:hover .anchor,
-.markdown-body h6:hover .anchor {
-  text-decoration: none;
-}
-
-.markdown-body details {
-  display: block;
-}
-
-.markdown-body summary {
-  display: list-item;
-}
-
-.markdown-body a {
-  background-color: initial;
-}
-
-.markdown-body a:active,
-.markdown-body a:hover {
-  outline-width: 0;
-}
-
-.markdown-body strong {
-  font-weight: inherit;
-  font-weight: bolder;
-}
-.markdown-body strong{
-  color: #333333;
-}
-.markdown-body em{
-  color: #333333;
-}
-
-.markdown-body img {
-  border-style: none;
-}
-
-.markdown-body code,
-.markdown-body kbd,
-.markdown-body pre {
-  font-family: monospace,monospace;
-  font-size: 0.9rem;
-}
-
-.markdown-body hr {
-  box-sizing: initial;
-  height: 0;
-  overflow: visible;
-}
-
-.markdown-body input {
-  font: inherit;
-  margin: 0;
-}
-
-.markdown-body input {
-  overflow: visible;
-}
-
-.markdown-body [type=checkbox] {
-  box-sizing: border-box;
-  padding: 0;
-}
-
-.markdown-body * {
-  box-sizing: border-box;
-}
-
-.markdown-body input {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-}
-
-.markdown-body a {
-  color: #0366dd;
-  text-decoration: none;
-}
-.markdown-body mjx-container[jax="SVG"] > svg a{fill:#0366dd;stroke: #0366dd;}
-
-.markdown-body a:hover {
-  text-decoration: underline;
-}
-
-.markdown-body strong {
-  font-weight: 600;
-}
-
-.markdown-body hr:after,
-.markdown-body hr:before {
-  display: table;
-  content: "";
-}
-
-.markdown-body hr:after {
-  clear: both;
-}
-
-.markdown-body table {
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-
-.markdown-body td,
-.markdown-body th {
-  padding: 0;
-}
-
-.markdown-body details summary {
-  cursor: pointer;
-}
-
-.markdown-body kbd {
-  display: inline-block;
-  padding: 0.1875rem 0.3125rem;
-  font: 0.75rem SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-  line-height: 0.75rem;
-  color: #09844f;
-  vertical-align: middle;
-  background-color: #f7f8f8;
-  border: 1px solid #e1e2e2;
-  border-radius: 0.1875rem;
-}
-
-.markdown-body p {
-  margin-top: 0;
-  margin-bottom: 0.625rem;
-}
-
-.markdown-body blockquote {
-  margin: 0;
-}
-
-.markdown-body ol,
-.markdown-body ul {
-  padding-left: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body ol ol,
-.markdown-body ul ol {
-  list-style-type: lower-roman;
-}
-
-.markdown-body ol ol ol,
-.markdown-body ol ul ol,
-.markdown-body ul ol ol,
-.markdown-body ul ul ol {
-  list-style-type: lower-alpha;
-}
-
-.markdown-body dd {
-  margin-left: 0;
-}
-
-.markdown-body code,
-.markdown-body pre {
-  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-  font-size: 0.75rem;
-}
-
-.markdown-body pre {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body input::-webkit-inner-spin-button,
-.markdown-body input::-webkit-outer-spin-button {
-  margin: 0;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.markdown-body:after,
-.markdown-body:before {
-  display: table;
-  content: "";
-}
-
-.markdown-body:after {
-  clear: both;
-}
-
-.markdown-body>:first-child {
-  margin-top: 0!important;
-}
-
-.markdown-body>:last-child {
-  margin-bottom: 0!important;
-}
-
-.markdown-body a:not([href]) {
-  color: inherit;
-  text-decoration: none;
-}
-
-.markdown-body blockquote,
-.markdown-body details,
-.markdown-body dl,
-.markdown-body ol,
-.markdown-body p,
-.markdown-body pre,
-.markdown-body table,
-.markdown-body ul {
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-.markdown-body hr {
-  height: .25rem;
-  padding: 0;
-  margin: 1.5rem 0;
-  background-color: #e1e2e2;
-  border: 0;
-}
-
-.markdown-body blockquote {
-  padding: 0 1rem;
-  color: #636363;
-  border-left: .25rem solid #bbbbbb;
-}
-
-.markdown-body blockquote>:first-child {
-  margin-top: 0;
-}
-
-.markdown-body blockquote>:last-child {
-  margin-bottom: 0;
-}
-
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  line-height: 1.25;
-}
-
-.markdown-body h1 {
-  font-size: 2em;
-}
-
-.markdown-body h1,
-.markdown-body h2 {
-  padding-bottom: .3rem;
-  border-bottom: 1px solid #e7e8e8;
-  color: #0595bf;
-}
-
-.markdown-body h2 {
-  font-size: 1.5rem;
-  color: #0595bf;
-}
-
-.markdown-body h3 {
-  font-size: 1.25rem;
-  color: #0595bf;
-}
-
-.markdown-body h4 {
-  font-size: 1rem;
-  color: #0595bf;
-}
-
-.markdown-body h5 {
-  font-size: .875rem;
-  color: #0595bf;
-}
-
-.markdown-body h6 {
-  font-size: .85rem;
-  color: #0595bf;
-}
-
-.markdown-body ol,
-.markdown-body ul {
-  padding-left: 2rem;
-}
-
-.markdown-body ol ol,
-.markdown-body ol ul,
-.markdown-body ul ol,
-.markdown-body ul ul {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body li {
-  word-wrap: break-all;
-}
-
-.markdown-body li>p {
-  margin-top: 1rem;
-}
-
-.markdown-body li+li {
-  margin-top: .25rem;
-}
-
-.markdown-body dl {
-  padding: 0;
-}
-
-.markdown-body dl dt {
-  padding: 0;
-  margin-top: 1rem;
-  font-size: 1rem;
-  font-style: italic;
-  font-weight: 600;
-}
-
-.markdown-body dl dd {
-  padding: 0 1rem;
-  margin-bottom: 1rem;
-}
-
-.markdown-body table {
-  display: block;
-  width: 100%;
-  overflow: auto;
-}
-
-.markdown-body table th {
-  font-weight: 600;
-}
-
-.markdown-body table td,
-.markdown-body table th {
-  padding: 0.375rem 0.75rem;
-  border: 1px solid #b9baba;
-}
-
-.markdown-body table tr {
-  background-color: #feffff;
-  border-top: 1px solid #b9baba;
-}
-
-.markdown-body table th {
-  background-color: #e7e8e8;
-}
-
-.markdown-body table tr:nth-child(2n) {
-  background-color: #f8f9f9;
-}
-
-.markdown-body img,.markdown-body video {
-  max-width: 100%;
-  box-sizing: initial;
-}
-
-.markdown-body img[align=right] {
-  padding-left: 1.25rem;
-}
-
-.markdown-body img[align=left] {
-  padding-right: 1.25rem;
-}
-
-.markdown-body code {
-  padding: .2rem .4rem;
-  margin: 0;
-  font-size: 85%;
-  background-color: #f7f8f8;
-  color: #09844f;
-  border-radius: 0.1875rem;
-}
-
-.markdown-body pre {
-  word-wrap: normal;
-}
-
-.markdown-body pre>code {
-  padding: 0;
-  margin: 0;
-   font-size: 100%;
-  word-break: normal;
-  white-space: pre;
-  background: transparent;
-  border: 0;
-}
-
-.markdown-body .highlight {
-  margin-bottom: 1rem;
-}
-
-.markdown-body .highlight pre {
-  margin-bottom: 0;
-  word-break: normal;
-}
-
-.markdown-body .highlight pre,
-.markdown-body pre {
-  padding: 1rem;
-  overflow: auto;
-  font-size: 85%;
-  line-height: 1.45;
-  background-color: #f7f8f8;
-  border-radius: 0.1875rem;
-}
-
-.markdown-body pre code {
-  display: inline;
-  max-width: auto;
-  padding: 0;
-  margin: 0;
-  overflow: visible;
-  line-height: inherit;
-  word-wrap: normal;
-  background-color: initial;
-  border: 0;
-  color: #09844f;
-}
-
-.markdown-body .task-list-item {
-  list-style-type: none;
-}
-
-.markdown-body .task-list-item+.task-list-item {
-  margin-top: 0.1875rem;
-}
-
-.markdown-body .task-list-item input {
-  margin: 0 .2rem .25rem -1.6rem;
-  vertical-align: middle;
-}
-
-.markdown-body .task-list-item input[type="checkbox"]{
--webkit-appearance: none;-moz-appearance: none;appearance: none;
-width: 0.875rem; height: 0.875rem;outline: none;
-border: 1px solid #0366dd;border-radius: 2px; 
-}
-.markdown-body .task-list-item input[type="checkbox"]:checked {
-  background:no-repeat center/80% url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Cpath%20fill%3D%22%230366dd%22%20d%3D%22M173.898%20439.404l-166.4-166.4c-9.997-9.997-9.997-26.206%200-36.204l36.203-36.204c9.997-9.998%2026.207-9.998%2036.204%200L192%20312.69%20432.095%2072.596c9.997-9.997%2026.207-9.997%2036.204%200l36.203%2036.204c9.997%209.997%209.997%2026.206%200%2036.204l-294.4%20294.401c-9.998%209.997-26.207%209.997-36.204-.001z%22%2F%3E%3C%2Fsvg%3E") ;
-}
-
-.markdown-body section.footnotes{
-    margin-top:3rem;
-    border-top:solid 1px #e1e2e2;
-    padding-top:0px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .markdown-body mark{color: #111;}
-}
-
-/* PrismJS 1.23.0
-https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript */
-/**
- * prism.js default theme for JavaScript, CSS and HTML
- * Based on dabblet (http://dabblet.com)
- * @author Lea Verou
- */
-
-
-code[class*="language-"],
-pre[class*="language-"] {
-    color: black;
-    background: none;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
-}
-
-@media print {
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>example_4_quantum_phase_estimation</title>
+    <style>html {
+        font-size: 16.000000px;
+    }</style>
+    <style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
+
+    html, body {
+        background-color: #feffff;
+    }
+
+    .markdown-body {
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+        line-height: 1.5;
+        color: #333333;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+        font-size: 1rem;
+        word-wrap: break-word;
+    }
+
+    .markdown-body .octicon {
+        display: inline-block;
+        fill: currentColor;
+        vertical-align: text-bottom;
+    }
+
+    .markdown-body figure {
+        margin: 0;
+        padding: 0;
+        display: table;
+    }
+
+    .markdown-body figure figcaption {
+        font-size: 92%;
+        text-align: center;
+        color: #09844f;
+    }
+
+    .markdown-body .anchor {
+        float: left;
+        line-height: 1;
+        margin-left: -1.25rem;
+        padding-right: 0.25rem;
+    }
+
+    .markdown-body .anchor:focus {
+        outline: none;
+    }
+
+    .markdown-body h1 .octicon-link,
+    .markdown-body h2 .octicon-link,
+    .markdown-body h3 .octicon-link,
+    .markdown-body h4 .octicon-link,
+    .markdown-body h5 .octicon-link,
+    .markdown-body h6 .octicon-link {
+        color: #0595bf;
+        vertical-align: middle;
+        visibility: hidden;
+    }
+
+    .markdown-body h1:hover .anchor,
+    .markdown-body h2:hover .anchor,
+    .markdown-body h3:hover .anchor,
+    .markdown-body h4:hover .anchor,
+    .markdown-body h5:hover .anchor,
+    .markdown-body h6:hover .anchor {
+        text-decoration: none;
+    }
+
+    .markdown-body details {
+        display: block;
+    }
+
+    .markdown-body summary {
+        display: list-item;
+    }
+
+    .markdown-body a {
+        background-color: initial;
+    }
+
+    .markdown-body a:active,
+    .markdown-body a:hover {
+        outline-width: 0;
+    }
+
+    .markdown-body strong {
+        font-weight: inherit;
+        font-weight: bolder;
+    }
+
+    .markdown-body strong {
+        color: #333333;
+    }
+
+    .markdown-body em {
+        color: #333333;
+    }
+
+    .markdown-body img {
+        border-style: none;
+    }
+
+    .markdown-body code,
+    .markdown-body kbd,
+    .markdown-body pre {
+        font-family: monospace, monospace;
+        font-size: 0.9rem;
+    }
+
+    .markdown-body hr {
+        box-sizing: initial;
+        height: 0;
+        overflow: visible;
+    }
+
+    .markdown-body input {
+        font: inherit;
+        margin: 0;
+    }
+
+    .markdown-body input {
+        overflow: visible;
+    }
+
+    .markdown-body [type=checkbox] {
+        box-sizing: border-box;
+        padding: 0;
+    }
+
+    .markdown-body * {
+        box-sizing: border-box;
+    }
+
+    .markdown-body input {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    .markdown-body a {
+        color: #0366dd;
+        text-decoration: none;
+    }
+
+    .markdown-body mjx-container[jax="SVG"] > svg a {
+        fill: #0366dd;
+        stroke: #0366dd;
+    }
+
+    .markdown-body a:hover {
+        text-decoration: underline;
+    }
+
+    .markdown-body strong {
+        font-weight: 600;
+    }
+
+    .markdown-body hr:after,
+    .markdown-body hr:before {
+        display: table;
+        content: "";
+    }
+
+    .markdown-body hr:after {
+        clear: both;
+    }
+
+    .markdown-body table {
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+
+    .markdown-body td,
+    .markdown-body th {
+        padding: 0;
+    }
+
+    .markdown-body details summary {
+        cursor: pointer;
+    }
+
+    .markdown-body kbd {
+        display: inline-block;
+        padding: 0.1875rem 0.3125rem;
+        font: 0.75rem SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+        line-height: 0.75rem;
+        color: #09844f;
+        vertical-align: middle;
+        background-color: #f7f8f8;
+        border: 1px solid #e1e2e2;
+        border-radius: 0.1875rem;
+    }
+
+    .markdown-body p {
+        margin-top: 0;
+        margin-bottom: 0.625rem;
+    }
+
+    .markdown-body blockquote {
+        margin: 0;
+    }
+
+    .markdown-body ol,
+    .markdown-body ul {
+        padding-left: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .markdown-body ol ol,
+    .markdown-body ul ol {
+        list-style-type: lower-roman;
+    }
+
+    .markdown-body ol ol ol,
+    .markdown-body ol ul ol,
+    .markdown-body ul ol ol,
+    .markdown-body ul ul ol {
+        list-style-type: lower-alpha;
+    }
+
+    .markdown-body dd {
+        margin-left: 0;
+    }
+
+    .markdown-body code,
+    .markdown-body pre {
+        font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+        font-size: 0.75rem;
+    }
+
+    .markdown-body pre {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .markdown-body input::-webkit-inner-spin-button,
+    .markdown-body input::-webkit-outer-spin-button {
+        margin: 0;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    .markdown-body:after,
+    .markdown-body:before {
+        display: table;
+        content: "";
+    }
+
+    .markdown-body:after {
+        clear: both;
+    }
+
+    .markdown-body > :first-child {
+        margin-top: 0 !important;
+    }
+
+    .markdown-body > :last-child {
+        margin-bottom: 0 !important;
+    }
+
+    .markdown-body a:not([href]) {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .markdown-body blockquote,
+    .markdown-body details,
+    .markdown-body dl,
+    .markdown-body ol,
+    .markdown-body p,
+    .markdown-body pre,
+    .markdown-body table,
+    .markdown-body ul {
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+
+    .markdown-body hr {
+        height: .25rem;
+        padding: 0;
+        margin: 1.5rem 0;
+        background-color: #e1e2e2;
+        border: 0;
+    }
+
+    .markdown-body blockquote {
+        padding: 0 1rem;
+        color: #636363;
+        border-left: .25rem solid #bbbbbb;
+    }
+
+    .markdown-body blockquote > :first-child {
+        margin-top: 0;
+    }
+
+    .markdown-body blockquote > :last-child {
+        margin-bottom: 0;
+    }
+
+    .markdown-body h1,
+    .markdown-body h2,
+    .markdown-body h3,
+    .markdown-body h4,
+    .markdown-body h5,
+    .markdown-body h6 {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        line-height: 1.25;
+    }
+
+    .markdown-body h1 {
+        font-size: 2em;
+    }
+
+    .markdown-body h1,
+    .markdown-body h2 {
+        padding-bottom: .3rem;
+        border-bottom: 1px solid #e7e8e8;
+        color: #0595bf;
+    }
+
+    .markdown-body h2 {
+        font-size: 1.5rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h3 {
+        font-size: 1.25rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h4 {
+        font-size: 1rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h5 {
+        font-size: .875rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h6 {
+        font-size: .85rem;
+        color: #0595bf;
+    }
+
+    .markdown-body ol,
+    .markdown-body ul {
+        padding-left: 2rem;
+    }
+
+    .markdown-body ol ol,
+    .markdown-body ol ul,
+    .markdown-body ul ol,
+    .markdown-body ul ul {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .markdown-body li {
+        word-wrap: break-all;
+    }
+
+    .markdown-body li > p {
+        margin-top: 1rem;
+    }
+
+    .markdown-body li + li {
+        margin-top: .25rem;
+    }
+
+    .markdown-body dl {
+        padding: 0;
+    }
+
+    .markdown-body dl dt {
+        padding: 0;
+        margin-top: 1rem;
+        font-size: 1rem;
+        font-style: italic;
+        font-weight: 600;
+    }
+
+    .markdown-body dl dd {
+        padding: 0 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .markdown-body table {
+        display: block;
+        width: 100%;
+        overflow: auto;
+    }
+
+    .markdown-body table th {
+        font-weight: 600;
+    }
+
+    .markdown-body table td,
+    .markdown-body table th {
+        padding: 0.375rem 0.75rem;
+        border: 1px solid #b9baba;
+    }
+
+    .markdown-body table tr {
+        background-color: #feffff;
+        border-top: 1px solid #b9baba;
+    }
+
+    .markdown-body table th {
+        background-color: #e7e8e8;
+    }
+
+    .markdown-body table tr:nth-child(2n) {
+        background-color: #f8f9f9;
+    }
+
+    .markdown-body img, .markdown-body video {
+        max-width: 100%;
+        box-sizing: initial;
+    }
+
+    .markdown-body img[align=right] {
+        padding-left: 1.25rem;
+    }
+
+    .markdown-body img[align=left] {
+        padding-right: 1.25rem;
+    }
+
+    .markdown-body code {
+        padding: .2rem .4rem;
+        margin: 0;
+        font-size: 85%;
+        background-color: #f7f8f8;
+        color: #09844f;
+        border-radius: 0.1875rem;
+    }
+
+    .markdown-body pre {
+        word-wrap: normal;
+    }
+
+    .markdown-body pre > code {
+        padding: 0;
+        margin: 0;
+        font-size: 100%;
+        word-break: normal;
+        white-space: pre;
+        background: transparent;
+        border: 0;
+    }
+
+    .markdown-body .highlight {
+        margin-bottom: 1rem;
+    }
+
+    .markdown-body .highlight pre {
+        margin-bottom: 0;
+        word-break: normal;
+    }
+
+    .markdown-body .highlight pre,
+    .markdown-body pre {
+        padding: 1rem;
+        overflow: auto;
+        font-size: 85%;
+        line-height: 1.45;
+        background-color: #f7f8f8;
+        border-radius: 0.1875rem;
+    }
+
+    .markdown-body pre code {
+        display: inline;
+        max-width: auto;
+        padding: 0;
+        margin: 0;
+        overflow: visible;
+        line-height: inherit;
+        word-wrap: normal;
+        background-color: initial;
+        border: 0;
+        color: #09844f;
+    }
+
+    .markdown-body .task-list-item {
+        list-style-type: none;
+    }
+
+    .markdown-body .task-list-item + .task-list-item {
+        margin-top: 0.1875rem;
+    }
+
+    .markdown-body .task-list-item input {
+        margin: 0 .2rem .25rem -1.6rem;
+        vertical-align: middle;
+    }
+
+    .markdown-body .task-list-item input[type="checkbox"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 0.875rem;
+        height: 0.875rem;
+        outline: none;
+        border: 1px solid #0366dd;
+        border-radius: 2px;
+    }
+
+    .markdown-body .task-list-item input[type="checkbox"]:checked {
+        background: no-repeat center/80% url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Cpath%20fill%3D%22%230366dd%22%20d%3D%22M173.898%20439.404l-166.4-166.4c-9.997-9.997-9.997-26.206%200-36.204l36.203-36.204c9.997-9.998%2026.207-9.998%2036.204%200L192%20312.69%20432.095%2072.596c9.997-9.997%2026.207-9.997%2036.204%200l36.203%2036.204c9.997%209.997%209.997%2026.206%200%2036.204l-294.4%20294.401c-9.998%209.997-26.207%209.997-36.204-.001z%22%2F%3E%3C%2Fsvg%3E");
+    }
+
+    .markdown-body section.footnotes {
+        margin-top: 3rem;
+        border-top: solid 1px #e1e2e2;
+        padding-top: 0px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .markdown-body mark {
+            color: #111;
+        }
+    }
+
+    /* PrismJS 1.23.0
+    https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript */
+    /**
+     * prism.js default theme for JavaScript, CSS and HTML
+     * Based on dabblet (http://dabblet.com)
+     * @author Lea Verou
+     */
+
+
     code[class*="language-"],
     pre[class*="language-"] {
-        text-shadow: none;
+        color: black;
+        background: none;
+        font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+        text-align: left;
+        white-space: pre;
+        word-spacing: normal;
+        word-break: normal;
+        word-wrap: normal;
+        -moz-tab-size: 4;
+        -o-tab-size: 4;
+        tab-size: 4;
+
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
     }
-}
 
-/* Code blocks */
-pre[class*="language-"] {
-    padding: 1rem;
-    margin: .5rem 0;
-    overflow: auto;
-}
+    @media print {
+        code[class*="language-"],
+        pre[class*="language-"] {
+            text-shadow: none;
+        }
+    }
 
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-    background-color: #f7f8f8;
-}
+    /* Code blocks */
+    pre[class*="language-"] {
+        padding: 1rem;
+        margin: .5rem 0;
+        overflow: auto;
+    }
 
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-    padding: .1rem;
-    border-radius: .3rem;
-    white-space: normal;
-}
+    :not(pre) > code[class*="language-"],
+    pre[class*="language-"] {
+        background-color: #f7f8f8;
+    }
 
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-    color: #8e9c92;
-}
+    /* Inline code */
+    :not(pre) > code[class*="language-"] {
+        padding: .1rem;
+        border-radius: .3rem;
+        white-space: normal;
+    }
 
-.token.punctuation {
-    color: #2834ce;
-}
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+        color: #8e9c92;
+    }
 
-.token.namespace {
-    opacity: .7;
-}
+    .token.punctuation {
+        color: #2834ce;
+    }
 
-.token.property,
-.token.tag,
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol,
-.token.deleted {
-    color: #2834ce;
-}
+    .token.namespace {
+        opacity: .7;
+    }
 
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
-    color: #d32d26;
-}
+    .token.property,
+    .token.tag,
+    .token.boolean,
+    .token.number,
+    .token.constant,
+    .token.symbol,
+    .token.deleted {
+        color: #2834ce;
+    }
 
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
-    color: #$$codeBlockColor$$;
-}
+    .token.selector,
+    .token.attr-name,
+    .token.string,
+    .token.char,
+    .token.builtin,
+    .token.inserted {
+        color: #d32d26;
+    }
 
-.token.atrule,
-.token.attr-value,
-.token.keyword {
-    color: #bc319c;
-}
+    .token.operator,
+    .token.entity,
+    .token.url,
+    .language-css .token.string,
+    .style .token.string {
+        color: # $ $ codeBlockColor $ $;
+    }
 
-.token.function,
-.token.class-name {
-    color: #967d41;
-}
+    .token.atrule,
+    .token.attr-value,
+    .token.keyword {
+        color: #bc319c;
+    }
 
-.token.regex,
-.token.important,
-.token.variable {
-    color: #784830;
-}
+    .token.function,
+    .token.class-name {
+        color: #967d41;
+    }
 
-.token.important,
-.token.bold {
-    font-weight: bold;
-}
-.token.italic {
-    font-style: italic;
-}
+    .token.regex,
+    .token.important,
+    .token.variable {
+        color: #784830;
+    }
 
-.token.entity {
-    cursor: help;
-}
+    .token.important,
+    .token.bold {
+        font-weight: bold;
+    }
+
+    .token.italic {
+        font-style: italic;
+    }
+
+    .token.entity {
+        cursor: help;
+    }
 
 
-pre[class*="language-"].line-numbers {
-  position: relative;
-  padding-left: 3.8rem;
-  counter-reset: linenumber;
-}
+    pre[class*="language-"].line-numbers {
+        position: relative;
+        padding-left: 3.8rem;
+        counter-reset: linenumber;
+    }
 
-pre[class*="language-"].line-numbers > code {
-  position: relative;
-  white-space: inherit;
-}
+    pre[class*="language-"].line-numbers > code {
+        position: relative;
+        white-space: inherit;
+    }
 
-.line-numbers .line-numbers-rows {
-  position: absolute;
-  pointer-events: none;
-  top: 0;
-  font-size: 100%;
-  left: -3.8rem;
-  width: 3rem; /* works for line-numbers below 1000 lines */
-  letter-spacing: -1px;
-  border-right: 1px solid #bfc0c0;
+    .line-numbers .line-numbers-rows {
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        font-size: 100%;
+        left: -3.8rem;
+        width: 3rem; /* works for line-numbers below 1000 lines */
+        letter-spacing: -1px;
+        border-right: 1px solid #bfc0c0;
 
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
 
-}
+    }
 
-  .line-numbers-rows > span {
-    display: block;
-    counter-increment: linenumber;
-  }
+    .line-numbers-rows > span {
+        display: block;
+        counter-increment: linenumber;
+    }
 
     .line-numbers-rows > span:before {
-      content: counter(linenumber);
-      color: #bfc0c0;
-      display: block;
-      padding-right: 0.8rem;
-      text-align: right;
+        content: counter(linenumber);
+        color: #bfc0c0;
+        display: block;
+        padding-right: 0.8rem;
+        text-align: right;
     }
 
 
-</style><script>(n=>{"use strict";let s,r,e;const l=["cdn.jsdelivr.net","fastly.jsdelivr.net","gcore.jsdelivr.net","cdn.zenless.top","testingcf.jsdelivr.net"],t="//",i=l[0],o=Date.now(),a=2e3,c="jsdelivr-auto-fallback",f="/gh/PipecraftNet/jsdelivr-auto-fallback@main/empty.css?",d=e=>e&&e.includes(t+i),m=e=>e.replace(t+i,t+s),u=window.setTimeout,v=n.querySelectorAll.bind(n),b=()=>{let e,t;for(e of v('link[rel="stylesheet"]'))t=e.href,d(t)&&!t.includes(f)&&(e.href=m(t));for(e of v("script"))if(t=e.src,d(t)){const s=n.createElement("script");s.src=m(t),e.defer=!0,e.src="",e.before(s),e.remove()}for(e of v("img"))t=e.src,d(t)&&(e.src="",e.src=m(t));for(e of v("*[style]"))t=e.getAttribute("style"),d(t)&&e.setAttribute("style",m(t));for(e of v("style"))t=e.innerHTML,d(t)&&(e.innerHTML=m(t))},h=()=>{!e&&r&&s&&(console.warn(i+" is not available. Use "+s),e=!0,u(b,0),u(b,20),setInterval(b,500))},g=(()=>{try{return Object.assign({},JSON.parse(localStorage.getItem(c)||"{}"))}catch{return{}}})(),y=()=>{g.time=o,g.failed=!1,g.fastNode=null;for(const t of l)((e,t)=>{let s;const r=n.createElement("link"),l=e=>{s&&(clearTimeout(s),s=0,e||(r.href="data:text/css;base64,"),r.remove(),t(e))};s=u(l,a),r.addEventListener("error",()=>l(!1)),r.addEventListener("load",()=>l(!0)),r.rel="stylesheet",r.text="text/css",r.href=e+f+o,n.head.insertAdjacentElement("afterbegin",r)})("https://"+t,e=>{e||t!==i||(r=!0,g.failed=!0),e&&!s&&(s=t),e&&!g.fastNode&&(g.fastNode=t),h()});u(()=>{r&&!s&&(s=l[1],h()),localStorage.setItem(c,JSON.stringify(g))},a+100)};if(g.time&&o-g.time<36e5&&g.failed&&g.fastNode)r=!0,s=g.fastNode,h(),u(y,1e3);else if(n.head)y();else{const j=new MutationObserver(()=>{n.head&&(j.disconnect(),y())});j.observe(n,{childList:!0,subtree:!0})}})(document);</script>
-<style>.mweb-charts{background:#fff;}
-body{ box-sizing: border-box;
-    margin: 0 auto;}
-@media print{
-    pre, code, pre code {
-     overflow: visible !important;
-     white-space: pre-wrap !important;       /* css-3 */
-     white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
-     white-space: -pre-wrap !important;      /* Opera 4-6 */
-     white-space: -o-pre-wrap !important;    /* Opera 7 */
-     word-wrap: break-word !important;       /* Internet Explorer 5.5+ */
+    </style>
+    <script>(n => {
+        "use strict";
+        let s, r, e;
+        const l = ["cdn.jsdelivr.net", "fastly.jsdelivr.net", "gcore.jsdelivr.net", "cdn.zenless.top", "testingcf.jsdelivr.net"],
+            t = "//", i = l[0], o = Date.now(), a = 2e3, c = "jsdelivr-auto-fallback",
+            f = "/gh/PipecraftNet/jsdelivr-auto-fallback@main/empty.css?", d = e => e && e.includes(t + i),
+            m = e => e.replace(t + i, t + s), u = window.setTimeout, v = n.querySelectorAll.bind(n), b = () => {
+                let e, t;
+                for (e of v('link[rel="stylesheet"]')) t = e.href, d(t) && !t.includes(f) && (e.href = m(t));
+                for (e of v("script")) if (t = e.src, d(t)) {
+                    const s = n.createElement("script");
+                    s.src = m(t), e.defer = !0, e.src = "", e.before(s), e.remove()
+                }
+                for (e of v("img")) t = e.src, d(t) && (e.src = "", e.src = m(t));
+                for (e of v("*[style]")) t = e.getAttribute("style"), d(t) && e.setAttribute("style", m(t));
+                for (e of v("style")) t = e.innerHTML, d(t) && (e.innerHTML = m(t))
+            }, h = () => {
+                !e && r && s && (console.warn(i + " is not available. Use " + s), e = !0, u(b, 0), u(b, 20), setInterval(b, 500))
+            }, g = (() => {
+                try {
+                    return Object.assign({}, JSON.parse(localStorage.getItem(c) || "{}"))
+                } catch {
+                    return {}
+                }
+            })(), y = () => {
+                g.time = o, g.failed = !1, g.fastNode = null;
+                for (const t of l) ((e, t) => {
+                    let s;
+                    const r = n.createElement("link"), l = e => {
+                        s && (clearTimeout(s), s = 0, e || (r.href = "data:text/css;base64,"), r.remove(), t(e))
+                    };
+                    s = u(l, a), r.addEventListener("error", () => l(!1)), r.addEventListener("load", () => l(!0)), r.rel = "stylesheet", r.text = "text/css", r.href = e + f + o, n.head.insertAdjacentElement("afterbegin", r)
+                })("https://" + t, e => {
+                    e || t !== i || (r = !0, g.failed = !0), e && !s && (s = t), e && !g.fastNode && (g.fastNode = t), h()
+                });
+                u(() => {
+                    r && !s && (s = l[1], h()), localStorage.setItem(c, JSON.stringify(g))
+                }, a + 100)
+            };
+        if (g.time && o - g.time < 36e5 && g.failed && g.fastNode) r = !0, s = g.fastNode, h(), u(y, 1e3); else if (n.head) y(); else {
+            const j = new MutationObserver(() => {
+                n.head && (j.disconnect(), y())
+            });
+            j.observe(n, {childList: !0, subtree: !0})
+        }
+    })(document);</script>
+    <style>.mweb-charts {
+        background: #fff;
     }
-    html,body{margin:0;padding:4px;}
-}
+
+    body {
+        box-sizing: border-box;
+        margin: 0 auto;
+    }
+
+    @media print {
+        pre, code, pre code {
+            overflow: visible !important;
+            white-space: pre-wrap !important; /* css-3 */
+            white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+            white-space: -pre-wrap !important; /* Opera 4-6 */
+            white-space: -o-pre-wrap !important; /* Opera 7 */
+            word-wrap: break-word !important; /* Internet Explorer 5.5+ */
+        }
+
+        html, body {
+            margin: 0;
+            padding: 4px;
+        }
+    }
 
 
+    div.code-toolbar {
+        position: relative;
+    }
 
-div.code-toolbar {
-  position: relative;
-}
+    div.code-toolbar > .toolbar {
+        position: absolute;
+        z-index: 10;
+        top: .3em;
+        right: .2em;
+        transition: opacity 0.3s ease-in-out;
+        opacity: 0;
+    }
 
-div.code-toolbar > .toolbar {
-  position: absolute;
-  z-index: 10;
-  top: .3em;
-  right: .2em;
-  transition: opacity 0.3s ease-in-out;
-  opacity: 0;
-}
+    div.code-toolbar:hover > .toolbar {
+        opacity: 1;
+    }
 
-div.code-toolbar:hover > .toolbar {
-  opacity: 1;
-}
+    /* Separate line b/c rules are thrown out if selector is invalid.
+       IE11 and old Edge versions don't support :focus-within. */
+    div.code-toolbar:focus-within > .toolbar {
+        opacity: 1;
+    }
 
-/* Separate line b/c rules are thrown out if selector is invalid.
-   IE11 and old Edge versions don't support :focus-within. */
-div.code-toolbar:focus-within > .toolbar {
-  opacity: 1;
-}
+    div.code-toolbar > .toolbar > .toolbar-item {
+        display: inline-block;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item {
-  display: inline-block;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > a {
+        cursor: pointer;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item > a {
-  cursor: pointer;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > button {
+        background: none;
+        border: 0;
+        color: inherit;
+        font: inherit;
+        line-height: normal;
+        overflow: visible;
+        padding: 0;
+        -webkit-user-select: none; /* for button */
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item > button {
-  background: none;
-  border: 0;
-  color: inherit;
-  font: inherit;
-  line-height: normal;
-  overflow: visible;
-  padding: 0;
-  -webkit-user-select: none; /* for button */
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > a,
+    div.code-toolbar > .toolbar > .toolbar-item > button,
+    div.code-toolbar > .toolbar > .toolbar-item > span {
+        color: inherit;
+        font-size: .8em;
+        padding: 4px .5em;
+        background: #f5f2f0;
+        background: rgba(224, 224, 224, 0.4);
+        box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2);
+        border-radius: .5em;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item > a,
-div.code-toolbar > .toolbar > .toolbar-item > button,
-div.code-toolbar > .toolbar > .toolbar-item > span {
-  color: inherit;
-  font-size: .8em;
-  padding: 4px .5em;
-  background: #f5f2f0;
-  background: rgba(224, 224, 224, 0.4);
-  box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
-  border-radius: .5em;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > a:hover,
+    div.code-toolbar > .toolbar > .toolbar-item > a:focus,
+    div.code-toolbar > .toolbar > .toolbar-item > button:hover,
+    div.code-toolbar > .toolbar > .toolbar-item > button:focus,
+    div.code-toolbar > .toolbar > .toolbar-item > span:hover,
+    div.code-toolbar > .toolbar > .toolbar-item > span:focus {
+        color: inherit;
+        text-decoration: none;
+    }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script>!function () {
+        if ("undefined" != typeof Prism && "undefined" != typeof document) {
+            var e = [], t = {}, n = function () {
+            };
+            Prism.plugins.toolbar = {};
+            var a = Prism.plugins.toolbar.registerButton = function (n, a) {
+                var r;
+                r = "function" == typeof a ? a : function (e) {
+                    var t;
+                    return "function" == typeof a.onClick ? ((t = document.createElement("button")).type = "button", t.addEventListener("click", (function () {
+                        a.onClick.call(this, e)
+                    }))) : "string" == typeof a.url ? (t = document.createElement("a")).href = a.url : t = document.createElement("span"), a.className && t.classList.add(a.className), t.textContent = a.text, t
+                }, n in t ? console.warn('There is a button with the key "' + n + '" registered already.') : e.push(t[n] = r)
+            }, r = Prism.plugins.toolbar.hook = function (a) {
+                var r = a.element.parentNode;
+                var l = a.element.classList;
+                if (l.contains('language-mermaid') || l.contains('language-echarts') || l.contains('language-plantuml')) {
+                    return;
+                }
+                if (r && /pre/i.test(r.nodeName) && !r.parentNode.classList.contains("code-toolbar")) {
+                    var o = document.createElement("div");
+                    o.classList.add("code-toolbar"), r.parentNode.insertBefore(o, r), o.appendChild(r);
+                    var i = document.createElement("div");
+                    i.classList.add("toolbar");
+                    var l = e, d = function (e) {
+                        for (; e;) {
+                            var t = e.getAttribute("data-toolbar-order");
+                            if (null != t) return (t = t.trim()).length ? t.split(/\s*,\s*/g) : [];
+                            e = e.parentElement
+                        }
+                    }(a.element);
+                    d && (l = d.map((function (e) {
+                        return t[e] || n
+                    }))), l.forEach((function (e) {
+                        var t = e(a);
+                        if (t) {
+                            var n = document.createElement("div");
+                            n.classList.add("toolbar-item"), n.appendChild(t), i.appendChild(n)
+                        }
+                    })), o.appendChild(i)
+                }
+            };
+            a("label", (function (e) {
+                var t = e.element.parentNode;
+                if (t && /pre/i.test(t.nodeName) && t.hasAttribute("data-label")) {
+                    var n, a, r = t.getAttribute("data-label");
+                    try {
+                        a = document.querySelector("template#" + r)
+                    } catch (e) {
+                    }
+                    return a ? n = a.content : (t.hasAttribute("data-url") ? (n = document.createElement("a")).href = t.getAttribute("data-url") : n = document.createElement("span"), n.textContent = r), n
+                }
+            })), Prism.hooks.add("complete", r)
+        }
+    }();</script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <style>div.code-toolbar > .toolbar > .toolbar-item > a, div.code-toolbar > .toolbar > .toolbar-item > button, div.code-toolbar > .toolbar > .toolbar-item > span {
+        padding: 4px .5em;
+        background: #f5f2f0;
+        background: rgba(224, 224, 224, 0.4);
+    }</style>
+    <script>window.MathJax = {
+        tex: {tags: 'ams', inlineMath: [['$', '$'], ['\\(', '\\)']]}, startup: {
+            pageReady() {
+                return MathJax.startup.defaultPageReady().then(function () {
+                    window.mweb_mathjax_ready_val = 'yes';
+                    if (window.mweb_mathjax_ready !== undefined) {
+                        mweb_mathjax_ready();
+                    }
+                });
+            }
+        }
+    };
+    document.addEventListener('DOMContentLoaded', function (event) {
+        if (typeof Prism != 'undefined') {
+            Prism.highlightAll();
+        }
+    });
+    window.mweb_mathjax_ready_val = '';
 
-div.code-toolbar > .toolbar > .toolbar-item > a:hover,
-div.code-toolbar > .toolbar > .toolbar-item > a:focus,
-div.code-toolbar > .toolbar > .toolbar-item > button:hover,
-div.code-toolbar > .toolbar > .toolbar-item > button:focus,
-div.code-toolbar > .toolbar > .toolbar-item > span:hover,
-div.code-toolbar > .toolbar > .toolbar-item > span:focus {
-  color: inherit;
-  text-decoration: none;
-}
-</style><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>!function(){if("undefined"!=typeof Prism&&"undefined"!=typeof document){var e=[],t={},n=function(){};Prism.plugins.toolbar={};var a=Prism.plugins.toolbar.registerButton=function(n,a){var r;r="function"==typeof a?a:function(e){var t;return"function"==typeof a.onClick?((t=document.createElement("button")).type="button",t.addEventListener("click",(function(){a.onClick.call(this,e)}))):"string"==typeof a.url?(t=document.createElement("a")).href=a.url:t=document.createElement("span"),a.className&&t.classList.add(a.className),t.textContent=a.text,t},n in t?console.warn('There is a button with the key "'+n+'" registered already.'):e.push(t[n]=r)},r=Prism.plugins.toolbar.hook=function(a){var r=a.element.parentNode;var l=a.element.classList;if(l.contains('language-mermaid') || l.contains('language-echarts') || l.contains('language-plantuml')){return;} if(r&&/pre/i.test(r.nodeName)&&!r.parentNode.classList.contains("code-toolbar")){var o=document.createElement("div");o.classList.add("code-toolbar"),r.parentNode.insertBefore(o,r),o.appendChild(r);var i=document.createElement("div");i.classList.add("toolbar");var l=e,d=function(e){for(;e;){var t=e.getAttribute("data-toolbar-order");if(null!=t)return(t=t.trim()).length?t.split(/\s*,\s*/g):[];e=e.parentElement}}(a.element);d&&(l=d.map((function(e){return t[e]||n}))),l.forEach((function(e){var t=e(a);if(t){var n=document.createElement("div");n.classList.add("toolbar-item"),n.appendChild(t),i.appendChild(n)}})),o.appendChild(i)}};a("label",(function(e){var t=e.element.parentNode;if(t&&/pre/i.test(t.nodeName)&&t.hasAttribute("data-label")){var n,a,r=t.getAttribute("data-label");try{a=document.querySelector("template#"+r)}catch(e){}return a?n=a.content:(t.hasAttribute("data-url")?(n=document.createElement("a")).href=t.getAttribute("data-url"):n=document.createElement("span"),n.textContent=r),n}})),Prism.hooks.add("complete",r)}}();</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.css"><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><style>div.code-toolbar > .toolbar > .toolbar-item > a, div.code-toolbar > .toolbar > .toolbar-item > button, div.code-toolbar > .toolbar > .toolbar-item > span {padding: 4px .5em; background: #f5f2f0; background: rgba(224, 224, 224, 0.4);}</style><script>window.MathJax = {     tex: { tags: 'ams', inlineMath: [ ['$','$'], ['\\(','\\)'] ] } ,     startup: {     pageReady() {       return MathJax.startup.defaultPageReady().then(function () {          window.mweb_mathjax_ready_val = 'yes';          if(window.mweb_mathjax_ready !== undefined){ mweb_mathjax_ready(); }       });     }   }};document.addEventListener('DOMContentLoaded', function(event) {    if (typeof Prism != 'undefined') {         Prism.highlightAll();     }});window.mweb_mathjax_ready_val = '';function theMWebMathJaxRenderIsReady(key){ return window.mweb_mathjax_ready_val; }</script><script>window.MathJax = { tex: { tags: 'ams', inlineMath: [ ['$','$'], ['\\(','\\)'] ] } }; </script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script> <style>body{max-width:808px; padding:24px;}</style></head><body><div id='markdown_content' class='markdown-body'><h2><a id="example-4-quantum-phase-estimation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example 4: Quantum Phase Estimation</h2>
-<h3><a id="purpose" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Purpose</h3>
-<p>Quantum Phase Estimation (QPE) is an important part of many quantum algorithms, such as Shor's factorization algorithm. This example shows how QPE can be implemented with TinyQsim.</p>
-<p>It demonstrates the following:</p>
-<ul>
-<li>How to implement QPE</li>
-<li>How to plot the probability distribution as a histogram</li>
-<li>How to create a custom controlled gate</li>
-<li>An application of the QFT developed in example 3</li>
-</ul>
-<p>We will start by importing the libraries that we need and the inverse QFT from example 3.</p>
-<pre><code class="language-python">PI = '\u03C0'  # Unicode pi
+    function theMWebMathJaxRenderIsReady(key) {
+        return window.mweb_mathjax_ready_val;
+    }</script>
+    <script>window.MathJax = {tex: {tags: 'ams', inlineMath: [['$', '$'], ['\\(', '\\)']]}}; </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+    <style>body {
+        max-width: 808px;
+        padding: 24px;
+    }</style>
+</head>
+<body>
+<div id='markdown_content' class='markdown-body'><h2><a id="example-4-quantum-phase-estimation" class="anchor"
+                                                        aria-hidden="true"><span
+        class="octicon octicon-link"></span></a>Example 4: Quantum Phase Estimation</h2>
+    <h3><a id="purpose" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Purpose</h3>
+    <p>Quantum Phase Estimation (QPE) is an important part of many quantum algorithms, such as Shor's factorization
+        algorithm. This example shows how QPE can be implemented with TinyQsim.</p>
+    <p>It demonstrates the following:</p>
+    <ul>
+        <li>How to implement QPE</li>
+        <li>How to plot the probability distribution as a histogram</li>
+        <li>How to create a custom controlled gate</li>
+        <li>An application of the QFT developed in example 3</li>
+    </ul>
+    <p>We will start by importing the libraries that we need and the inverse QFT from example 3.</p>
+    <pre><code class="language-python">PI = '\u03C0'  # Unicode pi
 PHI = '\u03d5'  # Unicode phi
 from math import pi
 
@@ -768,7 +957,7 @@ import numpy as np
 
 from tinyqsim.qcircuit import QCircuit
 </code></pre>
-<pre><code class="language-python">def iqft(qc, n: int, start: int = 0):
+    <pre><code class="language-python">def iqft(qc, n: int, start: int = 0):
     &quot;&quot;&quot; N-qubit inverse QFT starting at qubit index 'start'.&quot;&quot;&quot;
     for i in range(n // 2 - 1, -1, -1):  # Reverse order of qubits
         qc.swap(start + i, start + n - i - 1)
@@ -778,38 +967,42 @@ from tinyqsim.qcircuit import QCircuit
             qc.cp(-pi / 2 ** k, f'-{PI}/{2 ** k}', j, j + k)
         qc.h(j)
 </code></pre>
-<h3><a id="introduction" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
-<p>Any unitary operator can be expressed in terms of the phases of its eigenvectors:</p>
-<p>\(\qquad U=\sum_k{e^{i\theta_k}\,\ket{\psi_k}\bra{\psi_k}}\)</p>
-<p>where \(\lambda_k = e^{i\theta_k}\) are the corresponding eigenvalues.</p>
-<p>The eigenvalue always has a magnitude of one because the operator is unitary.</p>
-<p>If we apply the unitary to one of its eigenvectors \(\ket{\psi_k}\), the result will be the corresponding eigenvalue \(e^{i\theta_k}\) multiplied by the eigenstate:</p>
-<p>$\qquad\begin{align*}<br />
-U \ket{\psi_k} &amp;= ({e^{i\theta_k},\ket{\psi_k}\bra{\psi_k}})\ \ket{\psi_k}\<br />
-&amp;= e^{i\theta_k}\ket{\psi_k}<br />
-\end{align*}$</p>
-<p>The aim of QPE is to find the phase associated with an eigenvector \(\ket{\psi}\) of a unitary \(U\).</p>
-<p>The QPE algorithm works by expressing the phase as a binary fraction \(\,\phi\in[0,1]\) so that it can be approximated to the required precision one bit at a time:</p>
-<p>\(\quad\phi=\sum_{k=1}^n{\phi_k} 2^{-k} = 0.\phi_1\phi_2\dots\phi_n\)</p>
-<p>where \(\phi_k\in\{0,1\}\) and .' denotes the <em>binary point</em> analogous to a decimal point.</p>
-<p>The symbol \(\theta\) was used above for the phase in radians to avoid confusion.</p>
-<h3><a id="simple-1-qubit-phase-register" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simple 1-qubit Phase Register</h3>
-<p>Let us start with the simplest case of a one-bit binary estimation.</p>
-<pre><code class="language-python">def qpe1(qc, phi):
+    <h3><a id="introduction" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction
+    </h3>
+    <p>Any unitary operator can be expressed in terms of the phases of its eigenvectors:</p>
+    <p>\(\qquad U=\sum_k{e^{i\theta_k}\,\ket{\psi_k}\bra{\psi_k}}\)</p>
+    <p>where \(\lambda_k = e^{i\theta_k}\) are the corresponding eigenvalues.</p>
+    <p>The eigenvalue always has a magnitude of one because the operator is unitary.</p>
+    <p>If we apply the unitary to one of its eigenvectors \(\ket{\psi_k}\), the result will be the corresponding
+        eigenvalue \(e^{i\theta_k}\) multiplied by the eigenstate:</p>
+    <p>$\qquad\begin{align*}<br/>
+        U \ket{\psi_k} &amp;= ({e^{i\theta_k},\ket{\psi_k}\bra{\psi_k}})\ \ket{\psi_k}\<br/>
+        &amp;= e^{i\theta_k}\ket{\psi_k}<br/>
+        \end{align*}$</p>
+    <p>The aim of QPE is to find the phase associated with an eigenvector \(\ket{\psi}\) of a unitary \(U\).</p>
+    <p>The QPE algorithm works by expressing the phase as a binary fraction \(\,\phi\in[0,1]\) so that it can be
+        approximated to the required precision one bit at a time:</p>
+    <p>\(\quad\phi=\sum_{k=1}^n{\phi_k} 2^{-k} = 0.\phi_1\phi_2\dots\phi_n\)</p>
+    <p>where \(\phi_k\in\{0,1\}\) and .' denotes the <em>binary point</em> analogous to a decimal point.</p>
+    <p>The symbol \(\theta\) was used above for the phase in radians to avoid confusion.</p>
+    <h3><a id="simple-1-qubit-phase-register" class="anchor" aria-hidden="true"><span
+            class="octicon octicon-link"></span></a>Simple 1-qubit Phase Register</h3>
+    <p>Let us start with the simplest case of a one-bit binary estimation.</p>
+    <pre><code class="language-python">def qpe1(qc, phi):
     &quot;&quot;&quot; QPE for 1-qubit unitary using 1-qubit phase register.&quot;&quot;&quot;
     qc.barrier()
     qc.h(0)
     qc.cp(2 * pi * phi, f'{PHI}={phi}', 0, 1)
     qc.h(0)
 </code></pre>
-<p>We will first run the circuit with \(\phi=0\):</p>
-<pre><code class="language-python">phi = 0 / 2
+    <p>We will first run the circuit with \(\phi=0\):</p>
+    <pre><code class="language-python">phi = 0 / 2
 qc = QCircuit(2)
 qc.x(1)
 qpe1(qc, phi)
 qc.draw()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ0AAAB/CAYAAAD1j5d2AAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ0AAAB/CAYAAAD1j5d2AAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAADtRJREFUeJzt3X9wFOUZB/Dv
 3eVyIaKS8RAQBDqkkAM7gUShwkgUChG0SAtjaZJKlBa1IyPaVqtoBsHKqJXadmoF
@@ -891,12 +1084,13 @@ U5NSQ4cqNWWKUm+8odSGDUr5/UqVlxs/d9ddSnk8xrTNm5VyuZR69FGl9u2Tsrlc
 Sv3lL6mXxwkYNMgxqquVys+XLyag1LBhSq1effH7PXJEAlFurgSMJUuUam42fmbh
 Qsmzs3XrlBo9WqnsbKXGjpVAkuk4IpQcpzdHhJI+doQSkRYGDSLSwtMTItLClgYR
 aWHQICItDBpEpIVBg4i0MGgQkRYGDSLSwqBBRFoYNIhIy/8A+fN6RlYqDO0AAAAA
-SUVORK5CYII=" alt="png" /></p>
-<p>The X gate initializes qubit 1 to \(\ket{1}\), which is the eigenvector of the unitary P for which we want to find \(\phi\). The barrier symbol is simply to separate the initialization from the actual QPE algorithm.</p>
-<p>The input phase was 0, resulting in the output state \(\ket{0}\) as shown by the histogram:</p>
-<pre><code class="language-python">qc.plot_probabilities(0)
+SUVORK5CYII=" alt="png"/></p>
+    <p>The X gate initializes qubit 1 to \(\ket{1}\), which is the eigenvector of the unitary P for which we want to
+        find \(\phi\). The barrier symbol is simply to separate the initialization from the actual QPE algorithm.</p>
+    <p>The input phase was 0, resulting in the output state \(\ket{0}\) as shown by the histogram:</p>
+    <pre><code class="language-python">qc.plot_probabilities(0)
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcoAAACLCAYAAADh79mhAAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcoAAACLCAYAAADh79mhAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAEqxJREFUeJzt3XtQVOfhxvFn
 ua1JKnhlhRaRxomKmAQxjcSqIVYUbRzaTGtsVbTGip2JETQ1pGkZbKtNayujUdO0
@@ -998,16 +1192,16 @@ KNGjNmzYoOLiYl2+fFnp6ek6e/asbDabvvOd72jNmjVmxwNM1d7eLsMwFB4eLkn6
 5JNPlJiYqGXLlmndunUmp0MHihK3xJtvvqm3335biYmJeuCBBzRu3Dj3Pw5AX2cY
 hgzD0NGjR5WRkaFLly5xRWwIoSgBIES88cYbOnXqlH72s5+ZHQWfQ1ECQIjomFl+
 /qsiMB9FCQCAD/xvCwAAPlCUAAD4QFECAOADRQkAgA8UJQAAPlCUAAD4QFECAOAD
-RQkAgA8UJQAAPvwfUJQiQ1Z4DvEAAAAASUVORK5CYII=" alt="png" /></p>
-<p>If we repeat the run with \(\phi=\frac{1}{2}\), the output state is \(\ket{1}\):</p>
-<pre><code class="language-python">phi = 1 / 2
+RQkAgA8UJQAAPvwfUJQiQ1Z4DvEAAAAASUVORK5CYII=" alt="png"/></p>
+    <p>If we repeat the run with \(\phi=\frac{1}{2}\), the output state is \(\ket{1}\):</p>
+    <pre><code class="language-python">phi = 1 / 2
 qc = QCircuit(2)
 qc.x(1)  # q1 = |1&gt;
 qpe1(qc, phi)
 qc.draw()
 qc.plot_probabilities(0)
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ0AAAB/CAYAAAD1j5d2AAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ0AAAB/CAYAAAD1j5d2AAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAADqRJREFUeJzt3XtwVNUdB/Dv
 7mazIaKTjMtLENIhlay0E5IoCBmJQiESKDKFsQxJJUiLtiMjvqeiGQQf44vWdmpF
@@ -1088,8 +1282,8 @@ UuXlxvfddZdSHk/n8/37lZo9W6m1a5Xas0ep6mqlCgqUSk9X6oMP4i+PEzBokGNU
 VyuVm6uUyyUBZMQIpVav7vt+jx6VQJSZKQFj6VKlWlqM71m4UPKM+M9/lCotVWro
 UKW8XqWyspQqK0v+gKGUUpxPgxynshL4/HNZR5jMx45QItLCoEFEWtg8ISItPNMg
 Ii0MGkSkhUGDiLQwaBCRFgYNItLCoEFEWhg0iEgLgwYRafkfEfhbAUbYtKQAAAAA
-SUVORK5CYII=" alt="png" /></p>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcoAAACLCAYAAADh79mhAAAAOnRFWHRTb2Z0d2Fy
+SUVORK5CYII=" alt="png"/></p>
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcoAAACLCAYAAADh79mhAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAEpZJREFUeJzt3XtQVOfhxvFn
 5WaaCl5ZoUWgcaIiJkFMI7FqiBXFNA5tpjG2Klpjxc7EBDRV0rQMttVJayujUdO0
@@ -1191,12 +1385,21 @@ Wq36zne+ozVr1pgdDzCV2+2WYRgKCwuTJH3yySdKTEzU8uXLtX79epPToR1FiV7x
 1ltv6Z133lFiYqLuv/9+TZgwwfOPA9DfGYYhwzB07NgxZWZm6vLly1wRG0IoSgAI
 EW+++aZOnz6tn/3sZ2ZHwedQlAAQItpnlp+/VQTmoygBAPCB/7YAAOADRQkAgA8U
 JQAAPlCUAAD4QFECAOADRQkAgA8UJQAAPlCUAAD4QFECAODD/wGBzS1GIGNDDwAA
-AABJRU5ErkJggg==" alt="png" /></p>
-<p>A binary point must be placed before the result of 0 or 1 to express it as a binary fraction.</p>
-<p>The X gate gives qubit 1 an initial state of \(\ket{1}\), which is an eigenstate of the phase gate we are trying to measure. The <em>phase kickback</em> effect kicks the phase of the phase gate back to the control qubit q0. The first Hadamard (H) gate places qubit 0 in the superposition state \(\ket{+}\) by effectively transforming between the Z and X bases. The second Hadamard gate would simply undo the effect of the first one if there were no phase kickback to q0. However, with the phase kickback, the second Hadamard transforms the phase back to the Z-basis, resulting in a change in the probability of measuring \(\ket{0}\) or \(\ket{1}\). The second Hadamard is actually performing an inverse Quantum Fourier transform (QFT), but in the trivial case of one qubit this reduces to the Hadamard operator.</p>
-<h3><a id="qpe-algorithm-with-a-2-qubit-phase-register" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>QPE Algorithm with a 2-qubit Phase Register</h3>
-<p>To improve the accuracy, we need to add more qubits, each calculating the next bit in the binary expansion of the phase.</p>
-<pre><code class="language-python">def qpe2(qc, phi):
+AABJRU5ErkJggg==" alt="png"/></p>
+    <p>A binary point must be placed before the result of 0 or 1 to express it as a binary fraction.</p>
+    <p>The X gate gives qubit 1 an initial state of \(\ket{1}\), which is an eigenstate of the phase gate we are trying
+        to measure. The <em>phase kickback</em> effect kicks the phase of the phase gate back to the control qubit q0.
+        The first Hadamard (H) gate places qubit 0 in the superposition state \(\ket{+}\) by effectively transforming
+        between the Z and X bases. The second Hadamard gate would simply undo the effect of the first one if there were
+        no phase kickback to q0. However, with the phase kickback, the second Hadamard transforms the phase back to the
+        Z-basis, resulting in a change in the probability of measuring \(\ket{0}\) or \(\ket{1}\). The second Hadamard
+        is actually performing an inverse Quantum Fourier transform (QFT), but in the trivial case of one qubit this
+        reduces to the Hadamard operator.</p>
+    <h3><a id="qpe-algorithm-with-a-2-qubit-phase-register" class="anchor" aria-hidden="true"><span
+            class="octicon octicon-link"></span></a>QPE Algorithm with a 2-qubit Phase Register</h3>
+    <p>To improve the accuracy, we need to add more qubits, each calculating the next bit in the binary expansion of the
+        phase.</p>
+    <pre><code class="language-python">def qpe2(qc, phi):
     &quot;&quot;&quot; QPE for 1-qubit unitary using 2-qubit phase register.&quot;&quot;&quot;
     radians = 2 * pi * phi
     qc.barrier()
@@ -1208,14 +1411,14 @@ AABJRU5ErkJggg==" alt="png" /></p>
     qc.barrier()
     iqft(qc, 2, start=0)
 </code></pre>
-<p>We will create an instance with a unitary that has a phase \(\phi=\frac{1}{4}\).</p>
-<pre><code class="language-python">phi = 1 / 4
+    <p>We will create an instance with a unitary that has a phase \(\phi=\frac{1}{4}\).</p>
+    <pre><code class="language-python">phi = 1 / 4
 qc = QCircuit(3)
 qc.x(2)  # q2 = |1&gt;
 qpe2(qc, phi)
 qc.draw()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAh4AAAC2CAYAAACWE4TgAAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAh4AAAC2CAYAAACWE4TgAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAHZlJREFUeJzt3Xt01PWd//Hn
 ZHIhKXLRcFMa40/ABOiCxAt4A0UEKkW29SBCrGBarbv6O2irdGVNLYoe2cqpa7FW
@@ -1375,12 +1578,12 @@ MW4/xiwi7lHiId3SsWOwdWvrv88/372YYuHHuP0Ys4i4R4mHdEsnnwwlJfBv/2Ym
 NU6dasrnz3c1rE75MW4/xiwi7tGqFumWBg2CBx80SzzLy2HECHjlFWixL5Tn+DFu
 P8YsIu4JWJZluR2ESDLNnQtvvw379rkdSXz8GLcfYxYRd2moRURERByjxENEREQc
 o6EWERERcYx6PERERMQxSjxERETEMUo8RERExDFKPERERMQxSjxERETEMUo8RERE
-xDFKPERERMQxSjxERETEMUo8RERExDH/H0BkwMlra621AAAAAElFTkSuQmCC" alt="png" /></p>
-<p>The part of the circuit to the right of the second barrier is an inverese 2-qubit QFT to change the basis.</p>
-<p>We can plot the probabilities as a histogram.</p>
-<pre><code class="language-python">qc.plot_probabilities(*range(2))
+xDFKPERERMQxSjxERETEMUo8RERExDH/H0BkwMlra621AAAAAElFTkSuQmCC" alt="png"/></p>
+    <p>The part of the circuit to the right of the second barrier is an inverese 2-qubit QFT to change the basis.</p>
+    <p>We can plot the probabilities as a histogram.</p>
+    <pre><code class="language-python">qc.plot_probabilities(*range(2))
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcoAAACTCAYAAAAOallXAAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcoAAACTCAYAAAAOallXAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAF8tJREFUeJzt3XtUk+cdB/Bv
 uBitFRSQABsC1huXXhCLoqKlTClolTOPYleLWqulPROF6hTX1kk7XVdWOV7rBW91
@@ -1509,16 +1712,17 @@ mYlbt24hIiICFy9ehEKhwK9+9SssW7ZM6nh2g/1gPbRaLYQQcHR0BHB/fV0/Pz+8
 +uqrWL16tcTp7Ie99QMLZTfw+eef45tvvoGfnx+efvppPP7447o/UOo67AfrIYSA
 EAKnT59GVFQUqqurjZ6JSZ3DXvqBhZKIuq1PP/0UZ8+eta1LEbohW+8HFkoi6rZa
 RzS8pZa0bL0fWCiJiIiMsM3yT0REZCEslEREREawUBIRERnBQklERGQECyUREZER
-LJRERERGsFASEREZwUJJRERkBAslERGREf8BSTe/SFK/uN0AAAAASUVORK5CYII=" alt="png" /></p>
-<p>The resulting state is \(\ket{01}\). We place a binary point before the '01' giving the binary fraction \(0.01_2\) which is the value \(\phi=\frac{1}{4}\) expressed in binary.</p>
-<p>We can repeat the experiment for \(\phi=\frac{3}{4}\):</p>
-<pre><code class="language-python">phi = 3 / 4
+LJRERERGsFASEREZwUJJRERkBAslERGREf8BSTe/SFK/uN0AAAAASUVORK5CYII=" alt="png"/></p>
+    <p>The resulting state is \(\ket{01}\). We place a binary point before the '01' giving the binary fraction
+        \(0.01_2\) which is the value \(\phi=\frac{1}{4}\) expressed in binary.</p>
+    <p>We can repeat the experiment for \(\phi=\frac{3}{4}\):</p>
+    <pre><code class="language-python">phi = 3 / 4
 qc = QCircuit(3)
 qc.x(2)
 qpe2(qc, phi)
 qc.plot_probabilities(*range(2))
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcoAAACTCAYAAAAOallXAAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcoAAACTCAYAAAAOallXAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAF71JREFUeJzt3XtQVNcdB/Dv
 8nA1BlBQVmgRMD6BPBCDIqIhVAlolKnjI41BjdGQTEUhWsUmsZpUJw2NjM/4wFds
@@ -1647,12 +1851,14 @@ CgV+85vfYMWKFVLHsxvsB+uh1WohhICjoyOA++vr+vr64tVXX8W6deskTmc/7K0f
 WCi7gc8//xzffPMNfH198fTTT+Pxxx/X/QelrsN+sB5CCAghkJWVhcjISFRVVRm9
 EpM6h730AwslEXVbn376Kc6fP29btyJ0Q7beDyyURNRttY5o+Egtadl6P7BQEhER
 GWGb5Z+IiMhCWCiJiIiMYKEkIiIygoWSiIjICBZKIiIiI1goiYiIjGChJCIiMoKF
-koiIyAgWSiIiIiP+C+mUvSQAcIDuAAAAAElFTkSuQmCC" alt="png" /></p>
-<p>The result is \(0.11_2\) in binary as the phase to be found was \(\frac{3}{4}\).</p>
-<p>We can improve the phase resolution by measuring more binary bits.</p>
-<h3><a id="generalizing-to-an-k-qubit-phase-register" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generalizing to an K-qubit Phase Register</h3>
-<p>We can generalize the algorithm to 'k' qubits by using Python code to generate the circuit, as we we did with QFT in example 3.</p>
-<pre><code class="language-python">def qpe(qc, k, phi):
+koiIyAgWSiIiIiP+C+mUvSQAcIDuAAAAAElFTkSuQmCC" alt="png"/></p>
+    <p>The result is \(0.11_2\) in binary as the phase to be found was \(\frac{3}{4}\).</p>
+    <p>We can improve the phase resolution by measuring more binary bits.</p>
+    <h3><a id="generalizing-to-an-k-qubit-phase-register" class="anchor" aria-hidden="true"><span
+            class="octicon octicon-link"></span></a>Generalizing to an K-qubit Phase Register</h3>
+    <p>We can generalize the algorithm to 'k' qubits by using Python code to generate the circuit, as we we did with QFT
+        in example 3.</p>
+    <pre><code class="language-python">def qpe(qc, k, phi):
     &quot;&quot;&quot; QPE for 1-qubit unitary using k-qubit phase register.&quot;&quot;&quot;
     radians = 2 * pi * phi
     qc.barrier()
@@ -1666,15 +1872,15 @@ koiIyAgWSiIiIiP+C+mUvSQAcIDuAAAAAElFTkSuQmCC" alt="png" /></p>
     qc.barrier()
     iqft(qc, k, start=0)
 </code></pre>
-<p>We will create an instance for \(k=4\) with a unitary that has a phase of \(2\pi\times \frac{11}{16}\) :</p>
-<pre><code class="language-python">k = 4
+    <p>We will create an instance for \(k=4\) with a unitary that has a phase of \(2\pi\times \frac{11}{16}\) :</p>
+    <pre><code class="language-python">k = 4
 phi = 11 / 2 ** k
 qc = QCircuit(k + 1)
 qc.x(k)
 qpe(qc, k, phi)
 qc.draw()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABawAAAEjCAYAAADe90YjAAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABawAAAEjCAYAAADe90YjAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAUldJREFUeJzt3Xl8XFX9//FX
 ki5paClLChQwFAVsBKULS4tCWVuQfgFFLUuVQhVEEYGfLLLLKny/oIjwRdYiZRWV
@@ -2116,10 +2322,10 @@ SSfJT4y5Y8wMceaOMTPEmdvMhRNj7hgzQ5y5Y8wMceaOMTPEm1uSJEmtc0oQSZIk
 SZIkSVIqWLCWJEmSJEmSJKWCU4JIkiRJkiRJklLBEdaSJEmSJEmSpFSwYC1JkiRJ
 kiRJSgUL1pIkSZIkSZKkVLBgLUmSJEmSJElKBQvWkiRJkiRJkqRUsGAtSZIkSZIk
 SUoFC9aSJEmSJEmSpFSwYC1JkiRJkiRJSgUL1pIkSZIkSZKkVPj/q4ktbNF6sy0A
-AAAASUVORK5CYII=" alt="png" /></p>
-<pre><code class="language-python">qc.plot_probabilities(*range(k))
+AAAASUVORK5CYII=" alt="png"/></p>
+    <pre><code class="language-python">qc.plot_probabilities(*range(k))
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArMAAACjCAYAAACZrpapAAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArMAAACjCAYAAACZrpapAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAJdhJREFUeJzt3XlUVPX/x/HX
 ZdUUUERRFBEVFSUL3BMXRDGgzG/mwVxIK402c2uhzbTM/Na3/GpqZeCWncpccs1Q
@@ -2323,17 +2529,17 @@ ntK1a1f54IMPrJ3Gtruoi21sswadTmdyfmVeXp64u7sb75BnLVrtEmGbWmxTh23m
 ERISgqysLDRt2tTaWZrtAtimFtvUYVvVOJklIiJs2rQJBw4cwHvvvWftFBNa7QLY
 phbb1GHb7XEyS0RExiMsdnZ21k4xodUugG1qsU0dtt0eJ7NEREREZLO0N70nIiIi
 IjITJ7NEREREZLM4mSUiIiIim8XJLBERERHZLE5miYiIiMhmcTJLRERERDaLk1ki
-IiIislmczBIRERGRzeJkloiIiIhs1v8Dry1jShHC408AAAAASUVORK5CYII=" alt="png" /></p>
-<p>The result is \(\phi=0.1011_2\) which is \(\frac{11}{16}\).</p>
-<p>Finally, let us set the phase to half way between resolution steps:</p>
-<pre><code class="language-python">k = 4
+IiIislmczBIRERGRzeJkloiIiIhs1v8Dry1jShHC408AAAAASUVORK5CYII=" alt="png"/></p>
+    <p>The result is \(\phi=0.1011_2\) which is \(\frac{11}{16}\).</p>
+    <p>Finally, let us set the phase to half way between resolution steps:</p>
+    <pre><code class="language-python">k = 4
 phi = 3.5 / 2 ** k
 qc = QCircuit(k + 1)
 qc.x(k)
 qpe(qc, k, phi)
 qc.plot_probabilities(*range(k))
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArMAAACiCAYAAABS8kUMAAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAArMAAACiCAYAAABS8kUMAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAJpxJREFUeJzt3XtcFPX+x/H3
 AIKmgCKCoYikaChZ4L1AJRRDSu3iDzIlu2iWZWo36aZZZh6tPJp0vKFZVmaZmWGG
@@ -2541,14 +2747,16 @@ HbaZj9eZNcOPP/6IX375BT4+Pujduzduu+022Nvb2zoLANuupy6AbWqxTT25clAD
 u3btQmhoKHJzc9GmTRtbZ2m2C2CbWmxTh23XxsksERHh+++/x759+/DOO+/YOsWI
 VrsAtqnFNnXYVjNOZomIyHCExc7OztYpRrTaBbBNLbapw7aacTJLRERERI2W9qb3
 RERERERm4mSWiIiIiBotTmaJiIiIqNHiZJaIiIiIGi1OZomIiIio0eJkloiIiIga
-LU5miYiIiKjR4mSWiIiIiBotTmaJiIiIqNH6f0HV/tut7rJ7AAAAAElFTkSuQmCC" alt="png" /></p>
-<p>Phi has equal probabilities for 0011 and 0100 because the actual value is mid-way between them, e.g. 0.00111 (base 2).</p>
-<h3><a id="custom-unitary" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Custom Unitary</h3>
-<p>Let us define a custom unitary 'u' and modify the the QPE circuit to use it.</p>
-<pre><code class="language-python">def u(phi):
+LU5miYiIiKjR4mSWiIiIiBotTmaJiIiIqNH6f0HV/tut7rJ7AAAAAElFTkSuQmCC" alt="png"/></p>
+    <p>Phi has equal probabilities for 0011 and 0100 because the actual value is mid-way between them, e.g. 0.00111
+        (base 2).</p>
+    <h3><a id="custom-unitary" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Custom
+        Unitary</h3>
+    <p>Let us define a custom unitary 'u' and modify the the QPE circuit to use it.</p>
+    <pre><code class="language-python">def u(phi):
     return np.array([[1, 0], [0, np.exp(1j * 2 * pi * phi)]])
 </code></pre>
-<pre><code class="language-python">def qpe_u(qc, k, u):
+    <pre><code class="language-python">def qpe_u(qc, k, u):
     &quot;&quot;&quot; QPE for 1-qubit unitary using k-qubit phase register.&quot;&quot;&quot;
     qc.barrier()
     for q in range(k):
@@ -2561,14 +2769,14 @@ LU5miYiIiKjR4mSWiIiIiBotTmaJiIiIqNH6f0HV/tut7rJ7AAAAAElFTkSuQmCC" alt="png" /></
     qc.barrier()
     iqft(qc, k, start=0)
 </code></pre>
-<pre><code class="language-python">k = 3
+    <pre><code class="language-python">k = 3
 phi = 3 / 2 ** k
 qc = QCircuit(k + 1)
 qc.x(k)
 qpe_u(qc, k, u(phi))
 qc.draw()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA10AAADlCAYAAACoCp3aAAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA10AAADlCAYAAACoCp3aAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAALs1JREFUeJzt3Xt4VNW9//HP
 ZHIXRCUIKkasIBnBAySKgFUoioClSlstqPFUwKOnnOpPqWKPIK2XarWVPhWtFxRo
@@ -2820,10 +3028,10 @@ C9NJOBzWl19+GbXssMMOU0YGc50AADqHNgYAnEXR5RK1tbX6+9//HrVs0qRJys3N
 dSgRACBV0MYAgLM4xQUAAAAAFqLoAgAAAAALMbzQRTIz+ecAAFiDNgYAnMPshQAA
 AABgIYYXAgAAAICFKLoAAAAAwEIUXQAAAABgIYouAAAAALAQRRcAAAAAWIiiCwAA
 AAAsRNEFAAAAABai6AIAAAAAC1F0AQAAAICFKLoAAAAAwEIUXQAAAABgIYouAAAA
-ALAQRRcAAAAAWOj/A1I8BBLYZXbHAAAAAElFTkSuQmCC" alt="png" /></p>
-<pre><code class="language-python">qc.plot_probabilities(*range(k))
+ALAQRRcAAAAAWOj/A1I8BBLYZXbHAAAAAElFTkSuQmCC" alt="png"/></p>
+    <pre><code class="language-python">qc.plot_probabilities(*range(k))
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcoAAACbCAYAAADiOds6AAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcoAAACbCAYAAADiOds6AAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAHXJJREFUeJzt3XtUVOX+P/D3
 cJWQi4ggJCJ5RdECLCUhIxUCurjquPSUoh7TL91IyS50szynrJPn6PKCWUkey1ad
@@ -2983,6 +3191,8 @@ D8pTc37eR9kFX375Jb777jsEBgbi5ptvxtixY3tukV4rYR/UoTf0QS7/4o3c3FxE
 R0ejoqICAwYMUDpWp7APylNjfhZKIrKqL774AgcPHsQ//vEPpaNYjH1Qnprys1AS
 kVW1zgjU+Bgqc7EPylNTfhZKIiIiE5Qv1URERCrGQklERGQCCyUREZEJLJREREQm
 sFASERGZwEJJRERkAgslERGRCSyUREREJrBQEhERmfD/APxK4sGR+iluAAAAAElF
-TkSuQmCC" alt="png" /></p>
-<p>The estimated phase is \(0.011_2\) or \(\frac{3}{8}\).</p>
-</div></body></html>
+TkSuQmCC" alt="png"/></p>
+    <p>The estimated phase is \(0.011_2\) or \(\frac{3}{8}\).</p>
+</div>
+</body>
+</html>

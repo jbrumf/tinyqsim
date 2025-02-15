@@ -23,12 +23,14 @@ setup(
     python_requires='>=3.12',
     install_requires=[
         'more-itertools',
-        'numpy',
+        'numpy>=2',
         'matplotlib',
         'ipython',
         'ipympl',
         'scipy',
         'notebook',
-        'pytest'
+        'pytest',
+        'pdoc',
+        'nb-clean'
     ]
 )

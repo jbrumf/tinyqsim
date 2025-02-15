@@ -1,6 +1,9 @@
 # Quantum Computing Basics
 
-This is a short introduction to some basic concepts of quantum computation using the quantum gate model. Some knowledge of linear algebra is assumed.
+*Jon Brumfitt
+(First draft 19 June 2024, last updated 21 February 2025)*
+
+This is an introduction to some basic concepts of quantum computation using the quantum gate model. Some knowledge of linear algebra is assumed.
 
 ### Contents
 
@@ -17,13 +20,14 @@ This is a short introduction to some basic concepts of quantum computation using
     - [Projectors](#projectors)
   - [Multi-Qubit States](#multi-qubit-states)
   - [Unitary Operators](#unitary-operators)
+  - [Other Bases](#other-bases)
   - [No-Cloning Theorem](#no-cloning-theorem)
   - [Quantum Circuits](#quantum-circuits)
     - [Endianness](#endianness)
     - [Operations on Multiple Qubits](#operations-on-multiple-qubits)
     - [Composing Circuits](#composing-circuits)
-    - [Rearranging Qubits](#rearranging-qubits)
-  - [Other Bases](#other-bases)
+    - [Permutation of Qubits](#permutation-of-qubits)
+    - [Addressing Qubits](#addressing-qubits)
   - [Quantum Gates](#quantum-gates)
     - [Introduction](#introduction)
     - [Identity (I) Gate](#identity-i-gate)
@@ -54,6 +58,9 @@ This is a short introduction to some basic concepts of quantum computation using
     - [Exploring the Teleportation Example](#exploring-the-teleportation-example)
     - [Quantum Fourier Transform](#quantum-fourier-transform)
     - [Quantum Phase Estimation](#quantum-phase-estimation)
+  - [Simulating a Quantum Computer](#simulating-a-quantum-computer)
+    - [Using Matrices and Vectors](#using-matrices-and-vectors)
+    - [Using Tensors](#using-tensors)
   - [Conclusions](#conclusions)
   - [Bibliography](#bibliography)
 
@@ -436,6 +443,48 @@ The unitary operators in a gate-model quantum computer are called “quantum gat
 
 Unitary operators can be expressed as unitary matrices. A unitary matrix is one whose inverse is its conjugate transpose. It is the complex equivalent of a real orthonormal matrix. Unitary matrices are square, which results in quantum gates (and hence quantum circuits) having the same number of outputs as inputs. This is very different to ordinary digital logic gates where, for example, a NAND gate has two inputs and one output. The inputs of a NAND gate cannot be inferred from the output, so it is not reversible.
 
+## Other Bases
+
+So far, only the computational (Z) basis has been considered. However, there are other orthonormal bases that are useful, particularly the X and Y bases.
+
+The X basis vectors are denoted by $\ket{+}$ and $\ket{-}$ and are related to the computational (Z) basis vectors $\ket{0}$ and $\ket{1}$ as follows:
+
+```math
+\begin{align*}
+	\ket{+} &= {\small\frac{1}{\sqrt{2}}}(\ket{0} + \ket{1}) =  {\small\frac{1}{\sqrt{2}}} \begin{bmatrix}1\\1\end{bmatrix}\\[1ex]
+	\ket{-} &= {\small\frac{1}{\sqrt{2}}}(\ket{0} - \ket{1} =  {\small\frac{1}{\sqrt{2}}} \begin{bmatrix}1\\-1\end{bmatrix}
+\end{align*}
+```
+
+The Y basis vectors are denoted by $\ket{R}$ and $\ket{L}$, or sometimes $\ket{i}$ and $\ket{-i}$. They are related to the computational (Z) basis vectors $\ket{0}$ and $\ket{1}$ as follows:
+
+```math
+\begin{align*}
+	\ket{R} &= {\small\frac{1}{\sqrt{2}}}(\ket{0} + i\ket{1}) =  {\small\frac{1}{\sqrt{2}}} \begin{bmatrix}1\\i\end{bmatrix}\\[1ex]
+	\ket{L} &= {\small\frac{1}{\sqrt{2}}}(\ket{0} - i\ket{1} =  {\small\frac{1}{\sqrt{2}}} \begin{bmatrix}1\\-i\end{bmatrix}
+\end{align*}
+```
+
+The scaling factor of $\frac{1}{\sqrt{2}}$ is to normalize the vectors, so that the probabilities of the measurement outcomes sum to one.
+
+A basis state in the Z-basis corresponds to an equal superposition in the X-basis and vice versa. If we measure a qubit in the Z basis, the state will collapse into the Z basis state $\ket{0}$ or $\ket{1}$. If we then measure it in the X-basis, there is an equal probability that we will measure $\ket{+}$ or $\ket{-}$ and the state will become that X-basis eigenstate. If we then measure it again in the Z-basis, there will be an equal probability of measuring $\ket{0}$ or $\ket{1}$.
+
+This is an example of the *Uncertainty Principle*. If a qubit is measured in one measurement basis (e.g. Z), the state becomes an eigenstate in that basis. The value of the state is then completely unknown (i.e. in an equal superposition) in the complementary measurement basis (e.g. X).
+
+The operator that converts a qubit from the Z basis to the X basis, or vice versa, is the *Hadamard* operator $H$:
+
+```math
+H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 & 1 \\ 1 & -1 \end{bmatrix}
+```
+
+So, for example:
+
+```math
+H\ket{1} = \frac{1}{\sqrt{2}} \begin{bmatrix}1 & 1 \\ 1 & -1 \end{bmatrix}\begin{bmatrix}0\\1\end{bmatrix}=\frac{1}{\sqrt{2}}\begin{bmatrix}1\\-1\end{bmatrix}=\ket{-}
+```
+
+The X basis is also known as the Hadamard basis. The Hadamard operator H can be thought of as a one-qubit [Hadamard Transform](#hadamard-transform). It is also equivalent to a one-qubit [Quantum Fourier Transform](#quantum-fourier-transform).
+
 ## No-Cloning Theorem
 
 The *no-cloning* theorem of quantum mechanics says that, given an unknown quantum state, it is not possible to create an exact independent copy of it. For example, in quantum teleportation, it is not possible to send an unknown quantum state from A to B, unless the original state at A is lost in the process.
@@ -567,57 +616,69 @@ The A and B gates in this example may be applied in either order, or they can bo
 
 However, both A and B must be complete before C is applied. The circuit should be thought of as a *partially ordered* Directed Acyclic Graph (DAG), rather than as a strict time-sequence having time on the horizontal axis.
 
-### Rearranging Qubits
+### Permutation of Qubits
 
-It is more complicated when we want to apply a multi-qubit gate to non-consecutive qubits or to qubits that are in a different order. One possibility is to use [SWAP](#swap-gate) gates to swap pairs of qubits to make the required qubits adjacent and in the correct order, then apply the gate and finally reverse all the swaps to put the qubits back in the original order.
+Consider modifying the previous example so that there are 5 qubits and the $\ket{x}$ input is qubit 4 instead of qubit 1. The dotted lines on qubits 2 and 3 of gate 'C' indicate that the gate does not use these qubits.
 
-Non-consecutive qubits are a problem in real quantum computers because the qubits are typically physically arranged in a one or two dimensional array. Operations that involve interactions between qubits (e.g. CX), require them to be physically adjacent. A single swap of two non-adjacent qubits may be built from a sequence of smaller swaps of adjacent qubits. Consequently, many swaps may be needed.
+<div style="text-align: center;">
+<img src="assets_qcb/permute1.png" alt="permute1.png" height="270"/>
+</div>
+
+This gives rise to two problems. Firstly, the $\ket{x}$ and $\ket{y}$ qubits are non-adjacent and secondly the order of the qubits does not match the order required by gate 'C' (indicated by the 0 and 1 labels in the gate symbol).
+
+One solution is to use [SWAP](#swap-gate) gates to swap pairs of qubits to make the required qubits adjacent and in the correct order, then apply gate 'C' and finally reverse all the swaps to put the qubits back in the original order. The swap gates are denoted by a symbol with two crossses.
+
+<div style="text-align: center;">
+<img src="assets_qcb/permute3.png" alt="permute3.png" height="270"/>
+</div>
+
+The swap gates, like the other gates, require adjacent inputs, so we cannot swap qubits 0 and 4 directly, but instead need to use a chain of swaps of adjacent qubits. Consequently, a large number of swaps may be needed to permute the qubits, especially when there are many qubits.
+
+Non-consecutive qubits are a problem in real quantum computers because the qubits are typically physically arranged in a one or two dimensional array. Operations that involve interactions between qubits (e.g. CX), usually require them to be physically adjacent. Consequently, the physical topology of the array of gates is important in minimizing the number of swaps needed.
 
 Quantum computer programming languages and quantum circuit diagrams work at a higher level of abstraction, where multi-qubit gates can be applied to arbitrary qubits, without the user needing to worry about such issues. Software then compiles these into sequences of lower-level operations for the quantum hardware, taking into account the qubit topology and primitive operations available.
 
-In a simulator, rather than real quantum hardware, the state vector can be rearranged by permutation before applying the multi-qubit operation. Another technique is to represent the state vector as a tensor, then the qubits can be rearranged simply by permuting the tensor indices, rather than rearranging the data.
+Fortunately, in a quantum-computer simulator, we can avoid some of these isseues by permuting the qubit indices instead of the actual data. The next section takes a brief look at at some approaches to simulation.
 
-## Other Bases
+### Addressing Qubits
 
-So far, only the computational (Z) basis has been considered. However, there are other orthonormal bases that are useful, particularly the X and Y bases.
-
-The X basis vectors are denoted by $\ket{+}$ and $\ket{-}$ and are related to the computational (Z) basis vectors $\ket{0}$ and $\ket{1}$ as follows:
+It is important to understand that even a simple one-qubit gate can affect *all* the elements of the state vector. To see why this is, consider two qubits:
 
 ```math
 \begin{align*}
-	\ket{+} &= {\small\frac{1}{\sqrt{2}}}(\ket{0} + \ket{1}) =  {\small\frac{1}{\sqrt{2}}} \begin{bmatrix}1\\1\end{bmatrix}\\[1ex]
-	\ket{-} &= {\small\frac{1}{\sqrt{2}}}(\ket{0} - \ket{1} =  {\small\frac{1}{\sqrt{2}}} \begin{bmatrix}1\\-1\end{bmatrix}
+\qquad\ket{A}&=a_0\ket{0} + a_1\ket{1}\\
+\qquad\ket{B}&=b_0\ket{0} + b_1\ket{1}
 \end{align*}
 ```
 
-The Y basis vectors are denoted by $\ket{R}$ and $\ket{L}$, or sometimes $\ket{i}$ and $\ket{-i}$. They are related to the computational (Z) basis vectors $\ket{0}$ and $\ket{1}$ as follows:
+A 2-qubit state is formed by the tensor product of these two qubits:
 
 ```math
 \begin{align*}
-	\ket{R} &= {\small\frac{1}{\sqrt{2}}}(\ket{0} + i\ket{1}) =  {\small\frac{1}{\sqrt{2}}} \begin{bmatrix}1\\i\end{bmatrix}\\[1ex]
-	\ket{L} &= {\small\frac{1}{\sqrt{2}}}(\ket{0} - i\ket{1} =  {\small\frac{1}{\sqrt{2}}} \begin{bmatrix}1\\-i\end{bmatrix}
+\ket{AB} &= \ket{A} \otimes\ket{B}\\
+&= (a_0\ket{0} + a_1\ket{1})\otimes (b_0\ket{0} + b_1\ket{1})\\
+&=a_0b_0\ket{00} + a_0b_1\ket{01} + a_1b_0\ket{10} + a_1b_1\ket{11}
 \end{align*}
 ```
 
-The scaling factor of $\frac{1}{\sqrt{2}}$ is to normalize the vectors, so that the probabilities of the measurement outcomes sum to one.
-
-A basis state in the Z-basis corresponds to an equal superposition in the X-basis and vice versa. If we measure a qubit in the Z basis, the state will collapse into the Z basis state $\ket{0}$ or $\ket{1}$. If we then measure it in the X-basis, there is an equal probability that we will measure $\ket{+}$ or $\ket{-}$ and the state will become that X-basis eigenstate. If we then measure it again in the Z-basis, there will be an equal probability of measuring $\ket{0}$ or $\ket{1}$.
-
-This is an example of the *Uncertainty Principle*. If a qubit is measured in one measurement basis (e.g. Z), the state becomes an eigenstate in that basis. The value of the state is then completely unknown (i.e. in an equal superposition) in the complementary measurement basis (e.g. X).
-
-The operator that converts a qubit from the Z basis to the X basis, or vice versa, is the *Hadamard* operator $H$:
+This can be written as a table:
 
 ```math
-H = \frac{1}{\sqrt{2}} \begin{bmatrix}1 & 1 \\ 1 & -1 \end{bmatrix}
+\begin{align*}
+\ket{00}\quad & a_0b_0\\
+\ket{01}\quad & a_0b_1\\
+\ket{10}\quad & a_1b_0\\
+\ket{11}\quad & a_1b_1
+\end{align*}
 ```
 
-So, for example:
+The ket labels 00, 01, 10 and 11 can be thought of as binary numbers that index elements of the state vector. Qubits 0 and 1 corresponds to the first and second bits of this number respectively. The values of the elements, such as $a_0b_1$ all contain '$a$' and '$b$' terms. Consequently, modifying either of the qubits affects all of the elements of the state vector. 
 
-```math
-H\ket{1} = \frac{1}{\sqrt{2}} \begin{bmatrix}1 & 1 \\ 1 & -1 \end{bmatrix}\begin{bmatrix}0\\1\end{bmatrix}=\frac{1}{\sqrt{2}}\begin{bmatrix}1\\-1\end{bmatrix}=\ket{-}
-```
+This explains why we had to take the tensor product of gates with dummy identity gates to make a $2^N\times 2^N$ matrix that could be applied to the $2^N$ element state vector.
 
-The X basis is also known as the Hadamard basis. The Hadamard operator H can be thought of as a one-qubit [Hadamard Transform](#hadamard-transform). It is also equivalent to a one-qubit [Quantum Fourier Transform](#quantum-fourier-transform).
+Individual state elements do not correspond to qubits, so we cannot apply gates to a subset of the elements. However, it is possible to permute the order of qubits by permuting the elements of the state vector. This is equivalent to permuting the columns of the binary index values in the table above and then sorting the table by index. However, a one-qubit gate can still affect the complex amplitudes of all the state elements, so we still need to expand the qubit matrix to match the size of the state vector.
+
+As we will see in a later section on simulation, the use of tensors instead of vectors and matrices leads to a much simpler and more efficient approach, where qubits can be addressed directly and there is no need to expand matrices before applying them to the state.
 
 ## Quantum Gates
 
@@ -1386,6 +1447,48 @@ The following histogram shows the counts for different measurement outcomes from
 
 The resulting state is $\ket{011}$. Placing a binary point before the '011' gives the binary fraction $0.011_2$ which is the value $\theta=\frac{3}{8}$ expressed in binary.
 
+## Simulating a Quantum Computer
+
+A simulator that can run quantum circuits can be implemented in a number of different ways.
+
+### Using Matrices and Vectors
+
+One possible approach to simulation is to represent the quantum state vector as an array and the quantum gates as matrices, as in the earlier examples. Following this approach, a K-qubit gate requires a $2^K\times 2^K$ matrix of complex values, typically of 16 bytes each.
+
+However, even a one-qubit gate (e.g. Hadamard) needs to be expanded to an N-qubit matrix with $2^N\times 2^N$ elements in order to apply it to the N-qubit quantum state. For 15 qubits, the matrix would be about 17 GB, growing by a factor of 4 for each extra qubit. Not only is this a problem for memory but it is also extremely slow because of the enormous overhead in using such a large matrix, when the one-qubit gate to be applied only needs a 2x2 matrix.
+
+It is generally better to start with an initial state vector and multiply it by each expanded gate matrix in turn, than to multiply all the expanded matrices together first to form a circuit matrix and then multiply this by the state vector. The time complexity of the former is of the order $\mathcal{O}(M.2^{2N})$ for M gates applied one at a time, whereas the latter is of order $\mathcal{O}(M.2^{3N})$. This is just for the matrix multiplications. It does not take into account expanding the gates or permuting the qubits.
+
+There are various optimizations that can be applied with this approach. Groups of matrices may be combined in a bottom-up fashion by taking the matrix and tensor products before expanding them for application to the state vector. At least one N-qubit matrix will normally be needed at the end of the computation, so the memory needed for this large matrix will still be a limiting factor. Such optimisations can make a useful improvement but cannot compete with the exponential growth in complexity as the number of qubits increases.
+
+In conclusion, the 'brute force' approach of using matrices and vectors for simulation is only useful for very simple circuits involving up to about 12 qubits and is not used in practice.
+
+### Using Tensors
+
+A much better approach is to represent the quantum state as a tensor, with the tensor subscripts corresponding to qubits. A tensor is an abstract mathematical entity, but it may be represented in a specific orthonormal basis as a multi-dimensional array with one dimension per tensor index.
+
+Numerical libraries, such as Numpy, represent tensors this way as 'strided' arrays. The internal data structure is a one-dimensional array with a separate small 'stride' array that holds the step size between elements for each dimension. The dimensions (e.g. qubits) may be permuted simply by permuting the stride arrays, without altering the data array. The same one-dimensional data-array may have multiple 'views' each with its own stride array.
+
+The state vector may be converted into a tensor simply by changing the view. This is known as 'reshaping' the array. The vector and tensor are just different views of the same underlying 1D data array. Likewise, a gate matrix can be expressed as a tensor, with subscripts for both the input and ouput qubits, simply by reshaping it.
+
+For example, a 4-bit quantum state may be represented as the tensor $S_{abcd}$ where the subscripts correspond to qubits. Similarly, the matrix definition of a 2-qubit gate can be expressed as a tensor $U_{ijkl}$.
+
+If we now want to apply the 2-qubit gate to qubits (3,0) of the state, in that order, it is simply necessary to perform a tensor contraction, which can be expressed in Einstein summation notation as:
+
+$\qquad U_{ijdb}\,S_{abcd}\,\rightarrow S^{'}_{ajci}$
+
+Summation is implied over subscripts that are repeated within in a term, which in this case are $b$ and $d$.
+
+There is no longer any need to expand the gate definition to operate on the entire state. The gate tensor updates all the elements of the state tensor. The tensor indices take care of applying the gate to non-adjacent qubits in a specified order.
+
+The state tensor has $2^N$ elements of 16 bytes each and a K-qubit gate tensor has $2^{2K}$ elements of 16 bytes.
+
+The gate complexity is now only $\mathcal{O}(M.2^N)$. If the circuit is built from one and two qubit gates, a constant average gate size can be assumed, so the variation with gate size can be ignored. The time complexity for $M$ gates is then also $\mathcal{O}(M.2^N)$. This is better than the complexity for the matrix approach, which was $\mathcal{O}(M.2^{2N})$, by a factor of $2^N$, which is an exponential improvement.
+
+A different approach to using tensors is to represent the quantum circuit as a *tensor network*. This is a graph with nodes representing tensors and edges (connecting lines) representing tensor contractions. There are a variety of techniques and algorithms for optimizing such networks.
+
+Alternatively, there are software libraries, such as TensorFlow and PyTorch, that implement tensors as multi-dimensional arrays and can exploit hardware acceleration through the use of GPUs.
+
 ## Conclusions
 
 This has been a look at the basics of quantum computing, mostly from the perspective of information processing rather than physical implementation. There are many more topics to learn about, but it is hoped that this has been a useful start.
@@ -1401,9 +1504,3 @@ If you wish to explore further, the [Bibliography](#bibliography) contains some 
 [NC10]: M.A. Nielsen and I.L.Chuang, *Quantum Computation and Quantum Information*, 10th anniversary edition, Cambridge University Press, 2010.
 
 [Sus15]: L. Susskind, A. Friedman, Quantum Mechanics - The Theoretical Minimum, Penguin Books, 2015.
-
----
-
-*Jon Brumfitt
-19 June 2024
-Updated 5 February 2025*

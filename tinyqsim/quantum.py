@@ -12,7 +12,7 @@ import numpy.random as random
 from numpy import ndarray
 from numpy.linalg import norm
 
-from tinyqsim.utils import (is_normalized, normalize)
+from tinyqsim.utils import (is_unitary, is_normalized, normalize)
 
 RANGLE = '\u27E9'  # Unicode right bracket for ket
 
@@ -35,7 +35,6 @@ def random_state(nqubits: int) -> np.ndarray:
     """
     n = 2 ** nqubits
     gen = random.default_rng()
-
     while True:
         v = gen.normal(size=(2, n))
         z = v[0] + 1j * v[1]  # Random complex
@@ -49,13 +48,11 @@ def random_unitary(nq: int):
     """Return a random unitary matrix.
     :param nq: number of qubits
     """
-    while True:
-        # Create matrix of independent Gaussian random complex variables
-        m = random_state(nq * 2).reshape(2 ** nq, 2 ** nq)
-        if abs(np.linalg.det(m)) > 1E-6:  # Check non-singular
-            break
+    # Create matrix of independent Gaussian random complex variables
+    m = random_state(nq * 2).reshape(2 ** nq, 2 ** nq)
     # Orthonormalize using QR factorization
     q, r = np.linalg.qr(m)
+    assert is_unitary(q)
     return q
 
 
@@ -128,10 +125,11 @@ def apply_tensor(ts: ndarray, tu: ndarray, qubits: list[int]) -> ndarray:
 
     # Tensor subscripts as lists of integers
     a = range(nq)
-    b = [q + nq for q in qubits] + qubits
-    c = [i + nq if i in qubits else i for i in a]
+    b = [i + nq for i in range(len(qubits))]
+    fn = dict(zip(qubits, b))
+    c = [fn[i] if i in qubits else i for i in a]
 
-    return np.einsum(ts, a, tu, b, c, optimize=True)
+    return np.einsum(ts, a, tu, b + qubits, c, optimize=True)
 
 
 def compose_tensor(tu: ndarray, tg: ndarray, qubits: list[int]) -> ndarray:

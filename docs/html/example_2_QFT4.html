@@ -1,791 +1,1000 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>example_2_QFT4</title><style>html{font-size:16.000000px;}</style><style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
-
-html,body{background-color: #feffff;}
-
-.markdown-body {
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  line-height: 1.5;
-  color: #333333;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
-  font-size: 1rem;
-  word-wrap: break-word;
-}
-
-.markdown-body .octicon {
-  display: inline-block;
-  fill: currentColor;
-  vertical-align: text-bottom;
-}
-
-.markdown-body figure{margin:0;padding:0; display:table;}
-.markdown-body figure figcaption{font-size:92%; text-align:center; color:#09844f;}
-
-.markdown-body .anchor {
-  float: left;
-  line-height: 1;
-  margin-left: -1.25rem;
-  padding-right: 0.25rem;
-}
-
-.markdown-body .anchor:focus {
-  outline: none;
-}
-
-.markdown-body h1 .octicon-link,
-.markdown-body h2 .octicon-link,
-.markdown-body h3 .octicon-link,
-.markdown-body h4 .octicon-link,
-.markdown-body h5 .octicon-link,
-.markdown-body h6 .octicon-link {
-  color: #0595bf;
-  vertical-align: middle;
-  visibility: hidden;
-}
-
-.markdown-body h1:hover .anchor,
-.markdown-body h2:hover .anchor,
-.markdown-body h3:hover .anchor,
-.markdown-body h4:hover .anchor,
-.markdown-body h5:hover .anchor,
-.markdown-body h6:hover .anchor {
-  text-decoration: none;
-}
-
-.markdown-body details {
-  display: block;
-}
-
-.markdown-body summary {
-  display: list-item;
-}
-
-.markdown-body a {
-  background-color: initial;
-}
-
-.markdown-body a:active,
-.markdown-body a:hover {
-  outline-width: 0;
-}
-
-.markdown-body strong {
-  font-weight: inherit;
-  font-weight: bolder;
-}
-.markdown-body strong{
-  color: #333333;
-}
-.markdown-body em{
-  color: #333333;
-}
-
-.markdown-body img {
-  border-style: none;
-}
-
-.markdown-body code,
-.markdown-body kbd,
-.markdown-body pre {
-  font-family: monospace,monospace;
-  font-size: 0.9rem;
-}
-
-.markdown-body hr {
-  box-sizing: initial;
-  height: 0;
-  overflow: visible;
-}
-
-.markdown-body input {
-  font: inherit;
-  margin: 0;
-}
-
-.markdown-body input {
-  overflow: visible;
-}
-
-.markdown-body [type=checkbox] {
-  box-sizing: border-box;
-  padding: 0;
-}
-
-.markdown-body * {
-  box-sizing: border-box;
-}
-
-.markdown-body input {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-}
-
-.markdown-body a {
-  color: #0366dd;
-  text-decoration: none;
-}
-.markdown-body mjx-container[jax="SVG"] > svg a{fill:#0366dd;stroke: #0366dd;}
-
-.markdown-body a:hover {
-  text-decoration: underline;
-}
-
-.markdown-body strong {
-  font-weight: 600;
-}
-
-.markdown-body hr:after,
-.markdown-body hr:before {
-  display: table;
-  content: "";
-}
-
-.markdown-body hr:after {
-  clear: both;
-}
-
-.markdown-body table {
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-
-.markdown-body td,
-.markdown-body th {
-  padding: 0;
-}
-
-.markdown-body details summary {
-  cursor: pointer;
-}
-
-.markdown-body kbd {
-  display: inline-block;
-  padding: 0.1875rem 0.3125rem;
-  font: 0.75rem SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-  line-height: 0.75rem;
-  color: #09844f;
-  vertical-align: middle;
-  background-color: #f7f8f8;
-  border: 1px solid #e1e2e2;
-  border-radius: 0.1875rem;
-}
-
-.markdown-body p {
-  margin-top: 0;
-  margin-bottom: 0.625rem;
-}
-
-.markdown-body blockquote {
-  margin: 0;
-}
-
-.markdown-body ol,
-.markdown-body ul {
-  padding-left: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body ol ol,
-.markdown-body ul ol {
-  list-style-type: lower-roman;
-}
-
-.markdown-body ol ol ol,
-.markdown-body ol ul ol,
-.markdown-body ul ol ol,
-.markdown-body ul ul ol {
-  list-style-type: lower-alpha;
-}
-
-.markdown-body dd {
-  margin-left: 0;
-}
-
-.markdown-body code,
-.markdown-body pre {
-  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-  font-size: 0.75rem;
-}
-
-.markdown-body pre {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body input::-webkit-inner-spin-button,
-.markdown-body input::-webkit-outer-spin-button {
-  margin: 0;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.markdown-body:after,
-.markdown-body:before {
-  display: table;
-  content: "";
-}
-
-.markdown-body:after {
-  clear: both;
-}
-
-.markdown-body>:first-child {
-  margin-top: 0!important;
-}
-
-.markdown-body>:last-child {
-  margin-bottom: 0!important;
-}
-
-.markdown-body a:not([href]) {
-  color: inherit;
-  text-decoration: none;
-}
-
-.markdown-body blockquote,
-.markdown-body details,
-.markdown-body dl,
-.markdown-body ol,
-.markdown-body p,
-.markdown-body pre,
-.markdown-body table,
-.markdown-body ul {
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-.markdown-body hr {
-  height: .25rem;
-  padding: 0;
-  margin: 1.5rem 0;
-  background-color: #e1e2e2;
-  border: 0;
-}
-
-.markdown-body blockquote {
-  padding: 0 1rem;
-  color: #636363;
-  border-left: .25rem solid #bbbbbb;
-}
-
-.markdown-body blockquote>:first-child {
-  margin-top: 0;
-}
-
-.markdown-body blockquote>:last-child {
-  margin-bottom: 0;
-}
-
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  line-height: 1.25;
-}
-
-.markdown-body h1 {
-  font-size: 2em;
-}
-
-.markdown-body h1,
-.markdown-body h2 {
-  padding-bottom: .3rem;
-  border-bottom: 1px solid #e7e8e8;
-  color: #0595bf;
-}
-
-.markdown-body h2 {
-  font-size: 1.5rem;
-  color: #0595bf;
-}
-
-.markdown-body h3 {
-  font-size: 1.25rem;
-  color: #0595bf;
-}
-
-.markdown-body h4 {
-  font-size: 1rem;
-  color: #0595bf;
-}
-
-.markdown-body h5 {
-  font-size: .875rem;
-  color: #0595bf;
-}
-
-.markdown-body h6 {
-  font-size: .85rem;
-  color: #0595bf;
-}
-
-.markdown-body ol,
-.markdown-body ul {
-  padding-left: 2rem;
-}
-
-.markdown-body ol ol,
-.markdown-body ol ul,
-.markdown-body ul ol,
-.markdown-body ul ul {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body li {
-  word-wrap: break-all;
-}
-
-.markdown-body li>p {
-  margin-top: 1rem;
-}
-
-.markdown-body li+li {
-  margin-top: .25rem;
-}
-
-.markdown-body dl {
-  padding: 0;
-}
-
-.markdown-body dl dt {
-  padding: 0;
-  margin-top: 1rem;
-  font-size: 1rem;
-  font-style: italic;
-  font-weight: 600;
-}
-
-.markdown-body dl dd {
-  padding: 0 1rem;
-  margin-bottom: 1rem;
-}
-
-.markdown-body table {
-  display: block;
-  width: 100%;
-  overflow: auto;
-}
-
-.markdown-body table th {
-  font-weight: 600;
-}
-
-.markdown-body table td,
-.markdown-body table th {
-  padding: 0.375rem 0.75rem;
-  border: 1px solid #b9baba;
-}
-
-.markdown-body table tr {
-  background-color: #feffff;
-  border-top: 1px solid #b9baba;
-}
-
-.markdown-body table th {
-  background-color: #e7e8e8;
-}
-
-.markdown-body table tr:nth-child(2n) {
-  background-color: #f8f9f9;
-}
-
-.markdown-body img,.markdown-body video {
-  max-width: 100%;
-  box-sizing: initial;
-}
-
-.markdown-body img[align=right] {
-  padding-left: 1.25rem;
-}
-
-.markdown-body img[align=left] {
-  padding-right: 1.25rem;
-}
-
-.markdown-body code {
-  padding: .2rem .4rem;
-  margin: 0;
-  font-size: 85%;
-  background-color: #f7f8f8;
-  color: #09844f;
-  border-radius: 0.1875rem;
-}
-
-.markdown-body pre {
-  word-wrap: normal;
-}
-
-.markdown-body pre>code {
-  padding: 0;
-  margin: 0;
-   font-size: 100%;
-  word-break: normal;
-  white-space: pre;
-  background: transparent;
-  border: 0;
-}
-
-.markdown-body .highlight {
-  margin-bottom: 1rem;
-}
-
-.markdown-body .highlight pre {
-  margin-bottom: 0;
-  word-break: normal;
-}
-
-.markdown-body .highlight pre,
-.markdown-body pre {
-  padding: 1rem;
-  overflow: auto;
-  font-size: 85%;
-  line-height: 1.45;
-  background-color: #f7f8f8;
-  border-radius: 0.1875rem;
-}
-
-.markdown-body pre code {
-  display: inline;
-  max-width: auto;
-  padding: 0;
-  margin: 0;
-  overflow: visible;
-  line-height: inherit;
-  word-wrap: normal;
-  background-color: initial;
-  border: 0;
-  color: #09844f;
-}
-
-.markdown-body .task-list-item {
-  list-style-type: none;
-}
-
-.markdown-body .task-list-item+.task-list-item {
-  margin-top: 0.1875rem;
-}
-
-.markdown-body .task-list-item input {
-  margin: 0 .2rem .25rem -1.6rem;
-  vertical-align: middle;
-}
-
-.markdown-body .task-list-item input[type="checkbox"]{
--webkit-appearance: none;-moz-appearance: none;appearance: none;
-width: 0.875rem; height: 0.875rem;outline: none;
-border: 1px solid #0366dd;border-radius: 2px; 
-}
-.markdown-body .task-list-item input[type="checkbox"]:checked {
-  background:no-repeat center/80% url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Cpath%20fill%3D%22%230366dd%22%20d%3D%22M173.898%20439.404l-166.4-166.4c-9.997-9.997-9.997-26.206%200-36.204l36.203-36.204c9.997-9.998%2026.207-9.998%2036.204%200L192%20312.69%20432.095%2072.596c9.997-9.997%2026.207-9.997%2036.204%200l36.203%2036.204c9.997%209.997%209.997%2026.206%200%2036.204l-294.4%20294.401c-9.998%209.997-26.207%209.997-36.204-.001z%22%2F%3E%3C%2Fsvg%3E") ;
-}
-
-.markdown-body section.footnotes{
-    margin-top:3rem;
-    border-top:solid 1px #e1e2e2;
-    padding-top:0px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .markdown-body mark{color: #111;}
-}
-
-/* PrismJS 1.23.0
-https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript */
-/**
- * prism.js default theme for JavaScript, CSS and HTML
- * Based on dabblet (http://dabblet.com)
- * @author Lea Verou
- */
-
-
-code[class*="language-"],
-pre[class*="language-"] {
-    color: black;
-    background: none;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
-}
-
-@media print {
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>example_2_QFT4</title>
+    <style>html {
+        font-size: 16.000000px;
+    }</style>
+    <style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
+
+    html, body {
+        background-color: #feffff;
+    }
+
+    .markdown-body {
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+        line-height: 1.5;
+        color: #333333;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+        font-size: 1rem;
+        word-wrap: break-word;
+    }
+
+    .markdown-body .octicon {
+        display: inline-block;
+        fill: currentColor;
+        vertical-align: text-bottom;
+    }
+
+    .markdown-body figure {
+        margin: 0;
+        padding: 0;
+        display: table;
+    }
+
+    .markdown-body figure figcaption {
+        font-size: 92%;
+        text-align: center;
+        color: #09844f;
+    }
+
+    .markdown-body .anchor {
+        float: left;
+        line-height: 1;
+        margin-left: -1.25rem;
+        padding-right: 0.25rem;
+    }
+
+    .markdown-body .anchor:focus {
+        outline: none;
+    }
+
+    .markdown-body h1 .octicon-link,
+    .markdown-body h2 .octicon-link,
+    .markdown-body h3 .octicon-link,
+    .markdown-body h4 .octicon-link,
+    .markdown-body h5 .octicon-link,
+    .markdown-body h6 .octicon-link {
+        color: #0595bf;
+        vertical-align: middle;
+        visibility: hidden;
+    }
+
+    .markdown-body h1:hover .anchor,
+    .markdown-body h2:hover .anchor,
+    .markdown-body h3:hover .anchor,
+    .markdown-body h4:hover .anchor,
+    .markdown-body h5:hover .anchor,
+    .markdown-body h6:hover .anchor {
+        text-decoration: none;
+    }
+
+    .markdown-body details {
+        display: block;
+    }
+
+    .markdown-body summary {
+        display: list-item;
+    }
+
+    .markdown-body a {
+        background-color: initial;
+    }
+
+    .markdown-body a:active,
+    .markdown-body a:hover {
+        outline-width: 0;
+    }
+
+    .markdown-body strong {
+        font-weight: inherit;
+        font-weight: bolder;
+    }
+
+    .markdown-body strong {
+        color: #333333;
+    }
+
+    .markdown-body em {
+        color: #333333;
+    }
+
+    .markdown-body img {
+        border-style: none;
+    }
+
+    .markdown-body code,
+    .markdown-body kbd,
+    .markdown-body pre {
+        font-family: monospace, monospace;
+        font-size: 0.9rem;
+    }
+
+    .markdown-body hr {
+        box-sizing: initial;
+        height: 0;
+        overflow: visible;
+    }
+
+    .markdown-body input {
+        font: inherit;
+        margin: 0;
+    }
+
+    .markdown-body input {
+        overflow: visible;
+    }
+
+    .markdown-body [type=checkbox] {
+        box-sizing: border-box;
+        padding: 0;
+    }
+
+    .markdown-body * {
+        box-sizing: border-box;
+    }
+
+    .markdown-body input {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    .markdown-body a {
+        color: #0366dd;
+        text-decoration: none;
+    }
+
+    .markdown-body mjx-container[jax="SVG"] > svg a {
+        fill: #0366dd;
+        stroke: #0366dd;
+    }
+
+    .markdown-body a:hover {
+        text-decoration: underline;
+    }
+
+    .markdown-body strong {
+        font-weight: 600;
+    }
+
+    .markdown-body hr:after,
+    .markdown-body hr:before {
+        display: table;
+        content: "";
+    }
+
+    .markdown-body hr:after {
+        clear: both;
+    }
+
+    .markdown-body table {
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+
+    .markdown-body td,
+    .markdown-body th {
+        padding: 0;
+    }
+
+    .markdown-body details summary {
+        cursor: pointer;
+    }
+
+    .markdown-body kbd {
+        display: inline-block;
+        padding: 0.1875rem 0.3125rem;
+        font: 0.75rem SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+        line-height: 0.75rem;
+        color: #09844f;
+        vertical-align: middle;
+        background-color: #f7f8f8;
+        border: 1px solid #e1e2e2;
+        border-radius: 0.1875rem;
+    }
+
+    .markdown-body p {
+        margin-top: 0;
+        margin-bottom: 0.625rem;
+    }
+
+    .markdown-body blockquote {
+        margin: 0;
+    }
+
+    .markdown-body ol,
+    .markdown-body ul {
+        padding-left: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .markdown-body ol ol,
+    .markdown-body ul ol {
+        list-style-type: lower-roman;
+    }
+
+    .markdown-body ol ol ol,
+    .markdown-body ol ul ol,
+    .markdown-body ul ol ol,
+    .markdown-body ul ul ol {
+        list-style-type: lower-alpha;
+    }
+
+    .markdown-body dd {
+        margin-left: 0;
+    }
+
+    .markdown-body code,
+    .markdown-body pre {
+        font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+        font-size: 0.75rem;
+    }
+
+    .markdown-body pre {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .markdown-body input::-webkit-inner-spin-button,
+    .markdown-body input::-webkit-outer-spin-button {
+        margin: 0;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    .markdown-body:after,
+    .markdown-body:before {
+        display: table;
+        content: "";
+    }
+
+    .markdown-body:after {
+        clear: both;
+    }
+
+    .markdown-body > :first-child {
+        margin-top: 0 !important;
+    }
+
+    .markdown-body > :last-child {
+        margin-bottom: 0 !important;
+    }
+
+    .markdown-body a:not([href]) {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .markdown-body blockquote,
+    .markdown-body details,
+    .markdown-body dl,
+    .markdown-body ol,
+    .markdown-body p,
+    .markdown-body pre,
+    .markdown-body table,
+    .markdown-body ul {
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+
+    .markdown-body hr {
+        height: .25rem;
+        padding: 0;
+        margin: 1.5rem 0;
+        background-color: #e1e2e2;
+        border: 0;
+    }
+
+    .markdown-body blockquote {
+        padding: 0 1rem;
+        color: #636363;
+        border-left: .25rem solid #bbbbbb;
+    }
+
+    .markdown-body blockquote > :first-child {
+        margin-top: 0;
+    }
+
+    .markdown-body blockquote > :last-child {
+        margin-bottom: 0;
+    }
+
+    .markdown-body h1,
+    .markdown-body h2,
+    .markdown-body h3,
+    .markdown-body h4,
+    .markdown-body h5,
+    .markdown-body h6 {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        line-height: 1.25;
+    }
+
+    .markdown-body h1 {
+        font-size: 2em;
+    }
+
+    .markdown-body h1,
+    .markdown-body h2 {
+        padding-bottom: .3rem;
+        border-bottom: 1px solid #e7e8e8;
+        color: #0595bf;
+    }
+
+    .markdown-body h2 {
+        font-size: 1.5rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h3 {
+        font-size: 1.25rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h4 {
+        font-size: 1rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h5 {
+        font-size: .875rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h6 {
+        font-size: .85rem;
+        color: #0595bf;
+    }
+
+    .markdown-body ol,
+    .markdown-body ul {
+        padding-left: 2rem;
+    }
+
+    .markdown-body ol ol,
+    .markdown-body ol ul,
+    .markdown-body ul ol,
+    .markdown-body ul ul {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .markdown-body li {
+        word-wrap: break-all;
+    }
+
+    .markdown-body li > p {
+        margin-top: 1rem;
+    }
+
+    .markdown-body li + li {
+        margin-top: .25rem;
+    }
+
+    .markdown-body dl {
+        padding: 0;
+    }
+
+    .markdown-body dl dt {
+        padding: 0;
+        margin-top: 1rem;
+        font-size: 1rem;
+        font-style: italic;
+        font-weight: 600;
+    }
+
+    .markdown-body dl dd {
+        padding: 0 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .markdown-body table {
+        display: block;
+        width: 100%;
+        overflow: auto;
+    }
+
+    .markdown-body table th {
+        font-weight: 600;
+    }
+
+    .markdown-body table td,
+    .markdown-body table th {
+        padding: 0.375rem 0.75rem;
+        border: 1px solid #b9baba;
+    }
+
+    .markdown-body table tr {
+        background-color: #feffff;
+        border-top: 1px solid #b9baba;
+    }
+
+    .markdown-body table th {
+        background-color: #e7e8e8;
+    }
+
+    .markdown-body table tr:nth-child(2n) {
+        background-color: #f8f9f9;
+    }
+
+    .markdown-body img, .markdown-body video {
+        max-width: 100%;
+        box-sizing: initial;
+    }
+
+    .markdown-body img[align=right] {
+        padding-left: 1.25rem;
+    }
+
+    .markdown-body img[align=left] {
+        padding-right: 1.25rem;
+    }
+
+    .markdown-body code {
+        padding: .2rem .4rem;
+        margin: 0;
+        font-size: 85%;
+        background-color: #f7f8f8;
+        color: #09844f;
+        border-radius: 0.1875rem;
+    }
+
+    .markdown-body pre {
+        word-wrap: normal;
+    }
+
+    .markdown-body pre > code {
+        padding: 0;
+        margin: 0;
+        font-size: 100%;
+        word-break: normal;
+        white-space: pre;
+        background: transparent;
+        border: 0;
+    }
+
+    .markdown-body .highlight {
+        margin-bottom: 1rem;
+    }
+
+    .markdown-body .highlight pre {
+        margin-bottom: 0;
+        word-break: normal;
+    }
+
+    .markdown-body .highlight pre,
+    .markdown-body pre {
+        padding: 1rem;
+        overflow: auto;
+        font-size: 85%;
+        line-height: 1.45;
+        background-color: #f7f8f8;
+        border-radius: 0.1875rem;
+    }
+
+    .markdown-body pre code {
+        display: inline;
+        max-width: auto;
+        padding: 0;
+        margin: 0;
+        overflow: visible;
+        line-height: inherit;
+        word-wrap: normal;
+        background-color: initial;
+        border: 0;
+        color: #09844f;
+    }
+
+    .markdown-body .task-list-item {
+        list-style-type: none;
+    }
+
+    .markdown-body .task-list-item + .task-list-item {
+        margin-top: 0.1875rem;
+    }
+
+    .markdown-body .task-list-item input {
+        margin: 0 .2rem .25rem -1.6rem;
+        vertical-align: middle;
+    }
+
+    .markdown-body .task-list-item input[type="checkbox"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 0.875rem;
+        height: 0.875rem;
+        outline: none;
+        border: 1px solid #0366dd;
+        border-radius: 2px;
+    }
+
+    .markdown-body .task-list-item input[type="checkbox"]:checked {
+        background: no-repeat center/80% url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Cpath%20fill%3D%22%230366dd%22%20d%3D%22M173.898%20439.404l-166.4-166.4c-9.997-9.997-9.997-26.206%200-36.204l36.203-36.204c9.997-9.998%2026.207-9.998%2036.204%200L192%20312.69%20432.095%2072.596c9.997-9.997%2026.207-9.997%2036.204%200l36.203%2036.204c9.997%209.997%209.997%2026.206%200%2036.204l-294.4%20294.401c-9.998%209.997-26.207%209.997-36.204-.001z%22%2F%3E%3C%2Fsvg%3E");
+    }
+
+    .markdown-body section.footnotes {
+        margin-top: 3rem;
+        border-top: solid 1px #e1e2e2;
+        padding-top: 0px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .markdown-body mark {
+            color: #111;
+        }
+    }
+
+    /* PrismJS 1.23.0
+    https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript */
+    /**
+     * prism.js default theme for JavaScript, CSS and HTML
+     * Based on dabblet (http://dabblet.com)
+     * @author Lea Verou
+     */
+
+
     code[class*="language-"],
     pre[class*="language-"] {
-        text-shadow: none;
+        color: black;
+        background: none;
+        font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+        text-align: left;
+        white-space: pre;
+        word-spacing: normal;
+        word-break: normal;
+        word-wrap: normal;
+        -moz-tab-size: 4;
+        -o-tab-size: 4;
+        tab-size: 4;
+
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
     }
-}
 
-/* Code blocks */
-pre[class*="language-"] {
-    padding: 1rem;
-    margin: .5rem 0;
-    overflow: auto;
-}
+    @media print {
+        code[class*="language-"],
+        pre[class*="language-"] {
+            text-shadow: none;
+        }
+    }
 
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-    background-color: #f7f8f8;
-}
+    /* Code blocks */
+    pre[class*="language-"] {
+        padding: 1rem;
+        margin: .5rem 0;
+        overflow: auto;
+    }
 
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-    padding: .1rem;
-    border-radius: .3rem;
-    white-space: normal;
-}
+    :not(pre) > code[class*="language-"],
+    pre[class*="language-"] {
+        background-color: #f7f8f8;
+    }
 
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-    color: #8e9c92;
-}
+    /* Inline code */
+    :not(pre) > code[class*="language-"] {
+        padding: .1rem;
+        border-radius: .3rem;
+        white-space: normal;
+    }
 
-.token.punctuation {
-    color: #2834ce;
-}
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+        color: #8e9c92;
+    }
 
-.token.namespace {
-    opacity: .7;
-}
+    .token.punctuation {
+        color: #2834ce;
+    }
 
-.token.property,
-.token.tag,
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol,
-.token.deleted {
-    color: #2834ce;
-}
+    .token.namespace {
+        opacity: .7;
+    }
 
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
-    color: #d32d26;
-}
+    .token.property,
+    .token.tag,
+    .token.boolean,
+    .token.number,
+    .token.constant,
+    .token.symbol,
+    .token.deleted {
+        color: #2834ce;
+    }
 
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
-    color: #$$codeBlockColor$$;
-}
+    .token.selector,
+    .token.attr-name,
+    .token.string,
+    .token.char,
+    .token.builtin,
+    .token.inserted {
+        color: #d32d26;
+    }
 
-.token.atrule,
-.token.attr-value,
-.token.keyword {
-    color: #bc319c;
-}
+    .token.operator,
+    .token.entity,
+    .token.url,
+    .language-css .token.string,
+    .style .token.string {
+        color: # $ $ codeBlockColor $ $;
+    }
 
-.token.function,
-.token.class-name {
-    color: #967d41;
-}
+    .token.atrule,
+    .token.attr-value,
+    .token.keyword {
+        color: #bc319c;
+    }
 
-.token.regex,
-.token.important,
-.token.variable {
-    color: #784830;
-}
+    .token.function,
+    .token.class-name {
+        color: #967d41;
+    }
 
-.token.important,
-.token.bold {
-    font-weight: bold;
-}
-.token.italic {
-    font-style: italic;
-}
+    .token.regex,
+    .token.important,
+    .token.variable {
+        color: #784830;
+    }
 
-.token.entity {
-    cursor: help;
-}
+    .token.important,
+    .token.bold {
+        font-weight: bold;
+    }
+
+    .token.italic {
+        font-style: italic;
+    }
+
+    .token.entity {
+        cursor: help;
+    }
 
 
-pre[class*="language-"].line-numbers {
-  position: relative;
-  padding-left: 3.8rem;
-  counter-reset: linenumber;
-}
+    pre[class*="language-"].line-numbers {
+        position: relative;
+        padding-left: 3.8rem;
+        counter-reset: linenumber;
+    }
 
-pre[class*="language-"].line-numbers > code {
-  position: relative;
-  white-space: inherit;
-}
+    pre[class*="language-"].line-numbers > code {
+        position: relative;
+        white-space: inherit;
+    }
 
-.line-numbers .line-numbers-rows {
-  position: absolute;
-  pointer-events: none;
-  top: 0;
-  font-size: 100%;
-  left: -3.8rem;
-  width: 3rem; /* works for line-numbers below 1000 lines */
-  letter-spacing: -1px;
-  border-right: 1px solid #bfc0c0;
+    .line-numbers .line-numbers-rows {
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        font-size: 100%;
+        left: -3.8rem;
+        width: 3rem; /* works for line-numbers below 1000 lines */
+        letter-spacing: -1px;
+        border-right: 1px solid #bfc0c0;
 
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
 
-}
+    }
 
-  .line-numbers-rows > span {
-    display: block;
-    counter-increment: linenumber;
-  }
+    .line-numbers-rows > span {
+        display: block;
+        counter-increment: linenumber;
+    }
 
     .line-numbers-rows > span:before {
-      content: counter(linenumber);
-      color: #bfc0c0;
-      display: block;
-      padding-right: 0.8rem;
-      text-align: right;
+        content: counter(linenumber);
+        color: #bfc0c0;
+        display: block;
+        padding-right: 0.8rem;
+        text-align: right;
     }
 
 
-</style><script>(n=>{"use strict";let s,r,e;const l=["cdn.jsdelivr.net","fastly.jsdelivr.net","gcore.jsdelivr.net","cdn.zenless.top","testingcf.jsdelivr.net"],t="//",i=l[0],o=Date.now(),a=2e3,c="jsdelivr-auto-fallback",f="/gh/PipecraftNet/jsdelivr-auto-fallback@main/empty.css?",d=e=>e&&e.includes(t+i),m=e=>e.replace(t+i,t+s),u=window.setTimeout,v=n.querySelectorAll.bind(n),b=()=>{let e,t;for(e of v('link[rel="stylesheet"]'))t=e.href,d(t)&&!t.includes(f)&&(e.href=m(t));for(e of v("script"))if(t=e.src,d(t)){const s=n.createElement("script");s.src=m(t),e.defer=!0,e.src="",e.before(s),e.remove()}for(e of v("img"))t=e.src,d(t)&&(e.src="",e.src=m(t));for(e of v("*[style]"))t=e.getAttribute("style"),d(t)&&e.setAttribute("style",m(t));for(e of v("style"))t=e.innerHTML,d(t)&&(e.innerHTML=m(t))},h=()=>{!e&&r&&s&&(console.warn(i+" is not available. Use "+s),e=!0,u(b,0),u(b,20),setInterval(b,500))},g=(()=>{try{return Object.assign({},JSON.parse(localStorage.getItem(c)||"{}"))}catch{return{}}})(),y=()=>{g.time=o,g.failed=!1,g.fastNode=null;for(const t of l)((e,t)=>{let s;const r=n.createElement("link"),l=e=>{s&&(clearTimeout(s),s=0,e||(r.href="data:text/css;base64,"),r.remove(),t(e))};s=u(l,a),r.addEventListener("error",()=>l(!1)),r.addEventListener("load",()=>l(!0)),r.rel="stylesheet",r.text="text/css",r.href=e+f+o,n.head.insertAdjacentElement("afterbegin",r)})("https://"+t,e=>{e||t!==i||(r=!0,g.failed=!0),e&&!s&&(s=t),e&&!g.fastNode&&(g.fastNode=t),h()});u(()=>{r&&!s&&(s=l[1],h()),localStorage.setItem(c,JSON.stringify(g))},a+100)};if(g.time&&o-g.time<36e5&&g.failed&&g.fastNode)r=!0,s=g.fastNode,h(),u(y,1e3);else if(n.head)y();else{const j=new MutationObserver(()=>{n.head&&(j.disconnect(),y())});j.observe(n,{childList:!0,subtree:!0})}})(document);</script>
-<style>.mweb-charts{background:#fff;}
-body{ box-sizing: border-box;
-    margin: 0 auto;}
-@media print{
-    pre, code, pre code {
-     overflow: visible !important;
-     white-space: pre-wrap !important;       /* css-3 */
-     white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
-     white-space: -pre-wrap !important;      /* Opera 4-6 */
-     white-space: -o-pre-wrap !important;    /* Opera 7 */
-     word-wrap: break-word !important;       /* Internet Explorer 5.5+ */
+    </style>
+    <script>(n => {
+        "use strict";
+        let s, r, e;
+        const l = ["cdn.jsdelivr.net", "fastly.jsdelivr.net", "gcore.jsdelivr.net", "cdn.zenless.top", "testingcf.jsdelivr.net"],
+            t = "//", i = l[0], o = Date.now(), a = 2e3, c = "jsdelivr-auto-fallback",
+            f = "/gh/PipecraftNet/jsdelivr-auto-fallback@main/empty.css?", d = e => e && e.includes(t + i),
+            m = e => e.replace(t + i, t + s), u = window.setTimeout, v = n.querySelectorAll.bind(n), b = () => {
+                let e, t;
+                for (e of v('link[rel="stylesheet"]')) t = e.href, d(t) && !t.includes(f) && (e.href = m(t));
+                for (e of v("script")) if (t = e.src, d(t)) {
+                    const s = n.createElement("script");
+                    s.src = m(t), e.defer = !0, e.src = "", e.before(s), e.remove()
+                }
+                for (e of v("img")) t = e.src, d(t) && (e.src = "", e.src = m(t));
+                for (e of v("*[style]")) t = e.getAttribute("style"), d(t) && e.setAttribute("style", m(t));
+                for (e of v("style")) t = e.innerHTML, d(t) && (e.innerHTML = m(t))
+            }, h = () => {
+                !e && r && s && (console.warn(i + " is not available. Use " + s), e = !0, u(b, 0), u(b, 20), setInterval(b, 500))
+            }, g = (() => {
+                try {
+                    return Object.assign({}, JSON.parse(localStorage.getItem(c) || "{}"))
+                } catch {
+                    return {}
+                }
+            })(), y = () => {
+                g.time = o, g.failed = !1, g.fastNode = null;
+                for (const t of l) ((e, t) => {
+                    let s;
+                    const r = n.createElement("link"), l = e => {
+                        s && (clearTimeout(s), s = 0, e || (r.href = "data:text/css;base64,"), r.remove(), t(e))
+                    };
+                    s = u(l, a), r.addEventListener("error", () => l(!1)), r.addEventListener("load", () => l(!0)), r.rel = "stylesheet", r.text = "text/css", r.href = e + f + o, n.head.insertAdjacentElement("afterbegin", r)
+                })("https://" + t, e => {
+                    e || t !== i || (r = !0, g.failed = !0), e && !s && (s = t), e && !g.fastNode && (g.fastNode = t), h()
+                });
+                u(() => {
+                    r && !s && (s = l[1], h()), localStorage.setItem(c, JSON.stringify(g))
+                }, a + 100)
+            };
+        if (g.time && o - g.time < 36e5 && g.failed && g.fastNode) r = !0, s = g.fastNode, h(), u(y, 1e3); else if (n.head) y(); else {
+            const j = new MutationObserver(() => {
+                n.head && (j.disconnect(), y())
+            });
+            j.observe(n, {childList: !0, subtree: !0})
+        }
+    })(document);</script>
+    <style>.mweb-charts {
+        background: #fff;
     }
-    html,body{margin:0;padding:4px;}
-}
+
+    body {
+        box-sizing: border-box;
+        margin: 0 auto;
+    }
+
+    @media print {
+        pre, code, pre code {
+            overflow: visible !important;
+            white-space: pre-wrap !important; /* css-3 */
+            white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+            white-space: -pre-wrap !important; /* Opera 4-6 */
+            white-space: -o-pre-wrap !important; /* Opera 7 */
+            word-wrap: break-word !important; /* Internet Explorer 5.5+ */
+        }
+
+        html, body {
+            margin: 0;
+            padding: 4px;
+        }
+    }
 
 
+    div.code-toolbar {
+        position: relative;
+    }
 
-div.code-toolbar {
-  position: relative;
-}
+    div.code-toolbar > .toolbar {
+        position: absolute;
+        z-index: 10;
+        top: .3em;
+        right: .2em;
+        transition: opacity 0.3s ease-in-out;
+        opacity: 0;
+    }
 
-div.code-toolbar > .toolbar {
-  position: absolute;
-  z-index: 10;
-  top: .3em;
-  right: .2em;
-  transition: opacity 0.3s ease-in-out;
-  opacity: 0;
-}
+    div.code-toolbar:hover > .toolbar {
+        opacity: 1;
+    }
 
-div.code-toolbar:hover > .toolbar {
-  opacity: 1;
-}
+    /* Separate line b/c rules are thrown out if selector is invalid.
+       IE11 and old Edge versions don't support :focus-within. */
+    div.code-toolbar:focus-within > .toolbar {
+        opacity: 1;
+    }
 
-/* Separate line b/c rules are thrown out if selector is invalid.
-   IE11 and old Edge versions don't support :focus-within. */
-div.code-toolbar:focus-within > .toolbar {
-  opacity: 1;
-}
+    div.code-toolbar > .toolbar > .toolbar-item {
+        display: inline-block;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item {
-  display: inline-block;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > a {
+        cursor: pointer;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item > a {
-  cursor: pointer;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > button {
+        background: none;
+        border: 0;
+        color: inherit;
+        font: inherit;
+        line-height: normal;
+        overflow: visible;
+        padding: 0;
+        -webkit-user-select: none; /* for button */
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item > button {
-  background: none;
-  border: 0;
-  color: inherit;
-  font: inherit;
-  line-height: normal;
-  overflow: visible;
-  padding: 0;
-  -webkit-user-select: none; /* for button */
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > a,
+    div.code-toolbar > .toolbar > .toolbar-item > button,
+    div.code-toolbar > .toolbar > .toolbar-item > span {
+        color: inherit;
+        font-size: .8em;
+        padding: 4px .5em;
+        background: #f5f2f0;
+        background: rgba(224, 224, 224, 0.4);
+        box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2);
+        border-radius: .5em;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item > a,
-div.code-toolbar > .toolbar > .toolbar-item > button,
-div.code-toolbar > .toolbar > .toolbar-item > span {
-  color: inherit;
-  font-size: .8em;
-  padding: 4px .5em;
-  background: #f5f2f0;
-  background: rgba(224, 224, 224, 0.4);
-  box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
-  border-radius: .5em;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > a:hover,
+    div.code-toolbar > .toolbar > .toolbar-item > a:focus,
+    div.code-toolbar > .toolbar > .toolbar-item > button:hover,
+    div.code-toolbar > .toolbar > .toolbar-item > button:focus,
+    div.code-toolbar > .toolbar > .toolbar-item > span:hover,
+    div.code-toolbar > .toolbar > .toolbar-item > span:focus {
+        color: inherit;
+        text-decoration: none;
+    }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script>!function () {
+        if ("undefined" != typeof Prism && "undefined" != typeof document) {
+            var e = [], t = {}, n = function () {
+            };
+            Prism.plugins.toolbar = {};
+            var a = Prism.plugins.toolbar.registerButton = function (n, a) {
+                var r;
+                r = "function" == typeof a ? a : function (e) {
+                    var t;
+                    return "function" == typeof a.onClick ? ((t = document.createElement("button")).type = "button", t.addEventListener("click", (function () {
+                        a.onClick.call(this, e)
+                    }))) : "string" == typeof a.url ? (t = document.createElement("a")).href = a.url : t = document.createElement("span"), a.className && t.classList.add(a.className), t.textContent = a.text, t
+                }, n in t ? console.warn('There is a button with the key "' + n + '" registered already.') : e.push(t[n] = r)
+            }, r = Prism.plugins.toolbar.hook = function (a) {
+                var r = a.element.parentNode;
+                var l = a.element.classList;
+                if (l.contains('language-mermaid') || l.contains('language-echarts') || l.contains('language-plantuml')) {
+                    return;
+                }
+                if (r && /pre/i.test(r.nodeName) && !r.parentNode.classList.contains("code-toolbar")) {
+                    var o = document.createElement("div");
+                    o.classList.add("code-toolbar"), r.parentNode.insertBefore(o, r), o.appendChild(r);
+                    var i = document.createElement("div");
+                    i.classList.add("toolbar");
+                    var l = e, d = function (e) {
+                        for (; e;) {
+                            var t = e.getAttribute("data-toolbar-order");
+                            if (null != t) return (t = t.trim()).length ? t.split(/\s*,\s*/g) : [];
+                            e = e.parentElement
+                        }
+                    }(a.element);
+                    d && (l = d.map((function (e) {
+                        return t[e] || n
+                    }))), l.forEach((function (e) {
+                        var t = e(a);
+                        if (t) {
+                            var n = document.createElement("div");
+                            n.classList.add("toolbar-item"), n.appendChild(t), i.appendChild(n)
+                        }
+                    })), o.appendChild(i)
+                }
+            };
+            a("label", (function (e) {
+                var t = e.element.parentNode;
+                if (t && /pre/i.test(t.nodeName) && t.hasAttribute("data-label")) {
+                    var n, a, r = t.getAttribute("data-label");
+                    try {
+                        a = document.querySelector("template#" + r)
+                    } catch (e) {
+                    }
+                    return a ? n = a.content : (t.hasAttribute("data-url") ? (n = document.createElement("a")).href = t.getAttribute("data-url") : n = document.createElement("span"), n.textContent = r), n
+                }
+            })), Prism.hooks.add("complete", r)
+        }
+    }();</script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <style>div.code-toolbar > .toolbar > .toolbar-item > a, div.code-toolbar > .toolbar > .toolbar-item > button, div.code-toolbar > .toolbar > .toolbar-item > span {
+        padding: 4px .5em;
+        background: #f5f2f0;
+        background: rgba(224, 224, 224, 0.4);
+    }</style>
+    <script>window.MathJax = {
+        tex: {tags: 'ams', inlineMath: [['$', '$'], ['\\(', '\\)']]}, startup: {
+            pageReady() {
+                return MathJax.startup.defaultPageReady().then(function () {
+                    window.mweb_mathjax_ready_val = 'yes';
+                    if (window.mweb_mathjax_ready !== undefined) {
+                        mweb_mathjax_ready();
+                    }
+                });
+            }
+        }
+    };
+    document.addEventListener('DOMContentLoaded', function (event) {
+        if (typeof Prism != 'undefined') {
+            Prism.highlightAll();
+        }
+    });
+    window.mweb_mathjax_ready_val = '';
 
-div.code-toolbar > .toolbar > .toolbar-item > a:hover,
-div.code-toolbar > .toolbar > .toolbar-item > a:focus,
-div.code-toolbar > .toolbar > .toolbar-item > button:hover,
-div.code-toolbar > .toolbar > .toolbar-item > button:focus,
-div.code-toolbar > .toolbar > .toolbar-item > span:hover,
-div.code-toolbar > .toolbar > .toolbar-item > span:focus {
-  color: inherit;
-  text-decoration: none;
-}
-</style><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>!function(){if("undefined"!=typeof Prism&&"undefined"!=typeof document){var e=[],t={},n=function(){};Prism.plugins.toolbar={};var a=Prism.plugins.toolbar.registerButton=function(n,a){var r;r="function"==typeof a?a:function(e){var t;return"function"==typeof a.onClick?((t=document.createElement("button")).type="button",t.addEventListener("click",(function(){a.onClick.call(this,e)}))):"string"==typeof a.url?(t=document.createElement("a")).href=a.url:t=document.createElement("span"),a.className&&t.classList.add(a.className),t.textContent=a.text,t},n in t?console.warn('There is a button with the key "'+n+'" registered already.'):e.push(t[n]=r)},r=Prism.plugins.toolbar.hook=function(a){var r=a.element.parentNode;var l=a.element.classList;if(l.contains('language-mermaid') || l.contains('language-echarts') || l.contains('language-plantuml')){return;} if(r&&/pre/i.test(r.nodeName)&&!r.parentNode.classList.contains("code-toolbar")){var o=document.createElement("div");o.classList.add("code-toolbar"),r.parentNode.insertBefore(o,r),o.appendChild(r);var i=document.createElement("div");i.classList.add("toolbar");var l=e,d=function(e){for(;e;){var t=e.getAttribute("data-toolbar-order");if(null!=t)return(t=t.trim()).length?t.split(/\s*,\s*/g):[];e=e.parentElement}}(a.element);d&&(l=d.map((function(e){return t[e]||n}))),l.forEach((function(e){var t=e(a);if(t){var n=document.createElement("div");n.classList.add("toolbar-item"),n.appendChild(t),i.appendChild(n)}})),o.appendChild(i)}};a("label",(function(e){var t=e.element.parentNode;if(t&&/pre/i.test(t.nodeName)&&t.hasAttribute("data-label")){var n,a,r=t.getAttribute("data-label");try{a=document.querySelector("template#"+r)}catch(e){}return a?n=a.content:(t.hasAttribute("data-url")?(n=document.createElement("a")).href=t.getAttribute("data-url"):n=document.createElement("span"),n.textContent=r),n}})),Prism.hooks.add("complete",r)}}();</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.css"><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><style>div.code-toolbar > .toolbar > .toolbar-item > a, div.code-toolbar > .toolbar > .toolbar-item > button, div.code-toolbar > .toolbar > .toolbar-item > span {padding: 4px .5em; background: #f5f2f0; background: rgba(224, 224, 224, 0.4);}</style><script>window.MathJax = {     tex: { tags: 'ams', inlineMath: [ ['$','$'], ['\\(','\\)'] ] } ,     startup: {     pageReady() {       return MathJax.startup.defaultPageReady().then(function () {          window.mweb_mathjax_ready_val = 'yes';          if(window.mweb_mathjax_ready !== undefined){ mweb_mathjax_ready(); }       });     }   }};document.addEventListener('DOMContentLoaded', function(event) {    if (typeof Prism != 'undefined') {         Prism.highlightAll();     }});window.mweb_mathjax_ready_val = '';function theMWebMathJaxRenderIsReady(key){ return window.mweb_mathjax_ready_val; }</script><script>window.MathJax = { tex: { tags: 'ams', inlineMath: [ ['$','$'], ['\\(','\\)'] ] } }; </script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script> <style>body{max-width:808px; padding:24px;}</style></head><body><div id='markdown_content' class='markdown-body'><h2><a id="example-2-four-qubit-quantum-fourier-transform-qft" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example 2: Four-Qubit Quantum Fourier Transform (QFT)</h2>
-<h3><a id="purpose" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Purpose</h3>
-<p>This example assumes familiarity with the basics of TinyQsim from example 1. It shows how we can build a quantum circuit for a 4-qubit Quantum Fourier Transform (QFT). It then creates an inverse QFT to show how we can make the inverse of a quantum circuit.</p>
-<p>Example 3 goes on to extend this 4-qubit QFT to a more general N-qubit QFT.</p>
-<p>We will start by importing TinyQsim and the Python libraries that we will need:</p>
-<pre><code class="language-python">PI = '\u03C0'  # PI unicode
+    function theMWebMathJaxRenderIsReady(key) {
+        return window.mweb_mathjax_ready_val;
+    }</script>
+    <script>window.MathJax = {tex: {tags: 'ams', inlineMath: [['$', '$'], ['\\(', '\\)']]}}; </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+    <style>body {
+        max-width: 808px;
+        padding: 24px;
+    }</style>
+</head>
+<body>
+<div id='markdown_content' class='markdown-body'><h2><a id="example-2-four-qubit-quantum-fourier-transform-qft"
+                                                        class="anchor" aria-hidden="true"><span
+        class="octicon octicon-link"></span></a>Example 2: Four-Qubit Quantum Fourier Transform (QFT)</h2>
+    <h3><a id="purpose" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Purpose</h3>
+    <p>This example assumes familiarity with the basics of TinyQsim from example 1. It shows how we can build a quantum
+        circuit for a 4-qubit Quantum Fourier Transform (QFT). It then creates an inverse QFT to show how we can make
+        the inverse of a quantum circuit.</p>
+    <p>Example 3 goes on to extend this 4-qubit QFT to a more general N-qubit QFT.</p>
+    <p>We will start by importing TinyQsim and the Python libraries that we will need:</p>
+    <pre><code class="language-python">PI = '\u03C0'  # PI unicode
 from math import pi
 
 import numpy as np
 
 from tinyqsim.qcircuit import QCircuit
 </code></pre>
-<h3><a id="the-quantum-fourier-transform" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Quantum Fourier Transform</h3>
-<p>The Quantum Fourier Transform (QFT) is in important algorithm in quantum computing. It is used for estimating phase and periodicities in algorithms such as Shor's well-known integer factorization algorithm.</p>
-<p>The QFT has the same effect as applying the normal inverse Discrete Fourier Transform (DFT) to the quantum state vector. It is equivalent to the <em>inverse</em> DFT, rather than forward DFT, simply because a different sign convention is normally used. However, for a quantum computer, we have to find a way to implement the transform using only quantum gates.</p>
-<p>The inverse DFT, with \(\frac{1}{\sqrt{N}}\) normalization, can be defined as:</p>
-\[\qquad X_n = \frac{1}{\sqrt{N}} \sum_{m=0}^{N-1} x_m\omega_N^{mn},\quad n=0,1,2,\dots,N-1
-\]
-<p>where \(\omega_N = e^\frac{2\pi i}{N}\)</p>
-<p>The result is in bit-reversed order, so we need to finally apply a bit-reversal operation.</p>
-<p>The DFT can be expressed as a unitary matrix as follows, where the \(\omega^0\) terms have been written as \(1\).</p>
-\[\qquad
-U_N=\frac{1}{\sqrt{N}}\begin{bmatrix}1&amp;1&amp;1&amp;\dots&amp;1\\
-1&amp;\omega&amp;\omega^2&amp;\dots&amp;\omega^{N-1}\\
-1&amp;\omega^2&amp;\omega^4&amp;\dots&amp;\omega^{2(N-1)}\\
-\vdots&amp;\vdots&amp;\vdots&amp;\dots&amp;\vdots\\
-1&amp;\omega^{N-1}&amp;\omega^{2(N-1)}&amp;\dots&amp;\omega^{(N-1)(N-1)}\\
-\end{bmatrix}
-\]
-<p>The QFT is equivalent to the application of this unitary matrix to the quantum state. The columns of the matrix are the DFTs of the N orthogonal quantum basis vectors \([1,0,0,\dots], [0,1,0,\dots],[0,0,1,\dots], \)etc. Because of linearity, we can apply it to a general quantum state that is a superposition of the basis states.</p>
-<p>However, we still need to build the unitary out of standard quantum gates to realise it on a quantum computer. The QFT algorithm is an ingeneous way to decompose the matrix into the sequential application of Hadamard (H) gates and Controlled-phase (CP) gates.</p>
-<p>The time complexity of the basic DFT algorithm is \(\mathcal{O}(n^2)\). However, it is normally implemented by the Fast Fourier Transform algorithm which is \(\mathcal{O}(n\log{}n)\). The normal QFT algorithm does even better at \(\mathcal{O}(\log^2{}n)\), which is exponentially faster than even the FFT. However, this assumes that we can efficiently implement a CP gate where the 2 qubits are non-adjacent. In practice, a quantum computer can normally only perform such operations on physically-adjacent qubits and so there may be some overhead in iperforming 'swap' operations to move the qubits around.</p>
-<p>The details of how the QFT algorithm works are beyond the scope of this short introduction. A key part is using phase gates to rotate the phase of qubits to perform the \(\omega_n\) phase shifts.</p>
-<h3><a id="4-qubit-qft" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>4-Qubit QFT</h3>
-<p>TinyQsim doesn't support sub-circuits but we can define a function to build the QFT circuit. We can then use it more than once in a notebook, for example to try different initial conditions.</p>
-<p>We can build the 4-qubit QFT as follows:</p>
-<pre><code class="language-python">def qft4(qc):
+    <h3><a id="the-quantum-fourier-transform" class="anchor" aria-hidden="true"><span
+            class="octicon octicon-link"></span></a>The Quantum Fourier Transform</h3>
+    <p>The Quantum Fourier Transform (QFT) is in important algorithm in quantum computing. It is used for estimating
+        phase and periodicities in algorithms such as Shor's well-known integer factorization algorithm.</p>
+    <p>The QFT has the same effect as applying the normal inverse Discrete Fourier Transform (DFT) to the quantum state
+        vector. It is equivalent to the <em>inverse</em> DFT, rather than forward DFT, simply because a different sign
+        convention is normally used. However, for a quantum computer, we have to find a way to implement the transform
+        using only quantum gates.</p>
+    <p>The inverse DFT, with \(\frac{1}{\sqrt{N}}\) normalization, can be defined as:</p>
+    \[\qquad X_n = \frac{1}{\sqrt{N}} \sum_{m=0}^{N-1} x_m\omega_N^{mn},\quad n=0,1,2,\dots,N-1
+    \]
+    <p>where \(\omega_N = e^\frac{2\pi i}{N}\)</p>
+    <p>The result is in bit-reversed order, so we need to finally apply a bit-reversal operation.</p>
+    <p>The DFT can be expressed as a unitary matrix as follows, where the \(\omega^0\) terms have been written as
+        \(1\).</p>
+    \[\qquad
+    U_N=\frac{1}{\sqrt{N}}\begin{bmatrix}1&amp;1&amp;1&amp;\dots&amp;1\\
+    1&amp;\omega&amp;\omega^2&amp;\dots&amp;\omega^{N-1}\\
+    1&amp;\omega^2&amp;\omega^4&amp;\dots&amp;\omega^{2(N-1)}\\
+    \vdots&amp;\vdots&amp;\vdots&amp;\dots&amp;\vdots\\
+    1&amp;\omega^{N-1}&amp;\omega^{2(N-1)}&amp;\dots&amp;\omega^{(N-1)(N-1)}\\
+    \end{bmatrix}
+    \]
+    <p>The QFT is equivalent to the application of this unitary matrix to the quantum state. The columns of the matrix
+        are the DFTs of the N orthogonal quantum basis vectors \([1,0,0,\dots], [0,1,0,\dots],[0,0,1,\dots], \)etc.
+        Because of linearity, we can apply it to a general quantum state that is a superposition of the basis
+        states.</p>
+    <p>However, we still need to build the unitary out of standard quantum gates to realise it on a quantum computer.
+        The QFT algorithm is an ingeneous way to decompose the matrix into the sequential application of Hadamard (H)
+        gates and Controlled-phase (CP) gates.</p>
+    <p>The time complexity of the basic DFT algorithm is \(\mathcal{O}(n^2)\). However, it is normally implemented by
+        the Fast Fourier Transform algorithm which is \(\mathcal{O}(n\log{}n)\). The normal QFT algorithm does even
+        better at \(\mathcal{O}(\log^2{}n)\), which is exponentially faster than even the FFT. However, this assumes
+        that we can efficiently implement a CP gate where the 2 qubits are non-adjacent. In practice, a quantum computer
+        can normally only perform such operations on physically-adjacent qubits and so there may be some overhead in
+        iperforming 'swap' operations to move the qubits around.</p>
+    <p>The details of how the QFT algorithm works are beyond the scope of this short introduction. A key part is using
+        phase gates to rotate the phase of qubits to perform the \(\omega_n\) phase shifts.</p>
+    <h3><a id="4-qubit-qft" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>4-Qubit QFT
+    </h3>
+    <p>TinyQsim doesn't support sub-circuits but we can define a function to build the QFT circuit. We can then use it
+        more than once in a notebook, for example to try different initial conditions.</p>
+    <p>We can build the 4-qubit QFT as follows:</p>
+    <pre><code class="language-python">def qft4(qc):
     &quot;&quot;&quot;4-qubit QFT.&quot;&quot;&quot;
     qc.h(0)
     qc.cp(pi / 2, f'{PI}/2', 0, 1)
@@ -800,20 +1009,22 @@ U_N=\frac{1}{\sqrt{N}}\begin{bmatrix}1&amp;1&amp;1&amp;\dots&amp;1\\
     qc.swap(0, 3)  # Reverse order of qubits
     qc.swap(1, 2)
 </code></pre>
-<p>The <code>swap</code> gates are used to reverse the order of qubits in the result of the QFT. This is like the bit-reversal that is performed in a normal Discrete Fourier Transform (DFT).</p>
-<p>We will start by creating a 4-qubit circuit and initializing the state to \(\ket{0010}\), as the state we wish to transform:</p>
-<pre><code class="language-python">qc = QCircuit(4)
+    <p>The <code>swap</code> gates are used to reverse the order of qubits in the result of the QFT. This is like the
+        bit-reversal that is performed in a normal Discrete Fourier Transform (DFT).</p>
+    <p>We will start by creating a 4-qubit circuit and initializing the state to \(\ket{0010}\), as the state we wish to
+        transform:</p>
+    <pre><code class="language-python">qc = QCircuit(4)
 qc.x(2)  # Initial state
 qc.barrier()
 print(qc.format_probabilities())
 </code></pre>
-<pre><code class="language-plain_text">|0010⟩  1
+    <pre><code class="language-plain_text">|0010⟩  1
 </code></pre>
-<p>We can run the QFT as follows:</p>
-<pre><code class="language-python">qft4(qc)
+    <p>We can run the QFT as follows:</p>
+    <pre><code class="language-python">qft4(qc)
 qc.draw()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqcAAADsCAYAAABJ5Q+CAAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqcAAADsCAYAAABJ5Q+CAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAALiZJREFUeJzt3Xt4VNW9//HP
 ZHJH7hPgIERUFOINSMSCrXIVFFGoRaEQK96gPY/HeqHwqwjSolI56Hksp9Yq3gOi
@@ -1062,11 +1273,11 @@ zVJKivT44+auUffdZ0vIsFhjdWTo0PDvO/XU+tehrsaO87JlZq7TSZOkPn2kzZuD
 LSHDYo3VEbSMxo7z6tXmcflyMytCzWXJEuvjBQJcfj/TXgNoeaNGmeloFi60OxI4
 FXXEGhxnxBuSUwAAADgG3foAAABwDJJTAAAAOAbJKQAAAByD5BQAAACOQXIKAAAA
 xyA5BQAAgGOQnAIAAMAxSE4BAADgGCSnAAAAcAySUwAAADjG/wcoRLD70Xn3rQAA
-AABJRU5ErkJggg==" alt="png" /></p>
-<p>The barrier symbol is used for clarity to separate initialization of the state from the actual QFT.</p>
-<pre><code class="language-python">print(qc.format_probabilities(edge=3))
+AABJRU5ErkJggg==" alt="png"/></p>
+    <p>The barrier symbol is used for clarity to separate initialization of the state from the actual QFT.</p>
+    <pre><code class="language-python">print(qc.format_probabilities(edge=3))
 </code></pre>
-<pre><code class="language-plain_text">|0000⟩  0.0625
+    <pre><code class="language-plain_text">|0000⟩  0.0625
 |0001⟩  0.0625
 |0010⟩  0.0625
 ...
@@ -1074,17 +1285,19 @@ AABJRU5ErkJggg==" alt="png" /></p>
 |1110⟩  0.0625
 |1111⟩  0.0625
 </code></pre>
-<p>The probability of every outcome is 1/16, so all 16 measurement outcomes are equally likely.</p>
-<p>However, if we examine the phase angle (in degrees), we can see that the phase is varying periodically:</p>
-<pre><code class="language-python">sv = qc.state_vector
+    <p>The probability of every outcome is 1/16, so all 16 measurement outcomes are equally likely.</p>
+    <p>However, if we examine the phase angle (in degrees), we can see that the phase is varying periodically:</p>
+    <pre><code class="language-python">sv = qc.state_vector
 print(np.atan2(sv.imag, sv.real) * 180 / np.pi)
 </code></pre>
-<pre><code class="language-plain_text">[   0.   45.   90.  135.  180. -135.  -90.  -45.    0.   45.   90.  135.
+    <pre><code class="language-plain_text">[   0.   45.   90.  135.  180. -135.  -90.  -45.    0.   45.   90.  135.
   180. -135.  -90.  -45.]
 </code></pre>
-<h3><a id="comparing-dft-and-qft" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comparing DFT and QFT</h3>
-<p>It was mentioned above that the QFT gives the same result as the inverse DFT applied to the quantum state vector. The following code creates a random state and generates both the QFT and FFT (DFT), then compares them.</p>
-<pre><code class="language-python">qc = QCircuit(4, init='random')
+    <h3><a id="comparing-dft-and-qft" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comparing
+        DFT and QFT</h3>
+    <p>It was mentioned above that the QFT gives the same result as the inverse DFT applied to the quantum state vector.
+        The following code creates a random state and generates both the QFT and FFT (DFT), then compares them.</p>
+    <pre><code class="language-python">qc = QCircuit(4, init='random')
 qc.x(2)
 state = np.array(qc.state_vector)  # Save copy of state
 
@@ -1098,18 +1311,21 @@ dft_result = np.fft.ifft(state, norm='ortho')  # Numpy inverse FFT
 # Compare the results
 print(np.isclose(qft_result, dft_result).all())
 </code></pre>
-<pre><code class="language-plain_text">True
+    <pre><code class="language-plain_text">True
 </code></pre>
-<p>This should print 'True', indicating that the two results are the same.</p>
-<h3><a id="inverse-qft" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inverse QFT</h3>
-<p>Quantum circuits (excluding collapse measurements) are reversible as they are unitary. To run a circuit in reverse, we reverse the order of the sequence of gates and replace each gate by its conjugate transpose:</p>
-\[\qquad (U_1 U_2\dots U_{n-1})^\dagger = U^\dagger_{n-1}\dots U^\dagger_2 U^\dagger_1
-\]
-<p>In the QFT circuit above, the Hadamard and swap gates are Hermitian (i.e. equal to their own conjugates transposes). The conjugate transpose of the phase gate is given by:</p>
-\[\qquad P^\dagger(\phi) = P(-\phi)
-\]
-<p>Consequently, the inverse 4-qubit QFT can be constructed as follows:</p>
-<pre><code class="language-python">def iqft4(qc):
+    <p>This should print 'True', indicating that the two results are the same.</p>
+    <h3><a id="inverse-qft" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inverse QFT
+    </h3>
+    <p>Quantum circuits (excluding collapse measurements) are reversible as they are unitary. To run a circuit in
+        reverse, we reverse the order of the sequence of gates and replace each gate by its conjugate transpose:</p>
+    \[\qquad (U_1 U_2\dots U_{n-1})^\dagger = U^\dagger_{n-1}\dots U^\dagger_2 U^\dagger_1
+    \]
+    <p>In the QFT circuit above, the Hadamard and swap gates are Hermitian (i.e. equal to their own conjugates
+        transposes). The conjugate transpose of the phase gate is given by:</p>
+    \[\qquad P^\dagger(\phi) = P(-\phi)
+    \]
+    <p>Consequently, the inverse 4-qubit QFT can be constructed as follows:</p>
+    <pre><code class="language-python">def iqft4(qc):
     &quot;&quot;&quot;4-qubit inverse QFT.&quot;&quot;&quot;
     qc.swap(1, 2)
     qc.swap(0, 3)  # Reverse order of qubits
@@ -1124,11 +1340,11 @@ print(np.isclose(qft_result, dft_result).all())
     qc.cp(-pi / 2, f'-{PI}/2', 0, 1)
     qc.h(0)
 </code></pre>
-<pre><code class="language-python">qc = QCircuit(4)
+    <pre><code class="language-python">qc = QCircuit(4)
 iqft4(qc)
 qc.draw()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAkwAAADsCAYAAACG5/kEAAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAkwAAADsCAYAAACG5/kEAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAKKtJREFUeJzt3Xt4VNW9xvHv
 ZLglAgokgIgxfUQkPbZColXsUVCEgLWClqpgVGi8tmi1h4oKRgtUhVNovbWKWFAu
@@ -1347,10 +1563,12 @@ rXNyWn/pbdhgpnZoGaQkuYTTPvr1gx/8AIqLzXioc84xvZIPPggXXGB6s0TsosAk
 KaWgAAYPhqlTzeXatfDUU4HL7N8PO3aY6xMmtH4Nzf0SnnC2taSucNvHkiUwd64Z
 7F1cbHp9f/ADs+uuZS+VSCxppm9JWZs2mV6MgwdbT4wn0aVtLaGofUgiUGASERER
 saAOTRERERELCkwiIiIiFhSYRERERCwoMImIiIhYUGASERERsaDAJCIiImJBgUlE
-RETEggKTiIiIiAUFJhERERELCkwiIiIiFv4fT5UvzhO9aUkAAAAASUVORK5CYII=" alt="png" /></p>
-<h3><a id="testing-the-inverse-qft" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testing the Inverse QFT</h3>
-<p>We can test the inverse QFT by taking the forward QFT of a random state, followed by the inverse QFT and checking that we get the state that we started with:</p>
-<pre><code class="language-python">qc = QCircuit(4, init='random')
+RETEggKTiIiIiAUFJhERERELCkwiIiIiFv4fT5UvzhO9aUkAAAAASUVORK5CYII=" alt="png"/></p>
+    <h3><a id="testing-the-inverse-qft" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testing
+        the Inverse QFT</h3>
+    <p>We can test the inverse QFT by taking the forward QFT of a random state, followed by the inverse QFT and checking
+        that we get the state that we started with:</p>
+    <pre><code class="language-python">qc = QCircuit(4, init='random')
 initial_state = qc.state_vector
 qft4(qc)
 qc.barrier()
@@ -1358,7 +1576,7 @@ iqft4(qc)
 qc.draw()
 print('Result:', np.allclose(qc.state_vector, initial_state))
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABJsAAADsCAYAAADTn6d3AAAAOnRFWHRTb2Z0d2Fy
+    <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABJsAAADsCAYAAADTn6d3AAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAARYRJREFUeJzt3Xt8E1X+//F3
 GlraykWwCCoirgjUZQVaVPDGTcALCuu6C2q9u7D687oi+BVFFl0UvuIqrvv1gsIq
@@ -1731,9 +1949,13 @@ Nb1nat4k2LFDWrPGTLM+dGjtczeiE01ZI31FWz+mTzcDyD/9tOkdPnmySUC9/nr4
 mX+BRHD5fP4JEYHUN3CgeWZ58mS7I0Gyoo5Yh7IGAGdZvtz0ntm1yzy+g8ShrBEJ
 9QNOQLIJAAAAAAAAcUNHOgAAAAAAAMQNySYAAAAAAADEDckmAAAAAAAAxA3JJgAA
 AAAAAMQNySYAAAAAAADEDckmAAAAAAAAxA3JJgAAAAAAAMQNySYAAAAAAADEDckm
-AAAAAAAAxA3JJgAAAAAAAMTN/wfzXmCK6hd+4QAAAABJRU5ErkJggg==" alt="png" /></p>
-<pre><code class="language-plain_text">Result: True
+AAAAAAAAxA3JJgAAAAAAAMTN/wfzXmCK6hd+4QAAAABJRU5ErkJggg==" alt="png"/></p>
+    <pre><code class="language-plain_text">Result: True
 </code></pre>
-<p>This should print 'True', indicating that the inverse QFT has completely undone the effect of the forward QFT.</p>
-<p>Observe how each step of the inverse QFT undoes the corresponding step of the forward QFT, until we are left with the original random state.</p>
-</div></body></html>
+    <p>This should print 'True', indicating that the inverse QFT has completely undone the effect of the forward
+        QFT.</p>
+    <p>Observe how each step of the inverse QFT undoes the corresponding step of the forward QFT, until we are left with
+        the original random state.</p>
+</div>
+</body>
+</html>
