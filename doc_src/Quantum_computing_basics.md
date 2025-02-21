@@ -638,7 +638,7 @@ Non-consecutive qubits are a problem in real quantum computers because the qubit
 
 Quantum computer programming languages and quantum circuit diagrams work at a higher level of abstraction, where multi-qubit gates can be applied to arbitrary qubits, without the user needing to worry about such issues. Software then compiles these into sequences of lower-level operations for the quantum hardware, taking into account the qubit topology and primitive operations available.
 
-Fortunately, in a quantum-computer simulator, we can avoid some of these isseues by permuting the qubit indices instead of the actual data. The next section takes a brief look at at some approaches to simulation.
+Fortunately, in a quantum-computer simulator, we can implement swaps more efficiently by permuting the qubit indices, as explained in the next section. Then a later section considers approaches to simulating a quantum computer, including the use of tensors to provide a much more efficient solution..
 
 ### Addressing Qubits
 
@@ -1473,7 +1473,7 @@ The state vector may be converted into a tensor simply by changing the view. Thi
 
 For example, a 4-bit quantum state may be represented as the tensor $S_{abcd}$ where the subscripts correspond to qubits. Similarly, the matrix definition of a 2-qubit gate can be expressed as a tensor $U_{ijkl}$.
 
-If we now want to apply the 2-qubit gate to qubits (3,0) of the state, in that order, it is simply necessary to perform a tensor contraction, which can be expressed in Einstein summation notation as:
+If we now want to apply the 2-qubit gate to qubits (3,1) of the state, in that order, it is simply necessary to perform a tensor contraction, which can be expressed in Einstein summation notation as:
 
 $\qquad U_{ijdb}\,S_{abcd}\,\rightarrow S^{'}_{ajci}$
 
