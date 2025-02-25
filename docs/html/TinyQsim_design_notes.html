@@ -756,9 +756,10 @@ div.code-toolbar > .toolbar > .toolbar-item > span:focus {
 <li><a href="#tinyqsim-design-notes">TinyQsim Design Notes</a>
 <ul>
 <li><a href="#introduction">Introduction</a></li>
+<li><a href="#use-of-tensors">Use of Tensors</a></li>
 <li><a href="#simulation">Simulation</a></li>
-<li><a href="#performance">Performance</a></li>
 <li><a href="#endianness">Endianness</a></li>
+<li><a href="#performance">Performance</a></li>
 <li><a href="#software-modules">Software Modules</a></li>
 </ul>
 </li>
@@ -767,9 +768,16 @@ div.code-toolbar > .toolbar > .toolbar-item > span:focus {
 <h3><a id="introduction" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
 <p>TinyQsim was originally started as a fun project to learn about quantum computation and as a framework to explore new ideas. The aim was to 'keep it simple', rather than worrying about optimization. Nevertheless, it is capable of simulating a 20-qubit Quantum Fourier Transform in about one second. This is sufficient for most textbook examples.</p>
 <p>The software is intended as a tool for interactive experiments. It is written in Python, using Jupyter notebooks as an environment for interaction. TinyQsim works in an incremental fashion by executing each gate as it is added to the circuit, so that the state is always up to date. This makes it very easy to examine the state, probabilities, etc, at any time, without having to run a simulator on the model each time. This is very convenient for interactive use, but limits the scope for circuit optimization. However, there is an experimental deferred-execution mode that allows a circuit to be constructed before it is run.</p>
+<h3><a id="use-of-tensors" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use of Tensors</h3>
+<p>Textbooks often give examples of gates as unitary matrices that are applied to state vectors. Although it is possible to write a simulator using this approach, it is very slow and limited to just a few qubits. Even a one-qubit gate can affect all the elements of the state vector, so the matrix has to be expanded to operate on the full state. This results in an enormous overhead in memory requirements and execution speed. Another problem is that the state vector needs to be permuted before and after the matrix multiplication, so that the gate is applied to the correct qubits. Some optimisation is possible, but this only makes a small improvement.</p>
+<p>Instead, quantum simulators typically use tensors to describe both the state and the unitary operators. This greatly improves the speed and memory usage.</p>
+<p>As an example, a 2-qubit state can be expresed as a tensor \(\psi^{ab}\), where the indices refer to the qubits. Similarly, a 2-qubit unitary operator can be expressed as a tensor \(U_{kl}^{ij}\). The operator can be applied to the state by tensor contraction as follows:</p>
+<p>\(\qquad U_{ab}^{ij}\ \psi^{ab} \rightarrow \psi^{ij}\)</p>
+<p>Since the indices correspond to qubits, the operator can be applied directly to whichever qubits are appropriate. For example, to apply \(U\) to qubits (3,1), that is (d,b), of a 4-qubit state \(\psi^{abcd}\):</p>
+<p>\(\qquad U_{db}^{ij}\ \psi^{abcd} \rightarrow \psi^{ajci}\)</p>
 <h3><a id="simulation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simulation</h3>
-<p>When a new instance of QCircuit is created, the quantum state is initialized to the all-zero state \(\ket{000\dots 0}\). Executing a quantum circuit just involves applying each gate in the circuit in turn to the quantum state as a unitary operator.</p>
-<p>TinyQsim represents the quantum state internally as a tensor, represented by a multi-dimensional array with one dimension per qubit, with each tensor subscript corresponding to a dimension. This is much more efficient than applying matrices to a state vector. It allows gates, which are also represented as tensors, to be applied to specific qubits of the state. However, the state is presented to the user as a normal state vector by the QCircuit API.</p>
+<p>TinyQsim uses tensors for both quantum states and unitary operators (i.e gates). The tensors are represented internally as multi-dimensional arrays with one dimension per tensor index.</p>
+<p>When a new instance of QCircuit is created, the quantum state is initialized to the all-zero state \(\ket{000\dots 0}\), expressed as a tensor. Executing a quantum circuit just involves applying each gate in the circuit, in turn, to the quantum state using tensor contraction.</p>
 <p>For example, consider the following circuit:</p>
 <div style="text-align: center;">
 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAADlCAYAAADXwTCfAAAAOnRFWHRTb2Z0d2Fy
@@ -833,22 +841,33 @@ bVvymWeohnyL4uIab73y2sSJDDuep05dvOjk9+/vxsldu5IjR5IffOC6GE0++cSJ
 rDtUk5GFPIYMIU+fZtjx5EqurOz6fXC42L+fnD2bTEoiO3QgBw92DaKlruZi5B8v
 5h4kM1gSWbOyvOm6bhRsulIZT1qw0TjWgpUxwcqYYGVMsDImWBkTrIwJVsYEK2OC
 lTHByphgZUywMiZYGROsjAlWxgQrY4KVMcHKmGBlTLAyJlgZE6yMCVbGBCtjgpUx
-wcqYYGVMsDImGLr8HxFQUbaGNBtvAAAAAElFTkSuQmCC" alt="QFT_benchmark" width="80"/>
+wcqYYGVMsDImGLr8HxFQUbaGNBtvAAAAAElFTkSuQmCC" alt="QFT_benchmark" width="75"/>
 </div>
-<p>The 2-qubit unitary CX gate, which we will represent by the tensor \(U\), is applied to qubits (3,1) of a 4-qubit quantum state \(S\). This can be expressed in Einstein summation notation as the tensor contraction:</p>
-<p>\(\qquad U_{ijdb}\,S_{abcd}\,\rightarrow S_{ajci}\)</p>
-<p>The Python implementation can do this using the numpy 'einsum' fuction as follows:</p>
-<pre><code class="language-plain_text">  s = einsum('ijdb,abcd-&gt;ajci', u, s)
+<p>This corresponds to the earlier example, where a 2-qubit unitary \(U\) was applied to qubits (3,1) of a 4-qubit state \(\psi\). In this case, the unitary is a CX (controlled-NOT) gate.</p>
+<p>This can be expressed in Einstein summation notation as the tensor contraction:</p>
+<p>\(\qquad U_{ijdb}\,\psi_{abcd}\,\rightarrow \psi_{ajci}\)</p>
+<p>This can be implemented in Python using the numpy 'einsum' function as follows:</p>
+<pre><code class="language-plain_text">  s = einsum('ijdb,abcd-&gt;ajci', u, psi)
 </code></pre>
-<p>Numpy implements multi-dimensional arrays as 'strided' arrays. The internal data structure is a one-dimensional array with a separate small 'stride' array that holds the step size between elements for each dimension. The order of dimensions (e.g. qubits) may be permuted simply by permuting the strides, without altering the data array. The same one-dimensional data-array may have multiple 'views' each with its own stride array.</p>
-<p>Consequently, the state-vector and tensor representations of the state can share the same data array, simply by creating a new view. A unitary operator may be applied to the required qubits specified by tensor indices, making use of the strides array.</p>
-<p>For example, a tensor view 't' of an n-qubit state vector 's' can be created as follows:</p>
+<p>Numpy implements multi-dimensional arrays as 'strided' arrays. The internal data structure is a one-dimensional array with a separate small 'stride' array that holds the step size between elements for each dimension. Permuting the indices simply involves permuting the small stride array, without altering the data array. The same one-dimensional data-array may have multiple 'views' each with its own stride array. Consequently, the state-vector and tensor representations of the state can share the same data array, simply by creating a new view.</p>
+<p>The tensor view 't' of an n-qubit state vector 's' can be obtained as a new view simply by reshaping it, without changing the internal data array.</p>
 <pre><code class="language-plain_text">   t = s.reshape([2] * n)
 </code></pre>
-<p>Similarly, a tensor view 'u' of a k-qubit unitary matrix 'm', representing a quantum operator, can be created as follows':</p>
+<p>Similarly, a tensor view 'u' of a k-qubit unitary matrix 'm', representing a quantum operator, can be obtained as follows':</p>
 <pre><code class="language-plain_text">   u = m.reshape([2] * k * 2)
 </code></pre>
 <p>TinyQsim also uses 'einsum' to construct a unitary-matrix representation of a quantum circuit. It is also used to calculate measurement probabilities for a subset of qubits by summing over the remaining qubits.</p>
+<h3><a id="endianness" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Endianness</h3>
+<p>Some books, papers and online resources use the <em>big-endian</em> convention, in which qubit 0 is the most-significant qubit, while others use the <em>little-endian</em> convention, in which qubit 0 is the least significant qubit. This can lead to confusion when comparing examples from different sources.</p>
+<p>The big-endian convention was chosen for TinyQsim as it is popular in books and published papers on quantum computing.</p>
+<p>Using tensors, swapping endianness simply involves reversing the order of indices.</p>
+<p>For example, to swap the endianness of a 4-qubit state \(\psi\):</p>
+<p>\(\qquad \psi^{ijkl} \rightarrow \psi^{lkji}\)</p>
+<p>Similarly, to swap the endianness of a unitary operator \(U\):</p>
+<p>\(\qquad U_{abcd}^{ijkl} \rightarrow U_{dcba}^{lkji}\)</p>
+<p>So, an endian-swapped operator, applied to an endian-swapped state, gives an endian-swapped result:</p>
+<p>\(\qquad U_{dcba}^{lkji}\ \psi^{dcba} \rightarrow (U\psi)^{lkji}\)</p>
+<p>TinyQsim currently only supports the big-endian convention, but it would not be too difficult to add support for little-endian at a later date.</p>
 <h3><a id="performance" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Performance</h3>
 <p>The following graph shows the execution time of a Quantum Fourier Transform (QFT) plotted against the numbers of qubits. The time axis is logarithmic, so a straight line corresponds to a time complexity that is exponential in the number of qubits.</p>
 <p>The test was run on a Mac Mini M2 Pro with 32GB of RAM, starting with a random N-qubit state for each run. The times are for execution of the QFT algorithm, excluding the initialisation of the random state.</p>
@@ -1653,9 +1672,6 @@ CgBFREREbEYBoIiIiIjNKAAUERERgb38H/dzupLQ2/ZzAAAAAElFTkSuQmCC" alt="QFT_benchmark
 <p>The blue plot shows the execution time for an N-qubit QFT operating on the full N-qubit state. The QFT algorithm has a complexity of \(\mathcal{O}(N^2)\) gates. On a real quantum computer, this is also the time complexity if it is assumed that the different gates take equal times. However, in the simulation, the time taken per gate approximately doubles for each qubit, so the overall time complexity is expected to be \(\mathcal{O}(N^2\ 2^N) \approx \mathcal{O}(2^N)\).</p>
 <p>In conclusion, the simulator is quite responsive for interactive use with up to 20 qubits. However, with 28 qubits a QFT of all the qubits takes around 1000 seconds. Of course, these figures depend on the processor's performance and memory available.</p>
 <p>There are a number of ways in which the performance could be further improved, but an initial design goal of TinyQsim was to keep it simple.</p>
-<h3><a id="endianness" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Endianness</h3>
-<p>Some books, papers and online resources use the <em>big-endian</em> convention in which qubit 0 is the most-significant qubit, while others use the <em>little-endian</em> convention, in which qubit 0 is the least significant qubit. This can lead to confusion when comparing examples from different sources.</p>
-<p>The big-endian convention was chosen for TinyQsim as it is popular in books and published papers.</p>
 <h3><a id="software-modules" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Software Modules</h3>
 <p>The Python software modules are as follows:</p>
 <table>

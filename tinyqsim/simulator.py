@@ -106,7 +106,7 @@ class Simulator:
                     u = params['unitary']
                     self.apply(u, qubits)
 
-                case 'P' | 'CP' | 'RX' | 'RY':  # Parameterized gate
+                case 'P' | 'CP' | 'CRX' | 'CRY' | 'CRZ' | 'RX' | 'RY' | 'RZ':  # Parameterized gate
                     u = self._gates[name](params['args'])
                     self.apply(u, qubits)
 

@@ -1,5 +1,17 @@
 ## TinyQsim Release Notes
 
+### Release Notes (25 February 2025)
+
+- Added gates: RZ, CRX, CRY, CRZ
+- Added prototype code to export circuit as OpenQASM-3
+- Added new functions to quantum module:
+  - swap_vector_endianness, swap_unitary_endianness
+- Documentation:
+  - Updated TinyQsim Design Notes
+  - Updated Guide to Gates document 
+
+--- 
+
 ### Release Notes (21 February 2025)
 
 - Increased maximum number of qubits

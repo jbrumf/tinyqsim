@@ -15,6 +15,10 @@ from tinyqsim.gates import *
 from tinyqsim.utils import is_unitary
 
 
+# Note:
+#   Controlled versions of gates are not tested explicitly as the underlying
+#   gates are tested and the generic control mechanism is tested by 'test_cu'.
+
 def test_id():
     assert is_unitary(ID)
     assert_array_equal(ID @ ID, ID)
@@ -90,6 +94,13 @@ def test_ry():
     assert is_unitary(RY(pi / 3))
     assert_array_almost_equal(RY(0), ID)
     assert_array_almost_equal(RY(pi), -1j * Y)
+
+
+def test_rz():
+    # Note: RZ(pi) and Z differ by a global phase of 'i'
+    assert is_unitary(RZ(pi / 3))
+    assert_array_almost_equal(RZ(0), ID)
+    assert_array_almost_equal(RZ(pi), -1j * Z)
 
 
 def test_sx():

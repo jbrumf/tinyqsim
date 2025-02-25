@@ -5,6 +5,7 @@ Licensed under MIT license: see LICENSE.txt
 Copyright (c) 2024 Jon Brumfitt
 """
 
+from cmath import exp
 from math import sin, cos, sqrt
 
 import numpy as np
@@ -102,7 +103,7 @@ def P(phi: float) -> ndarray:
 
 
 def CP(phi: float) -> ndarray:
-    """Controlled phase gate.
+    """Controlled P gate.
        :param phi: Phase angle in radians
        :return: the controlled-phase gate
     """
@@ -129,11 +130,47 @@ def RY(theta: float) -> ndarray:
     return np.array([[c, -s], [s, c]])
 
 
+def RZ(theta: float) -> ndarray:
+    """RZ gate: Rotation by 'phi' radians about Z axis.
+       :param theta: angle in radians
+       :return: the gate
+    """
+    z = exp(1j * theta / 2)
+    return np.array([[z.conjugate(), 0], [0, z]])
+
+
+def CRX(phi: float) -> ndarray:
+    """Controlled RX gate.
+       :param phi: Phase angle in radians
+       :return: the controlled-phase gate
+    """
+    return cu(RX(phi))
+
+
+def CRY(phi: float) -> ndarray:
+    """Controlled RY gate.
+       :param phi: Phase angle in radians
+       :return: the controlled-phase gate
+    """
+    return cu(RY(phi))
+
+
+def CRZ(phi: float) -> ndarray:
+    """Controlled RZ gate.
+       :param phi: Phase angle in radians
+       :return: the controlled-phase gate
+    """
+    return cu(RZ(phi))
+
+
 """ Dictionary to look-up gates by name."""
 GATES = {
     'CCX': CCX,
     'CH': CH,
     'CP': CP,
+    'CRX': CRX,
+    'CRY': CRY,
+    'CRZ': CRZ,
     'CS': CS,
     'CSWAP': CSWAP,
     'CT': CT,
@@ -145,6 +182,7 @@ GATES = {
     'P': P,
     'RX': RX,
     'RY': RY,
+    'RZ': RZ,
     'S': S,
     'Sdg': Sdg,
     'SX': SX,

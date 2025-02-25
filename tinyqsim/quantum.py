@@ -114,6 +114,29 @@ def tensor_to_unitary(t: ndarray) -> ndarray:
     return t.reshape([k, k])
 
 
+def swap_vector_endianness(v: ndarray) -> ndarray:
+    """Swap endianness of state vector.
+       :param v: state vector
+       :return state vector with reversed endianness
+    """
+    return tensor_to_state(np.transpose(state_to_tensor(v)))
+
+
+def swap_unitary_endianness(u: ndarray) -> ndarray:
+    """Swap endianness of a square matrix.
+       :param u: matrix
+       :return: matrix with reversed endianness
+    """
+    nq = int.bit_length(len(u) - 1)
+    tm = unitary_to_tensor(u)
+
+    rng = np.flip(np.arange(nq))
+    indices = np.concatenate((rng, rng + nq))
+    t = np.einsum(tm, indices)
+
+    return tensor_to_unitary(t)  # Tensor to unitary
+
+
 def apply_tensor(ts: ndarray, tu: ndarray, qubits: list[int]) -> ndarray:
     """ Apply tensor of unitary to specified qubits of state tensor.
         :param ts: state tensor

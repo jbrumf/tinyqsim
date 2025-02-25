@@ -20,7 +20,8 @@ from tinyqsim.quantum import (n_qubits, basis_names, random_state, zeros_state,
                               random_unitary, unitary_to_tensor, tensor_to_state,
                               tensor_to_unitary, state_to_tensor, apply_tensor,
                               compose_tensor, state_dict, probabilities,
-                              probability_dict)
+                              probability_dict, swap_vector_endianness,
+                              swap_unitary_endianness)
 from tinyqsim.utils import kron_n, normalize, is_unitary
 
 CX_BIG = np.array([[1, 0, 0, 0],  # Big-endian CX gate
@@ -123,6 +124,20 @@ def test_tensor_to_unitary():
                    [[0, 0], [1, 0]]]])
     m = tensor_to_unitary(t)
     assert_allclose(m, CX)
+
+
+def test_swap_vector_endianness():
+    v = np.arange(16)
+    vr = swap_vector_endianness(v)
+    exp = np.array([0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15])
+    assert_allclose(vr, exp)
+
+
+def test_swap_unitary_endianness():
+    m = np.reshape(range(16), [4, 4])
+    mr = swap_unitary_endianness(m)
+    exp = np.array([[0, 2, 1, 3], [8, 10, 9, 11], [4, 6, 5, 7], [12, 14, 13, 15]])
+    assert_allclose(mr, exp)
 
 
 def test_apply_tensor():

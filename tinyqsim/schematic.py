@@ -192,7 +192,7 @@ class Schematic:
                 self.draw_generic_gate(x, name, [], qubits[0:1])
 
             # Parameterized gates
-            case 'P' | 'RX' | 'RY':
+            case 'P' | 'RX' | 'RY' | 'RZ':
                 self.draw_generic_gate(x, name, [], qubits[0:1], params['label'])
 
             # Controlled gates
@@ -202,7 +202,7 @@ class Schematic:
                 self.draw_generic_gate(x, name[1:], qubits[0:1], qubits[1:2])
 
             # Controlled parameterized gates
-            case 'CP':
+            case 'CP' | 'CRX' | 'CRY' | 'CRZ':
                 self.draw_generic_gate(x, name[1:], qubits[0:1], qubits[1:2], params['label'])
 
             # Custom unitary gates

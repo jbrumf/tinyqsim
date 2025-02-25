@@ -6,6 +6,7 @@ Copyright (c) 2024 Jon Brumfitt
 """
 
 import numpy as np
+from numpy import ndarray
 
 from tinyqsim.gates import GATES
 from tinyqsim.model import Model
@@ -17,7 +18,7 @@ class UnitarySimulator:
         The circuit must not contain measurements or resets.
     """
 
-    def execute(self, model: Model):
+    def execute(self, model: Model) -> ndarray:
         """Create unitary matrix from a circuit model.
         :param model: circuit model
         :return: unitary matrix
@@ -33,7 +34,7 @@ class UnitarySimulator:
             match name:
                 case 'U':  # Custom unitary
                     ug = params['unitary']
-                case 'P' | 'CP' | 'RX' | 'RY':  # Parameterized gate
+                case 'P' | 'CP' | 'RX' | 'RY' | 'RZ' | 'CRX' | 'CRY' | 'CRZ':  # Param gate
                     ug = gates[name](params['args'])
                 case 'measure' | 'reset':
                     raise ValueError('Circuit is not unitary')

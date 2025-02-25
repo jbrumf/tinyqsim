@@ -12,7 +12,7 @@ from IPython.display import Math, display
 from numpy import ndarray
 from numpy.linalg import norm
 
-from tinyqsim import gates, quantum, utils, plotting, format, unitary_sim
+from tinyqsim import gates, quantum, utils, plotting, format, unitary_sim, qasm
 from tinyqsim.format import state_kets, format_table
 from tinyqsim.model import Model
 from tinyqsim.schematic import Schematic
@@ -370,6 +370,15 @@ class QCircuit(object):
         freq = self.counts(*qubits, runs=runs, mode=mode, include_zeros=True)
         plotting.plot_histogram(freq, show=show, save=save, ylabel='Counts', height=height)
 
+    # ------------------ I/O ------------------
+
+    def to_qasm(self) -> str:
+        """Return an OpenQASM version of the quantum circuit.
+           Some TinyQsim constructs are not supported.
+           :return: OpenQASM version of the quantum circuit
+         """
+        return qasm.to_qasm(self._model)
+
     # ------------------ Wrapper methods for gates ------------------
 
     # In the following, 'c' stands for control and 't' for target.
@@ -399,15 +408,45 @@ class QCircuit(object):
         """
         self._add_gate('CH', [c, t], {'controls': 1})
 
-    def cp(self, phi: float, phi_text: str, c: int, t: int) -> None:
+    def cp(self, phi: float, label: str, c: int, t: int) -> None:
         """Add a controlled-phase (CP) gate.
         :param phi: phase angle in radians
-        :param phi_text: text annotation for phase angle
+        :param label: text annotation for phase angle
         :param c: control qubit
         :param t: target qubit
         """
         self._add_param_gate('CP', [c, t],
-                             {'args': phi, 'label': phi_text, 'controls': 1})
+                             {'args': phi, 'label': label, 'controls': 1})
+
+    def crx(self, theta: float, label: str, c: int, t: int) -> None:
+        """Add a CRX gate.
+        :param theta: target qubit
+        :param label: text annotation for angle
+        :param c: control qubit
+        :param t: target qubit
+        """
+        self._add_param_gate('CRX', [c, t],
+                             {'args': theta, 'label': label, 'controls': 1})
+
+    def cry(self, theta: float, label: str, c: int, t: int) -> None:
+        """Add a CRY gate.
+        :param theta: target qubit
+        :param label: text annotation for angle
+        :param c: control qubit
+        :param t: target qubit
+        """
+        self._add_param_gate('CRY', [c, t],
+                             {'args': theta, 'label': label, 'controls': 1})
+
+    def crz(self, theta: float, label: str, c: int, t: int) -> None:
+        """Add a CRZ gate.
+        :param theta: target qubit
+        :param label: text annotation for angle
+        :param c: control qubit
+        :param t: target qubit
+        """
+        self._add_param_gate('CRZ', [c, t],
+                             {'args': theta, 'label': label, 'controls': 1})
 
     def cs(self, c: int, t: int) -> None:
         """ Add a controlled-S (CS) gate.
@@ -473,29 +512,37 @@ class QCircuit(object):
         """
         self._add_gate('I', [t])
 
-    def p(self, phi: float, phi_text: str, t: int) -> None:
+    def p(self, phi: float, label: str, t: int) -> None:
         """Add a phase (P) gate.
         :param phi: phase angle
-        :param phi_text: text value of phase angle
+        :param label: text value of phase angle
         :param t: target qubit
         """
-        self._add_param_gate('P', [t], {'args': phi, 'label': phi_text})
+        self._add_param_gate('P', [t], {'args': phi, 'label': label})
 
-    def rx(self, theta: float, theta_text: str, t: int) -> None:
+    def rx(self, theta: float, label: str, t: int) -> None:
         """Add an RX gate.
         :param theta: target qubit
-        :param theta_text: text annotation for phase angle
+        :param label: text annotation for angle
         :param t: target qubit
         """
-        self._add_param_gate('RX', [t], {'args': theta, 'label': theta_text})
+        self._add_param_gate('RX', [t], {'args': theta, 'label': label})
 
-    def ry(self, theta: float, theta_text: str, t: int) -> None:
+    def ry(self, theta: float, label: str, t: int) -> None:
         """Add an RY gate.
         :param theta: target qubit
-        :param theta_text: text annotation for phase angle
+        :param label: text annotation for angle
         :param t: target qubit
         """
-        self._add_param_gate('RY', [t], {'args': theta, 'label': theta_text})
+        self._add_param_gate('RY', [t], {'args': theta, 'label': label})
+
+    def rz(self, theta: float, label: str, t: int) -> None:
+        """Add an RZ gate.
+        :param theta: target qubit
+        :param label: text annotation for angle
+        :param t: target qubit
+        """
+        self._add_param_gate('RZ', [t], {'args': theta, 'label': label})
 
     def s(self, t: int) -> None:
         """Add an S gate.
