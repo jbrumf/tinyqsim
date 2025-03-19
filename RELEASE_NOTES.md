@@ -1,5 +1,11 @@
 ## TinyQsim Release Notes
 
+### Release Notes (19 March 2025)
+
+- Moved Quantum Computing Basics document to a new project as it is of more general applicability:
+  - https://github.com/jbrumf/qc_basics
+  - https://jbrumf.github.io/qc_basics/Quantum_computing_basics.html
+
 ### Release Notes (25 February 2025)
 
 - Added gates: RZ, CRX, CRY, CRZ

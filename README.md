@@ -29,6 +29,10 @@ The TinyQsim documentation and examples can be found at:
 
 - [https://jbrumf.github.io/tinyqsim/](https://jbrumf.github.io/tinyqsim/)
 
+The author has also written an introduction to quantum computing, which may be of interest if you wish to learn more about the subject:
+
+- [https://jbrumf.github.io/qc_basics/Quantum_computing_basics.html](https://jbrumf.github.io/qc_basics/Quantum_computing_basics.html)
+
 ### Installation
 
 These instructions apply to macOS and Linux systems, but the software should also run on Windows.
