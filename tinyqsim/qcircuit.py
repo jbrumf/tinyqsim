@@ -99,7 +99,7 @@ class QCircuit(object):
             raise ValueError(f'Qubit indices out of range: {qubits}')
 
     def _add_gate(self, name: str, qubits: list[int], params: dict = None) -> None:
-        """ Add a gate to the model.
+        """ Add a gate operating on one or more qubits to the model.
             :param name: name of the gate
             :param qubits: qubits
             :param params: parameter dictionary
@@ -109,8 +109,22 @@ class QCircuit(object):
         if self._auto_exec:
             self._simulator.apply(self._gates[name], qubits)
 
+    def _add_gates(self, name: str, qubits: list[int], params: dict = None) -> None:
+        """ Add zero or more one-qubit gates to the model.
+            :param name: name of the gate
+            :param qubits: qubit(s)
+            :param params: parameter dictionary
+        """
+        if len(qubits) == 0:
+            return
+        self._check_qubits(qubits)
+        for q in qubits:
+            self._model.add_gate(name, [q], params)
+            if self._auto_exec:
+                self._simulator.apply(self._gates[name], [q])
+
     def _add_param_gate(self, name: str, qubits: list[int], params: dict) -> None:
-        """ Add a parameterized gate to the model.
+        """ Add a parameterized gate operating on one or more qubits to the model.
             :param name: name of the gate
             :param qubits: Qubits
             :param params: Parameter dictionary
@@ -120,6 +134,21 @@ class QCircuit(object):
         if self._auto_exec:
             u = self._gates[name](params['args'])
             self._simulator.apply(u, qubits)
+
+    def _add_param_gates(self, name: str, qubits: list[int], params: dict) -> None:
+        """ Add zero or more one-qubit parameterized gates to the model.
+            :param name: name of the gate
+            :param qubits: qubits
+            :param params: parameter dictionary
+        """
+        if len(qubits) == 0:
+            return
+        self._check_qubits(qubits)
+        u = self._gates[name](params['args'])
+        for q in qubits:
+            self._model.add_gate(name, [q], params)
+            if self._auto_exec:
+                self._simulator.apply(u, [q])
 
     def _add_measure(self, qubits: list[int]) -> ndarray | None:
         """ Add a measurement to the model.
@@ -342,19 +371,20 @@ class QCircuit(object):
         self._schematic.draw(self._model, show=show, save=save)
 
     def plot_probabilities(self, *qubits: int, show=True, save: str | None = False,
-                           height: float = 1) -> None:
+                           height: float = 1, ylim: list[float] | None = None) -> None:
         """Plot histogram of probabilities of measurement outcomes.
         See the 'counts' method for further details.
         :param qubits: qubits (None => all)
         :param show: show the plot
         :param save: file to save image if required
         :param height: Scaling factor for plot height
+        :param ylim: Y-axis limits [min, max]
         """
         if not qubits:
             qubits = range(self._nqubits)
         probs = quantum.probability_dict(self._simulator.state_vector, qubits)
         plotting.plot_histogram(probs, show=show, save=save, ylabel='Probability',
-                                height=height)
+                                height=height, ylim=ylim)
 
     def plot_counts(self, *qubits: int, runs: int = 1000, mode: str = 'resample',
                     show=True, save: str | None = False, height: float = 1) -> None:
@@ -500,61 +530,77 @@ class QCircuit(object):
         """
         self._add_gate('CZ', [c, t], {'controls': 1})
 
-    def h(self, t: int) -> None:
-        """Add a Hadamard (H) gate.
-        :param t: target qubit
+    def h(self, ts: int | list[int]) -> None:
+        """Add one or more Hadamard (H) gates.
+        :param ts: target qubits
         """
-        self._add_gate('H', [t])
+        if isinstance(ts, int):
+            ts = [ts]
+        self._add_gates('H', ts)
 
-    def i(self, t: int) -> None:
-        """Add an identity (I) gate.
-        :param t: target qubit
+    def i(self, ts: int | list[int]) -> None:
+        """Add one or more identity (H) gates.
+        :param ts: target qubits
         """
-        self._add_gate('I', [t])
+        if isinstance(ts, int):
+            ts = [ts]
+        self._add_gates('I', ts)
 
-    def p(self, phi: float, label: str, t: int) -> None:
+    def p(self, phi: float, label: str, ts: int | list[int]) -> None:
         """Add a phase (P) gate.
         :param phi: phase angle
         :param label: text value of phase angle
-        :param t: target qubit
+        :param ts: target qubits
         """
-        self._add_param_gate('P', [t], {'args': phi, 'label': label})
+        if isinstance(ts, int):
+            ts = [ts]
+        self._add_param_gates('P', ts, {'args': phi, 'label': label})
 
-    def rx(self, theta: float, label: str, t: int) -> None:
+    def rx(self, theta: float, label: str, ts: int | list[int]) -> None:
         """Add an RX gate.
         :param theta: target qubit
         :param label: text annotation for angle
-        :param t: target qubit
+        :param ts: target qubits
         """
-        self._add_param_gate('RX', [t], {'args': theta, 'label': label})
+        if isinstance(ts, int):
+            ts = [ts]
+        self._add_param_gates('RX', ts, {'args': theta, 'label': label})
 
-    def ry(self, theta: float, label: str, t: int) -> None:
+    def ry(self, theta: float, label: str, ts: int | list[int]) -> None:
         """Add an RY gate.
         :param theta: target qubit
         :param label: text annotation for angle
-        :param t: target qubit
+        :param ts: target qubits
         """
-        self._add_param_gate('RY', [t], {'args': theta, 'label': label})
+        if isinstance(ts, int):
+            ts = [ts]
+        self._add_param_gates('RY', ts, {'args': theta, 'label': label})
 
-    def rz(self, theta: float, label: str, t: int) -> None:
+    def rz(self, theta: float, label: str, ts: int | list[int]) -> None:
         """Add an RZ gate.
         :param theta: target qubit
         :param label: text annotation for angle
-        :param t: target qubit
+        :param ts: target qubits
         """
-        self._add_param_gate('RZ', [t], {'args': theta, 'label': label})
+        if isinstance(ts, int):
+            ts = [ts]
+        self._add_param_gates('RZ', ts, {'args': theta, 'label': label})
 
-    def s(self, t: int) -> None:
-        """Add an S gate.
-        :param t: target qubit
+    def s(self, ts: int | list[int]) -> None:
+        """Add one or more S gates.
+        :param ts: target qubit
         """
-        self._add_gate('S', [t])
+        if isinstance(ts, int):
+            ts = [ts]
+        self._add_gates('S', ts)
 
-    def sdg(self, t: int) -> None:
-        """Add an S-dagger gate.
-        :param t: target qubit
+    def sdg(self, ts: int | list[int]) -> None:
+        """Add one or more S-dagger (SDG) gates.
+        :param ts: target qubits
         """
-        self._add_gate('Sdg', [t])
+        if isinstance(ts, int):
+            ts = [ts]
+        self._add_gates('Sdg', ts)
 
     def swap(self, t1: int, t2: int) -> None:
         """Add a swap (SWAP) gate.
@@ -563,23 +609,29 @@ class QCircuit(object):
         """
         self._add_gate('SWAP', [t1, t2])
 
-    def sx(self, t: int) -> None:
-        """Add a sqrt(X) gate.
-        :param t: target qubit
+    def sx(self, ts: int | list[int]) -> None:
+        """Add one or more sqrt(X) gates.
+        :param ts: target qubits
         """
-        self._add_gate('SX', [t])
+        if isinstance(ts, int):
+            ts = [ts]
+        self._add_gates('SX', ts)
 
-    def t(self, t: int) -> None:
-        """Add a T gate.
-        :param t: target qubit
+    def t(self, ts: int | list[int]) -> None:
+        """Add one or more T gates.
+        :param ts: target qubits
         """
-        self._add_gate('T', [t])
+        if isinstance(ts, int):
+            ts = [ts]
+        self._add_gates('T', ts)
 
-    def tdg(self, t: int) -> None:
-        """Add an T-dagger gate.
-        :param t: target qubit
+    def tdg(self, ts: int | list[int]) -> None:
+        """Add one or more T-dagger gatea.
+        :param ts: target qubita
         """
-        self._add_gate('Tdg', [t])
+        if isinstance(ts, int):
+            ts = [ts]
+        self._add_gates('Tdg', ts)
 
     def u(self, u: ndarray, name: str, *qubits):
         """Add a custom unitary gate (U).
@@ -589,23 +641,29 @@ class QCircuit(object):
         """
         self._add_unitary(name, u, list(qubits), {})
 
-    def x(self, t: int) -> None:
-        """Add an X (NOT) gate.
-        :param t: target qubit
+    def x(self, ts: int | list[int]) -> None:
+        """Add one or more Pauli X (NOT) gates.
+        :param ts: target qubits
         """
-        self._add_gate('X', [t])
+        if isinstance(ts, int):
+            ts = [ts]
+        self._add_gates('X', ts)
 
-    def y(self, t: int) -> None:
-        """Add a Y gate.
-        :param t: target qubit
+    def y(self, ts: int | list[int]) -> None:
+        """Add one or more Pauli Y gates.
+        :param ts: target qubits
         """
-        self._add_gate('Y', [t])
+        if isinstance(ts, int):
+            ts = [ts]
+        self._add_gates('Y', ts)
 
-    def z(self, t: int) -> None:
-        """Add a Z gate.
-        :param t: target qubit
+    def z(self, ts: int | list[int]) -> None:
+        """Add one or more Pauli Z gates.
+        :param ts: target qubits
         """
-        self._add_gate('Z', [t])
+        if isinstance(ts, int):
+            ts = [ts]
+        self._add_gates('Z', ts)
 
     def barrier(self) -> None:
         """Add a barrier to the circuit."""

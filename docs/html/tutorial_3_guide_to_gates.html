@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>tutorial_3_guide_to_gates</title><style>html{font-size:16.000000px;}</style><style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>tutorial_3_guide_to_gates</title><style>html{font-size:17.000000px;}</style><style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
 
 html,body{background-color: #feffff;}
 
@@ -758,6 +758,7 @@ div.code-toolbar > .toolbar > .toolbar-item > span:focus {
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#imports-and-definitions">Imports and Definitions</a></li>
 <li><a href="#symbols-and-notation">Symbols and Notation</a></li>
+<li><a href="#repeated-gates">Repeated Gates</a></li>
 <li><a href="#controlled-gates">Controlled Gates</a></li>
 <li><a href="#anti-controlled-gates">Anti-Controlled Gates</a></li>
 <li><a href="#angle-parameters">Angle Parameters</a></li>
@@ -835,8 +836,8 @@ PHI = '\u03d5'  # Unicode PHI
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB4CAYAAACHMm6PAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA5FJREFUeJzt3E8oNAEcxvFn
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA5FJREFUeJzt3E8oNAEcxvFn
 /WvbEwonpUjrIEUpRZLioqSIuJBSysVZXHBxdlAS5SYlUZSDAw5CccFFcUT5U9rI
 n9/bvPNua17vwcjz1prnU5rdaWcP35md2V3tL2RmBqFI4TytKC6Z4hIpLpHiEiku
 keISKS6R4hIpLpHiEikukeISKS6R4hIpLpHiEikukeISKW4yxl1ZAcrKgHAYKC4G
@@ -865,8 +866,8 @@ qc.y(1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB4CAYAAACHMm6PAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABltJREFUeJztnGtIVFsUx/9m
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABltJREFUeJztnGtIVFsUx/9m
 PpovVmh9iEooyqEietgLzR5k0IceYPSy0IIi6EPRCwsjKgsKi4rQDLPICxVB9ICs
 CKOiKPPeosdYFNH0qbKkD5mRti7rbobxXOd654yz5uGsHwxH9jlz9jk/9+y99nms
 OCIiKCL0kNmtonKFUbmCqFxBVK4gKlcQlSuIyhVE5QqicgVRuYL0RITjdgONjaGv
@@ -901,6 +902,70 @@ cufONaFMSQlw9qxJQHnunFl64P6usNA6Y+MPE0uvFAYU7q9ZY27B/PhhRmLO7Nwe
 jieJfH9iCb0qJojKFaRbZGeKVKLiBmWgcN/Pn3Ch3YIgKlcQlSuIyhVE5cZ6tODS
 1FfBJ1VTX8nijuLncyNebjSjA5ogKlcQlSuIyhVE5QqicgVRuYKoXEFUriAqVxCV
 K4jKFUTlCqJyBVG5gqhcQVSuICpXEJULOf4GVQ0SJKgGc58AAAAASUVORK5CYII=" alt="png" /></p>
+<h3><a id="repeated-gates" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Repeated Gates</h3>
+<p>It is also possible to add instances of a single-qubit gate to a list of qubits with a single command, as shown in the following example. This is supported for single-qubit gates with the current exception of the U gate. One use is to add Hadamard gates to all the qubits to create a multi-qubit superposition.</p>
+<pre><code class="language-python">qc = QCircuit(3)
+qc.h(range(3))
+qc.x([0,2])
+qc.z([]) # No effect
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAACuCAYAAAAYsc7JAAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAACeNJREFUeJztnX9oVXUfx99z
+6tz+MW0lPH+EILkdJoUzScPSnsBKoZTKwqaVgkEEmT/R0HQVQTEy/MNaUo2WFEaB
+BoW2ahYSlj4KxnWsQsUUS/qBOJc29/Dxw312r5+1x3Puud97vsf3Cy7Tc+/d+d67
+1/n+Oud832W9vb29ICSHQbn/IUSgFMRAKYiBUhADpSAGSkEMlIIYKAUxUApioBTE
+MBgJ5+hR4NQp9/utrgauu86vMhdabi+kkC+3prYH3WfLne97WGUPOg6Vh/6CpcxB
+AHR1oSRUVQGZTGFiJFoKOdouCrHoYeBfGXc7Ph6gu/ndi/sP++XKe0SI1laVwyUi
+Q0ODliG1UvwPEWL0f+ATQQDU18NL2NEkBkpBDJSCGCgFMVAKYqAUxJ0U27cDN94I
+DBsGjB0LvPVWsfZEvJDi66+B2bOByZOBTz4BHnwQWLgQ+OCDYuyNeCHFc88BN98M
+vPYacPvt+v+HHgLWrkXRmDpqKnof6cXSuqX/+Bp5fvu/tyNJrF4NlJUBb75pn5Ob
+L6ZNAyoqgIMHEy7FG28Ao0frPPsddwDffacf7O23gb/+Ar74Anjggfz3iBQyDXv4
+cEwlTwnr1gHjxgFLlgDHjuU/t2ED0N4OrF+vr0msFB9/DCxapDXARx+pFLkC/Pgj
+cP48UFub/77seYBDhwouc6oYOhRoaQHOnNEmNktHB/DMM1rjLl/utkyhpXj+eeDW
+W7XjeOedWv3Nm9f3/O+/68+rrsp/34gR+vO33worcBqprwdWrQJ27ACam4GeHmD+
+fG0+RJhyxyeJQ50Qk8Lu3Qu89FL+9vvv135DWLq6unBogKojk6mUOibU76wqr8LV
+FVeHL0y/+88AOBvyPeHLLKxZA2zbBixbBuzfD+zZAzQ1ATU18ZW7/jLP0IWS4tdf
+gb//Bq69Nn/7qFG2Rvjzz/zXZGuQkSP7tokQEyZMGGCP4wHsC1NENI5vvPiIg4aG
+hwGEPTsbvszCkCFaK0ycCGzaBEyZAixejFjLfbm3DYeS4pprgMGDgV9+yd9+8mTf
+v8eM0Q8oFYA0L1myFUJuX6O2thZ7peoZ4KiT6wPC8HrH69h6ZGu/z302/bNQv6u1
+9V0EQfiaImyZswwfriMN6ZPNmAEMijg2jFLuyFJI2yY1kHQwn366b3vu/IN8KOmE
+yrannurb/v772tmUUUuWqqqqy67SLpfO051oO9EWy+8KgsDZNRFyED/2GHDunH5P
+0nebM0cPMtflDn2RjfSI771XP4AMM+VAf+cd2z7K+PqJJ/SDyRB1yxYVg/TPxo3A
+l18CL7yg36/8URcs0G0y3HdJ6Arqnnt0UqqtDZg1S3vMl/6xpT388EOd2ZQmRITY
+vNnOXRCls1NHH9KfWLkSqKvT+Ytdu1QW10S6HO/xx/WR5Y8/+pdHHmRgLlwAHn1U
+R3a5w88VK/TAEllmzozWjESFZ0lLTFMTsHs30NiYf6GvyCEzxDLak2bE5XpDlKKE
+ZDLa/5o0CVjazymbUjUjsVzNLbOXpV45q/1kO8paBu6R/b/nXRMEQHf3wK+R5kMe
+LmFNQQyUghgoBTFQCmKgFMTTe0mPB97tL+Pwfui495loKWStBVkSQO4Ad82wyh5U
+V5dHKrNcphj1TGmhyL6lDIVQlvS1ubloiftFSxIvBXEPO5rEQCmIgVIQA6UgBkpB
+DJSCGCgFMVAKYqAUxEApiIFSEAOlIAZKQQyUghgoBTFQCmKgFMRAKYiBUhADpSB+
+XeLv69XcvpNoKXyMoEwDiZbCxwjKNJBoKXyOoPQZdjSJgVIQA6UgBkpBDJSCuJFi
+505g7lxdJVbWlX7yyWLshXglxaefAgcOAFOn2oQgcoVK8fLLwPffa4KeZFgQv4g9
+bfDiLy1BT8XXCMokEnvaILkCp7lz0wYFyfOQ9aWjBMuRZJK6tME4yURIG0wyJUsb
+DEMx0gbjjKBsiJQ2mFxKljYYhmKkDcYZQdlaYGqfr8SeNhiGYqQNxhlBGThMG0wS
+RUkbPHIE+PZb/XdXl+afZ8WR/kcxiTOC8kplcNS0QYlKfO89DWiXtEH5mUUiJ0Wa
+3BlOeQhcyjX5RJpmkqRBuX7y7FnNzRw7Nv95Sc+TP35/D5J8eJaUGCgFSW/aILnS
+ruZOaQRlUmHzQQyUghgoBTFQCuJpR9PDtEGfSbQUPqYNpoHEB8txfQr3JF4K4h52
+NImBUhADpSAGSkEMlIIYKAUxUApioBTEQCmIgVIQA6UgBkpBDJSCGCgFMVAKYqAU
+xEApiIFSEAOlIAZKQQyUgvh134evl/gfLVGZ47o1IdFS+BhBKWUOAl0ArhTIeumy
+JmwhYiRaCh8jKE+dUiFaW1UOl4gMsu5oodGZiZbC5wjKINA1R32EHU1ioBTEQCmI
+gVIQA6UgxZdCgmIkJOa223QiZeRIjZb66qu490S8kULW637xRUCyXVpagC1bgBEj
+VIzPP497b8QLKSorgZ9+Al55BZg5E7jrLmDrVuD663VbsfA1bXD1ak1qlLjOS5Hl
+ZKZNAyoqgIMHPY6glKAYqRlykW033AAcPx5TqVPEunXAuHHAkiXAsWP5z23YALS3
+A+vX62tSFUEpuWPffON+2tcHhg7VZvbMGWDhwr7tHR0auCM5KsuXuy3ToEIiKCV+
+Uqq/efMGfo90PH/+OT9iivQh0+GrVgE7dgDNzdpZnz9fmw8RRmraVEVQ7twJPPss
+sHatdj6LHUEZZ9pgJkIEZdTYzDVrgG3bgGXLgP37gT17gKYmoKYmvnInIoJy3z7g
+vvuAuXNVChcRlHGmDTZEiqAMX2ZhyBCtFSZOBDZtAqZMARYvRqzlLnkE5Q8/AHff
+DdxyC7B5s7sIyjjTBlsjRFBGKXOW4cN1pHH+PDBjRvTM+EKjM4sSQXniBDB9up7T
+l+fkKHAVQRln2mDgMIJSDmIJ4zt3Tjvk0nebMwcYM8Z9uWOPoJTJK6kh5EKPV1/N
+H1/LUTBealdi2LhRQ/okxVG+X/mjLlig22S475JBUSMo29qAWbO0xywRlLlNyYED
+wOnT+trJk/ses2fHXPqU0Nmpow/pT6xcCdTV6fzFrl0qi/cRlDKp9U/xk4cPx1jy
+lHDhgkZ2ysgud/i5YgVw000qi4T9uoRnSUtMUxOwezfQ2Jg/uSdyyAyxjPakGXG5
+gjqlKCGZjM5PTJoELO3nlE2pmpHURFD6mDYYBEB398CvkeZDHi5hTUEMlIIYKAUx
+UApioBTE09sGPYygzDi89TXufSZaCh8jKKur9TLFqGdKC0X2LWVIddog16dwvz5F
+4qUg7mFHkxgoBTFQCmKgFMRAKYiBUhADpSAGSkEMlIIYKAUxUApioBTEQCmIgVIQ
+A6UgBkpBDJSCGCgFMVAKgkv5L16NpnLU8RDiAAAAAElFTkSuQmCC" alt="png" /></p>
 <h3><a id="controlled-gates" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Controlled Gates</h3>
 <p>Gates can have a <em>controlled</em> variant. The control enables the operation of the gate. It is drawn as a dark dot in the gate symbol.</p>
 <p>The controlled version CU of a gate U applies the gate if the control is \(\ket{1}\). For example, for a one-qubit gate defined by the unitary matrix \(U\):</p>
@@ -915,8 +980,8 @@ qc.cx(1, 0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAAB4CAYAAADc1jH7AAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAC15JREFUeJztnXtsFNUXx799
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAAC15JREFUeJztnXtsFNUXx799
 UB7ylBSqIBSsUGLLUzDBVhQViJQoBEUwBH9qKIj8gSjRCgi+EZSghCAGQXlYqaIC
 GhCCEkCk2AIiBNJIBSpUkGJbaYE+zi+H46a7e1u6252Z7ZbzSZZlZ2dn70y/9869
 59493zAiIiiKG+HuLxSFUVEoBioKxUBFoRioKBQDFYVioKJQDFQUioGKQjFQUSgG
@@ -990,8 +1055,8 @@ qc.cx(0, 2)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAACuCAYAAABDVZG9AAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACRBJREFUeJztnX9MldUfx99X
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAACRBJREFUeJztnX9MldUfx99X
 QG5oITKlpoX0a9ACCo02F2nU7Ie6ctlmZUWraa7WMlv/lIaz1tQ284+W/dSVFXM1
 I9jSKGyBQiGkrSbNGklpJQRDi9/w/u54vneXJ4G43Odz4YHPa2PP3bnnnufe13PO
 ec45954PPpKEIsIEmWIVlSuMyhVE5QqicgVRuYKoXEFUriAqVxCVK4jKFUTlCqJy
@@ -1047,8 +1112,8 @@ qc.ccx(0, 1, 2)  # CCX with 3 arguments
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAACuCAYAAABDVZG9AAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACYpJREFUeJztnH1sFNUaxp/t
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAACYpJREFUeJztnH1sFNUaxp/t
 B62AQttANaClfm7VUiiICRFBNBQFokSMqEExGpRobkCMf6BiEY0BTZA/iIiaErnl
 VqLBShPBaklsoRVoAWNMFbWXKqi0LCmVfrfPzeHcZruUlm533t1OeX/JZnZnz87M
 /ubMmTOzex4PSUIRIUpmsYrKFUblCqJyBVG5gqhcQVSuICpXEJUriMoVROUKonIF
@@ -1113,8 +1178,8 @@ qc.x(0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALIAAAB4CAYAAABW+ai6AAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACMtJREFUeJzt3W1sU1UYB/D/
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAACMtJREFUeJzt3W1sU1UYB/D/
 WBmsGqdx0w9mqMHAGlGzIaLGBSZGEk1AEhAUNCIJRuMXo35wiKggRgyowcRlRiau
 Eg0YfCEB5ANEQKNYxUTsJCI6jQoifGJD3HjMw7HpLrDZW3rXe5/+f0nT7fblnJ39
 e3rOfS0TEQFRxA0pdgWICoFBJhMYZDKBQSYTGGQygUEmExhkMoFBJhMYZDKBQSYT
@@ -1174,8 +1239,8 @@ qc.p(pi / 3, f'{PI}/3', 0)  # Unicode PI/3
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAABICAYAAADYrDZWAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAB4RJREFUeJztnHlsVFUUxr8W
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAAB4RJREFUeJztnHlsVFUUxr8W
 pICC1QKiqRZqkDYaERCqESwoS0qwalyQsIjRIKio/CEmEglbojGRgv5jCg0EqImy
 BWhc6gIE6gJUg1ELCCqagIK4EFOroMd8nkxmudMyr9M3fU/OL3mZmbf0nbn93rnn
 3nvOZImIwDBiyI79YBjERGE4mCgMBxOF4WCiMBxMFIaDicJwMFEYDiYKw8FEYTh0
@@ -1230,8 +1295,8 @@ qc.u(u1, 'U1', 2, 1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAACuCAYAAAAYsc7JAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACS5JREFUeJzt3W2IVFUYB/D/
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAACS5JREFUeJzt3W2IVFUYB/D/
 2rau+0UNUwk0xcgdsfIllURzLTX8YBlZli5YxBqIX+pjpQYJQYIZpC1UutombgkV
 CgliggXa1ppBNgaVtaCtL/RCupaVJx4Pw8zdx532zt63c+//B8N2787Mubn/OXPf
 znmqjDEGRCUGlC4QCYaCFIaCFIaCFIaCFIaCFIaCFIaCFIaCFIaClGokXGcncP58
@@ -1294,8 +1359,8 @@ qc.ccu(u2, 'U2', 0, 1, 2)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAACuCAYAAAAYsc7JAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACyVJREFUeJztnXlsVNUex79D
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAACyVJREFUeJztnXlsVNUex79D
 W2mLimyaF4MgKlIVSCFoQkRSRVwaUVyIbIrBYEj8R/nHgOJ7QWIQI5BoJLiAsgRF
 9BmMgCD6AiIEywuyFFRkkcUF2oiylC6/l18P82amv07bmd47vbf9fpLJbe/Sezr9
 zLnnnHt7vhERERASR7v4bwhRKAUxUApioBTEQCmIgVIQA6UgBkpBDJSCGCgFMVAK
@@ -1367,8 +1432,8 @@ qc.u(u3, 'U3', 0, 2)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAACuCAYAAABDVZG9AAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACZpJREFUeJztnX9MlHUcx9/I
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAACZpJREFUeJztnX9MlHUcx9/I
 gfyIAY6kFYiMLK4iJ64yyqxIWm391JCSzGJarfyj/quW/lGtjVo/abhVSutsWG3V
 YsvmispaZp7VTE7DssgQhJVuhRTap32erw93D57EA/c5eLjPa7vdPd/73n3vXve9
 59f383y+SUREUESYIvO2isoVRuUKonIFUbmCqFxBVK4gKlcQlSuIyhXEhwlORwfQ
@@ -1430,8 +1495,8 @@ qc.cu(mygate, 'U1', 1, 0, 2)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAACuCAYAAABDVZG9AAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACJ1JREFUeJztnWlsTF0Yx/+l
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAACJ1JREFUeJztnWlsTF0Yx/+l
 3mrFXoRYQ+jE3kYEsW/xwRpSvJYisQTBV6QkiISESGyxLyUqEoSERGL/YJsXCQax
 NrHXTu2eN4+Tm5nRMeZ2+tyZ23l+yc3ovXd6xq/nnjv33HP+N4mICIoI5WR+raJy
 hVG5gqhcQVSuICpXEJUriMoVROUKonIFSUacU1AAFBY6X256OtCwYRmWW1AAeDxA
@@ -1504,8 +1569,8 @@ qc.u(rk(3), 'RK', 0)  # Add rk(3) to qubit 0
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABBCAYAAACkRzjqAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABJNJREFUeJztm19IFF8Ux79r
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABJNJREFUeJztm19IFF8Ux79r
 Vv7ypcyyIENIYvchQgWpUDKkooKgSEy0CIKgeoke+2MP1UMF9VIgRBllLxVFWRlE
 GFgPQpsv2SxFUPtUJlkQW2Z1flwOgzu5O+3VPbK7nQ8sI/femTPzmXvn/pkxQEQE
 RYQ8mcMqKlcYlSuIyhVE5QqicgVRuYKoXEFUriAqVxCVK0g+MpxoFBgcnPy4xcXA
@@ -1739,8 +1804,8 @@ qc.ccu(u, 'U', 0, 1, 2)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAACuCAYAAABDVZG9AAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACAxJREFUeJztnFtoFFccxr81
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAACAxJREFUeJztnFtoFFccxr81
 SY2xUhNjxYcai6K7SGyTYAWplVYwiqKId02pYhGkpbT0LbYxrUqpL60PpaKWKEmK
 V0T0IV7Qh3jXrQhtE0UbFVTUGLHVaJpN/uXkuGymmsuY/WYv+f8gzO7Myc7ub8+c
 c2Z2zucTEYFCoQ/nZRWVS0blElG5RFQuEZVLROUSUblEVC4RlUtE5RJRuURULhGV
@@ -1801,8 +1866,8 @@ qc.ccx(0, 1, 2)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAACuCAYAAABDVZG9AAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACYpJREFUeJztnH1sFNUaxp/t
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAACYpJREFUeJztnH1sFNUaxp/t
 B62AQttANaClfm7VUiiICRFBNBQFokSMqEExGpRobkCMf6BiEY0BTZA/iIiaErnl
 VqLBShPBaklsoRVoAWNMFbWXKqi0LCmVfrfPzeHcZruUlm533t1OeX/JZnZnz87M
 /ubMmTOzex4PSUIRIUpmsYrKFUblCqJyBVG5gqhcQVSuICpXEJUriMoVROUKonIF
@@ -1867,8 +1932,8 @@ qc.ch(0, 1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB4CAYAAACHMm6PAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABbJJREFUeJztnF9IFFscx7/r
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABbJJREFUeJztnF9IFFscx7/r
 alf3pX9b0oVKKHIXia5KSZEsGWhPRVBY6eUagRH0Er0ZSVi+1EOvZpRddKN/EGGQ
 UGGREGVd6aHWiK7Yg2Lamgi6YPq7HI9719Fsd9z9za7r7wPDzJ45O2f2c86cOTt7
 9mcjIoLAQgrPYQWRy4zIZUTkMiJyGRG5jIhcRkQuIyKXEZHLiMhlROQyInIZEbmM
@@ -1913,8 +1978,8 @@ qc.cp(pi / 2, f'{PI}/2', 0, 1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB/CAYAAACaN143AAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAB1xJREFUeJztnWlsTF0Yx/+j
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAAB1xJREFUeJztnWlsTF0Yx/+j
 9WoHRWMJsUZJ50OtSS1Ra1IhlkgQpYmiIYKERMQSNEEifKjlA2qpxPLBEq9o7Cmi
 UUXfNwRtrC8fiFaUWFqhnjePY3JntMPcTp8xM31+yeRO7r2d2/ndc885c+5zn+Mg
 IoIiQiOZj1VUrjAqVxCVK4jKFUTlCqJyBVG5gqhcQVSuICpXEJUriMoVROUKonIF
@@ -1955,10 +2020,6 @@ EjHVgsPhLbe2KmHjRiA72wRDc0S8NBFTcuPjeWZU04jdvw+MG+e9/fBh84uMx4a7
 dQOuX7e28VNHtXXVAobCkOzsmnFnq1YRNWlipkmsba7LmTN9x69JTZIXceO5qalA
 nz41o9//BBEnN5SImAYtFFG5gqhcQVSuICpXEJUriMoVROUKonIFUbmQ43+gtDT0
 B5suJwAAAABJRU5ErkJggg==" alt="png" /></p>
-<pre><code class="language-python">
-</code></pre>
-<pre><code class="language-python">
-</code></pre>
 <pre><code class="language-API:">   cp(phi: float, label: str, c: int, t: int)
       phi      : the phase angle in radians
       label    : Text annotation for the angle
@@ -1972,8 +2033,8 @@ qc.crx(pi / 3, f'{PI}/3', 0, 1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB/CAYAAACaN143AAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACHZJREFUeJztnWtsFFUUx/9L
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAACHZJREFUeJztnWtsFFUUx/9L
 i9JVQeQhErAFCel+KAgE5CGCj5QYQCPyqhSCSkhQSID4gdAUmhhjlJgajdriow3S
 kAAJGmpA3gXUIFSeWiTyVMKbYiGUh+WYw3GzO3S33W33rLvD+SWT2Z25e+/sf+7c
 c+feM2c8REQwVGihk61h4ipj4ipi4ipi4ipi4ipi4ipi4ipi4ipi4ipi4ipi4ipi
@@ -2034,8 +2095,8 @@ qc.cry(pi / 3, f'{PI}/3', 0, 1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB/CAYAAACaN143AAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACCRJREFUeJztnW1sFFUUht+l
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAACCRJREFUeJztnW1sFFUUht+l
 5aNF+RAoAoWWj5D2BygQqqBAQaxIMCAiUFpNDQajQoLGH4am0MQYo8TUmJAARkGl
 MaCJmjZpAUVJawlCJUC1SKwgkKAtaakQWsByzOGw2V2623baPdvd7XmSyezOzM7M
 Pnvn3rszZ864iIhgqNBLZ7WGyVXG5CpichUxuYqYXEVMriImVxGTq4jJVcTkKmJy
@@ -2094,8 +2155,8 @@ qc.crz(pi / 3, f'{PI}/3', 0, 1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB/CAYAAACaN143AAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACCJJREFUeJztnWtsFFUUx/9L
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAACCJJREFUeJztnWtsFFUUx/9L
 W6HloUhBKGhbIKT9UBAISIBCeaQGojEiguVhIBoMkSaF8MHYtDYxhGgxJXxCDI8I
 tTxM1EBSBIISHoZHFQpYIGIRSSyUtLxCgVKOORw322132067Z93dnl8ymXbm9t7p
 f+7ce+beM+e6iIhgqNBFJ1vDxFXGxFXExFXExFXExFXExFXExFXExFXExFXExFXE
@@ -2154,8 +2215,8 @@ qc.cs(0, 1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB4CAYAAACHMm6PAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABjxJREFUeJztnFtIVFsYx//e
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABjxJREFUeJztnFtIVFsYx//e
 DhZEN816qKTrTGYdFZNKsQuoT0E37OIpITCCXnoKpKLrS1G9hlEWOT10RQqSfDBI
 iEpP9dDRki4UXb0jpFH5Hb6zGsZteZw947dnHL8fDHvPcs9ea357z9prb/f+RxER
 QREhWma1isoVRuUKonIFUbmCqFxBVK4gKlcQlSuIyhVE5QqicgVRuYKoXEFUriAq
@@ -2202,8 +2263,8 @@ qc.cswap(0, 1, 2)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAACuCAYAAABDVZG9AAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAB/hJREFUeJztnFtsFFUcxr+y
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAAB/hJREFUeJztnFtsFFUcxr+y
 RSrYQCHoi9ASm1oeShGIRFqDaOIVE0nKAzYxqA0J0RgTH1UsQR/QB/VFiXJLlGgU
 NVCMCF4SSqAEiiENoRqVChGVkoKipdjLZw7HzXaWbrsr88125P9LJrN79nRn5rdn
 zjkz6XwFJAlDwhjN1xomV4zJFWJyhZhcISZXiMkVYnKFmFwhJleIyRVicoWYXCEm
@@ -2260,8 +2321,8 @@ qc.ct(0, 1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB4CAYAAACHMm6PAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABZBJREFUeJztnF9IFFscx7+r
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABZBJREFUeJztnF9IFFscx7+r
 a6gv/bmW9FAJRe0S0VUpKRKpIHsqgsJKLxiBEfTSq5FE5Us99CpGGehGRRBRkNCD
 gUKUeaWHrr50rR6K0tZEUMHydzn3uOyOXq/7x+/Muv4+MMzM2bN7Zj9z5syZMzM/
 n4gIFApZnJ9VVC4ZlUtE5RJRuURULhGVS0TlElG5RFQuEZVLROUSUblEVC4RlUtE
@@ -2307,8 +2368,8 @@ qc.cu(u, 'U', 0, 1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB4CAYAAACHMm6PAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABeNJREFUeJztnF9IFFscx7/r
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABeNJREFUeJztnF9IFFscx7/r
 n1B76M+1pAfLKHKHqO6umBSJVJBBUASVlV4wAiPopdeNJCpf6qGXIDFKQzf6BxEF
 CT0YZESZV3rori9dqwej1DWRVLL8XU7HZR3N687u/mbX8feBZWbPnt0z+5lzzpw5
 M/NzERFBYCGF52cFkcuMyGVE5DIichkRuYyIXEZELiMilxGRy4jIZUTkMiJyGRG5
@@ -2356,8 +2417,8 @@ qc.cx(0, 1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB4CAYAAACHMm6PAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAB21JREFUeJztnGlIVGsYx/+a
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAAB21JREFUeJztnGlIVGsYx/+a
 3kqirEvabtpmq6UttJdFRSYVFBnRRtBCEVjhB6O9CCqIPgShWJHXrkS0kJAk2IeK
 yq3bwkWQrrSvaibXTMvn8vDeYRy3ZpzzjI09P5A5nnnP9jvveec9Z+b9+xARQRHB
 V2a1isoVRuUKonIFUbmCqFxBVK4gKlcQlSuIyhVE5QqicgVRuYKoXEFUriAqVxCV
@@ -2410,8 +2471,8 @@ qc.cy(0, 1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB4CAYAAACHMm6PAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABe9JREFUeJztnF1IVFsUx//j
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABe9JREFUeJztnF1IVFsUx//j
 R6gvfVxNIiqhqBkiuiolRSIVaU99gGGlhhYYQS+9FEwkUflSD0EQmWEGOlERRBRk
 RBgkSJlXeuiOL12ph6L8SiQNLNdl3e0wnsrrnJlZZ0ZdPxjOzD575sz89jlr79nn
 nOUiIoIiQoLMxyoqVxiVK4jKFUTlCqJyBVG5gqhcQVSuICpXEJUriMoVROUKonIF
@@ -2456,8 +2517,8 @@ qc.cz(0, 1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB4CAYAAACHMm6PAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABUFJREFUeJztnF9IVFkcx7+j
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABUFJREFUeJztnF9IVFkcx7+j
 oyibZG3m9hAG/RuJalMqpj9IBelrUEjFQhAYUQTCPg2bStFD9dBrSOWDOz1US0Vh
 0h96SOwfFgWFUK0+GeU6ZrO4bZPzW05nh/Fq/pmc751Rfx+43HuPZ7znfu65554Z
 Zr4eEREoFDI4/1ZRuWRULhGVS0TlElG5RFQuEZVLROUSUblEVC4RlUtE5RJRuURU
@@ -2499,8 +2560,8 @@ qc.h(0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABBCAYAAACkRzjqAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA2VJREFUeJztm89LFFEcwD/b
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA2VJREFUeJztm89LFFEcwD/b
 Kuqe0raEDiEItkOHSA8RFFlC3VYFNSEhIlDwEuJR7GCd+gv6IVSkgiR12EAQRQSP
 Wsc1JKg9FJqUEtiKysbzsa2L2+bUfrdd9/uBYXbfvJk3+9nv+zEzbzyxWCyGIsIh
 mcMqKlcYlSuIyhVE5QqicgVRuYKoXEFUriAqVxCVK0gROU4kAisr2S/X74cTJw6w
@@ -2521,8 +2582,8 @@ t7MNzaS4bGPK9fv/bXalJ9ff/Y3k8fzcnJebz2iHJojKFUTlCqJyBVG5gqhcQVSu
 ICpXEJUriMoVROUKonIFUbmCqFxBVK4gKlcQlSuIyhVE5SLHT17U28nbzPrDAAAA
 AElFTkSuQmCC" alt="png" /></p>
 <pre><code class="language-plain_text">API:
-   h(t: int)
-      t : the target qubit
+   h(t: int | list[int])
+      t : the target qubit (or list of qubits)
 </code></pre>
 <p>The H gate is described by the following matrix:</p>
 \[H = \frac{1}{\sqrt{2}}\begin{bmatrix}1 &amp; 1 \\ 1 &amp; -1 \end{bmatrix}
@@ -2534,8 +2595,8 @@ qc.i(0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABBCAYAAACkRzjqAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAAxlJREFUeJztm80rbGEYwH8u
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAAAxlJREFUeJztm80rbGEYwH8u
 4s4K+dhJKc1Z6bIiaqTY+SifXRspykbWsmLFP6AoiquUWFBKycbS3LscG6XZ+cjH
 Zi6hc3t7m8aJ5HAfM2OeX01n5j3znmf6zTPv55ks13VdFBG+yVxWUbnCqFxBVK4g
 KlcQlSuIyhVE5QqicgVRuYKoXEFySHGiUbi4+Py4xcVQXv6F5Uaj4DgQi31+7EAA
@@ -2554,8 +2615,8 @@ iMoVROUKonIFSYvbmSKR9IyX0nKLi+1WUjJWxkxcE/8jZJmNNFKYaBrfn5vyctMZ
 7dAEUbmCqFxBVK4gKlcQlSuIyhVE5QqicgVRuYKoXEFUriAqVxCVK4jKFUTlCqJy
 BVG5gqhc5PgH7Y4EeCAIe4QAAAAASUVORK5CYII=" alt="png" /></p>
 <pre><code class="language-plain_text">API:
-   i(t: int)
-      t : the target qubit
+   i(t: int | list[int])
+      t : the target qubit (or list of qubits)
 </code></pre>
 <p>The I gate is described by the identity matrix:</p>
 \[I = \begin{bmatrix}1 &amp; 0 \\ 0 &amp; 1 \end{bmatrix}
@@ -2567,8 +2628,8 @@ qc.p(pi / 2, f'{PI}/2', 0)  # For phi = pi/2
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABICAYAAACDSGkiAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABStJREFUeJztm1tIVF0Ux39j
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABStJREFUeJztm1tIVF0Ux39j
 hn1GUWJFEV3ogvPSRSEqKozCCMoKuslnRBeKgqCHKEq6QD1EL0o9FBUYpUFhRSQV
 3SSKrvp99FAzdCN8KDLpAuVXZJyPxebgjI4yx3GNM+P+wWHGs+ecPf5n77XWXnsd
 n+M4DhYV0nRua7HiKmPFVcSKq4gVVxErriJWXEWsuIpYcRWx4iqSToJTXw+NjfHv
@@ -2601,10 +2662,10 @@ iquIFVcRKy56/A8W9iJvqYU4UAAAAABJRU5ErkJggg==" alt="png" /></p>
 \[P(\phi) =\begin{bmatrix}1 &amp; 0 \\ 0 &amp; e^{i\phi} \end{bmatrix}
 \]
 <pre><code class="language-plain_text">API:
-   p(phi: float, label: str, t: int)
+   p(phi: float, label: str, t: int | list[int])
       phi   : the phase angle in radians
       label : text label for the angle
-      t     : the target qubit
+      t     : the target qubit (or list of qubits)
 </code></pre>
 <p>The first argument is the phase angle in radians. The second argument is the phase angle as a string. The phase angles are typically multiples of \(\pi\), so it is convenient to use unicode \(\pi\) in the text string.</p>
 <p>When the phase gate is applied to a qubit \(\alpha_0\ket{0} + \alpha_1\ket{1}\), the result is:</p>
@@ -2625,8 +2686,8 @@ qc.rx(pi / 4, f'{PI}/4', 0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABICAYAAACDSGkiAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABh5JREFUeJztm21IVE0Ux/+r
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABh5JREFUeJztm21IVE0Ux/+r
 aaZEJVYWplJSLmSvEBX0DkZUVFJZaWFkph8KhL5FFvRGFhlBJUYYZh+KoEJJS0vK
 XgmLPpRmRCCFZZZZ4mNUnIfD4bJed7Vd3bHd2/zgsnfPzJ0z+79zZ+aembUREUGj
 hAA1xWq0uIrR4ipEi6sQLa5CtLgK0eIqRIurEC2uQrS4ChkAH6ehAWhu7n+/ERFA
@@ -2661,10 +2722,10 @@ X8PbrjIz5W8FwcHer5NlxA0PB+7ckUHs5Uvn+S2vGruCNw52l9ZXLNMtZGbKxryE
 BFleHzv2b9fIgvHcxETZydh1g/bfwHLi+hKW6RZ8ES2uQrS4CtHiKkSLqxAtrkK0
 uArR4ipEi6sQLS7U8T8OH4XUgGwDKAAAAABJRU5ErkJggg==" alt="png" /></p>
 <pre><code class="language-plain_text">API:
-   rx(theta: float, t: int)
+   rx(theta: float, t: int | list[int])
       theta : the angle in radians
       label : text label for the angle
-      t     : the target qubit
+      t     : the target qubit (or list of qubits)
 </code></pre>
 <p>The RX gate is described by the following matrix:</p>
 \[RX(\theta) = \begin{bmatrix}
@@ -2687,8 +2748,8 @@ qc.ry(pi / 4, f'{PI}/4', 0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABICAYAAACDSGkiAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABbBJREFUeJztm2tIVE0Yx/+b
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABbBJREFUeJztm2tIVE0Yx/+b
 djGJSiQ/JCrdcKGbClFSYbeNoIvZHQ3sLkFB34Iogm5kUX4JSiIpfaMgilLSblgU
 VoSvFNRuRgQWFCWaIF7IeF4eHpbdsxffPbmz7p7mB8MeZ86ZmfM/c+aZ88yjjYgI
 GiUMUVOtRourGC2uQrS4CtHiKkSLqxAtrkK0uArR4ipEi6uQeEQ5LS1Aa2vk201O
@@ -2721,10 +2782,10 @@ LCNuUhLw5IkYsXfv/Ne3vFsciIkTg5cNFMtMCyUlEpA3bZpsq0+YMNg9sqA/1+EA
 Zs70D9AeDCwnbjRhmWkhGtHiKkSLqxAtrkK0uArR4ipEi6sQLa5CtLgK0eJCHf8B
 BCgfXx6Ss4QAAAAASUVORK5CYII=" alt="png" /></p>
 <pre><code class="language-plain_text">API:
-   ry(theta: float, t: int)
+   ry(theta: float, t: int | list[int])
       theta : the angle in radians
       label : text label for the angle
-      t     : the target qubit
+      t     : the target qubit (or list of qubits)
 </code></pre>
 <p>The RY gate is described by the following matrix:</p>
 \[RY(\theta) =  \begin{bmatrix}
@@ -2747,8 +2808,8 @@ qc.rz(pi / 4, f'{PI}/4', 0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABICAYAAACDSGkiAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABbFJREFUeJztm1tIVF0Ux/+T
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABbFJREFUeJztm1tIVF0Ux/+T
 Zn5KUGb1kJWVhPNgpVJUdKWaKApKIpPPQijKHgzsNbKgLLr7KEUIpd0IokbSLiBh
 ZT1Y+VAzGVFJkJhlgfgZGetjsRhmjnNxjs7WmdP+wWbGffY56/jf+6y99j5rbERE
 0ChhlJrLarS4itHiKkSLqxAtrkK0uArR4ipEi6sQLa5CtLgKiUeU09YGdHYOv93U
@@ -2780,10 +2841,10 @@ y4CxY711PGKPHZPJzFOYgwflO4scaSzjFmw2o7h79hiPc0J2fzjtqrhYflaQkBD5
 e7KMuCkpwKNHMom9eeMf3/Ib40DMmhX82FCxjFsoLpbkj6wsebU+c+ZI35EF93Md
 DmDePP8E7ZHAcuJGE5ZxC9GIFlchWlyFaHEVosVViBZXIVpchWhxFaLFVYgWF+r4
 Hx80idfDaqGpAAAAAElFTkSuQmCC" alt="png" /></p>
-<pre><code class="language-API:">   rz(theta: float, t: int)
+<pre><code class="language-API:">   rz(theta: float, t: int | list[int])
       theta : the angle in radians
       label : text label for the angle
-      t     : the target qubit
+      t     : the target qubit (or list of qubits)
 </code></pre>
 <p>The RZ gate is described by the following matrix:</p>
 \[RZ(\theta) =  \begin{bmatrix}
@@ -2808,8 +2869,8 @@ qc.s(0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABBCAYAAACkRzjqAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABBFJREFUeJztm0toFEsUQM88
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABBFJREFUeJztm0toFEsUQM88
 Ixg3Ro2flQRFnRE/vAQVNQE/MO6CX1QSQkBUXLpy4wdRN4K6FRSiEAWDBoKComgW
 iivH526iEggjgp/420wMfu6jKIakX+bJdMxtepJ7YOikprtu5Ux1Vd3qSUJEBEOF
 v3SqNUyuMiZXEZOriMlVxOQqYnIVMbmKmFxFTK4iJleRCmJOLgf9/dHHra6GefPG
@@ -2833,8 +2894,8 @@ FRdss1wRk6uIyVXE5Cpicif6UiybLc94sZZbXe0TgTA7Y2OFi+vi/wkJt8FAjMmV
 8fdzYy+3nLEJTRGTq4jJVcTkKmJyFTG5iphcRUyuIiZXEZOriMlVxOQqYnIVMbmK
 mFxFTK4iJlcRk6uIyUWPfwEizqcNQ59L6gAAAABJRU5ErkJggg==" alt="png" /></p>
 <pre><code class="language-plain_text">API:
-   s(t: int)
-      t : the target qubit
+   s(t: int | list[int])
+      t : the target qubit (or list of qubits)
 </code></pre>
 <p>The S gate is described by the following matrix:</p>
 \[S =\begin{bmatrix}1 &amp; 0 \\ 0 &amp; i \end{bmatrix}
@@ -2846,8 +2907,8 @@ qc.sdg(0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABBCAYAAACkRzjqAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABE9JREFUeJztm1tIFGEUx/9b
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABE9JREFUeJztm1tIFGEUx/9b
 Fnajm1ovpV3ZrSxSKiLFIrC3oBsGRgqB0mNPvZQQ1YsPPgsRJlkPUYEUFPlgUD0E
 bUUvuxWGbARdLPNlVbqcOBwGHZ2WHfXs7uj5wbDMNzN7vvnNmW/mfK4hIiIYKszS
 +VrD5CpjchUxuYqYXEVMriImVxGTq4jJVcTkKmJyFclDjpNIAH19mY9bUACsXj2N
@@ -2873,8 +2934,8 @@ Yk0lHJfjT4YQ18DIYRIB/n1uzssNMvZAU8TkKmJyFTG5iphcRUyuIiZXEZOriMlV
 xOQqYnIVMbmKmFxFTK4iJlcRk6uIyVXE5CpicqHHPzAvmvV4UiIoAAAAAElFTkSu
 QmCC" alt="png" /></p>
 <pre><code class="language-plain_text">API:
-   sdg(t: int)
-      t : the target qubit
+   sdg(t: int | list[int])
+      t : the target qubit (or list of qubits)
 </code></pre>
 <p>The Sdg gate is described by the following matrix:</p>
 \[Sdg =\begin{bmatrix}1 &amp; 0 \\ 0 &amp; -i \end{bmatrix}
@@ -2886,8 +2947,8 @@ qc.swap(0, 1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB4CAYAAACHMm6PAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABbFJREFUeJztnF1IFF0Yx/+b
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABbFJREFUeJztnF1IFF0Yx/+b
 WtZLVJJ1JSqJ73ohmkZSGlJBRfVGgV2UNxJSLXXTfQVR3XTTXUhZelEEJUQfghQY
 pJBSRvXeSFGZ0kUupBGZ5cfzct7DMs7quruy/90deH4wzOyZs87xN2fOPGd0Hp+I
 CBQKizg/VlG5ZFQuEZVLROUSUblEVC4RlUtE5RJRuURULhGVS0TlElG5RFQuEZVL
@@ -2922,7 +2983,7 @@ A6KRRMoSpurKAAAAAElFTkSuQmCC" alt="png" /></p>
 <pre><code class="language-plain_text">API:
    swap(c: int, t1: int, t2: int)
       t1 : the first target qubit
-      t2 i: the second target qubit
+      t2 i: the second target qubit (or list of qubits)
 </code></pre>
 <p>The SWAP gate is described by the following matrix:</p>
 \[SWAP =\begin{bmatrix}1&amp;0&amp;0&amp;0 \\ 0&amp;0&amp;1&amp;0 \\ 0&amp;1&amp;0&amp;0 \\ 0&amp;0&amp;0&amp;1 \end{bmatrix}
@@ -2936,8 +2997,8 @@ qc.sx(0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABBCAYAAACkRzjqAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABNxJREFUeJztm0tIVFEYx//q
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABNxJREFUeJztm0tIVFEYx//q
 WCpRpgZuelBmM5SZQoGVFEG2aVMEET1IoqAighYtpCLosQiioqiI0oQJIiIIF1oL
 C4ogYiKKGkt6MJseSK4ae+k/Pj6G8TYP5+acYSbPD2TGc8+5372/Ofe73z2OeSQJ
 ixHyzezWYuUaxso1iJVrECvXIFauQaxcg1i5BrFyDWLlGsTKNYgHWU4oBPT1ZT5u
@@ -2965,8 +3026,8 @@ kn37BqPYxXKDWLkGsXINYuUaxMo1SE58nSkYzM14WS23okK/bfj3ylgmkLgSfzTk
 SbGLLCaUw9/PzXq5uYy9oRnEyjWIlWsQK9cgVq5BrFyDWLkGsXINYuUaxMo1iJVr
 ECvXIFauQaxcg1i5BrFyDWLlGsTKNYiVC3P8AbShsOmwtMp8AAAAAElFTkSuQmCC" alt="png" /></p>
 <pre><code class="language-plain_text">API:
-   sx(t: int)
-     t : the target qubit
+   sx(t: int | list[int])
+     t : the target qubit (or list of qubits)
 </code></pre>
 <p>The SX gate is described by the following matrix:</p>
 \[SX =\frac{1}{\sqrt{2}}\begin{bmatrix}1+i &amp; 1-i \\ 1-i &amp; 1+i \end{bmatrix}
@@ -2981,8 +3042,8 @@ qc.t(0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABBCAYAAACkRzjqAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAAzlJREFUeJztm7tLI1EUh3+u
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAAAzlJREFUeJztm7tLI1EUh3+u
 Ed1UKlE7EQTJVLKKhaKgjXZRwVfYFBFBwUasxUot9C8QFSyMiiBaKAiCWGib3XLS
 iJJODT6arKAyy+UwTEazbkY9eZjzwTCZe2fmhi/nPmdSYBiGAYGFbzy3FUQuMyKX
 EZHLiMhlROQyInIZEbmMiFxGRC4jIpcRF7KcaBSIxdJfrscDVFd/YbnRKKBpQDye
@@ -3002,8 +3063,8 @@ y8tquR4PvW2YiZUxVa4q/yMU0MO97CWaw+/nZr3cXEY6NEZELiMilxGRy4jIZUTk
 MiJyGRG5jIhcRkQuIyKXEZHLiMhlROQyInIZEbmMiFxGRC4jIhd8/AWf0v1tMV1v
 KQAAAABJRU5ErkJggg==" alt="png" /></p>
 <pre><code class="language-plain_text">API:
-   t(t1: int)
-      t1 : the target qubit
+   t(t1: int | list[int])
+      t1 : the target qubit (or list of qubits)
 </code></pre>
 <p>The T gate is described by the following matrix:</p>
 \[T =\begin{bmatrix}1 &amp; 0 \\ 0 &amp; e^{i\frac{\pi}{4}} \end{bmatrix}
@@ -3018,8 +3079,8 @@ qc.tdg(0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABBCAYAAACkRzjqAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA29JREFUeJztm88rbGEYx79z
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA29JREFUeJztm88rbGEYx79z
 EXcWQoOFkijNWemyuClEFnaD8qvuFFKUjazFhpW/QCjKXKUmFpRSsmDJvcuxoDQ7
 TH5s5hKa29vTaeYwmOP0zJyZeT51mnPeM2fedz7znOf9MTOOSCQSgcDCN56XFUQu
 MyKXEZHLiMhlROQyInIZEbmMiFxGRC4jIpeRXNicYBAIhZJfr8sFVFZmsNxgENA0
@@ -3040,8 +3101,8 @@ N9tzbiCQnvXZWq7LRV8lpWIBXNWr6reCw+7//Q2m8e9zbS83nZEOjRGRy4jIZUTk
 MiJyGRG5jIhcRkQuIyKXEZHLiMhlROQyInIZEbmMiFxGRC4jIpcRkcuIyAUf/wHB
 eOCgdrb4IAAAAABJRU5ErkJggg==" alt="png" /></p>
 <pre><code class="language-plain_text">API:
-   tdg(t: int)
-      t : the target qubit
+   tdg(t: int | list[int])
+      t : the target qubit (or list of qubits)
 </code></pre>
 <p>The Tdg gate is described by the following matrix:</p>
 \[Tdg =\begin{bmatrix}1 &amp; 0 \\ 0 &amp; e^{-i\frac{\pi}{4}} \end{bmatrix}
@@ -3055,8 +3116,8 @@ qc.u(u, 'U', 0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABBCAYAAACkRzjqAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA5lJREFUeJztm89LVEEcwD+b
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA5lJREFUeJztm89LVEEcwD+b
 RrpdKjY7KUZQ+y6JSofEKBHsEPQDtJKEiKBDl+iqeMpT/0BBgUYWhKIHAyGILnVr
 6yS7F1EWOlSadGhTLCam4bE+XLZ9ud911/1+LrM7M+994cO8+c7M240YYwyKCLtk
 bquoXGFUriAqVxCVK4jKFUTlCqJyBVG5gqhcQVSuILWUOek0LC2VPm4sBk1NO1hu
@@ -3091,8 +3152,8 @@ qc.x(0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABBCAYAAACkRzjqAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABDNJREFUeJztm0toFEsUQE/M
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABDNJREFUeJztm0toFEsUQE/M
 P5uoRF35AUVnUJGXGH8kfkHBnaCIJIooCO4EdRElIn5BiCIulIBEIW8jgvgBxY2g
 IqjMe4LiRFGEcaUGgwvnRUy8j6IYxibz5qWTueNMvAdCh6ruvlVnaqpvdfeUiIhg
 qDBO57SGyVXG5CpichUxuYqYXEVMriImVxGTq4jJVcTkKlJGgZNIQG9v/uPW1cG0
@@ -3117,8 +3178,8 @@ FSmK15ni8eKMV9By6+r824YjuTM2WlxcF380lLhlGgVMoojfzy14ucWMXdAUMbmK
 mFxFTK4iJlcRk6uIyVXE5CpichUxuYqYXEVMriImVxGTq4jJVcTkKmJyFTG5iphc
 9PgXJuNAvT98TR8AAAAASUVORK5CYII=" alt="png" /></p>
 <pre><code class="language-plain_text">API:
-   x(t: int)
-      t : the target qubit
+   x(t: int | list[int])
+      t : the target qubit (or list of qubits)
 </code></pre>
 <p>The X gate is described by the following matrix:</p>
 \[X =\begin{bmatrix}0 &amp; 1 \\ 1 &amp; 0 \end{bmatrix}
@@ -3130,8 +3191,8 @@ qc.y(0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABBCAYAAACkRzjqAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA6BJREFUeJztm9srbFEcx79E
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA6BJREFUeJztm9srbFEcx79E
 4cUllwfFg9LMkw5FTpRLeHPJPZdcivIH8CBP3rwoT0w0Dy6lRKJE5IHyoDnncbxI
 zZtbKOYo9DutVtPYztDs4Tdnxvw+Ne09v7Vm/fZ89rL2mrW3KCIiCCxE8zQriFxm
 RC4jIpcRkcuIyGVE5DIichkRuYyIXEZELiMxCHFcLuDqKvh5U1OBrKxvLNflAqxW
@@ -3153,8 +3214,8 @@ nMnpDM98IS03NVU/bRjoythnUHk/e8ciSq3eIIRxhfHzuSEvN5yRCxojIpcRkcuI
 yGVE5DIichkRuYyIXEZELiMilxGRy4jIZUTkMiJyGRG5jIhcRkQuIyKXEZELPv4C
 GjO7BMl7iksAAAAASUVORK5CYII=" alt="png" /></p>
 <pre><code class="language-plain_text">API:
-   y(t: int)
-      t : the target qubit
+   y(t: int | list[int])
+      t : the target qubit (or list of qubits)
 </code></pre>
 <p>The Y gate is described by the following matrix:</p>
 \[Y = \begin{bmatrix}0 &amp; -i \\ i &amp; 0 \end{bmatrix}
@@ -3166,8 +3227,8 @@ qc.z(0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABBCAYAAACkRzjqAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA8hJREFUeJztm01IFGEYgJ/U
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAAA8hJREFUeJztm01IFGEYgJ/U
 woqgwooORVDk7kErJaFIkg5FJ4l+RQ9a1KFrpwjp0A9kdQ9CPGRFEEQ/1CXy0qXD
 VnRZOxSxl6hE8eAm9PPGx8eyje3azq7vuKvvA8PozPfN6z77zvc34wIREQwVqnQu
 a5hcZUyuIiZXEZOriMlVxOQqYnIVMbmKmFxFTK4iNZQ5qRSMjEQft64O1q+fw3JT
@@ -3190,8 +3251,8 @@ Wm5dnX/bsNiVsVJwcV38UljgpmmUMakKfj+37OVWMtahKWJyFTG5iphcRUyuIiZX
 EZOriMlVxOQqYnIVMbmKmFxFTK4iJlcRk6uIyVXE5CpichUxuejxB6391my7K1/p
 AAAAAElFTkSuQmCC" alt="png" /></p>
 <pre><code class="language-plain_text">API:
-   z(t: int)
-      t : the target qubit
+   z(t: int | list[int])
+      t : the target qubit (or list of qubits)
 </code></pre>
 <p>The Z gate is described by the following matrix:</p>
 \[Z =\begin{bmatrix}1&amp;0 \\ 0&amp;-1 \end{bmatrix}
@@ -3205,8 +3266,8 @@ qc.measure(0, 1)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB4CAYAAACHMm6PAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAB0NJREFUeJztnGdoFFsUx//R
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAAB0NJREFUeJztnGdoFFsUx//R
 WBJFVGIBe0GyNiyoYMWC3Yi9PEEFC3bFDyJ2LB+U98GKWIhiFEvA3rCiqIjGgshG
 QdCg2GJFEsVyHofDku3uJHvWXd/5wTCzd2fmTn5757bMnCQiIhgqlNI5rWFylTG5
 iphcRUyuIiZXEZOriMlVxOQqYnIVMbmKJCPOycsD8vNjn29aGlC37l8sNy8PcLmA
@@ -3258,8 +3319,8 @@ qc.reset(0)
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAABBCAYAAACkRzjqAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABGVJREFUeJztm9tLFHEUx79r
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABGVJREFUeJztm9tLFHEUx79r
 WrYUZGg9hGF02wErUggSoqIb0UMXulkGllDQS0RvRQ9dnvoHKiIMMkEoKowuFPRS
 D0VbDxFrQhkLPVSS2MNGZZw4HIaZMbWZtSOz6/m8jPzmN3N++5nzu82uCSIiGCqU
 6NzWMLnKmFxFTK4iJlcRk6uIyVXE5CpichUxuYqYXEVKEXOyWaC3d+zjVlYCs2cX
@@ -3297,8 +3358,8 @@ qc.barrier()
 qc.draw()
 </code></pre>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB4CAYAAACHMm6PAAAAOnRFWHRTb2Z0d2Fy
-ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAABQ1JREFUeJztnV9IU28Yx7/b
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABQ1JREFUeJztnV9IU28Yx7/b
 mX/YVQ0qvRgoRUwkBJVpmkiGhTDIsCjsxgiCoJuuo26qm667CCIMuoskI0FB0YtK
 yBIKpLwREhGx0BJStuXOE+/vJNu7/S6c7NnZ3j0fOJztYWccPufsOe9zXs+jh4gI
 Agtenq8VRC4zIpcRkcuIyGVE5DIichkRuYyIXEZELiMilxEfDCMajWJoaEiL9fX1

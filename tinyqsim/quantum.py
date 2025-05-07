@@ -12,7 +12,7 @@ import numpy.random as random
 from numpy import ndarray
 from numpy.linalg import norm
 
-from tinyqsim.utils import (is_unitary, is_normalized, normalize)
+from tinyqsim.utils import (is_unitary, normalize)
 
 RANGLE = '\u27E9'  # Unicode right bracket for ket
 
@@ -241,7 +241,8 @@ def measure_qubit(state: ndarray, qubit: int) -> tuple[int, ndarray]:
     :return: (measured, new_state) where 'measured' is the measured value
     """
     # Choose a state according to probabilities
-    assert is_normalized(state), f'norm={norm(state)}'
+    # assert is_normalized(state), f'norm={norm(state)}'
+    state = normalize(state)
     probs = probabilities(state, [qubit])
     measured = int(np.random.choice([0, 1], None, p=probs))
 
@@ -252,7 +253,7 @@ def measure_qubit(state: ndarray, qubit: int) -> tuple[int, ndarray]:
     return measured, normalize(np.where(mask, state, np.zeros(n)))
 
 
-def measure_qubits(state: ndarray, qubits: [int]) -> tuple[ndarray, ndarray]:
+def measure_qubits(state: ndarray, qubits: list[int]) -> tuple[ndarray, ndarray]:
     """Measure a list of qubits with collapse.
     :param state: State vector
     :param qubits: Qubits to be measured

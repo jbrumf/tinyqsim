@@ -22,6 +22,7 @@ export OUTM=../release/generated/
 # jupyter nbconvert --output-dir=$OUTH --to html example_2_QFT4.ipynb
 # jupyter nbconvert --output-dir=$OUTH --to html example_3_quantum_fourier_transform.ipynb
 # jupyter nbconvert --output-dir=$OUTH --to html example_4_quantum_phase_estimation.ipynb
+# jupyter nbconvert --output-dir=$OUTH --to html example_5_grovers_algorithm.ipynb
 
 # Generate Markdown versions of notebooks
 mkdir -p $OUTM
@@ -32,3 +33,5 @@ jupyter nbconvert --output-dir=$OUTM --to markdown tutorial_4_low_level_api.ipyn
 jupyter nbconvert --output-dir=$OUTM --to markdown example_2_QFT4.ipynb
 jupyter nbconvert --output-dir=$OUTM --to markdown example_3_quantum_fourier_transform.ipynb
 jupyter nbconvert --output-dir=$OUTM --to markdown example_4_quantum_phase_estimation.ipynb
+jupyter nbconvert --output-dir=$OUTM --to markdown example_5_grovers_algorithm.ipynb
+

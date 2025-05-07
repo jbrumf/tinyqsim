@@ -1,786 +1,998 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>TinyQsim_design_notes</title><style>html{font-size:16.000000px;}</style><style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
-
-html,body{background-color: #feffff;}
-
-.markdown-body {
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  line-height: 1.5;
-  color: #333333;
-  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
-  font-size: 1rem;
-  word-wrap: break-word;
-}
-
-.markdown-body .octicon {
-  display: inline-block;
-  fill: currentColor;
-  vertical-align: text-bottom;
-}
-
-.markdown-body figure{margin:0;padding:0; display:table;}
-.markdown-body figure figcaption{font-size:92%; text-align:center; color:#09844f;}
-
-.markdown-body .anchor {
-  float: left;
-  line-height: 1;
-  margin-left: -1.25rem;
-  padding-right: 0.25rem;
-}
-
-.markdown-body .anchor:focus {
-  outline: none;
-}
-
-.markdown-body h1 .octicon-link,
-.markdown-body h2 .octicon-link,
-.markdown-body h3 .octicon-link,
-.markdown-body h4 .octicon-link,
-.markdown-body h5 .octicon-link,
-.markdown-body h6 .octicon-link {
-  color: #0595bf;
-  vertical-align: middle;
-  visibility: hidden;
-}
-
-.markdown-body h1:hover .anchor,
-.markdown-body h2:hover .anchor,
-.markdown-body h3:hover .anchor,
-.markdown-body h4:hover .anchor,
-.markdown-body h5:hover .anchor,
-.markdown-body h6:hover .anchor {
-  text-decoration: none;
-}
-
-.markdown-body details {
-  display: block;
-}
-
-.markdown-body summary {
-  display: list-item;
-}
-
-.markdown-body a {
-  background-color: initial;
-}
-
-.markdown-body a:active,
-.markdown-body a:hover {
-  outline-width: 0;
-}
-
-.markdown-body strong {
-  font-weight: inherit;
-  font-weight: bolder;
-}
-.markdown-body strong{
-  color: #333333;
-}
-.markdown-body em{
-  color: #333333;
-}
-
-.markdown-body img {
-  border-style: none;
-}
-
-.markdown-body code,
-.markdown-body kbd,
-.markdown-body pre {
-  font-family: monospace,monospace;
-  font-size: 0.9rem;
-}
-
-.markdown-body hr {
-  box-sizing: initial;
-  height: 0;
-  overflow: visible;
-}
-
-.markdown-body input {
-  font: inherit;
-  margin: 0;
-}
-
-.markdown-body input {
-  overflow: visible;
-}
-
-.markdown-body [type=checkbox] {
-  box-sizing: border-box;
-  padding: 0;
-}
-
-.markdown-body * {
-  box-sizing: border-box;
-}
-
-.markdown-body input {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-}
-
-.markdown-body a {
-  color: #0366dd;
-  text-decoration: none;
-}
-.markdown-body mjx-container[jax="SVG"] > svg a{fill:#0366dd;stroke: #0366dd;}
-
-.markdown-body a:hover {
-  text-decoration: underline;
-}
-
-.markdown-body strong {
-  font-weight: 600;
-}
-
-.markdown-body hr:after,
-.markdown-body hr:before {
-  display: table;
-  content: "";
-}
-
-.markdown-body hr:after {
-  clear: both;
-}
-
-.markdown-body table {
-  border-spacing: 0;
-  border-collapse: collapse;
-}
-
-.markdown-body td,
-.markdown-body th {
-  padding: 0;
-}
-
-.markdown-body details summary {
-  cursor: pointer;
-}
-
-.markdown-body kbd {
-  display: inline-block;
-  padding: 0.1875rem 0.3125rem;
-  font: 0.75rem SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-  line-height: 0.75rem;
-  color: #09844f;
-  vertical-align: middle;
-  background-color: #f7f8f8;
-  border: 1px solid #e1e2e2;
-  border-radius: 0.1875rem;
-}
-
-.markdown-body p {
-  margin-top: 0;
-  margin-bottom: 0.625rem;
-}
-
-.markdown-body blockquote {
-  margin: 0;
-}
-
-.markdown-body ol,
-.markdown-body ul {
-  padding-left: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body ol ol,
-.markdown-body ul ol {
-  list-style-type: lower-roman;
-}
-
-.markdown-body ol ol ol,
-.markdown-body ol ul ol,
-.markdown-body ul ol ol,
-.markdown-body ul ul ol {
-  list-style-type: lower-alpha;
-}
-
-.markdown-body dd {
-  margin-left: 0;
-}
-
-.markdown-body code,
-.markdown-body pre {
-  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-  font-size: 0.75rem;
-}
-
-.markdown-body pre {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body input::-webkit-inner-spin-button,
-.markdown-body input::-webkit-outer-spin-button {
-  margin: 0;
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-.markdown-body:after,
-.markdown-body:before {
-  display: table;
-  content: "";
-}
-
-.markdown-body:after {
-  clear: both;
-}
-
-.markdown-body>:first-child {
-  margin-top: 0!important;
-}
-
-.markdown-body>:last-child {
-  margin-bottom: 0!important;
-}
-
-.markdown-body a:not([href]) {
-  color: inherit;
-  text-decoration: none;
-}
-
-.markdown-body blockquote,
-.markdown-body details,
-.markdown-body dl,
-.markdown-body ol,
-.markdown-body p,
-.markdown-body pre,
-.markdown-body table,
-.markdown-body ul {
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-.markdown-body hr {
-  height: .25rem;
-  padding: 0;
-  margin: 1.5rem 0;
-  background-color: #e1e2e2;
-  border: 0;
-}
-
-.markdown-body blockquote {
-  padding: 0 1rem;
-  color: #636363;
-  border-left: .25rem solid #bbbbbb;
-}
-
-.markdown-body blockquote>:first-child {
-  margin-top: 0;
-}
-
-.markdown-body blockquote>:last-child {
-  margin-bottom: 0;
-}
-
-.markdown-body h1,
-.markdown-body h2,
-.markdown-body h3,
-.markdown-body h4,
-.markdown-body h5,
-.markdown-body h6 {
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  line-height: 1.25;
-}
-
-.markdown-body h1 {
-  font-size: 2em;
-}
-
-.markdown-body h1,
-.markdown-body h2 {
-  padding-bottom: .3rem;
-  border-bottom: 1px solid #e7e8e8;
-  color: #0595bf;
-}
-
-.markdown-body h2 {
-  font-size: 1.5rem;
-  color: #0595bf;
-}
-
-.markdown-body h3 {
-  font-size: 1.25rem;
-  color: #0595bf;
-}
-
-.markdown-body h4 {
-  font-size: 1rem;
-  color: #0595bf;
-}
-
-.markdown-body h5 {
-  font-size: .875rem;
-  color: #0595bf;
-}
-
-.markdown-body h6 {
-  font-size: .85rem;
-  color: #0595bf;
-}
-
-.markdown-body ol,
-.markdown-body ul {
-  padding-left: 2rem;
-}
-
-.markdown-body ol ol,
-.markdown-body ol ul,
-.markdown-body ul ol,
-.markdown-body ul ul {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.markdown-body li {
-  word-wrap: break-all;
-}
-
-.markdown-body li>p {
-  margin-top: 1rem;
-}
-
-.markdown-body li+li {
-  margin-top: .25rem;
-}
-
-.markdown-body dl {
-  padding: 0;
-}
-
-.markdown-body dl dt {
-  padding: 0;
-  margin-top: 1rem;
-  font-size: 1rem;
-  font-style: italic;
-  font-weight: 600;
-}
-
-.markdown-body dl dd {
-  padding: 0 1rem;
-  margin-bottom: 1rem;
-}
-
-.markdown-body table {
-  display: block;
-  width: 100%;
-  overflow: auto;
-}
-
-.markdown-body table th {
-  font-weight: 600;
-}
-
-.markdown-body table td,
-.markdown-body table th {
-  padding: 0.375rem 0.75rem;
-  border: 1px solid #b9baba;
-}
-
-.markdown-body table tr {
-  background-color: #feffff;
-  border-top: 1px solid #b9baba;
-}
-
-.markdown-body table th {
-  background-color: #e7e8e8;
-}
-
-.markdown-body table tr:nth-child(2n) {
-  background-color: #f8f9f9;
-}
-
-.markdown-body img,.markdown-body video {
-  max-width: 100%;
-  box-sizing: initial;
-}
-
-.markdown-body img[align=right] {
-  padding-left: 1.25rem;
-}
-
-.markdown-body img[align=left] {
-  padding-right: 1.25rem;
-}
-
-.markdown-body code {
-  padding: .2rem .4rem;
-  margin: 0;
-  font-size: 85%;
-  background-color: #f7f8f8;
-  color: #09844f;
-  border-radius: 0.1875rem;
-}
-
-.markdown-body pre {
-  word-wrap: normal;
-}
-
-.markdown-body pre>code {
-  padding: 0;
-  margin: 0;
-   font-size: 100%;
-  word-break: normal;
-  white-space: pre;
-  background: transparent;
-  border: 0;
-}
-
-.markdown-body .highlight {
-  margin-bottom: 1rem;
-}
-
-.markdown-body .highlight pre {
-  margin-bottom: 0;
-  word-break: normal;
-}
-
-.markdown-body .highlight pre,
-.markdown-body pre {
-  padding: 1rem;
-  overflow: auto;
-  font-size: 85%;
-  line-height: 1.45;
-  background-color: #f7f8f8;
-  border-radius: 0.1875rem;
-}
-
-.markdown-body pre code {
-  display: inline;
-  max-width: auto;
-  padding: 0;
-  margin: 0;
-  overflow: visible;
-  line-height: inherit;
-  word-wrap: normal;
-  background-color: initial;
-  border: 0;
-  color: #09844f;
-}
-
-.markdown-body .task-list-item {
-  list-style-type: none;
-}
-
-.markdown-body .task-list-item+.task-list-item {
-  margin-top: 0.1875rem;
-}
-
-.markdown-body .task-list-item input {
-  margin: 0 .2rem .25rem -1.6rem;
-  vertical-align: middle;
-}
-
-.markdown-body .task-list-item input[type="checkbox"]{
--webkit-appearance: none;-moz-appearance: none;appearance: none;
-width: 0.875rem; height: 0.875rem;outline: none;
-border: 1px solid #0366dd;border-radius: 2px; 
-}
-.markdown-body .task-list-item input[type="checkbox"]:checked {
-  background:no-repeat center/80% url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Cpath%20fill%3D%22%230366dd%22%20d%3D%22M173.898%20439.404l-166.4-166.4c-9.997-9.997-9.997-26.206%200-36.204l36.203-36.204c9.997-9.998%2026.207-9.998%2036.204%200L192%20312.69%20432.095%2072.596c9.997-9.997%2026.207-9.997%2036.204%200l36.203%2036.204c9.997%209.997%209.997%2026.206%200%2036.204l-294.4%20294.401c-9.998%209.997-26.207%209.997-36.204-.001z%22%2F%3E%3C%2Fsvg%3E") ;
-}
-
-.markdown-body section.footnotes{
-    margin-top:3rem;
-    border-top:solid 1px #e1e2e2;
-    padding-top:0px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .markdown-body mark{color: #111;}
-}
-
-/* PrismJS 1.23.0
-https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript */
-/**
- * prism.js default theme for JavaScript, CSS and HTML
- * Based on dabblet (http://dabblet.com)
- * @author Lea Verou
- */
-
-
-code[class*="language-"],
-pre[class*="language-"] {
-    color: black;
-    background: none;
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
-}
-
-@media print {
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TinyQsim_design_notes</title>
+    <style>html {
+        font-size: 16.000000px;
+    }</style>
+    <style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
+
+    html, body {
+        background-color: #feffff;
+    }
+
+    .markdown-body {
+        -ms-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+        line-height: 1.5;
+        color: #333333;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+        font-size: 1rem;
+        word-wrap: break-word;
+    }
+
+    .markdown-body .octicon {
+        display: inline-block;
+        fill: currentColor;
+        vertical-align: text-bottom;
+    }
+
+    .markdown-body figure {
+        margin: 0;
+        padding: 0;
+        display: table;
+    }
+
+    .markdown-body figure figcaption {
+        font-size: 92%;
+        text-align: center;
+        color: #09844f;
+    }
+
+    .markdown-body .anchor {
+        float: left;
+        line-height: 1;
+        margin-left: -1.25rem;
+        padding-right: 0.25rem;
+    }
+
+    .markdown-body .anchor:focus {
+        outline: none;
+    }
+
+    .markdown-body h1 .octicon-link,
+    .markdown-body h2 .octicon-link,
+    .markdown-body h3 .octicon-link,
+    .markdown-body h4 .octicon-link,
+    .markdown-body h5 .octicon-link,
+    .markdown-body h6 .octicon-link {
+        color: #0595bf;
+        vertical-align: middle;
+        visibility: hidden;
+    }
+
+    .markdown-body h1:hover .anchor,
+    .markdown-body h2:hover .anchor,
+    .markdown-body h3:hover .anchor,
+    .markdown-body h4:hover .anchor,
+    .markdown-body h5:hover .anchor,
+    .markdown-body h6:hover .anchor {
+        text-decoration: none;
+    }
+
+    .markdown-body details {
+        display: block;
+    }
+
+    .markdown-body summary {
+        display: list-item;
+    }
+
+    .markdown-body a {
+        background-color: initial;
+    }
+
+    .markdown-body a:active,
+    .markdown-body a:hover {
+        outline-width: 0;
+    }
+
+    .markdown-body strong {
+        font-weight: inherit;
+        font-weight: bolder;
+    }
+
+    .markdown-body strong {
+        color: #333333;
+    }
+
+    .markdown-body em {
+        color: #333333;
+    }
+
+    .markdown-body img {
+        border-style: none;
+    }
+
+    .markdown-body code,
+    .markdown-body kbd,
+    .markdown-body pre {
+        font-family: monospace, monospace;
+        font-size: 0.9rem;
+    }
+
+    .markdown-body hr {
+        box-sizing: initial;
+        height: 0;
+        overflow: visible;
+    }
+
+    .markdown-body input {
+        font: inherit;
+        margin: 0;
+    }
+
+    .markdown-body input {
+        overflow: visible;
+    }
+
+    .markdown-body [type=checkbox] {
+        box-sizing: border-box;
+        padding: 0;
+    }
+
+    .markdown-body * {
+        box-sizing: border-box;
+    }
+
+    .markdown-body input {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    .markdown-body a {
+        color: #0366dd;
+        text-decoration: none;
+    }
+
+    .markdown-body mjx-container[jax="SVG"] > svg a {
+        fill: #0366dd;
+        stroke: #0366dd;
+    }
+
+    .markdown-body a:hover {
+        text-decoration: underline;
+    }
+
+    .markdown-body strong {
+        font-weight: 600;
+    }
+
+    .markdown-body hr:after,
+    .markdown-body hr:before {
+        display: table;
+        content: "";
+    }
+
+    .markdown-body hr:after {
+        clear: both;
+    }
+
+    .markdown-body table {
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+
+    .markdown-body td,
+    .markdown-body th {
+        padding: 0;
+    }
+
+    .markdown-body details summary {
+        cursor: pointer;
+    }
+
+    .markdown-body kbd {
+        display: inline-block;
+        padding: 0.1875rem 0.3125rem;
+        font: 0.75rem SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+        line-height: 0.75rem;
+        color: #09844f;
+        vertical-align: middle;
+        background-color: #f7f8f8;
+        border: 1px solid #e1e2e2;
+        border-radius: 0.1875rem;
+    }
+
+    .markdown-body p {
+        margin-top: 0;
+        margin-bottom: 0.625rem;
+    }
+
+    .markdown-body blockquote {
+        margin: 0;
+    }
+
+    .markdown-body ol,
+    .markdown-body ul {
+        padding-left: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .markdown-body ol ol,
+    .markdown-body ul ol {
+        list-style-type: lower-roman;
+    }
+
+    .markdown-body ol ol ol,
+    .markdown-body ol ul ol,
+    .markdown-body ul ol ol,
+    .markdown-body ul ul ol {
+        list-style-type: lower-alpha;
+    }
+
+    .markdown-body dd {
+        margin-left: 0;
+    }
+
+    .markdown-body code,
+    .markdown-body pre {
+        font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+        font-size: 0.75rem;
+    }
+
+    .markdown-body pre {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .markdown-body input::-webkit-inner-spin-button,
+    .markdown-body input::-webkit-outer-spin-button {
+        margin: 0;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    .markdown-body:after,
+    .markdown-body:before {
+        display: table;
+        content: "";
+    }
+
+    .markdown-body:after {
+        clear: both;
+    }
+
+    .markdown-body > :first-child {
+        margin-top: 0 !important;
+    }
+
+    .markdown-body > :last-child {
+        margin-bottom: 0 !important;
+    }
+
+    .markdown-body a:not([href]) {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .markdown-body blockquote,
+    .markdown-body details,
+    .markdown-body dl,
+    .markdown-body ol,
+    .markdown-body p,
+    .markdown-body pre,
+    .markdown-body table,
+    .markdown-body ul {
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+
+    .markdown-body hr {
+        height: .25rem;
+        padding: 0;
+        margin: 1.5rem 0;
+        background-color: #e1e2e2;
+        border: 0;
+    }
+
+    .markdown-body blockquote {
+        padding: 0 1rem;
+        color: #636363;
+        border-left: .25rem solid #bbbbbb;
+    }
+
+    .markdown-body blockquote > :first-child {
+        margin-top: 0;
+    }
+
+    .markdown-body blockquote > :last-child {
+        margin-bottom: 0;
+    }
+
+    .markdown-body h1,
+    .markdown-body h2,
+    .markdown-body h3,
+    .markdown-body h4,
+    .markdown-body h5,
+    .markdown-body h6 {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        line-height: 1.25;
+    }
+
+    .markdown-body h1 {
+        font-size: 2em;
+    }
+
+    .markdown-body h1,
+    .markdown-body h2 {
+        padding-bottom: .3rem;
+        border-bottom: 1px solid #e7e8e8;
+        color: #0595bf;
+    }
+
+    .markdown-body h2 {
+        font-size: 1.5rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h3 {
+        font-size: 1.25rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h4 {
+        font-size: 1rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h5 {
+        font-size: .875rem;
+        color: #0595bf;
+    }
+
+    .markdown-body h6 {
+        font-size: .85rem;
+        color: #0595bf;
+    }
+
+    .markdown-body ol,
+    .markdown-body ul {
+        padding-left: 2rem;
+    }
+
+    .markdown-body ol ol,
+    .markdown-body ol ul,
+    .markdown-body ul ol,
+    .markdown-body ul ul {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .markdown-body li {
+        word-wrap: break-all;
+    }
+
+    .markdown-body li > p {
+        margin-top: 1rem;
+    }
+
+    .markdown-body li + li {
+        margin-top: .25rem;
+    }
+
+    .markdown-body dl {
+        padding: 0;
+    }
+
+    .markdown-body dl dt {
+        padding: 0;
+        margin-top: 1rem;
+        font-size: 1rem;
+        font-style: italic;
+        font-weight: 600;
+    }
+
+    .markdown-body dl dd {
+        padding: 0 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .markdown-body table {
+        display: block;
+        width: 100%;
+        overflow: auto;
+    }
+
+    .markdown-body table th {
+        font-weight: 600;
+    }
+
+    .markdown-body table td,
+    .markdown-body table th {
+        padding: 0.375rem 0.75rem;
+        border: 1px solid #b9baba;
+    }
+
+    .markdown-body table tr {
+        background-color: #feffff;
+        border-top: 1px solid #b9baba;
+    }
+
+    .markdown-body table th {
+        background-color: #e7e8e8;
+    }
+
+    .markdown-body table tr:nth-child(2n) {
+        background-color: #f8f9f9;
+    }
+
+    .markdown-body img, .markdown-body video {
+        max-width: 100%;
+        box-sizing: initial;
+    }
+
+    .markdown-body img[align=right] {
+        padding-left: 1.25rem;
+    }
+
+    .markdown-body img[align=left] {
+        padding-right: 1.25rem;
+    }
+
+    .markdown-body code {
+        padding: .2rem .4rem;
+        margin: 0;
+        font-size: 85%;
+        background-color: #f7f8f8;
+        color: #09844f;
+        border-radius: 0.1875rem;
+    }
+
+    .markdown-body pre {
+        word-wrap: normal;
+    }
+
+    .markdown-body pre > code {
+        padding: 0;
+        margin: 0;
+        font-size: 100%;
+        word-break: normal;
+        white-space: pre;
+        background: transparent;
+        border: 0;
+    }
+
+    .markdown-body .highlight {
+        margin-bottom: 1rem;
+    }
+
+    .markdown-body .highlight pre {
+        margin-bottom: 0;
+        word-break: normal;
+    }
+
+    .markdown-body .highlight pre,
+    .markdown-body pre {
+        padding: 1rem;
+        overflow: auto;
+        font-size: 85%;
+        line-height: 1.45;
+        background-color: #f7f8f8;
+        border-radius: 0.1875rem;
+    }
+
+    .markdown-body pre code {
+        display: inline;
+        max-width: auto;
+        padding: 0;
+        margin: 0;
+        overflow: visible;
+        line-height: inherit;
+        word-wrap: normal;
+        background-color: initial;
+        border: 0;
+        color: #09844f;
+    }
+
+    .markdown-body .task-list-item {
+        list-style-type: none;
+    }
+
+    .markdown-body .task-list-item + .task-list-item {
+        margin-top: 0.1875rem;
+    }
+
+    .markdown-body .task-list-item input {
+        margin: 0 .2rem .25rem -1.6rem;
+        vertical-align: middle;
+    }
+
+    .markdown-body .task-list-item input[type="checkbox"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 0.875rem;
+        height: 0.875rem;
+        outline: none;
+        border: 1px solid #0366dd;
+        border-radius: 2px;
+    }
+
+    .markdown-body .task-list-item input[type="checkbox"]:checked {
+        background: no-repeat center/80% url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Cpath%20fill%3D%22%230366dd%22%20d%3D%22M173.898%20439.404l-166.4-166.4c-9.997-9.997-9.997-26.206%200-36.204l36.203-36.204c9.997-9.998%2026.207-9.998%2036.204%200L192%20312.69%20432.095%2072.596c9.997-9.997%2026.207-9.997%2036.204%200l36.203%2036.204c9.997%209.997%209.997%2026.206%200%2036.204l-294.4%20294.401c-9.998%209.997-26.207%209.997-36.204-.001z%22%2F%3E%3C%2Fsvg%3E");
+    }
+
+    .markdown-body section.footnotes {
+        margin-top: 3rem;
+        border-top: solid 1px #e1e2e2;
+        padding-top: 0px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .markdown-body mark {
+            color: #111;
+        }
+    }
+
+    /* PrismJS 1.23.0
+    https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript */
+    /**
+     * prism.js default theme for JavaScript, CSS and HTML
+     * Based on dabblet (http://dabblet.com)
+     * @author Lea Verou
+     */
+
+
     code[class*="language-"],
     pre[class*="language-"] {
-        text-shadow: none;
+        color: black;
+        background: none;
+        font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+        text-align: left;
+        white-space: pre;
+        word-spacing: normal;
+        word-break: normal;
+        word-wrap: normal;
+        -moz-tab-size: 4;
+        -o-tab-size: 4;
+        tab-size: 4;
+
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
     }
-}
 
-/* Code blocks */
-pre[class*="language-"] {
-    padding: 1rem;
-    margin: .5rem 0;
-    overflow: auto;
-}
+    @media print {
+        code[class*="language-"],
+        pre[class*="language-"] {
+            text-shadow: none;
+        }
+    }
 
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-    background-color: #f7f8f8;
-}
+    /* Code blocks */
+    pre[class*="language-"] {
+        padding: 1rem;
+        margin: .5rem 0;
+        overflow: auto;
+    }
 
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-    padding: .1rem;
-    border-radius: .3rem;
-    white-space: normal;
-}
+    :not(pre) > code[class*="language-"],
+    pre[class*="language-"] {
+        background-color: #f7f8f8;
+    }
 
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-    color: #8e9c92;
-}
+    /* Inline code */
+    :not(pre) > code[class*="language-"] {
+        padding: .1rem;
+        border-radius: .3rem;
+        white-space: normal;
+    }
 
-.token.punctuation {
-    color: #2834ce;
-}
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+        color: #8e9c92;
+    }
 
-.token.namespace {
-    opacity: .7;
-}
+    .token.punctuation {
+        color: #2834ce;
+    }
 
-.token.property,
-.token.tag,
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol,
-.token.deleted {
-    color: #2834ce;
-}
+    .token.namespace {
+        opacity: .7;
+    }
 
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
-    color: #d32d26;
-}
+    .token.property,
+    .token.tag,
+    .token.boolean,
+    .token.number,
+    .token.constant,
+    .token.symbol,
+    .token.deleted {
+        color: #2834ce;
+    }
 
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
-    color: #$$codeBlockColor$$;
-}
+    .token.selector,
+    .token.attr-name,
+    .token.string,
+    .token.char,
+    .token.builtin,
+    .token.inserted {
+        color: #d32d26;
+    }
 
-.token.atrule,
-.token.attr-value,
-.token.keyword {
-    color: #bc319c;
-}
+    .token.operator,
+    .token.entity,
+    .token.url,
+    .language-css .token.string,
+    .style .token.string {
+        color: # $ $ codeBlockColor $ $;
+    }
 
-.token.function,
-.token.class-name {
-    color: #967d41;
-}
+    .token.atrule,
+    .token.attr-value,
+    .token.keyword {
+        color: #bc319c;
+    }
 
-.token.regex,
-.token.important,
-.token.variable {
-    color: #784830;
-}
+    .token.function,
+    .token.class-name {
+        color: #967d41;
+    }
 
-.token.important,
-.token.bold {
-    font-weight: bold;
-}
-.token.italic {
-    font-style: italic;
-}
+    .token.regex,
+    .token.important,
+    .token.variable {
+        color: #784830;
+    }
 
-.token.entity {
-    cursor: help;
-}
+    .token.important,
+    .token.bold {
+        font-weight: bold;
+    }
+
+    .token.italic {
+        font-style: italic;
+    }
+
+    .token.entity {
+        cursor: help;
+    }
 
 
-pre[class*="language-"].line-numbers {
-  position: relative;
-  padding-left: 3.8rem;
-  counter-reset: linenumber;
-}
+    pre[class*="language-"].line-numbers {
+        position: relative;
+        padding-left: 3.8rem;
+        counter-reset: linenumber;
+    }
 
-pre[class*="language-"].line-numbers > code {
-  position: relative;
-  white-space: inherit;
-}
+    pre[class*="language-"].line-numbers > code {
+        position: relative;
+        white-space: inherit;
+    }
 
-.line-numbers .line-numbers-rows {
-  position: absolute;
-  pointer-events: none;
-  top: 0;
-  font-size: 100%;
-  left: -3.8rem;
-  width: 3rem; /* works for line-numbers below 1000 lines */
-  letter-spacing: -1px;
-  border-right: 1px solid #bfc0c0;
+    .line-numbers .line-numbers-rows {
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        font-size: 100%;
+        left: -3.8rem;
+        width: 3rem; /* works for line-numbers below 1000 lines */
+        letter-spacing: -1px;
+        border-right: 1px solid #bfc0c0;
 
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
 
-}
+    }
 
-  .line-numbers-rows > span {
-    display: block;
-    counter-increment: linenumber;
-  }
+    .line-numbers-rows > span {
+        display: block;
+        counter-increment: linenumber;
+    }
 
     .line-numbers-rows > span:before {
-      content: counter(linenumber);
-      color: #bfc0c0;
-      display: block;
-      padding-right: 0.8rem;
-      text-align: right;
+        content: counter(linenumber);
+        color: #bfc0c0;
+        display: block;
+        padding-right: 0.8rem;
+        text-align: right;
     }
 
 
-</style><script>(n=>{"use strict";let s,r,e;const l=["cdn.jsdelivr.net","fastly.jsdelivr.net","gcore.jsdelivr.net","cdn.zenless.top","testingcf.jsdelivr.net"],t="//",i=l[0],o=Date.now(),a=2e3,c="jsdelivr-auto-fallback",f="/gh/PipecraftNet/jsdelivr-auto-fallback@main/empty.css?",d=e=>e&&e.includes(t+i),m=e=>e.replace(t+i,t+s),u=window.setTimeout,v=n.querySelectorAll.bind(n),b=()=>{let e,t;for(e of v('link[rel="stylesheet"]'))t=e.href,d(t)&&!t.includes(f)&&(e.href=m(t));for(e of v("script"))if(t=e.src,d(t)){const s=n.createElement("script");s.src=m(t),e.defer=!0,e.src="",e.before(s),e.remove()}for(e of v("img"))t=e.src,d(t)&&(e.src="",e.src=m(t));for(e of v("*[style]"))t=e.getAttribute("style"),d(t)&&e.setAttribute("style",m(t));for(e of v("style"))t=e.innerHTML,d(t)&&(e.innerHTML=m(t))},h=()=>{!e&&r&&s&&(console.warn(i+" is not available. Use "+s),e=!0,u(b,0),u(b,20),setInterval(b,500))},g=(()=>{try{return Object.assign({},JSON.parse(localStorage.getItem(c)||"{}"))}catch{return{}}})(),y=()=>{g.time=o,g.failed=!1,g.fastNode=null;for(const t of l)((e,t)=>{let s;const r=n.createElement("link"),l=e=>{s&&(clearTimeout(s),s=0,e||(r.href="data:text/css;base64,"),r.remove(),t(e))};s=u(l,a),r.addEventListener("error",()=>l(!1)),r.addEventListener("load",()=>l(!0)),r.rel="stylesheet",r.text="text/css",r.href=e+f+o,n.head.insertAdjacentElement("afterbegin",r)})("https://"+t,e=>{e||t!==i||(r=!0,g.failed=!0),e&&!s&&(s=t),e&&!g.fastNode&&(g.fastNode=t),h()});u(()=>{r&&!s&&(s=l[1],h()),localStorage.setItem(c,JSON.stringify(g))},a+100)};if(g.time&&o-g.time<36e5&&g.failed&&g.fastNode)r=!0,s=g.fastNode,h(),u(y,1e3);else if(n.head)y();else{const j=new MutationObserver(()=>{n.head&&(j.disconnect(),y())});j.observe(n,{childList:!0,subtree:!0})}})(document);</script>
-<style>.mweb-charts{background:#fff;}
-body{ box-sizing: border-box;
-    margin: 0 auto;}
-@media print{
-    pre, code, pre code {
-     overflow: visible !important;
-     white-space: pre-wrap !important;       /* css-3 */
-     white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
-     white-space: -pre-wrap !important;      /* Opera 4-6 */
-     white-space: -o-pre-wrap !important;    /* Opera 7 */
-     word-wrap: break-word !important;       /* Internet Explorer 5.5+ */
+    </style>
+    <script>(n => {
+        "use strict";
+        let s, r, e;
+        const l = ["cdn.jsdelivr.net", "fastly.jsdelivr.net", "gcore.jsdelivr.net", "cdn.zenless.top", "testingcf.jsdelivr.net"],
+            t = "//", i = l[0], o = Date.now(), a = 2e3, c = "jsdelivr-auto-fallback",
+            f = "/gh/PipecraftNet/jsdelivr-auto-fallback@main/empty.css?", d = e => e && e.includes(t + i),
+            m = e => e.replace(t + i, t + s), u = window.setTimeout, v = n.querySelectorAll.bind(n), b = () => {
+                let e, t;
+                for (e of v('link[rel="stylesheet"]')) t = e.href, d(t) && !t.includes(f) && (e.href = m(t));
+                for (e of v("script")) if (t = e.src, d(t)) {
+                    const s = n.createElement("script");
+                    s.src = m(t), e.defer = !0, e.src = "", e.before(s), e.remove()
+                }
+                for (e of v("img")) t = e.src, d(t) && (e.src = "", e.src = m(t));
+                for (e of v("*[style]")) t = e.getAttribute("style"), d(t) && e.setAttribute("style", m(t));
+                for (e of v("style")) t = e.innerHTML, d(t) && (e.innerHTML = m(t))
+            }, h = () => {
+                !e && r && s && (console.warn(i + " is not available. Use " + s), e = !0, u(b, 0), u(b, 20), setInterval(b, 500))
+            }, g = (() => {
+                try {
+                    return Object.assign({}, JSON.parse(localStorage.getItem(c) || "{}"))
+                } catch {
+                    return {}
+                }
+            })(), y = () => {
+                g.time = o, g.failed = !1, g.fastNode = null;
+                for (const t of l) ((e, t) => {
+                    let s;
+                    const r = n.createElement("link"), l = e => {
+                        s && (clearTimeout(s), s = 0, e || (r.href = "data:text/css;base64,"), r.remove(), t(e))
+                    };
+                    s = u(l, a), r.addEventListener("error", () => l(!1)), r.addEventListener("load", () => l(!0)), r.rel = "stylesheet", r.text = "text/css", r.href = e + f + o, n.head.insertAdjacentElement("afterbegin", r)
+                })("https://" + t, e => {
+                    e || t !== i || (r = !0, g.failed = !0), e && !s && (s = t), e && !g.fastNode && (g.fastNode = t), h()
+                });
+                u(() => {
+                    r && !s && (s = l[1], h()), localStorage.setItem(c, JSON.stringify(g))
+                }, a + 100)
+            };
+        if (g.time && o - g.time < 36e5 && g.failed && g.fastNode) r = !0, s = g.fastNode, h(), u(y, 1e3); else if (n.head) y(); else {
+            const j = new MutationObserver(() => {
+                n.head && (j.disconnect(), y())
+            });
+            j.observe(n, {childList: !0, subtree: !0})
+        }
+    })(document);</script>
+    <style>.mweb-charts {
+        background: #fff;
     }
-    html,body{margin:0;padding:4px;}
-}
+
+    body {
+        box-sizing: border-box;
+        margin: 0 auto;
+    }
+
+    @media print {
+        pre, code, pre code {
+            overflow: visible !important;
+            white-space: pre-wrap !important; /* css-3 */
+            white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+            white-space: -pre-wrap !important; /* Opera 4-6 */
+            white-space: -o-pre-wrap !important; /* Opera 7 */
+            word-wrap: break-word !important; /* Internet Explorer 5.5+ */
+        }
+
+        html, body {
+            margin: 0;
+            padding: 4px;
+        }
+    }
 
 
+    div.code-toolbar {
+        position: relative;
+    }
 
-div.code-toolbar {
-  position: relative;
-}
+    div.code-toolbar > .toolbar {
+        position: absolute;
+        z-index: 10;
+        top: .3em;
+        right: .2em;
+        transition: opacity 0.3s ease-in-out;
+        opacity: 0;
+    }
 
-div.code-toolbar > .toolbar {
-  position: absolute;
-  z-index: 10;
-  top: .3em;
-  right: .2em;
-  transition: opacity 0.3s ease-in-out;
-  opacity: 0;
-}
+    div.code-toolbar:hover > .toolbar {
+        opacity: 1;
+    }
 
-div.code-toolbar:hover > .toolbar {
-  opacity: 1;
-}
+    /* Separate line b/c rules are thrown out if selector is invalid.
+       IE11 and old Edge versions don't support :focus-within. */
+    div.code-toolbar:focus-within > .toolbar {
+        opacity: 1;
+    }
 
-/* Separate line b/c rules are thrown out if selector is invalid.
-   IE11 and old Edge versions don't support :focus-within. */
-div.code-toolbar:focus-within > .toolbar {
-  opacity: 1;
-}
+    div.code-toolbar > .toolbar > .toolbar-item {
+        display: inline-block;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item {
-  display: inline-block;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > a {
+        cursor: pointer;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item > a {
-  cursor: pointer;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > button {
+        background: none;
+        border: 0;
+        color: inherit;
+        font: inherit;
+        line-height: normal;
+        overflow: visible;
+        padding: 0;
+        -webkit-user-select: none; /* for button */
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item > button {
-  background: none;
-  border: 0;
-  color: inherit;
-  font: inherit;
-  line-height: normal;
-  overflow: visible;
-  padding: 0;
-  -webkit-user-select: none; /* for button */
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > a,
+    div.code-toolbar > .toolbar > .toolbar-item > button,
+    div.code-toolbar > .toolbar > .toolbar-item > span {
+        color: inherit;
+        font-size: .8em;
+        padding: 4px .5em;
+        background: #f5f2f0;
+        background: rgba(224, 224, 224, 0.4);
+        box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2);
+        border-radius: .5em;
+    }
 
-div.code-toolbar > .toolbar > .toolbar-item > a,
-div.code-toolbar > .toolbar > .toolbar-item > button,
-div.code-toolbar > .toolbar > .toolbar-item > span {
-  color: inherit;
-  font-size: .8em;
-  padding: 4px .5em;
-  background: #f5f2f0;
-  background: rgba(224, 224, 224, 0.4);
-  box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
-  border-radius: .5em;
-}
+    div.code-toolbar > .toolbar > .toolbar-item > a:hover,
+    div.code-toolbar > .toolbar > .toolbar-item > a:focus,
+    div.code-toolbar > .toolbar > .toolbar-item > button:hover,
+    div.code-toolbar > .toolbar > .toolbar-item > button:focus,
+    div.code-toolbar > .toolbar > .toolbar-item > span:hover,
+    div.code-toolbar > .toolbar > .toolbar-item > span:focus {
+        color: inherit;
+        text-decoration: none;
+    }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script>!function () {
+        if ("undefined" != typeof Prism && "undefined" != typeof document) {
+            var e = [], t = {}, n = function () {
+            };
+            Prism.plugins.toolbar = {};
+            var a = Prism.plugins.toolbar.registerButton = function (n, a) {
+                var r;
+                r = "function" == typeof a ? a : function (e) {
+                    var t;
+                    return "function" == typeof a.onClick ? ((t = document.createElement("button")).type = "button", t.addEventListener("click", (function () {
+                        a.onClick.call(this, e)
+                    }))) : "string" == typeof a.url ? (t = document.createElement("a")).href = a.url : t = document.createElement("span"), a.className && t.classList.add(a.className), t.textContent = a.text, t
+                }, n in t ? console.warn('There is a button with the key "' + n + '" registered already.') : e.push(t[n] = r)
+            }, r = Prism.plugins.toolbar.hook = function (a) {
+                var r = a.element.parentNode;
+                var l = a.element.classList;
+                if (l.contains('language-mermaid') || l.contains('language-echarts') || l.contains('language-plantuml')) {
+                    return;
+                }
+                if (r && /pre/i.test(r.nodeName) && !r.parentNode.classList.contains("code-toolbar")) {
+                    var o = document.createElement("div");
+                    o.classList.add("code-toolbar"), r.parentNode.insertBefore(o, r), o.appendChild(r);
+                    var i = document.createElement("div");
+                    i.classList.add("toolbar");
+                    var l = e, d = function (e) {
+                        for (; e;) {
+                            var t = e.getAttribute("data-toolbar-order");
+                            if (null != t) return (t = t.trim()).length ? t.split(/\s*,\s*/g) : [];
+                            e = e.parentElement
+                        }
+                    }(a.element);
+                    d && (l = d.map((function (e) {
+                        return t[e] || n
+                    }))), l.forEach((function (e) {
+                        var t = e(a);
+                        if (t) {
+                            var n = document.createElement("div");
+                            n.classList.add("toolbar-item"), n.appendChild(t), i.appendChild(n)
+                        }
+                    })), o.appendChild(i)
+                }
+            };
+            a("label", (function (e) {
+                var t = e.element.parentNode;
+                if (t && /pre/i.test(t.nodeName) && t.hasAttribute("data-label")) {
+                    var n, a, r = t.getAttribute("data-label");
+                    try {
+                        a = document.querySelector("template#" + r)
+                    } catch (e) {
+                    }
+                    return a ? n = a.content : (t.hasAttribute("data-url") ? (n = document.createElement("a")).href = t.getAttribute("data-url") : n = document.createElement("span"), n.textContent = r), n
+                }
+            })), Prism.hooks.add("complete", r)
+        }
+    }();</script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <style>div.code-toolbar > .toolbar > .toolbar-item > a, div.code-toolbar > .toolbar > .toolbar-item > button, div.code-toolbar > .toolbar > .toolbar-item > span {
+        padding: 4px .5em;
+        background: #f5f2f0;
+        background: rgba(224, 224, 224, 0.4);
+    }</style>
+    <script>window.MathJax = {
+        tex: {tags: 'ams', inlineMath: [['$', '$'], ['\\(', '\\)']]}, startup: {
+            pageReady() {
+                return MathJax.startup.defaultPageReady().then(function () {
+                    window.mweb_mathjax_ready_val = 'yes';
+                    if (window.mweb_mathjax_ready !== undefined) {
+                        mweb_mathjax_ready();
+                    }
+                });
+            }
+        }
+    };
+    document.addEventListener('DOMContentLoaded', function (event) {
+        if (typeof Prism != 'undefined') {
+            Prism.highlightAll();
+        }
+    });
+    window.mweb_mathjax_ready_val = '';
 
-div.code-toolbar > .toolbar > .toolbar-item > a:hover,
-div.code-toolbar > .toolbar > .toolbar-item > a:focus,
-div.code-toolbar > .toolbar > .toolbar-item > button:hover,
-div.code-toolbar > .toolbar > .toolbar-item > button:focus,
-div.code-toolbar > .toolbar > .toolbar-item > span:hover,
-div.code-toolbar > .toolbar > .toolbar-item > span:focus {
-  color: inherit;
-  text-decoration: none;
-}
-</style><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>!function(){if("undefined"!=typeof Prism&&"undefined"!=typeof document){var e=[],t={},n=function(){};Prism.plugins.toolbar={};var a=Prism.plugins.toolbar.registerButton=function(n,a){var r;r="function"==typeof a?a:function(e){var t;return"function"==typeof a.onClick?((t=document.createElement("button")).type="button",t.addEventListener("click",(function(){a.onClick.call(this,e)}))):"string"==typeof a.url?(t=document.createElement("a")).href=a.url:t=document.createElement("span"),a.className&&t.classList.add(a.className),t.textContent=a.text,t},n in t?console.warn('There is a button with the key "'+n+'" registered already.'):e.push(t[n]=r)},r=Prism.plugins.toolbar.hook=function(a){var r=a.element.parentNode;var l=a.element.classList;if(l.contains('language-mermaid') || l.contains('language-echarts') || l.contains('language-plantuml')){return;} if(r&&/pre/i.test(r.nodeName)&&!r.parentNode.classList.contains("code-toolbar")){var o=document.createElement("div");o.classList.add("code-toolbar"),r.parentNode.insertBefore(o,r),o.appendChild(r);var i=document.createElement("div");i.classList.add("toolbar");var l=e,d=function(e){for(;e;){var t=e.getAttribute("data-toolbar-order");if(null!=t)return(t=t.trim()).length?t.split(/\s*,\s*/g):[];e=e.parentElement}}(a.element);d&&(l=d.map((function(e){return t[e]||n}))),l.forEach((function(e){var t=e(a);if(t){var n=document.createElement("div");n.classList.add("toolbar-item"),n.appendChild(t),i.appendChild(n)}})),o.appendChild(i)}};a("label",(function(e){var t=e.element.parentNode;if(t&&/pre/i.test(t.nodeName)&&t.hasAttribute("data-label")){var n,a,r=t.getAttribute("data-label");try{a=document.querySelector("template#"+r)}catch(e){}return a?n=a.content:(t.hasAttribute("data-url")?(n=document.createElement("a")).href=t.getAttribute("data-url"):n=document.createElement("span"),n.textContent=r),n}})),Prism.hooks.add("complete",r)}}();</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.css"><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><style>div.code-toolbar > .toolbar > .toolbar-item > a, div.code-toolbar > .toolbar > .toolbar-item > button, div.code-toolbar > .toolbar > .toolbar-item > span {padding: 4px .5em; background: #f5f2f0; background: rgba(224, 224, 224, 0.4);}</style><script>window.MathJax = {     tex: { tags: 'ams', inlineMath: [ ['$','$'], ['\\(','\\)'] ] } ,     startup: {     pageReady() {       return MathJax.startup.defaultPageReady().then(function () {          window.mweb_mathjax_ready_val = 'yes';          if(window.mweb_mathjax_ready !== undefined){ mweb_mathjax_ready(); }       });     }   }};document.addEventListener('DOMContentLoaded', function(event) {    if (typeof Prism != 'undefined') {         Prism.highlightAll();     }});window.mweb_mathjax_ready_val = '';function theMWebMathJaxRenderIsReady(key){ return window.mweb_mathjax_ready_val; }</script><script>window.MathJax = { tex: { tags: 'ams', inlineMath: [ ['$','$'], ['\\(','\\)'] ] } }; </script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script> <style>body{max-width:808px; padding:24px;}</style></head><body><div id='markdown_content' class='markdown-body'><h2><a id="tinyqsim-design-notes" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>TinyQsim Design Notes</h2>
-<p>This document provides some informal notes on the design of TinyQsim, as well as some ideas for further development.</p>
-<!-- TOC -->
-<ul>
-<li><a href="#tinyqsim-design-notes">TinyQsim Design Notes</a>
-<ul>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#use-of-tensors">Use of Tensors</a></li>
-<li><a href="#simulation">Simulation</a></li>
-<li><a href="#endianness">Endianness</a></li>
-<li><a href="#performance">Performance</a></li>
-<li><a href="#software-modules">Software Modules</a></li>
-</ul>
-</li>
-</ul>
-<!-- TOC -->
-<h3><a id="introduction" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
-<p>TinyQsim was originally started as a fun project to learn about quantum computation and as a framework to explore new ideas. The aim was to 'keep it simple', rather than worrying about optimization. Nevertheless, it is capable of simulating a 20-qubit Quantum Fourier Transform in about one second. This is sufficient for most textbook examples.</p>
-<p>The software is intended as a tool for interactive experiments. It is written in Python, using Jupyter notebooks as an environment for interaction. TinyQsim works in an incremental fashion by executing each gate as it is added to the circuit, so that the state is always up to date. This makes it very easy to examine the state, probabilities, etc, at any time, without having to run a simulator on the model each time. This is very convenient for interactive use, but limits the scope for circuit optimization. However, there is an experimental deferred-execution mode that allows a circuit to be constructed before it is run.</p>
-<h3><a id="use-of-tensors" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use of Tensors</h3>
-<p>Textbooks often give examples of gates as unitary matrices that are applied to state vectors. Although it is possible to write a simulator using this approach, it is very slow and limited to just a few qubits. Even a one-qubit gate can affect all the elements of the state vector, so the matrix has to be expanded to operate on the full state. This results in an enormous overhead in memory requirements and execution speed. Another problem is that the state vector needs to be permuted before and after the matrix multiplication, so that the gate is applied to the correct qubits. Some optimisation is possible, but this only makes a small improvement.</p>
-<p>Instead, quantum simulators typically use tensors to describe both the state and the unitary operators. This greatly improves the speed and memory usage.</p>
-<p>As an example, a 2-qubit state can be expresed as a tensor \(\psi^{ab}\), where the indices refer to the qubits. Similarly, a 2-qubit unitary operator can be expressed as a tensor \(U_{kl}^{ij}\). The operator can be applied to the state by tensor contraction as follows:</p>
-<p>\(\qquad U_{ab}^{ij}\ \psi^{ab} \rightarrow \psi^{ij}\)</p>
-<p>Since the indices correspond to qubits, the operator can be applied directly to whichever qubits are appropriate. For example, to apply \(U\) to qubits (3,1), that is (d,b), of a 4-qubit state \(\psi^{abcd}\):</p>
-<p>\(\qquad U_{db}^{ij}\ \psi^{abcd} \rightarrow \psi^{ajci}\)</p>
-<h3><a id="simulation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simulation</h3>
-<p>TinyQsim uses tensors for both quantum states and unitary operators (i.e gates). The tensors are represented internally as multi-dimensional arrays with one dimension per tensor index.</p>
-<p>When a new instance of QCircuit is created, the quantum state is initialized to the all-zero state \(\ket{000\dots 0}\), expressed as a tensor. Executing a quantum circuit just involves applying each gate in the circuit, in turn, to the quantum state using tensor contraction.</p>
-<p>For example, consider the following circuit:</p>
-<div style="text-align: center;">
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAADlCAYAAADXwTCfAAAAOnRFWHRTb2Z0d2Fy
+    function theMWebMathJaxRenderIsReady(key) {
+        return window.mweb_mathjax_ready_val;
+    }</script>
+    <script>window.MathJax = {tex: {tags: 'ams', inlineMath: [['$', '$'], ['\\(', '\\)']]}}; </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script>
+    <style>body {
+        max-width: 808px;
+        padding: 24px;
+    }</style>
+</head>
+<body>
+<div id='markdown_content' class='markdown-body'><h2><a id="tinyqsim-design-notes" class="anchor"
+                                                        aria-hidden="true"><span
+        class="octicon octicon-link"></span></a>TinyQsim Design Notes</h2>
+    <p>This document provides some informal notes on the design of TinyQsim, as well as some ideas for further
+        development.</p>
+    <!-- TOC -->
+    <ul>
+        <li><a href="#tinyqsim-design-notes">TinyQsim Design Notes</a>
+            <ul>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#use-of-tensors">Use of Tensors</a></li>
+                <li><a href="#simulation">Simulation</a></li>
+                <li><a href="#endianness">Endianness</a></li>
+                <li><a href="#performance">Performance</a></li>
+                <li><a href="#software-modules">Software Modules</a></li>
+            </ul>
+        </li>
+    </ul>
+    <!-- TOC -->
+    <h3><a id="introduction" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction
+    </h3>
+    <p>TinyQsim was originally started as a fun project to learn about quantum computation and as a framework to explore
+        new ideas. The aim was to 'keep it simple', rather than worrying about optimization. Nevertheless, it is capable
+        of simulating a 20-qubit Quantum Fourier Transform in about one second. This is sufficient for most textbook
+        examples.</p>
+    <p>The software is intended as a tool for interactive experiments. It is written in Python, using Jupyter notebooks
+        as an environment for interaction. TinyQsim works in an incremental fashion by executing each gate as it is
+        added to the circuit, so that the state is always up to date. This makes it very easy to examine the state,
+        probabilities, etc, at any time, without having to run a simulator on the model each time. This is very
+        convenient for interactive use, but limits the scope for circuit optimization. However, there is an experimental
+        deferred-execution mode that allows a circuit to be constructed before it is run.</p>
+    <h3><a id="use-of-tensors" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use of
+        Tensors</h3>
+    <p>Textbooks often give examples of gates as unitary matrices that are applied to state vectors. Although it is
+        possible to write a simulator using this approach, it is very slow and limited to just a few qubits. Even a
+        one-qubit gate can affect all the elements of the state vector, so the matrix has to be expanded to operate on
+        the full state. This results in an enormous overhead in memory requirements and execution speed. Another problem
+        is that the state vector needs to be permuted before and after the matrix multiplication, so that the gate is
+        applied to the correct qubits. Some optimisation is possible, but this only makes a small improvement.</p>
+    <p>Instead, quantum simulators typically use tensors to describe both the state and the unitary operators. This
+        greatly improves the speed and memory usage.</p>
+    <p>As an example, a 2-qubit state can be expresed as a tensor \(\psi^{ab}\), where the indices refer to the qubits.
+        Similarly, a 2-qubit unitary operator can be expressed as a tensor \(U_{kl}^{ij}\). The operator can be applied
+        to the state by tensor contraction as follows:</p>
+    <p>\(\qquad U_{ab}^{ij}\ \psi^{ab} \rightarrow \psi^{ij}\)</p>
+    <p>Since the indices correspond to qubits, the operator can be applied directly to whichever qubits are appropriate.
+        For example, to apply \(U\) to qubits (3,1), that is (d,b), of a 4-qubit state \(\psi^{abcd}\):</p>
+    <p>\(\qquad U_{db}^{ij}\ \psi^{abcd} \rightarrow \psi^{ajci}\)</p>
+    <h3><a id="simulation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simulation
+    </h3>
+    <p>TinyQsim uses tensors for both quantum states and unitary operators (i.e gates). The tensors are represented
+        internally as multi-dimensional arrays with one dimension per tensor index.</p>
+    <p>When a new instance of QCircuit is created, the quantum state is initialized to the all-zero state
+        \(\ket{000\dots 0}\), expressed as a tensor. Executing a quantum circuit just involves applying each gate in the
+        circuit, in turn, to the quantum state using tensor contraction.</p>
+    <p>For example, consider the following circuit:</p>
+    <div style="text-align: center;">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAADlCAYAAADXwTCfAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAACv1JREFUeJztnAtsFFUbht9e
 gFIQAUtBECiK0CYCv9xUQgVbhJiQKAkGRMQSf0QCGgwYE+RiuIiiAUkM4BWNVROD
@@ -842,37 +1054,55 @@ rDtUk5GFPIYMIU+fZtjx5EqurOz6fXC42L+fnD2bTEoiO3QgBw92DaKlruZi5B8v
 5h4kM1gSWbOyvOm6bhRsulIZT1qw0TjWgpUxwcqYYGVMsDImWBkTrIwJVsYEK2OC
 lTHByphgZUywMiZYGROsjAlWxgQrY4KVMcHKmGBlTLAyJlgZE6yMCVbGBCtjgpUx
 wcqYYGVMsDImGLr8HxFQUbaGNBtvAAAAAElFTkSuQmCC" alt="QFT_benchmark" width="75"/>
-</div>
-<p>This corresponds to the earlier example, where a 2-qubit unitary \(U\) was applied to qubits (3,1) of a 4-qubit state \(\psi\). In this case, the unitary is a CX (controlled-NOT) gate.</p>
-<p>This can be expressed in Einstein summation notation as the tensor contraction:</p>
-<p>\(\qquad U_{ijdb}\,\psi_{abcd}\,\rightarrow \psi_{ajci}\)</p>
-<p>This can be implemented in Python using the numpy 'einsum' function as follows:</p>
-<pre><code class="language-plain_text">  s = einsum('ijdb,abcd-&gt;ajci', u, psi)
+    </div>
+    <p>This corresponds to the earlier example, where a 2-qubit unitary \(U\) was applied to qubits (3,1) of a 4-qubit
+        state \(\psi\). In this case, the unitary is a CX (controlled-NOT) gate.</p>
+    <p>This can be expressed in Einstein summation notation as the tensor contraction:</p>
+    <p>\(\qquad U_{ijdb}\,\psi_{abcd}\,\rightarrow \psi_{ajci}\)</p>
+    <p>This can be implemented in Python using the numpy 'einsum' function as follows:</p>
+    <pre><code class="language-plain_text">  s = einsum('ijdb,abcd-&gt;ajci', u, psi)
 </code></pre>
-<p>Numpy implements multi-dimensional arrays as 'strided' arrays. The internal data structure is a one-dimensional array with a separate small 'stride' array that holds the step size between elements for each dimension. Permuting the indices simply involves permuting the small stride array, without altering the data array. The same one-dimensional data-array may have multiple 'views' each with its own stride array. Consequently, the state-vector and tensor representations of the state can share the same data array, simply by creating a new view.</p>
-<p>The tensor view 't' of an n-qubit state vector 's' can be obtained as a new view simply by reshaping it, without changing the internal data array.</p>
-<pre><code class="language-plain_text">   t = s.reshape([2] * n)
+    <p>Numpy implements multi-dimensional arrays as 'strided' arrays. The internal data structure is a one-dimensional
+        array with a separate small 'stride' array that holds the step size between elements for each dimension.
+        Permuting the indices simply involves permuting the small stride array, without altering the data array. The
+        same one-dimensional data-array may have multiple 'views' each with its own stride array. Consequently, the
+        state-vector and tensor representations of the state can share the same data array, simply by creating a new
+        view.</p>
+    <p>The tensor view 't' of an n-qubit state vector 's' can be obtained as a new view simply by reshaping it, without
+        changing the internal data array.</p>
+    <pre><code class="language-plain_text">   t = s.reshape([2] * n)
 </code></pre>
-<p>Similarly, a tensor view 'u' of a k-qubit unitary matrix 'm', representing a quantum operator, can be obtained as follows':</p>
-<pre><code class="language-plain_text">   u = m.reshape([2] * k * 2)
+    <p>Similarly, a tensor view 'u' of a k-qubit unitary matrix 'm', representing a quantum operator, can be obtained as
+        follows':</p>
+    <pre><code class="language-plain_text">   u = m.reshape([2] * k * 2)
 </code></pre>
-<p>TinyQsim also uses 'einsum' to construct a unitary-matrix representation of a quantum circuit. It is also used to calculate measurement probabilities for a subset of qubits by summing over the remaining qubits.</p>
-<h3><a id="endianness" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Endianness</h3>
-<p>Some books, papers and online resources use the <em>big-endian</em> convention, in which qubit 0 is the most-significant qubit, while others use the <em>little-endian</em> convention, in which qubit 0 is the least significant qubit. This can lead to confusion when comparing examples from different sources.</p>
-<p>The big-endian convention was chosen for TinyQsim as it is popular in books and published papers on quantum computing.</p>
-<p>Using tensors, swapping endianness simply involves reversing the order of indices.</p>
-<p>For example, to swap the endianness of a 4-qubit state \(\psi\):</p>
-<p>\(\qquad \psi^{ijkl} \rightarrow \psi^{lkji}\)</p>
-<p>Similarly, to swap the endianness of a unitary operator \(U\):</p>
-<p>\(\qquad U_{abcd}^{ijkl} \rightarrow U_{dcba}^{lkji}\)</p>
-<p>So, an endian-swapped operator, applied to an endian-swapped state, gives an endian-swapped result:</p>
-<p>\(\qquad U_{dcba}^{lkji}\ \psi^{dcba} \rightarrow (U\psi)^{lkji}\)</p>
-<p>TinyQsim currently only supports the big-endian convention, but it would not be too difficult to add support for little-endian at a later date.</p>
-<h3><a id="performance" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Performance</h3>
-<p>The following graph shows the execution time of a Quantum Fourier Transform (QFT) plotted against the numbers of qubits. The time axis is logarithmic, so a straight line corresponds to a time complexity that is exponential in the number of qubits.</p>
-<p>The test was run on a Mac Mini M2 Pro with 32GB of RAM, starting with a random N-qubit state for each run. The times are for execution of the QFT algorithm, excluding the initialisation of the random state.</p>
-<div style="text-align: center;">
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAAOnRFWHRTb2Z0d2Fy
+    <p>TinyQsim also uses 'einsum' to construct a unitary-matrix representation of a quantum circuit. It is also used to
+        calculate measurement probabilities for a subset of qubits by summing over the remaining qubits.</p>
+    <h3><a id="endianness" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Endianness
+    </h3>
+    <p>Some books, papers and online resources use the <em>big-endian</em> convention, in which qubit 0 is the
+        most-significant qubit, while others use the <em>little-endian</em> convention, in which qubit 0 is the least
+        significant qubit. This can lead to confusion when comparing examples from different sources.</p>
+    <p>The big-endian convention was chosen for TinyQsim as it is popular in books and published papers on quantum
+        computing.</p>
+    <p>Using tensors, swapping endianness simply involves reversing the order of indices.</p>
+    <p>For example, to swap the endianness of a 4-qubit state \(\psi\):</p>
+    <p>\(\qquad \psi^{ijkl} \rightarrow \psi^{lkji}\)</p>
+    <p>Similarly, to swap the endianness of a unitary operator \(U\):</p>
+    <p>\(\qquad U_{abcd}^{ijkl} \rightarrow U_{dcba}^{lkji}\)</p>
+    <p>So, an endian-swapped operator, applied to an endian-swapped state, gives an endian-swapped result:</p>
+    <p>\(\qquad U_{dcba}^{lkji}\ \psi^{dcba} \rightarrow (U\psi)^{lkji}\)</p>
+    <p>TinyQsim currently only supports the big-endian convention, but it would not be too difficult to add support for
+        little-endian at a later date.</p>
+    <h3><a id="performance" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Performance
+    </h3>
+    <p>The following graph shows the execution time of a Quantum Fourier Transform (QFT) plotted against the numbers of
+        qubits. The time axis is logarithmic, so a straight line corresponds to a time complexity that is exponential in
+        the number of qubits.</p>
+    <p>The test was run on a Mac Mini M2 Pro with 32GB of RAM, starting with a random N-qubit state for each run. The
+        times are for execution of the QFT algorithm, excluding the initialisation of the random state.</p>
+    <div style="text-align: center;">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjAsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
 cmcvlHJYcgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAlElJREFUeJzt3Qd8U1UbBvCn
 i723bGTK3hsEFHCACqgoqCwZMgTZQwFFpoIoioACLlA+UFBBEUSULXsKyF6yV9l0
@@ -1666,67 +1896,83 @@ DDw7deqE5s2bmwwjM37sbv7uu+9MwMkgkjUJ2R1cokQJj58LEZE7CXAkpC6CiIgP
 GTJkCMaNG4fFixejatWq3m6OiEiSoQBQRPza9OnTTZFmlmAJDFSnh4gIKQAUERER
 sRl9HRYRERGxGQWAIiIiIjajAFBERETEZhQAioiIiNiMAkARERERm1EAKCIiImIz
 CgBFREREbEYBoIiIiIjNKAAUERERgb38H/dzupLQ2/ZzAAAAAElFTkSuQmCC" alt="QFT_benchmark" width="550"/>
+    </div>
+    <p>The green plot shows the time taken for a one-qubit QFT (which is just a single Hadamard gate) on the
+        most-significant qubit. This provides a baseline against which to compare an N-qubit QFT. Although the Hadamard
+        gate is only applied to one qubit, it will normally change all elements of the state vector. Hence the time
+        complexity is of order \(\mathcal{O}(2^N)\). The plot shows that the actual execution time increases by a factor
+        of 2.12 for each qubit that is added.</p>
+    <p>The approximate time to run a given algorithm will be this baseline time multiplied by the number of qubits in
+        the circuit, if run on the same computer, assuming simple one or two qubit gates.</p>
+    <p>The blue plot shows the execution time for an N-qubit QFT operating on the full N-qubit state. The QFT algorithm
+        has a complexity of \(\mathcal{O}(N^2)\) gates. On a real quantum computer, this is also the time complexity if
+        it is assumed that the different gates take equal times. However, in the simulation, the time taken per gate
+        approximately doubles for each qubit, so the overall time complexity is expected to be \(\mathcal{O}(N^2\ 2^N)
+        \approx \mathcal{O}(2^N)\).</p>
+    <p>In conclusion, the simulator is quite responsive for interactive use with up to 20 qubits. However, with 28
+        qubits a QFT of all the qubits takes around 1000 seconds. Of course, these figures depend on the processor's
+        performance and memory available.</p>
+    <p>There are a number of ways in which the performance could be further improved, but an initial design goal of
+        TinyQsim was to keep it simple.</p>
+    <h3><a id="software-modules" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Software
+        Modules</h3>
+    <p>The Python software modules are as follows:</p>
+    <table>
+        <thead>
+        <tr>
+            <th style="text-align: left">Module</th>
+            <th style="text-align: left">Purpose</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td style="text-align: left">qcircuit</td>
+            <td style="text-align: left">User API for a quantum circuit</td>
+        </tr>
+        <tr>
+            <td style="text-align: left">quantum</td>
+            <td style="text-align: left">Functions for quantum operations</td>
+        </tr>
+        <tr>
+            <td style="text-align: left">gates</td>
+            <td style="text-align: left">Gates defined as unitary matrices</td>
+        </tr>
+        <tr>
+            <td style="text-align: left">model</td>
+            <td style="text-align: left">Model of a quantum circuit</td>
+        </tr>
+        <tr>
+            <td style="text-align: left">simulator</td>
+            <td style="text-align: left">Simulation of state evolution</td>
+        </tr>
+        <tr>
+            <td style="text-align: left">unitary_sim</td>
+            <td style="text-align: left">Creates unitary matrix from circuit model</td>
+        </tr>
+        <tr>
+            <td style="text-align: left">schematic</td>
+            <td style="text-align: left">Graphics for drawing quantum circuits</td>
+        </tr>
+        <tr>
+            <td style="text-align: left">plotting</td>
+            <td style="text-align: left">Functions for plotting histograms etc</td>
+        </tr>
+        <tr>
+            <td style="text-align: left">bloch</td>
+            <td style="text-align: left">Graphics for Bloch sphere</td>
+        </tr>
+        <tr>
+            <td style="text-align: left">format</td>
+            <td style="text-align: left">Formatting of data for display</td>
+        </tr>
+        <tr>
+            <td style="text-align: left">utils</td>
+            <td style="text-align: left">General utility functions</td>
+        </tr>
+        </tbody>
+    </table>
+    <p>QCircuit is an API wrapper that presents the quantum circuit to the user as an object. Most of the actual
+        functionality is in the other modules.</p>
 </div>
-<p>The green plot shows the time taken for a one-qubit QFT (which is just a single Hadamard gate) on the most-significant qubit. This provides a baseline against which to compare an N-qubit QFT. Although the Hadamard gate is only applied to one qubit, it will normally change all elements of the state vector. Hence the time complexity is of order \(\mathcal{O}(2^N)\). The plot shows that the actual execution time increases by a factor of 2.12 for each qubit that is added.</p>
-<p>The approximate time to run a given algorithm will be this baseline time multiplied by the number of qubits in the circuit, if run on the same computer, assuming simple one or two qubit gates.</p>
-<p>The blue plot shows the execution time for an N-qubit QFT operating on the full N-qubit state. The QFT algorithm has a complexity of \(\mathcal{O}(N^2)\) gates. On a real quantum computer, this is also the time complexity if it is assumed that the different gates take equal times. However, in the simulation, the time taken per gate approximately doubles for each qubit, so the overall time complexity is expected to be \(\mathcal{O}(N^2\ 2^N) \approx \mathcal{O}(2^N)\).</p>
-<p>In conclusion, the simulator is quite responsive for interactive use with up to 20 qubits. However, with 28 qubits a QFT of all the qubits takes around 1000 seconds. Of course, these figures depend on the processor's performance and memory available.</p>
-<p>There are a number of ways in which the performance could be further improved, but an initial design goal of TinyQsim was to keep it simple.</p>
-<h3><a id="software-modules" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Software Modules</h3>
-<p>The Python software modules are as follows:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left">Module</th>
-<th style="text-align: left">Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left">qcircuit</td>
-<td style="text-align: left">User API for a quantum circuit</td>
-</tr>
-<tr>
-<td style="text-align: left">quantum</td>
-<td style="text-align: left">Functions for quantum operations</td>
-</tr>
-<tr>
-<td style="text-align: left">gates</td>
-<td style="text-align: left">Gates defined as unitary matrices</td>
-</tr>
-<tr>
-<td style="text-align: left">model</td>
-<td style="text-align: left">Model of a quantum circuit</td>
-</tr>
-<tr>
-<td style="text-align: left">simulator</td>
-<td style="text-align: left">Simulation of state evolution</td>
-</tr>
-<tr>
-<td style="text-align: left">unitary_sim</td>
-<td style="text-align: left">Creates unitary matrix from circuit model</td>
-</tr>
-<tr>
-<td style="text-align: left">schematic</td>
-<td style="text-align: left">Graphics for drawing quantum circuits</td>
-</tr>
-<tr>
-<td style="text-align: left">plotting</td>
-<td style="text-align: left">Functions for plotting histograms etc</td>
-</tr>
-<tr>
-<td style="text-align: left">bloch</td>
-<td style="text-align: left">Graphics for Bloch sphere</td>
-</tr>
-<tr>
-<td style="text-align: left">format</td>
-<td style="text-align: left">Formatting of data for display</td>
-</tr>
-<tr>
-<td style="text-align: left">utils</td>
-<td style="text-align: left">General utility functions</td>
-</tr>
-</tbody>
-</table>
-<p>QCircuit is an API wrapper that presents the quantum circuit to the user as an object. Most of the actual functionality is in the other modules.</p>
-</div></body></html>
+</body>
+</html>

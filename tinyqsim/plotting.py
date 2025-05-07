@@ -14,13 +14,15 @@ WIDTH_1D = 5.0  # Min plot width (inches)
 HEIGHT_1D = 1.5  # Default plot height (inches)
 
 
-def plot_histogram(data: dict, show=True, save: str = False, ylabel=None, height=1) -> None:
+def plot_histogram(data: dict, show=True, save: str = False, ylabel=None,
+                   height=1, ylim: list[float] | None = None) -> None:
     """Plot 1D histogram of data labelled with basis state names.
         :param data: Dictionary of data to plot
         :param show: Show the plot
         :param save: File name to save image (or None)
         :param ylabel: Label for the Y-axis
         :param height: Scaling factor for plot height
+        :param ylim: Y-axis limits [min, max]
     """
     n_bars = len(data)
     width = max(WIDTH_1D, n_bars * 0.5)
@@ -34,6 +36,8 @@ def plot_histogram(data: dict, show=True, save: str = False, ylabel=None, height
         label.set_rotation(65)
     margin = ax.patches[0].get_x()
     plt.xlim(margin, n_bars - 1 - margin)
+    if ylim:
+        plt.ylim(*ylim)
     plt.subplots_adjust(bottom=0.25)
     if ylabel:
         plt.ylabel(ylabel)

@@ -88,6 +88,7 @@ CZ = cu(Z)
 CS = cu(S)
 CT = cu(T)
 CCX = cu(CX)
+CCZ = cu(CZ)
 CSWAP = cu(SWAP)
 
 
@@ -166,6 +167,7 @@ def CRZ(phi: float) -> ndarray:
 """ Dictionary to look-up gates by name."""
 GATES = {
     'CCX': CCX,
+    'CCZ': CCZ,
     'CH': CH,
     'CP': CP,
     'CRX': CRX,

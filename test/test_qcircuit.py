@@ -122,7 +122,7 @@ def test_probability_array():
     assert_almost_equal(probs, [0.5, 0, 0, 0.5])
 
 
-def test__gate():
+def test_i_gate():
     qc = QCircuit(1)
     qc.i(0)
     assert_equal(qc.state_vector, [1, 0])
@@ -235,3 +235,29 @@ def test_swap_gate():
     assert_equal(qc.state_vector, [0, 1, 0, 0])
     qc.swap(0, 1)
     assert_equal(qc.state_vector, [0, 0, 1, 0])
+
+
+# Test creation of multiple non-parametrized gates with one command.
+# This is only tested for X because other gates share the same implementation
+def test_multi_gate():
+    qc = QCircuit(3)
+    qc.x([])
+    assert_equal(qc.state_vector, [1, 0, 0, 0, 0, 0, 0, 0])
+    qc.x([2])
+    assert_equal(qc.state_vector, [0, 1, 0, 0, 0, 0, 0, 0])
+    qc.x([2, 1])
+    assert_equal(qc.state_vector, [0, 0, 1, 0, 0, 0, 0, 0])
+    qc.x([0, 1, 2])
+    assert_equal(qc.state_vector, [0, 0, 0, 0, 0, 1, 0, 0])
+
+
+# Test creation of multiple parameterized gates with one command.
+# This is only tested for RX because other gates share the same implementation
+def test_param_multi_gate():
+    qc = QCircuit(3)
+    qc.rx(pi, 'pi', [])
+    assert_equal(qc.state_vector, [1, 0, 0, 0, 0, 0, 0, 0])
+    qc.rx(pi, 'pi', [0, 2])
+    qc.rx(-pi, '-pi', [0])
+    qc.rx(-pi, '-pi', [2])
+    assert_equal(qc.state_vector, [1, 0, 0, 0, 0, 0, 0, 0])

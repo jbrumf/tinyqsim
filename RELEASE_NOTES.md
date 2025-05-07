@@ -1,10 +1,23 @@
 ## TinyQsim Release Notes
 
+### Release Note (15 May 2025)
+
+- Added support for multiple instantiation of single-qubit gates, applied to a list of qubits
+- Updated Tutorials 2 & 3 to include multiple instatiation of gates
+- plot_probabilities has a new 'ylim' option
+- Added new section to Tutorial 2 on the use of registers
+- Updated Example 4 to use multiple instantiation
+- Added Example 5: Grover's Algorithm
+
+---
+
 ### Release Notes (19 March 2025)
 
 - Moved Quantum Computing Basics document to a new project as it is of more general applicability:
   - https://github.com/jbrumf/qc_basics
   - https://jbrumf.github.io/qc_basics/Quantum_computing_basics.html
+
+---
 
 ### Release Notes (25 February 2025)
 
