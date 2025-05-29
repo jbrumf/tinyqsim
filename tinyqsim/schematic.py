@@ -229,7 +229,7 @@ class Schematic:
             case 'measure':
                 self.draw_meters(x, *qubits)
             case 'barrier':
-                self.draw_barrier(x)
+                self.draw_barrier(x, params['label'])
             case _:
                 raise ValueError('Unknown gate:' + name)
 
@@ -380,12 +380,19 @@ class Schematic:
             p = FancyArrow(x, y - 1, 2, 3, lw=1, color=G_COLOR, head_width=0)
             self._ax.add_patch(p)
 
-    def draw_barrier(self, x: float) -> None:
+    def draw_barrier(self, x: float, label: str = None) -> None:
         """ Draw barrier.
             :param: x: x position
+            :param: label: optional barrier label
         """
-        y1 = self._qubit_pitch * 0.5
-        y2 = -self._qubit_pitch * (self._nqubits - 0.5)  # - 20
+        pitch = self._qubit_pitch
+        y1 = pitch * 0.5
+        y2 = -pitch * (self._nqubits - 0.5)
+        if label:
+            y2 += pitch / 2 - 5
+            ylabel = -pitch * (self._nqubits - 1) - 9
+            self._ax.annotate(label, (x, ylabel), color=G_COLOR,
+                              fontsize=TINY_FONT, ha='center', va='center')
         _ = self._ax.plot([x, x], [y1, y2], ':', c=BARRIER_COLOR, lw=3, zorder=0)
 
     # ------------- Draw basic shapes needed for gates --------------

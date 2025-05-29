@@ -3352,43 +3352,48 @@ yYUefwCnq7lAeVxv7gAAAABJRU5ErkJggg==" alt="png" /></p>
 </code></pre>
 <h2><a id="other-symbols" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other Symbols</h2>
 <h3><a id="barrier" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Barrier</h3>
-<p>A barrier is drawn in the circuit as a vertical dotted line, like a fence separating sections of the circuit. Its main use is to prevent circuit optimizations crossing boundaries. This does not apply to TinyQsim since it currently does no circuit optimization. However, a barrier can still be useful for separating parts of the circuit for clarify, for example to separate initialization from processing.</p>
+<p>A barrier is drawn in the circuit as a vertical dotted line, like a fence separating sections of the circuit. Its main use is to prevent circuit optimizations crossing boundaries. This does not apply to TinyQsim since it currently does no circuit optimization. However, a barrier can still be useful for separating parts of the circuit for clarify, for example to separate initialization from processing. The barrier can have an optional short label, which can be useful in documentation for referring to a particular stage of the circuit.</p>
 <pre><code class="language-python">qc = QCircuit(2)
-qc.barrier()
+qc.barrier('A')
 qc.draw()
 </code></pre>
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB4CAYAAACHMm6PAAAAOnRFWHRTb2Z0d2Fy
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFcAAAB/CAYAAACaN143AAAAOnRFWHRTb2Z0d2Fy
 ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjEsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
-cmcvc2/+5QAAAAlwSFlzAAAPYQAAD2EBqD+naQAABQ1JREFUeJztnV9IU28Yx7/b
-mX/YVQ0qvRgoRUwkBJVpmkiGhTDIsCjsxgiCoJuuo26qm667CCIMuoskI0FB0YtK
-yBIKpLwREhGx0BJStuXOE+/vJNu7/S6c7NnZ3j0fOJztYWccPufsOe9zXs+jh4gI
-Agtenq8VRC4zIpcRkcuIyGVE5DIichkRuYyIXEZELiMilxEfDCMajWJoaEiL9fX1
-obKyMu/7Ypxcxfb2NgoBSQuMiFxGPKbdz7VtG+vr61osEAjA683/eWSc3EJC0gIj
-IpcRkVuMcl+/BhoaADV2P3oUGBxEycEi9+1b4Nw54PhxYHQUuHgRuHoVePECJQXL
-aOHMGeD3b+Ddu2Ssvx/49An48gXs5e/w8LAW6+3tdaX83dOZ+/gxUFMD+P3AqVPA
-x4+AxwM8fQrEYsDUFHDhgr7NpUvA16/At29gJxaLaYtbZC13ZAS4dg04eRJ4+dKR
-mypyYQH48wcIhfTt6uqc9fw8Soasb9zcuwd0dCQvUCoFRKPA3bvO+58/nfW+ffp2
-+/c767TiyWiykptIALOzwIMHevz8+aTcbNja2sJ8jk9lVf7W1tZqsbm5uZyXv42N
-jbmV++OHup0HHDyoxw8dyjxDNzb0z+yc0YFAMqbENjU1oRjZzTggK7kHDgA+H/D9
-ux5fXU2+PnwYKCtzcqtKGTvsnKCpuTgUCmFW/RRMhbIkHCbq6NBjt2+rw0g0OOi8
-P32a6MQJ/TOXLxPV1VFJkbXcV68ckQMDRGNjRPfvE9XU6HLfvCGyLKLr14mmpoju
-3CHyeIieP6eSImu5ikePiIJBospKos5Oovfvdbk7B+HYMaLycqIjR4iePKGSIycV
-2q9fzoVMDc8GBnKTrkzAuAnKaDSKEVXppBCJRGT2N1dsbm6iEMiJXFWNyWRRJnKz
-nBHjJigTiQRWVla0WHV1NSzLyvu+GCe3kJC0wIjIZUTkMiJyGRG5jBhXocViMYyq
-+fwUenp6UFFRkfd9MU4uEWEjbRrErdGmpAVGRC4jRpa/S0tLWiwYDEr5axqSFhgR
-uYyIXEZELiMilxEjy9/x8XEt1t3dLeVvLlAjy7W1tYyYG0haYETkMmJcWigrK0N7
-e3tGzA2k/GVE0gIjIpcRkcuIyGVE5DJi3FAsHo9jcnJSi3V1daG8vDzv+2KcXNu2
-sZr67Na/mBtIWmBE5DJiXFrw+XxoaWnJiLmBlL+MSFpgROQWm1w1y9Lf7zzBrtqz
-3LiBkoRF7tgY8Pkz0NmZ2TGklGC5oKkxu/ffYVONhiIR4OFDlBw5787035d63S1/
-JyYmtEXF3MC31+5M6ul01c5KNfpIb3PlJrZtY3l5OSNmRHcmIYl3L92ZVCvB9O5M
-Qh66MxVC66uqqqria321m+5M2TAvra+SqL98VwdMtRm8eTMZ32t30ZDhra+yvqDd
-ugWcPQtcuZIcLTx7pn9mcRH48MF5vbXl9HfcOQCp+dnv9+/q51W0cHRnUmvg/5dS
-QrozMSJ3xRgxbiYiHo9jenpai7W1tRXv7G8hdWeybRuL6oqaQmtrqyv7ImmBEZHL
-iHE517IsNKh/UJEWcwOZ/WVE0gIjIpcRkcuIyGVE5DJiZPk7MzOjxcLhcPGWv4WE
-bdtYUDeQU2hubnZlXyQtMCJyGTEuLViWhfr6+oyYG0j5y4ikBUZELiMilxGRy4jI
-ZUTkMiJyGRG5jIhcRkQuIyKXEZHLiMhlROSCj7+Yb7YW5CbX9QAAAABJRU5ErkJg
-gg==" alt="png" /></p>
+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
+QmCC" alt="png" /></p>
 <pre><code class="language-plain_text">API:
-   barrier()
+   barrier(label: str)
+     label: Optional short label for the barrier
 </code></pre>
 </div></body></html>

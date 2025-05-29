@@ -18,7 +18,7 @@ export OUTM=../release/generated/
 # jupyter nbconvert --output-dir=$OUTH --to html tutorial_1_getting_started.ipynb
 # jupyter nbconvert --output-dir=$OUTH --to html tutorial_2_exploring_further.ipynb
 # jupyter nbconvert --output-dir=$OUTH --to html tutorial_3_guide_to_gates.ipynb
-# jupyter nbconvert --output-dir=$OUTH --to html tutorial_4_low_level_api.ipynb
+# jupyter nbconvert --output-dir=$OUTH --to html example_1_interference_and_kickback.ipynb
 # jupyter nbconvert --output-dir=$OUTH --to html example_2_QFT4.ipynb
 # jupyter nbconvert --output-dir=$OUTH --to html example_3_quantum_fourier_transform.ipynb
 # jupyter nbconvert --output-dir=$OUTH --to html example_4_quantum_phase_estimation.ipynb
@@ -29,7 +29,7 @@ mkdir -p $OUTM
 jupyter nbconvert --output-dir=$OUTM --to markdown tutorial_1_getting_started.ipynb
 jupyter nbconvert --output-dir=$OUTM --to markdown tutorial_2_exploring_further.ipynb
 jupyter nbconvert --output-dir=$OUTM --to markdown tutorial_3_guide_to_gates.ipynb
-jupyter nbconvert --output-dir=$OUTM --to markdown tutorial_4_low_level_api.ipynb
+jupyter nbconvert --output-dir=$OUTM --to markdown example_1_interference_and_kickback.ipynb
 jupyter nbconvert --output-dir=$OUTM --to markdown example_2_QFT4.ipynb
 jupyter nbconvert --output-dir=$OUTM --to markdown example_3_quantum_fourier_transform.ipynb
 jupyter nbconvert --output-dir=$OUTM --to markdown example_4_quantum_phase_estimation.ipynb

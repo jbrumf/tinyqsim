@@ -1,5 +1,17 @@
 ## TinyQsim Release Notes
 
+### Release Note (29 May 2025)
+
+- New Example 1: Interference and Phase Kickback
+- Removed Tutorial 4: Low-Level-API
+- New plotting methods: plot_real_imag and plot_mag_phase
+- New QCircuit method to draw Bloch Sphere: plot_bloch
+- Barrier symbol now supports an optional label
+- plot_probabilities has new 'ylim' option
+- Tutorials and examples updated
+
+---
+
 ### Release Note (15 May 2025)
 
 - Added support for multiple instantiation of single-qubit gates, applied to a list of qubits

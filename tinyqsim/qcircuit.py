@@ -12,11 +12,14 @@ from IPython.display import Math, display
 from numpy import ndarray
 from numpy.linalg import norm
 
-from tinyqsim import gates, quantum, utils, plotting, format, unitary_sim, qasm
+from tinyqsim import gates, quantum, utils, format, unitary_sim, qasm, bloch
 from tinyqsim.format import state_kets, format_table
 from tinyqsim.model import Model
+from tinyqsim.plotting import plot_bars
 from tinyqsim.schematic import Schematic
 from tinyqsim.simulator import Simulator
+
+PI = '\u03C0'  # Unicode pi
 
 
 class QCircuit(object):
@@ -377,17 +380,46 @@ class QCircuit(object):
         :param qubits: qubits (None => all)
         :param show: show the plot
         :param save: file to save image if required
-        :param height: Scaling factor for plot height
+        :param height: Scaling factor for plot height (default=1)
         :param ylim: Y-axis limits [min, max]
         """
         if not qubits:
             qubits = range(self._nqubits)
-        probs = quantum.probability_dict(self._simulator.state_vector, qubits)
-        plotting.plot_histogram(probs, show=show, save=save, ylabel='Probability',
-                                height=height, ylim=ylim)
+        values = quantum.probabilities(self._simulator.state_vector, qubits)
+        plot_bars(quantum.basis_names(len(qubits)), [values], ylabels=['Probability'],
+                  show=show, save=save, height=height, ylims=[ylim])
+
+    def plot_real_imag(self, show=True, save: str | None = False,
+                       height: float = 1, ylim: list[float] | None = None) -> None:
+        """Plot state vector real and imaginary parts.
+        :param show: show the plot
+        :param save: file to save image if required
+        :param height: Scaling factor for plot height (default=1)
+        :param ylim: Y-axis limits [min, max]
+        """
+        sv = self._simulator.state_vector
+        nq = self.n_qubits
+        plot_bars(quantum.basis_names(nq), [sv.real, sv.imag], ylabels=['Real', 'Imag'],
+                  show=show, save=save, height=height, ylims=[ylim, ylim])
+
+    def plot_mag_phase(self, show=True, save: str | None = False,
+                       height: float = 1, ylim: list[float] | None = None) -> None:
+        """Plot state vector magnitude and phase.
+        :param show: show the plot
+        :param save: file to save image if required
+        :param height: Scaling factor for plot height (default=1)
+        :param ylim: Y-axis limits for magnitude [min, max]
+        """
+        nq = self.n_qubits
+        sv = self._simulator.state_vector
+        mag = np.absolute(sv)
+        phase = np.atan2(sv.imag, sv.real) / np.pi
+        plot_bars(quantum.basis_names(nq), [mag, phase], ylabels=['Magnitude', f'Phase/{PI}'],
+                  ylims=[ylim, (-1.05, 1.05)], show=show, save=save, height=height)
 
     def plot_counts(self, *qubits: int, runs: int = 1000, mode: str = 'resample',
-                    show=True, save: str | None = False, height: float = 1) -> None:
+                    show=True, save: str | None = False, height: float = 1,
+                    ylim: list[float] | None = None) -> None:
         """Plot histogram of measurement counts.
         See the 'probabilities' method for further details.
         :param qubits: qubits (None => all)
@@ -395,10 +427,21 @@ class QCircuit(object):
         :param mode: 'resample' | 'repeat' | 'measure'
         :param show: show the plot
         :param save: file to save image if required
-        :param height: Scaling factor for plot height
+        :param height: Scaling factor for plot height (default=1)
+        :param ylim: Y-axis limits for magnitude [min, max]
         """
         freq = self.counts(*qubits, runs=runs, mode=mode, include_zeros=True)
-        plotting.plot_histogram(freq, show=show, save=save, ylabel='Counts', height=height)
+        plot_bars(freq.keys(), [list(freq.values())], show=show, save=save,
+                  ylabels=['Counts'], height=height, ylims=[ylim])
+
+    def plot_bloch(self, scale: float = 1.0):
+        """Draw the state vector on the Bloch sphere for a 1-qubit state.
+        This method will raise an exception for multi-qubit states.
+        :param scale: scaling factor
+        """
+        if self.n_qubits != 1:
+            raise ValueError('Bloch sphere only works for 1-qubit states')
+        bloch.plot_bloch(self._simulator.state_vector, scale)
 
     # ------------------ I/O ------------------
 
@@ -665,6 +708,9 @@ class QCircuit(object):
             ts = [ts]
         self._add_gates('Z', ts)
 
-    def barrier(self) -> None:
-        """Add a barrier to the circuit."""
-        self._model.add_gate('barrier', [0, self._nqubits - 1])
+    def barrier(self, label: str | None = None) -> None:
+        """Add a barrier to the circuit.
+        :param label: optional barrier label
+        """
+        self._model.add_gate('barrier', [0, self._nqubits - 1],
+                             params={'label': label})
