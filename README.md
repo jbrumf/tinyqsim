@@ -48,7 +48,7 @@ It is recommended to install the software in a virtual environment, using an env
 For example, to create and activate a Python virtual environment using conda:
 
 ```
-  conda create -n tinyqsim python=3.12
+  conda create -n tinyqsim python=3.14
   conda activate tinyqsim
 ```
 
