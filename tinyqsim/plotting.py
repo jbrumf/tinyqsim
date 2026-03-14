@@ -16,7 +16,7 @@ PI = '\u03C0'  # Unicode pi
 WIDTH_1D = 5.0  # Min plot width (inches)
 HEIGHT_1D = 1.5  # Default plot height (inches)
 BAR_WIDTH = 0.92  # Width of bar / pitch
-H_SPACE = 0.1  # Gap between plots
+H_SPACE = 0.15  # Gap between plots
 TICK_ANGLE = 65  # Angle of tick labels (degrees)
 COLORS = ('#7bc8f6', '#ffa500', '#67a6eb', 'r', 'g', 'b')  # Colors for subplots
 

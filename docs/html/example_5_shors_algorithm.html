@@ -1,0 +1,1690 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>example_5_shors_algorithm</title><style>html{font-size:15.000000px;}</style><style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
+
+html,body{background-color: #feffff;}
+
+.markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  color: #333333;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+  font-size: 1rem;
+  word-wrap: break-word;
+}
+
+.markdown-body .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.markdown-body figure{margin:0;padding:0; display:table;}
+.markdown-body figure figcaption{font-size:92%; text-align:center; color:#09844f;}
+
+.markdown-body .anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -1.25rem;
+  padding-right: 0.25rem;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #0595bf;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body details {
+  display: block;
+}
+
+.markdown-body summary {
+  display: list-item;
+}
+
+.markdown-body a {
+  background-color: initial;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline-width: 0;
+}
+
+.markdown-body strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+.markdown-body strong{
+  color: #333333;
+}
+.markdown-body em{
+  color: #333333;
+}
+
+.markdown-body img {
+  border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace,monospace;
+  font-size: 0.9rem;
+}
+
+.markdown-body hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+.markdown-body input {
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body input {
+  overflow: visible;
+}
+
+.markdown-body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body * {
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown-body a {
+  color: #0366dd;
+  text-decoration: none;
+}
+.markdown-body mjx-container[jax="SVG"] > svg a{fill:#0366dd;stroke: #0366dd;}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body hr:after,
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body details summary {
+  cursor: pointer;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 0.1875rem 0.3125rem;
+  font: 0.75rem SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 0.75rem;
+  color: #09844f;
+  vertical-align: middle;
+  background-color: #f7f8f8;
+  border: 1px solid #e1e2e2;
+  border-radius: 0.1875rem;
+}
+
+.markdown-body p {
+  margin-top: 0;
+  margin-bottom: 0.625rem;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ol ol ol,
+.markdown-body ol ul ol,
+.markdown-body ul ol ol,
+.markdown-body ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 0.75rem;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body input::-webkit-inner-spin-button,
+.markdown-body input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.markdown-body:after,
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  clear: both;
+}
+
+.markdown-body>:first-child {
+  margin-top: 0!important;
+}
+
+.markdown-body>:last-child {
+  margin-bottom: 0!important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body blockquote,
+.markdown-body details,
+.markdown-body dl,
+.markdown-body ol,
+.markdown-body p,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body ul {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.markdown-body hr {
+  height: .25rem;
+  padding: 0;
+  margin: 1.5rem 0;
+  background-color: #e1e2e2;
+  border: 0;
+}
+
+.markdown-body blockquote {
+  padding: 0 1rem;
+  color: #636363;
+  border-left: .25rem solid #bbbbbb;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  padding-bottom: .3rem;
+  border-bottom: 1px solid #e7e8e8;
+  color: #0595bf;
+}
+
+.markdown-body h2 {
+  font-size: 1.5rem;
+  color: #0595bf;
+}
+
+.markdown-body h3 {
+  font-size: 1.25rem;
+  color: #0595bf;
+}
+
+.markdown-body h4 {
+  font-size: 1rem;
+  color: #0595bf;
+}
+
+.markdown-body h5 {
+  font-size: .875rem;
+  color: #0595bf;
+}
+
+.markdown-body h6 {
+  font-size: .85rem;
+  color: #0595bf;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 2rem;
+}
+
+.markdown-body ol ol,
+.markdown-body ol ul,
+.markdown-body ul ol,
+.markdown-body ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li {
+  word-wrap: break-all;
+}
+
+.markdown-body li>p {
+  margin-top: 1rem;
+}
+
+.markdown-body li+li {
+  margin-top: .25rem;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.markdown-body dl dd {
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+.markdown-body table th {
+  font-weight: 600;
+}
+
+.markdown-body table td,
+.markdown-body table th {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #b9baba;
+}
+
+.markdown-body table tr {
+  background-color: #feffff;
+  border-top: 1px solid #b9baba;
+}
+
+.markdown-body table th {
+  background-color: #e7e8e8;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f9f9;
+}
+
+.markdown-body img,.markdown-body video {
+  max-width: 100%;
+  box-sizing: initial;
+}
+
+.markdown-body img[align=right] {
+  padding-left: 1.25rem;
+}
+
+.markdown-body img[align=left] {
+  padding-right: 1.25rem;
+}
+
+.markdown-body code {
+  padding: .2rem .4rem;
+  margin: 0;
+  font-size: 85%;
+  background-color: #f7f8f8;
+  color: #09844f;
+  border-radius: 0.1875rem;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+   font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 1rem;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 1rem;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f8f8;
+  border-radius: 0.1875rem;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+  color: #09844f;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 0.1875rem;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 .2rem .25rem -1.6rem;
+  vertical-align: middle;
+}
+
+.markdown-body .task-list-item input[type="checkbox"]{
+-webkit-appearance: none;-moz-appearance: none;appearance: none;
+width: 0.875rem; height: 0.875rem;outline: none;
+border: 1px solid #0366dd;border-radius: 2px; 
+}
+.markdown-body .task-list-item input[type="checkbox"]:checked {
+  background:no-repeat center/80% url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Cpath%20fill%3D%22%230366dd%22%20d%3D%22M173.898%20439.404l-166.4-166.4c-9.997-9.997-9.997-26.206%200-36.204l36.203-36.204c9.997-9.998%2026.207-9.998%2036.204%200L192%20312.69%20432.095%2072.596c9.997-9.997%2026.207-9.997%2036.204%200l36.203%2036.204c9.997%209.997%209.997%2026.206%200%2036.204l-294.4%20294.401c-9.998%209.997-26.207%209.997-36.204-.001z%22%2F%3E%3C%2Fsvg%3E") ;
+}
+
+.markdown-body section.footnotes{
+    margin-top:3rem;
+    border-top:solid 1px #e1e2e2;
+    padding-top:0px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .markdown-body mark{color: #111;}
+}
+
+/* PrismJS 1.23.0
+https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript */
+/**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+
+
+code[class*="language-"],
+pre[class*="language-"] {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+
+@media print {
+    code[class*="language-"],
+    pre[class*="language-"] {
+        text-shadow: none;
+    }
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+    padding: 1rem;
+    margin: .5rem 0;
+    overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+    background-color: #f7f8f8;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+    padding: .1rem;
+    border-radius: .3rem;
+    white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #8e9c92;
+}
+
+.token.punctuation {
+    color: #2834ce;
+}
+
+.token.namespace {
+    opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: #2834ce;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    color: #d32d26;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: #$$codeBlockColor$$;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+    color: #bc319c;
+}
+
+.token.function,
+.token.class-name {
+    color: #967d41;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+    color: #784830;
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+.token.italic {
+    font-style: italic;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+
+pre[class*="language-"].line-numbers {
+  position: relative;
+  padding-left: 3.8rem;
+  counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers > code {
+  position: relative;
+  white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  font-size: 100%;
+  left: -3.8rem;
+  width: 3rem; /* works for line-numbers below 1000 lines */
+  letter-spacing: -1px;
+  border-right: 1px solid #bfc0c0;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+  .line-numbers-rows > span {
+    display: block;
+    counter-increment: linenumber;
+  }
+
+    .line-numbers-rows > span:before {
+      content: counter(linenumber);
+      color: #bfc0c0;
+      display: block;
+      padding-right: 0.8rem;
+      text-align: right;
+    }
+
+
+</style><script>(n=>{"use strict";let s,r,e;const l=["cdn.jsdelivr.net","fastly.jsdelivr.net","gcore.jsdelivr.net","cdn.zenless.top","testingcf.jsdelivr.net"],t="//",i=l[0],o=Date.now(),a=2e3,c="jsdelivr-auto-fallback",f="/gh/PipecraftNet/jsdelivr-auto-fallback@main/empty.css?",d=e=>e&&e.includes(t+i),m=e=>e.replace(t+i,t+s),u=window.setTimeout,v=n.querySelectorAll.bind(n),b=()=>{let e,t;for(e of v('link[rel="stylesheet"]'))t=e.href,d(t)&&!t.includes(f)&&(e.href=m(t));for(e of v("script"))if(t=e.src,d(t)){const s=n.createElement("script");s.src=m(t),e.defer=!0,e.src="",e.before(s),e.remove()}for(e of v("img"))t=e.src,d(t)&&(e.src="",e.src=m(t));for(e of v("*[style]"))t=e.getAttribute("style"),d(t)&&e.setAttribute("style",m(t));for(e of v("style"))t=e.innerHTML,d(t)&&(e.innerHTML=m(t))},h=()=>{!e&&r&&s&&(console.warn(i+" is not available. Use "+s),e=!0,u(b,0),u(b,20),setInterval(b,500))},g=(()=>{try{return Object.assign({},JSON.parse(localStorage.getItem(c)||"{}"))}catch{return{}}})(),y=()=>{g.time=o,g.failed=!1,g.fastNode=null;for(const t of l)((e,t)=>{let s;const r=n.createElement("link"),l=e=>{s&&(clearTimeout(s),s=0,e||(r.href="data:text/css;base64,"),r.remove(),t(e))};s=u(l,a),r.addEventListener("error",()=>l(!1)),r.addEventListener("load",()=>l(!0)),r.rel="stylesheet",r.text="text/css",r.href=e+f+o,n.head.insertAdjacentElement("afterbegin",r)})("https://"+t,e=>{e||t!==i||(r=!0,g.failed=!0),e&&!s&&(s=t),e&&!g.fastNode&&(g.fastNode=t),h()});u(()=>{r&&!s&&(s=l[1],h()),localStorage.setItem(c,JSON.stringify(g))},a+100)};if(g.time&&o-g.time<36e5&&g.failed&&g.fastNode)r=!0,s=g.fastNode,h(),u(y,1e3);else if(n.head)y();else{const j=new MutationObserver(()=>{n.head&&(j.disconnect(),y())});j.observe(n,{childList:!0,subtree:!0})}})(document);</script>
+<style>.mweb-charts{background:#fff;}
+body{ box-sizing: border-box;
+    margin: 0 auto;}
+@media print{
+    pre, code, pre code {
+     overflow: visible !important;
+     white-space: pre-wrap !important;       /* css-3 */
+     white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+     white-space: -pre-wrap !important;      /* Opera 4-6 */
+     white-space: -o-pre-wrap !important;    /* Opera 7 */
+     word-wrap: break-word !important;       /* Internet Explorer 5.5+ */
+    }
+    html,body{margin:0;padding:4px;}
+    .mweb-yaml{display:none;}
+}
+
+
+
+div.code-toolbar {
+  position: relative;
+}
+
+div.code-toolbar > .toolbar {
+  position: absolute;
+  z-index: 10;
+  top: .3em;
+  right: .2em;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+}
+
+div.code-toolbar:hover > .toolbar {
+  opacity: 1;
+}
+
+/* Separate line b/c rules are thrown out if selector is invalid.
+   IE11 and old Edge versions don't support :focus-within. */
+div.code-toolbar:focus-within > .toolbar {
+  opacity: 1;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item {
+  display: inline-block;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > a {
+  cursor: pointer;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > button {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 0;
+  -webkit-user-select: none; /* for button */
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > a,
+div.code-toolbar > .toolbar > .toolbar-item > button,
+div.code-toolbar > .toolbar > .toolbar-item > span {
+  color: inherit;
+  font-size: .8em;
+  padding: 4px .5em;
+  background: #f5f2f0;
+  background: rgba(224, 224, 224, 0.4);
+  box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
+  border-radius: .5em;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > a:hover,
+div.code-toolbar > .toolbar > .toolbar-item > a:focus,
+div.code-toolbar > .toolbar > .toolbar-item > button:hover,
+div.code-toolbar > .toolbar > .toolbar-item > button:focus,
+div.code-toolbar > .toolbar > .toolbar-item > span:hover,
+div.code-toolbar > .toolbar > .toolbar-item > span:focus {
+  color: inherit;
+  text-decoration: none;
+}
+</style><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>!function(){if("undefined"!=typeof Prism&&"undefined"!=typeof document){var e=[],t={},n=function(){};Prism.plugins.toolbar={};var a=Prism.plugins.toolbar.registerButton=function(n,a){var r;r="function"==typeof a?a:function(e){var t;return"function"==typeof a.onClick?((t=document.createElement("button")).type="button",t.addEventListener("click",(function(){a.onClick.call(this,e)}))):"string"==typeof a.url?(t=document.createElement("a")).href=a.url:t=document.createElement("span"),a.className&&t.classList.add(a.className),t.textContent=a.text,t},n in t?console.warn('There is a button with the key "'+n+'" registered already.'):e.push(t[n]=r)},r=Prism.plugins.toolbar.hook=function(a){var r=a.element.parentNode;var l=a.element.classList;if(l.contains('language-mermaid') || l.contains('language-echarts') || l.contains('language-plantuml')){return;} if(r&&/pre/i.test(r.nodeName)&&!r.parentNode.classList.contains("code-toolbar")){var o=document.createElement("div");o.classList.add("code-toolbar"),r.parentNode.insertBefore(o,r),o.appendChild(r);var i=document.createElement("div");i.classList.add("toolbar");var l=e,d=function(e){for(;e;){var t=e.getAttribute("data-toolbar-order");if(null!=t)return(t=t.trim()).length?t.split(/\s*,\s*/g):[];e=e.parentElement}}(a.element);d&&(l=d.map((function(e){return t[e]||n}))),l.forEach((function(e){var t=e(a);if(t){var n=document.createElement("div");n.classList.add("toolbar-item"),n.appendChild(t),i.appendChild(n)}})),o.appendChild(i)}};a("label",(function(e){var t=e.element.parentNode;if(t&&/pre/i.test(t.nodeName)&&t.hasAttribute("data-label")){var n,a,r=t.getAttribute("data-label");try{a=document.querySelector("template#"+r)}catch(e){}return a?n=a.content:(t.hasAttribute("data-url")?(n=document.createElement("a")).href=t.getAttribute("data-url"):n=document.createElement("span"),n.textContent=r),n}})),Prism.hooks.add("complete",r)}}();</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.css"><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><style>div.code-toolbar > .toolbar > .toolbar-item > a, div.code-toolbar > .toolbar > .toolbar-item > button, div.code-toolbar > .toolbar > .toolbar-item > span {padding: 4px .5em; background: #f5f2f0; background: rgba(224, 224, 224, 0.4);}</style><script>window.MathJax = {     tex: { tags: 'ams', inlineMath: [ ['$','$'], ['\\(','\\)'] ] } ,     startup: {     pageReady() {       return MathJax.startup.defaultPageReady().then(function () {          window.mweb_mathjax_ready_val = 'yes';          if(window.mweb_mathjax_ready !== undefined){ mweb_mathjax_ready(); }       });     }   }};document.addEventListener('DOMContentLoaded', function(event) {    if (typeof Prism != 'undefined') {         Prism.highlightAll();     }});window.mweb_mathjax_ready_val = '';function theMWebMathJaxRenderIsReady(key){ return window.mweb_mathjax_ready_val; }</script><script>window.MathJax = { tex: { tags: 'ams', inlineMath: [ ['$','$'], ['\\(','\\)'] ] } }; </script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script> <style>body{max-width:1108px; padding:24px;}</style>
+<script>(()=>{var e={647:(e,t,n)=>{var o,l,r;l=[],void 0===(r="function"==typeof(o=function(e){"use strict";const t=!!(e&&e.document&&e.document.querySelector&&e.addEventListener);if("undefined"==typeof window&&!t)return;const o=n(563);return e.tocbot=o,o}(void 0!==n.g?n.g:window||n.g))?o.apply(t,l):o)||(e.exports=r)},563:(e,t,n)=>{"use strict";function o(e){var t,n=[].forEach,o=[].some,l=document.body,r=!0,i=" ";function s(t,o){var l,r,a,u=o.appendChild((l=t,r=document.createElement("li"),a=document.createElement("a"),e.listItemClass&&r.setAttribute("class",e.listItemClass),e.onClick&&(a.onclick=e.onClick),e.includeTitleTags&&a.setAttribute("title",l.textContent),e.includeHtml&&l.childNodes.length?n.call(l.childNodes,(function(e){a.appendChild(e.cloneNode(!0))})):a.textContent=l.textContent,a.setAttribute("href",e.basePath+"#"+l.id),a.setAttribute("class",e.linkClass+i+"node-name--"+l.nodeName+i+e.extraLinkClasses),r.appendChild(a),r));if(t.children.length){var d=c(t.isCollapsed);t.children.forEach((function(e){s(e,d)})),u.appendChild(d)}}function c(t){var n=e.orderedList?"ol":"ul",o=document.createElement(n),l=e.listClass+i+e.extraListClasses;return t&&(l=(l=l+i+e.collapsibleClass)+i+e.isCollapsedClass),o.setAttribute("class",l),o}function a(t){var n=0;return null!==t&&(n=t.offsetTop,e.hasInnerContainers&&(n+=a(t.offsetParent))),n}function u(e,t){return e&&e.className!==t&&(e.className=t),e}function d(t){return t&&-1!==t.className.indexOf(e.collapsibleClass)&&-1!==t.className.indexOf(e.isCollapsedClass)?(u(t,t.className.replace(i+e.isCollapsedClass,"")),d(t.parentNode.parentNode)):t}return{enableTocAnimation:function(){r=!0},disableTocAnimation:function(t){var n=t.target||t.srcElement;"string"==typeof n.className&&-1!==n.className.indexOf(e.linkClass)&&(r=!1)},render:function(e,n){var o=c(!1);if(n.forEach((function(e){s(e,o)})),null!==(t=e||t))return t.firstChild&&t.removeChild(t.firstChild),0===n.length?t:t.appendChild(o)},updateToc:function(s){var c;c=e.scrollContainer&&document.querySelector(e.scrollContainer)?document.querySelector(e.scrollContainer).scrollTop:document.documentElement.scrollTop||l.scrollTop,e.positionFixedSelector&&function(){var n;n=e.scrollContainer&&document.querySelector(e.scrollContainer)?document.querySelector(e.scrollContainer).scrollTop:document.documentElement.scrollTop||l.scrollTop;var o=document.querySelector(e.positionFixedSelector);"auto"===e.fixedSidebarOffset&&(e.fixedSidebarOffset=t.offsetTop),n>e.fixedSidebarOffset?-1===o.className.indexOf(e.positionFixedClass)&&(o.className+=i+e.positionFixedClass):o.className=o.className.replace(i+e.positionFixedClass,"")}();var f,m=s;if(r&&null!==t&&m.length>0){o.call(m,(function(t,n){return a(t)>c+e.headingsOffset+10?(f=m[0===n?n:n-1],!0):n===m.length-1?(f=m[m.length-1],!0):void 0}));var h=t.querySelector("."+e.activeLinkClass),p=t.querySelector("."+e.linkClass+".node-name--"+f.nodeName+'[href="'+e.basePath+"#"+f.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g,"\\$1")+'"]');if(h===p)return;var C=t.querySelectorAll("."+e.linkClass);n.call(C,(function(t){u(t,t.className.replace(i+e.activeLinkClass,""))}));var g=t.querySelectorAll("."+e.listItemClass);n.call(g,(function(t){u(t,t.className.replace(i+e.activeListItemClass,""))})),p&&-1===p.className.indexOf(e.activeLinkClass)&&(p.className+=i+e.activeLinkClass);var v=p&&p.parentNode;v&&-1===v.className.indexOf(e.activeListItemClass)&&(v.className+=i+e.activeListItemClass);var S=t.querySelectorAll("."+e.listClass+"."+e.collapsibleClass);n.call(S,(function(t){-1===t.className.indexOf(e.isCollapsedClass)&&(t.className+=i+e.isCollapsedClass)})),p&&p.nextSibling&&-1!==p.nextSibling.className.indexOf(e.isCollapsedClass)&&u(p.nextSibling,p.nextSibling.className.replace(i+e.isCollapsedClass,"")),d(p&&p.parentNode.parentNode)}}}}n.r(t),n.d(t,{_buildHtml:()=>i,_headingsArray:()=>c,_options:()=>d,_parseContent:()=>s,_scrollListener:()=>a,destroy:()=>m,init:()=>f,refresh:()=>h});const l={tocSelector:".js-toc",contentSelector:".js-toc-content",headingSelector:"h1, h2, h3",ignoreSelector:".js-toc-ignore",hasInnerContainers:!1,linkClass:"toc-link",extraLinkClasses:"",activeLinkClass:"is-active-link",listClass:"toc-list",extraListClasses:"",isCollapsedClass:"is-collapsed",collapsibleClass:"is-collapsible",listItemClass:"toc-list-item",activeListItemClass:"is-active-li",collapseDepth:0,scrollSmooth:!0,scrollSmoothDuration:420,scrollSmoothOffset:0,scrollEndCallback:function(e){},headingsOffset:1,throttleTimeout:50,positionFixedSelector:null,positionFixedClass:"is-position-fixed",fixedSidebarOffset:"auto",includeHtml:!1,includeTitleTags:!1,onClick:function(e){},orderedList:!0,scrollContainer:null,skipRendering:!1,headingLabelCallback:!1,ignoreHiddenElements:!1,headingObjectCallback:null,basePath:"",disableTocScrollSync:!1,tocScrollOffset:0};function r(e){var t=e.duration,n=e.offset,o=location.hash?l(location.href):location.href;function l(e){return e.slice(0,e.lastIndexOf("#"))}document.body.addEventListener("click",(function(r){var i;"a"!==(i=r.target).tagName.toLowerCase()||!(i.hash.length>0||"#"===i.href.charAt(i.href.length-1))||l(i.href)!==o&&l(i.href)+"#"!==o||r.target.className.indexOf("no-smooth-scroll")>-1||"#"===r.target.href.charAt(r.target.href.length-2)&&"!"===r.target.href.charAt(r.target.href.length-1)||-1===r.target.className.indexOf(e.linkClass)||function(e,t){var n,o,l=window.pageYOffset,r={duration:t.duration,offset:t.offset||0,callback:t.callback,easing:t.easing||function(e,t,n,o){return(e/=o/2)<1?n/2*e*e+t:-n/2*(--e*(e-2)-1)+t}},i=document.querySelector('[id="'+decodeURI(e).split("#").join("")+'"]')||document.querySelector('[id="'+e.split("#").join("")+'"]'),s="string"==typeof e?r.offset+(e?i&&i.getBoundingClientRect().top||0:-(document.documentElement.scrollTop||document.body.scrollTop)):e,c="function"==typeof r.duration?r.duration(s):r.duration;function a(e){o=e-n,window.scrollTo(0,r.easing(o,l,s,c)),o<c?requestAnimationFrame(a):(window.scrollTo(0,l+s),"function"==typeof r.callback&&r.callback())}requestAnimationFrame((function(e){n=e,a(e)}))}(r.target.hash,{duration:t,offset:n,callback:function(){var e,t;e=r.target.hash,(t=document.getElementById(e.substring(1)))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())}})}),!1)}let i,s,c,a,u,d={};function f(e){d=function(){const e={};for(let t=0;t<arguments.length;t++){const n=arguments[t];for(const t in n)p.call(n,t)&&(e[t]=n[t])}return e}(l,e||{}),d.scrollSmooth&&(d.duration=d.scrollSmoothDuration,d.offset=d.scrollSmoothOffset,r(d)),i=o(d),s=function(e){var t=[].reduce;function n(e){return e[e.length-1]}function o(e){return+e.nodeName.toUpperCase().replace("H","")}function l(t){if(!function(e){try{return e instanceof window.HTMLElement||e instanceof window.parent.HTMLElement}catch(t){return e instanceof window.HTMLElement}}(t))return t;if(e.ignoreHiddenElements&&(!t.offsetHeight||!t.offsetParent))return null;const n=t.getAttribute("data-heading-label")||(e.headingLabelCallback?String(e.headingLabelCallback(t.innerText)):(t.innerText||t.textContent).trim());var l={id:t.id,children:[],nodeName:t.nodeName,headingLevel:o(t),textContent:n};return e.includeHtml&&(l.childNodes=t.childNodes),e.headingObjectCallback?e.headingObjectCallback(l,t):l}return{nestHeadingsArray:function(o){return t.call(o,(function(t,o){var r=l(o);return r&&function(t,o){for(var r=l(t),i=r.headingLevel,s=o,c=n(s),a=i-(c?c.headingLevel:0);a>0&&(!(c=n(s))||i!==c.headingLevel);)c&&void 0!==c.children&&(s=c.children),a--;i>=e.collapseDepth&&(r.isCollapsed=!0),s.push(r)}(r,t.nest),t}),{nest:[]})},selectHeadings:function(t,n){var o=n;e.ignoreSelector&&(o=n.split(",").map((function(t){return t.trim()+":not("+e.ignoreSelector+")"})));try{return t.querySelectorAll(o)}catch(e){return console.warn("Headers not found with selector: "+o),null}}}}(d),m();const t=function(e){try{return e.contentElement||document.querySelector(e.contentSelector)}catch(t){return console.warn("Contents element not found: "+e.contentSelector),null}}(d);if(null===t)return;const n=g(d);if(null===n)return;if(c=s.selectHeadings(t,d.headingSelector),null===c)return;const f=s.nestHeadingsArray(c).nest;if(d.skipRendering)return this;i.render(n,f),a=C((function(e){i.updateToc(c),!d.disableTocScrollSync&&function(e){var t=e.tocElement||document.querySelector(e.tocSelector);if(t&&t.scrollHeight>t.clientHeight){var n=t.querySelector("."+e.activeListItemClass);if(n){var o=t.scrollTop,l=o+t.clientHeight,r=n.offsetTop,i=r+n.clientHeight;r<o+e.tocScrollOffset?t.scrollTop-=o-r+e.tocScrollOffset:i>l-e.tocScrollOffset-30&&(t.scrollTop+=i-l+e.tocScrollOffset+60)}}}(d);const t=e&&e.target&&e.target.scrollingElement&&0===e.target.scrollingElement.scrollTop;(e&&(0===e.eventPhase||null===e.currentTarget)||t)&&(i.updateToc(c),d.scrollEndCallback&&d.scrollEndCallback(e))}),d.throttleTimeout),a(),d.scrollContainer&&document.querySelector(d.scrollContainer)?(document.querySelector(d.scrollContainer).addEventListener("scroll",a,!1),document.querySelector(d.scrollContainer).addEventListener("resize",a,!1)):(document.addEventListener("scroll",a,!1),document.addEventListener("resize",a,!1));let h=null;u=C((function(e){d.scrollSmooth&&i.disableTocAnimation(e),i.updateToc(c),h&&clearTimeout(h),h=setTimeout((function(){i.enableTocAnimation()}),d.scrollSmoothDuration)}),d.throttleTimeout),d.scrollContainer&&document.querySelector(d.scrollContainer)?document.querySelector(d.scrollContainer).addEventListener("click",u,!1):document.addEventListener("click",u,!1)}function m(){const e=g(d);null!==e&&(d.skipRendering||e&&(e.innerHTML=""),d.scrollContainer&&document.querySelector(d.scrollContainer)?(document.querySelector(d.scrollContainer).removeEventListener("scroll",a,!1),document.querySelector(d.scrollContainer).removeEventListener("resize",a,!1),i&&document.querySelector(d.scrollContainer).removeEventListener("click",u,!1)):(document.removeEventListener("scroll",a,!1),document.removeEventListener("resize",a,!1),i&&document.removeEventListener("click",u,!1)))}function h(e){m(),f(e||d)}const p=Object.prototype.hasOwnProperty;function C(e,t,n){let o,l;return t||(t=250),function(){const r=n||this,i=+new Date,s=arguments;o&&i<o+t?(clearTimeout(l),l=setTimeout((function(){o=i,e.apply(r,s)}),t)):(o=i,e.apply(r,s))}}function g(e){try{return e.tocElement||document.querySelector(e.tocSelector)}catch(t){return console.warn("TOC element not found: "+e.tocSelector),null}}}},t={};function n(o){var l=t[o];if(void 0!==l)return l.exports;var r=t[o]={exports:{}};return e[o](r,r.exports,n),r.exports}n.d=(e,t)=>{for(var o in t)n.o(t,o)&&!n.o(e,o)&&Object.defineProperty(e,o,{enumerable:!0,get:t[o]})},n.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}(),n.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),n.r=e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n(647)})();</script>
+<style>#mweb_toc_list_iid{overflow-y:auto}#mweb_toc_list_iid>.toc-list{overflow:hidden;position:relative}.toc>.toc-list li{list-style:none}.toc-list{margin:0;padding-left:10px}a.toc-link{height:100%}.is-collapsible{max-height:1000px;overflow:hidden;transition:all 300ms ease-in-out}.is-collapsed{max-height:0}.is-position-fixed{position:fixed !important;top:0} .is-active-link{} .toc-link::before{background-color:#eee;content:' ';display:inline-block;height:inherit;left:0;margin-top:-1px;position:absolute;width:2px;} .is-active-link::before{background-color:#54bc4b;} .mweb_ct_wrap{margin:0 auto;} .mweb_toc_wrap{margin-top: 18px;}  .mweb_toc_wrap_ct{position: fixed;  width: 266px; padding: 0px; overflow: auto; border-radius:4px; }  .mweb_toc_wrap_ct .markdown-body li{margin: 2px 0;} .mweb_toc_wrap_ct ul{padding-left: 14px;} .mweb_toc_wrap_ct .markdown-body{ padding:12px 12px; font-size: 13px;} .mweb_toc_wrap_ct li.is-active-li{ font-weight: bold;} .mweb_toc_wrap_ct li.is-active-li li{font-weight: normal;} #mweb_toc_list_iid{ padding-left:0px; } #mweb_toc_list_iid>ul{padding-left: 22px;} .mweb_toc_wrap_ct{width: 270px; top:42px; bottom:42px;} .mweb_toc_wrap_ct, .toc-link::before{background-color:#f8f8f8;} .is-active-link::before{background-color:#bbbbbb;}.mweb_ct_wrap{padding-left: 300px;} .mweb_toc_wrap{float: left;} .mweb_toc_wrap_ct{ margin-left: -300px;}@media screen and (max-width: 860px) {  .mweb_toc_wrap{display: none;} .mweb_ct_wrap{ padding:30px;} }@media print{ .mweb_toc_wrap{display: none;} .mweb_ct_wrap{ padding:30px;} }</style><script>document.addEventListener('DOMContentLoaded', (event) => {const ele = document.getElementById('markdown_content');const arr = ele.querySelectorAll('h1,h2,h3,h4,h5,h6'); var idNum = 0;arr.forEach((tmpEle) => { var idVal = 'mweb_tt_id_'+idNum;  if(tmpEle.id === ''){  tmpEle.id = idVal;  }  idNum++; });tocbot.init({ tocSelector: '#mweb_toc_list_iid', contentSelector: '#markdown_content',  headingSelector: 'h1, h2, h3, h4, h5, h6',  orderedList: false, collapseDepth: 6,scrollEndCallback: function (e) { const el = document.querySelector('#mweb_toc_list_iid li.is-active-li'); if(document.querySelector('#mweb_toc_list_iid>ul>li:first-child').classList.contains('is-active-li')){ document.getElementById('mweb_toc_list_iid').scrollTop=0; return;} if(typeof el.scrollIntoViewIfNeeded === 'function'){ el.scrollIntoViewIfNeeded();}else{ el.scrollIntoView(true);} },});});</script></head><body><div class='mweb_ct_wrap'><div class='mweb_toc_wrap'><div class='mweb_toc_wrap_ct'><div id='mweb_toc_list_iid' class='mweb_toc markdown-body'></div></div></div><div id='markdown_content' class='markdown-body'><h2><a id="example-5-shor-s-algorithm" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example 5: Shor's Algorithm</h2>
+<h3><a id="purpose" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Purpose</h3>
+<p>This example uses TinyQsim to demonstrate the principle of Shor's Integer Factoring Algorithm. It makes use of the Quantum Fourier Transform (QFT) and Quantum Phase Estimation (QPE) algorithms that were explored in previous examples, so it would be useful to become familiar with those examples first.</p>
+<h3><a id="introduction" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
+<p>Factoring large composite numbers is an interesting mathematical problem in its own right, but it is has particular practical implications for the widely-used RSA encryption system. RSA relies for its security on the fact that it is easy to multiply two large prime numbers but very difficult to find the factors if you are just given their product.</p>
+<p>In 1994, Peter Shor published a quantum algorithm, now known as Shor's algorithm, that can theoretically factor large composite numbers exponentially faster than a classical computer. Daniel Simon had previously shown the possibility of exponential speedup on a contrived problem, but Shor's algorithm was the first to offer the promise of exponential speedup on a real-world problem. To have any practical advantage over classical factoring methods, Shor's algorithm would need to be run on a quantum computer with thousands of logical (error free) qubits, which is still some way in the future.</p>
+<p>Shor's algorithm is a hybrid algorithm that combines both classical and quantum computation. The top-level routine is classical and calls a quantum order-finding subroutine that runs on a quantum computer.</p>
+<p>We will start by looking at how the factoring process works and initially demonstrate it using a classical implementation of the order-finding part. We will then implement a simulation of quantum order-finding using TinyQsim and demonstate the factorisation of some small composite numbers using the quantum algorithm.</p>
+<h3><a id="imports-and-definitions" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Imports and Definitions</h3>
+<p>The example will make use of the following Python imports and definitions. These include the Quantum Fourier Transform (QFT) and Quantum Phase Estimation (QPE) code from previous example notebooks.</p>
+<pre><code class="language-python">from tinyqsim.qcircuit import QCircuit
+from tinyqsim.utils import bits_to_int
+from examples_lib import iqft, build_qpe_circuit, continued_fraction, convergents, build_qpe_circuit
+from math import gcd, log2, ceil
+from fractions import Fraction
+from functools import partial
+import numpy as np
+import random
+</code></pre>
+<pre><code class="language-python">MAX_TRIES = 10  # Give up after 10 attempts
+</code></pre>
+<pre><code class="language-python">def format_bits(bitlist, nbits=0):
+    &quot;&quot;&quot;Format a list of bits (0 or 1) as a string, optionally padded with zeros to nbits.&quot;&quot;&quot;
+    return ''.join([str(i) for i in bitlist]).zfill(nbits)
+</code></pre>
+<h3><a id="the-top-level-algorithm" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Top-Level Algorithm</h3>
+<p>The algorithm is based on number theory and makes use of modular arithmetic as well as Euclid's algorithm for efficiently finding the Greatest Common Divisor (GCD) of two integers.</p>
+<p>The aim is to factor a composite number \(N\) into its factors \(p_1\) and \(p_2\):</p>
+\[N=p_1\ p_2
+\]
+<p>We will assume that these factors are odd primes. If \(N\) is even, then \(2\) is trivially a factor. If the values are not prime, we can recursively call the factorization routine, using a classical primality test to decide when to stop recursing.</p>
+<p>We start by choosing a random integer \(a\) such that \(1&lt;a&lt;N\).</p>
+<p>If \(\gcd(a,N)\ne 1\) then the GCD is a factor and we can stop.</p>
+<p>Otherwise, we find the <em>multiplicative order</em> of \(a\) modulo \(N\). This is defined as the smallest positive integer \(r\) such that:</p>
+\[a^r\equiv 1\pmod{N}
+\]
+<p>where \(a\) is an integer coprime to \(N\):</p>
+\[\gcd(a, N)=1
+\]
+<p>Finding the order is the part of the algorithm that can make use of a quantum processor to give an exponential speed improvement.</p>
+<p>If \(r\) is odd we restart the algorithm with a new random value of \(a\). If \(r\) is even, then \(\frac{r}{2}\) is an integer and we have found a square root of \(1\) modulo \(N\):</p>
+\[(a^{r/2})^2 \equiv 1\pmod{N}
+\]
+<p>By the difference of squares:</p>
+\[(a^{r/2})^2 - 1^2 \equiv 0\pmod{N}
+\]
+\[(a^{r/2}-1)(a^{r/2}+1)\equiv 0\pmod{N}
+\]
+<p>Hence:</p>
+\[N\ |\ (a^{r/2}-1)(a^{r/2}+1)
+\]
+<p>If \(N\nmid (a^{r/2}\pm 1)\) then the following must be factors of \(N\) and we have a solution:</p>
+\[\qquad\gcd(a^{r/2}+1, N)\quad\text{ and }\quad\gcd(a^{r/2}-1, N)
+\]
+<p>We require that neither of the terms \((a^{r/2}+1)\) and \((a^{r/2}-1)\) is zero. The latter can't be zero because it would imply that \(r/2\) was the order of \(a\) modulo \(N\); but it is smaller than \(r\) which is defined as the smallest positive integer \(r\) such that \(a^r\equiv 1\pmod{N}\), which would lead to a contradiction. To guard against the first one being zero, we restart the algorithm with a new random \(a\) if:</p>
+\[\quad a^{r/2}\equiv -1\pmod{N}
+\]
+<p>It can be seen from the above that the algorithm is probabilistic in nature and may fail at at several points if certain conditions are not met. In these cases, the algorithm is restarted with a new random value of \(a\). The condition that \(r\) must be even has a probability of about 50%. The conditional probability that \(a^{r/2}\not\equiv -1\pmod{N}\), given that \(r\) is even, is at least 50%. From this simplistic analysis, the probability of success for a particular initial guess is \(\approx\)25%, which implies that about 4 tries are needed on average.</p>
+<p>When the order-finding is run on a quantum processor, the speed is exponentially greater than factoring on a classical computer. Even if a few runs are needed because of the restarts, the overall speedup is still exponentially better.</p>
+<h3><a id="simple-numerical-example" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simple Numerical Example</h3>
+<p>To demonstrate how the algorithm works, we will factor \(N=21\).</p>
+<p>Let us assume \(a=2\) as the random starting value, chosen so that \(1&lt;a&lt;N\).</p>
+<p>First, calculate \(\gcd(2,21)=1\)</p>
+<p>As the GCD is 1, it follows that 2 and 21 are coprime, so there isn't a trivial factor and we can proceed with the &quot;difference of squares&quot; approach.</p>
+<p>Next, we need to find the order \(r\), which is the smallest positive integer such that \(2^r\equiv 1\pmod{21}\). To do this classically, we could try succesive integers for 'r':</p>
+\[\begin{align*}
+2^0&amp;\equiv 1&amp;\pmod{21}&amp;\quad\text{(ignore)}\\
+2^1&amp;\equiv 2&amp;\pmod{21}\\
+2^2&amp;\equiv 4&amp;\pmod{21}\\
+2^3&amp;\equiv 8&amp;\pmod{21}\\
+2^4&amp;\equiv 16&amp;\pmod{21}\\
+2^5&amp;\equiv 11&amp;\pmod{21}\\
+2^6&amp;\equiv 1&amp;\pmod{21}\\
+\end{align*}
+\]
+<p>Hence the order \(r=6\). The pattern repeats with a cycle length of 6, with the first cycle starting at \(r=0\).</p>
+<p>Since \(r\) is even, we can proceed as follows, using the difference of squares:</p>
+\[2^6-1\equiv 0 \pmod{21}
+\]
+\[(2^\frac{6}{2}+1)(2^\frac{6}{2}-1)\equiv 0\pmod{21}
+\]
+\[9\times 7 \equiv 0\pmod{21}
+\]
+<p>\(21\) doesn't divide \(7\) or \(9\), so the GCDs of \(7\) and \(9\) with \(21\) must divide \(21\).</p>
+<p>The required factors of 21 are therefore:</p>
+\[\gcd(9,21)=3\quad\text{ and }\quad\gcd(7,21)=7
+\]
+<h3><a id="classical-order-finding" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Classical Order Finding</h3>
+<p>The top-level algorithm described above can be coded in Python as follows. To demonstrate that this works as intended, a simple classical implemention of the order-finding routine will be used initially.</p>
+<pre><code class="language-python"># A non-quantum order-finding routine
+def order_classical(a, N):
+    for r in range(1,N):
+        if pow(a,r,N) == 1:
+            return r
+    raise ValueError(f'Failed to find order of {a} modulo {N}')
+</code></pre>
+<pre><code class="language-python">def factorize_classical(N: int):
+    for _ in range(MAX_TRIES):
+        a = random.randint(2, N-1)
+        g = gcd(a, N)
+        if g &gt; 1:
+            return g, N//g  # Trivial factors if a &amp; N are not coprime
+        r = order_classical(a, N)
+        if (r % 2 == 0) and (a ** (r//2)) % N != N-1:
+            return gcd(a ** (r//2) + 1, N), gcd(a ** (r//2) - 1, N)
+    return None
+</code></pre>
+<p>The 'for' loop limits the number of restarts to avoid an infinite loop if the factorize function is called with a prime number.</p>
+<p>To demonstrate that this top-level routine works as intended, we can try factoring a few numbers:</p>
+<pre><code class="language-python">print(factorize_classical(21))
+print(factorize_classical(119))
+print(factorize_classical(247))
+</code></pre>
+<pre><code class="language-plain_text">(7, 3)
+(17, 7)
+(13, 19)
+</code></pre>
+<h3><a id="quantum-order-finding" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quantum Order Finding</h3>
+<p>Shor's algorithm achieves its performance gain on a quantum computer by using a quantum implementation of order-finding. This actually has both quantum and classical parts:</p>
+<ul>
+<li>A quantum circuit that performs Quantum Phase Estimation (QPE)</li>
+<li>A classical algorithm that extracts the order \(r\) from the phase</li>
+</ul>
+<p>We need to find the multiplicative order of \(a\) modulo \(N\), which is defined as the smallest integer such that:</p>
+\[a^r\equiv 1\pmod N
+\]
+<p>where \(a\) is coprime to \(N\).</p>
+<p>Quantum order finding works by defining a unitary \(U\) such that:</p>
+\[U: \ket{x}\mapsto \ket{ax\bmod N}
+\]
+<p>The QPE returns an approximation to an eigenvalue of \(U\), when the input of the target register is the corresponding eigenstate.</p>
+<p>If \(U_{a,N}\ket{x} = \ket{ax \bmod N}\), then it satisfies \(U^r_{a,N}=I\) when \(r\) is the order.</p>
+<p>Hence, its eigenvalues will be \(e^{2\pi\frac{k}{r}}\) for \(k=0,\dots,r-1\).</p>
+<p>Applying \(U\) to the eigenstate \(k\) times multiplies the phase \(\phi_s\) by \(k\):</p>
+\[U^k\ket{u_e}=e^{2\pi ik\phi_s}\ket{u_e}
+\]
+\[U^k: \ket{x}\mapsto \ket{a^kx\bmod N}
+\]
+<p>where \(\ket{u_e}\) is the eigenvector of \(U\) for which we want to find the eigenvalue.</p>
+<p>Using Quantum Phase Estimation (QPE) with \(m\) qubits for the control register, we will measure some value \(x\), such that \(\frac{x}{2^m}\) is an approximation to \(\frac{k}{r}\):</p>
+\[\frac{x}{2^m}\approx\frac{k}{r}
+\]
+<p>We need to deduce the order \(r\) by finding the exact rational \(\frac{k}{r}\) from the approximation \(\frac{x}{2^m}\).</p>
+<p>This can be done by computing the sequence of continued-fraction convergents and checking each one to see whether its denominator is the order \(r\) of \(a\) modulo \(N\). This should be done in order of increasing candidate \(r\), as the order is defined as the <em>smallest</em> such value.</p>
+\[a^r\equiv 1\pmod{N}
+\]
+<p>The approximation error is:</p>
+\[\left|\frac{x}{2^m}-\frac{k}{r}\right|
+\]
+<p>There is a theorem by Legendre that states that if a rational number \(\frac{p}{q}\) is a sufficently good approximation of a real number \(\alpha\), such that:</p>
+\[\left|\alpha-\frac{p}{q}\right| &lt; \frac{1}{2q^2}
+\]
+<p>then \(\frac{p}{q}\) must be one of the convergents of the continued fraction of \(\alpha\).</p>
+<p>Rather than test each convergent denominator to see whether it is the order 'r' of \(a\) mod \(N\), it is faster to only test ones that satisfy the approximation error condition:</p>
+\[\left|\frac{x}{2^m}-\frac{k}{r}\right| &lt; \frac{1}{2r^2}
+\]
+<p>The procedure may still sometimes fail to find the order because the convergents are <em>reduced fractions</em> in their lowest terms. The actual order may therefore be a multiple of the convergent denominator. The simplest solution is to restart the algorithm with a new random value \(a\), as is done for other failure conditions. Another approach is to try small multiples of the candidate order.</p>
+<p>To keep this example simple, we will just test the denominator of each convergent to see whether it is the order 'r' of \(a\) mod \(N\) and accept that there may be a few more retries.</p>
+<h3><a id="implementing-the-unitary" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Implementing the Unitary</h3>
+<p>The unitary operator \(U\) is specific to given values of \(a\) and \(N\) and consequently needs to be constructed for each run of the circuit. There are several ways to build such an operation out of gates, but they are quite complicated. Since the purpose of this notebook is just to demonstrate the principle of Shor's algorithm, we will implement the unitary as a single \(2^K\times 2^K\) unitary matrix, where \(K\) is the number of qubits necessary for a binary represententation of the number to be factored. Modular exponentiation can be viewed as a permutation operation, so the matrix can be constructed by starting with an identity matrix and permuting the columns, as shown in the following simple implementation.</p>
+<pre><code class="language-python">def modexp_unitary(a, N, k, nq):
+    &quot;&quot;&quot;Build unitary gate for modular exponentiation: a^k mod N.
+      This is a slow but simple implementation as a matrix.
+    &quot;&quot;&quot;
+    assert gcd(a, N) == 1  # Pre-condition: 'a' is coprime with N
+    m = np.eye(2**nq, dtype=int)
+    m[[(a ** k * i) % N for i in range(N)]] = m[range(N)]
+    return m
+</code></pre>
+<h3><a id="quantum-phase-estimation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quantum Phase Estimation</h3>
+<p>The following Python function constructs and runs the quantum circuit for performing Quantum Phase Estimation using the modular exponentiation unitary. See the previous notebook on Quantum Phase Estimation for more background and the definition of the function 'build_qpe_circuit'.</p>
+<pre><code class="language-python">def run_quantum_circuit(a, N, m=None):
+    &quot;&quot;&quot;Build and run the quantum phase estimation circuit.&quot;&quot;&quot;
+
+    # Calculate register sizes
+    t = int.bit_length(N)  # Size of state register (to hold N)
+    if not m:
+        m = ceil(2 * log2(N)) + 1 # Size of control register
+    print(f'N={N}, m={m}, t={t}')
+
+    # Create the QPE circuit
+    qc = build_qpe_circuit(partial(modexp_unitary, a, N), m, t)
+
+    # Measure the state
+    qc.barrier('3')
+    bits = qc.measure(*range(m))
+    return qc, bits
+</code></pre>
+<p>We can now build the quantum circuit for specific values of \(a\) and \(N\).</p>
+<p>The following diagram shows the general form of the circuit. The default value \(m\) has been overidden to reduce the number of control qubits from 8 to 4, to keep the diagram simple.</p>
+<p>The circuit is the same as the example in the QPE notebook except that it is using the modular exponentiation unitary and measurements are performed on the output of the control register.</p>
+<pre><code class="language-python">qc, bits = run_quantum_circuit(a=11, N=15, m=4)
+qc.draw()
+</code></pre>
+<pre><code class="language-plain_text">N=15, m=4, t=4
+</code></pre>
+<p><img src="data:image/png;base64,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
+Ub96tfl5//1N4b5uXfwzhl1S19SYqbbDhklpafGMBKAlt9wi/fSTaZcN+Xzmzefa
+ay2PBYdoqmDfupVCHbDb+PHSrFnSM89If/2rmU55+eXSX/5id7LmuTU3UN/UqWYg
+o6kPmfx+8/WXv1g3vRn2u+gi85r473/NzNRQAgGpXz/zs9crvfOOlJUljRsX/9dL
+2MX6li1mxeDu3eMZB0BLfv5ZevbZpgv1Wj6f+eR4/XrLYsFhGhbsu+9e9zOFOmCP
+fv2k4mLpjDPMYpAffyx17So9+aS0ebPd6UJza26gViBgFghrblDX75dKS+vWfkHb
+tmGD6U/feWddIR7KCSeY76efLhUUmJnm//iHmTo/P84TdcI+Z732UwMrFl+oqKhQ
+aWlpyNu93ixJnvgHCbl/r6SdluzL7/drr732Ctr25ZdfKtkp5xnAcqWlWaqqavn1
+HwhIc+eu1qGHbrcgVXRMW6r77mRubIu33Sb9+GMPLV7c4bdtEyZs1mmnrdfSpTYG
+C5ObXh9ILK3VD9ltN3NK04svSl9/bTqA4e0/8n5Ia/adoskdbd8pkfp8dftz3/ue
+03Pv2JGsjRv7hXHPgN54o0xZWVviHSkh2N13au794+9/N1fFaWmR3eXL69Zlmz27
+bvvgwWZ9qMcfN1PiQ2do+j2ksLCw+R3/KuxiPTdXysw0qyfGW2lpqYqKipq5xyGS
+IutpZqdmq3NG55hy1SouniBpWav8LSByHklfhXXPCy44W5LzPyIuLi62O0Ib1U5S
+8Ic1s2d30ezZXSU555yxlvD6gPNE3g9pSiBgzpWUTD8rXNH1Q1onsxRd7uj7TonZ
+53Pr+55zc6dL2hXG/ZJ0552Tdeedz8Q7ECzR9PtHTY1Z+b24WOrQofGjajWc/l5f
+UpJZ2PfSS81M1lCLzYV6DwmEOX8+7GI9NVU66igzR7+6Or7nrRcUFGjJkiUhb/d6
+sxTpe8HkvpM1ue/kGJMZJSWz5fFY9ykrUJ/PJ40eXaUffkhT7cIoTcnJqdFbbz2q
+jAznnnzl9XpVXFyskpISeTz2jZy0RRUVyfr97/vV27JWUo9ff/bpk0+WNnlZNyfh
+9QGniqYfIplzvcvLTQdw40ZzDu3y5eZcyd/9Lvy/E00/JNrMUuvkjrbvlGh9Pre+
+77kh93nnbdPnn7eX3x+675ScHNBrr12tPfe8zMJkiJdQ7x8bN5pp8C1dDad2+vtp
+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
+3XYzC+y8+KIZYe3SJdz9R35sTKTjefA+nf26fvrpg+XzNT8yk5QU0EMPrdeZZ35v
+UarE4IbXx4wZXZSc3PW3mRZN8fmkGTOq9Mc/WrQKFxzJ7r5Tc8eYd981ten06WbB
+9ObUTo3/9FMzW1wyM83/8Q9z2sfllzeXoenjTGFhYYv5pQiK9dpPV5NCt8uQFi6U
+rr1Wuvpqc357S0pLS1VUVNTMPQ6RtDSiDNmp2eqc0Tmix4RSXDxB0rJW+VstycrK
+0p/+9KegbX/5y1+0c6e1nYu261+STpIU+sTMQCBJn366poXXpDMUFxfbHSEqbsjt
+3rZ4q6T6J1UVa8SI2XaFiYobXh/OEPmxsSmBgBlFkCJbzyC6Y2PiHM8b79vJr+tt
+kpov1v3+aj388Aw9/LAFJ20mIGe/Pu6SdJWk5iuc77+vdEXfCfFjf98p9DHm8cfN
+KYO//33zf6H+9Pf+/eu2d+kinXKK+TuXXmrWvWpKqONMINTUpQbCLtZzc6XMTKms
+LNxHGCtWSCecYJa/n9L0ejCNFBQUaMmSJSFv93qzFOl72OS+kzW5b+scUEpKZsvj
+sa+D3vBFj+jdf/8+ev755JBTuSQpOTmgQYP20/33h35N2s3r9aq4uFglJSXyuOhc
+E7fmruX0tmjOUc9rsLVEDz10i37/+19syRQJt78+rBbNsVEyq92Wl5sifeNGMxNu
++XJzVYyGC+00J5pjYyIez93wuj7xxFSVlQUkNTfrLE033HCmTjpptHXBEoAbXh//
++leu7rknLeRpEpKZeZGfn6Z//9u5fSfYw8q+U6hjzNat5jrqDz7Y/EB0w+nvDV1w
+gVl47pNPzHT6psR6nAm7WE9NlY46ypzjW10d3nnra9eayzkUFprr1oU7Kp+dnR32
+1IBwPbn6ST337XNN3jZn6JyI/pbH41Erx4NNJk2Snn22+fv4/Um6+uqOKizs2Pwd
+HcC8Nt334nRrbid7/PHgD0gXLDArOEvmHPa5c80CQG7A6yO+br/dfNVKSjILbz75
+ZGR/x6pjY1s5njv5dX3JJeb4WLvoalMyMpJ09dX7avfd97UuWAJx8utj331NkVNV
+1dy9knTppVmO/Tcgsf3wgzlVo3fv5u/X1PT3+moX823utMJYjzMRnTBw1VXmAH7b
+bcEH9lpz59Zdlm3TJnO5tr32kl5+ueVzAeJtzbY1mrdxXpO3+QLNDKuiTevTRzr1
+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
+u/VWs65bp05NPz7U8TwQ5rktYRfrqanSUUeZS7VVV0d23nqtoiIznefbb5sv1gsK
+CrRkSehOmdebpUj79pP7TtbkvpMje1AIJSWz5fHYt/LO0bXLJjuIzyeNGVOl779P
+U3MjCCkpAb355l3q1Om2kPexm9frVXFxsUpKSuTx2Du6Fi43Zpbcm7uWE9ui282d
+2ynoHPU6n2nWrFIddFBF3DPYfYyR4nuc2bgxTWPHBhQINDeaF1Be3i699NLbEc2o
+Q7BvvsnUKae0PGp64IEVKin52KJUcJLzz9+pZcvatzC6nqKSkj/L4znTslxAvFjZ
+dwp1PN+4Ufp//8+st9WchtPfG/rjH819PvlEGjmy6b8R6/E8ojkIV10ljRplLi9x
+++2Nb58715ybHsr775tp9Pu1MPsuOzs77KkB4Xpy9ZN67tumRxLmDJ3T5PZQPB6P
+Wjlem3DlleayfKHOcUxJkU49NUnDhvWxNliUzP+zu/6j3ZhZcm9utK5nnpFuvrnu
+93XrpK+/rrus2xlnFDR5WTcnaM1jjBT/48zYsdLrr5spgE1JSkrStddmqqiIdhmL
+wkJp8GDT/wl13rrfn6Trr2/He2CCuuEGsxp1KCkp5tJtEya47wNtwKm2bTMD0Xvu
+2fz9mpr+Xt+ee5pTvLdvD/03Yj2eR1Ssjxwp3XijdMcd5vyq004zIdetk2bNMovW
+jBljLhJ/3HFScbG5eHx1tfTuu2YRjT//ueXpBvGwZtsazds4r8nbfAHOx2sNV1xh
+FlqYP79xwZ6SYj6keeghW6IBcLiG11GvXUwuLy+867DbzW3HmCeekAYOlNavb1xE
+JiWZYv7Pf7YnW1szY4Z5rrdsafrDkdNPlyZMsD4XnOHEE6XzzjOLVSUlBa/6npIi
+deggzZ5tXz6gLSooMFdaaMljj5kPXBteyq1Wu3amzm1ukchYRfyn77jDjKBv22be
+XIYONQV89+7m8mySObf9gAOkBx4wJ9+fcYb03nvStGlmdVm0TenpZqTm1luDP5DJ
+yvLp4ouljz4yax8AQH2hCvVaLV2HHZHr2tVM27vgAik7u277PvuYkYQXXzSjDojd
+fvuZ1+tZZ5n+Ua38fOnhh81gRzw7enC2pCTTP37iCalHj7rt6emm/7xkiXTggfbl
+A9qqpKSWF06/8EKpV6/m/0a837+jOhSPHm2+QsnIMJ8kI/Gkp5tLIFx3nfTqqyt1
+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" alt="png" /></p>
+<p>The cicuit is split into four parts by the barrier symbols:</p>
+<ul>
+<li>Initialization</li>
+<li>Phase kickback</li>
+<li>Inverse QFT</li>
+<li>Measurement of result</li>
+</ul>
+<p>The barrier symbols are labelled 1,2,... so that the state at these points can be referred to as \(\ket{\psi_1},\ket{\psi_2}\), etc.</p>
+<p>The qubits are split into two registers, C and T. Register C is the control register, with \(m\) qubits, and register T is the target register, with \(t\) qubits, that is initialized with the eigenvector. Register T requires enough qubits to hold the binary representation of the number \(N\) that is to be factored:</p>
+\[t=\lceil\log_2 N\rceil
+\]
+<p>Register C normally requires more qubits than register T to give the required phase resolution. The following value is commonly used:</p>
+\[m = \lceil 2\log_2 N\rceil + 1
+\]
+<p>In the circuit above, a smaller value has been used to make the diagram easier to understand.</p>
+<p>The control register is placed in the equal superposition state by the Hadamard gates. The target register is placed in the state \(\ket{0001}\) which is an eigenvector of the unitary \(U\).</p>
+\[\ket{\psi_1}=\frac{1}{\sqrt{M}}\sum_{k=0}^{M-1}\ket{k}\ket{u_e}
+\]
+<p>where \(M=2^\text{m}\)</p>
+<p>Applying the unitary operators gives:</p>
+\[\begin{align*}
+\ket{\psi_2}&amp;={\small\frac{1}{\sqrt{M}}}\sum_{k=0}^{M-1}\ket{k}U^k\ket{u_e}\\
+&amp;={\small\frac{1}{\sqrt{M}}}\sum_{k=0}^{M-1}e^{2\pi ik\phi_s}\ket{k}\ket{u_e}
+\end{align*}
+\]
+<p>The Quantum Fourier Transform (QFT) is defined as:</p>
+\[QFT: \ket{x}\mapsto\frac{1}{\sqrt{M}}\sum_{k=0}^{M-1}{\large e^\frac{2\pi ixk}{M}}\ \ket{k}
+\]
+<p>So applying the inverse QFT to register C results in:</p>
+\[\ket{\psi_3}=\ket{x}\ket{\lambda}
+\]
+<p>where the phase \(\theta\) is approximated by the binary fraction \(\large\frac{x}{2^m}\).</p>
+<h3><a id="computing-the-order" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Computing the Order</h3>
+<p>The next step is to find the multiplicative order \(r\) from the estimated phase.</p>
+<p>The result of the quantum phase estimation is the phase expressed as a binary fraction \(\large\frac{x}{2^m}\) approximated to '\(m\) bits.</p>
+<p>This is an approximation to the true phase:</p>
+\[\phi = \frac{k}{r} \approx \frac{x}{M}
+\]
+<p>where \(k=0,1,\dots,r-1\)</p>
+<p>We need to deduce the order \(r\) by finding the exact rational \(\frac{k}{r}\) from the approximation \(\frac{x}{M}\).</p>
+<p>This can be done by computing the sequence of continued-fraction convergents. These are a sequence of progressively better approximations to a fraction. For example, the first few convergents for \(\pi\) are \(\frac{22}{7}, \frac{333}{106}, \frac{355}{113},\dots\).</p>
+<p>In our case, we have rational fraction, so the sequence is finite. We just need to check each convergent to see whether its denominator is the order of \(a\) modulo \(N\):</p>
+\[a^q\equiv 1\pmod{N}
+\]
+<p>The following function is used to compute the sequence of convergents from the phase returned by the Quantum Phase Estimation circuit.</p>
+<pre><code class="language-python">def build_convergents(x):
+    &quot;&quot;&quot;Build convergents of continued fraction.&quot;&quot;&quot;
+    f = Fraction(x)
+    fraction = continued_fraction(f)
+    print(f'continued_frac={fraction}')
+    return list(convergents(fraction))
+</code></pre>
+<p>The order is then found by checking each convergent to find the first one whose denominator \(q\) satisfies:</p>
+\[a^q \equiv 1 \pmod{N}
+\]
+<p>This may fail as the convergents are reduced fractions, in which case the algorithm is restarted with a new value of \(a\).</p>
+<pre><code class="language-python">def order_from_measured_bits(bits, a, N):
+
+    &quot;&quot;&quot;Convert measurement result to phase.&quot;&quot;&quot;
+    m = len(bits)
+    x = bits_to_int(bits)
+    M = 2 ** m
+
+    # Find convergents
+    f = Fraction(x, M)
+    convergents = build_convergents(f)
+    print('Convergents:', [f'{p}/{q}' for p,q in convergents])
+
+    for p,q in convergents:
+        if q &gt; N:
+            return None
+        if q == 1:
+            continue
+
+        # Check whether convergent is a good enough approximation
+        ok = abs(x/M - p/q) &lt;= 1/(2 * 2**m)
+
+        if ok:
+            for i in range(1,5):
+                print(f'a={a}, q={q}, i={i}, {pow(a, q*i, N)}')
+                if pow(a, q*i, N) == 1:
+                    return q*i
+    return None
+</code></pre>
+<p>Putting the above functions together, we can define the quantum order-finding routine. This involves generating and running the quantum circuit and then extracting the order from the measured phase.</p>
+<pre><code class="language-python">def order_quantum(a, N):
+    &quot;&quot;&quot;Quantum order-finding function.&quot;&quot;&quot;
+
+    # Run the quantum circuit
+    qc, bits = run_quantum_circuit(a, N)
+    bits = qc.results().values()  # FIXME: Assumes dict is ordered
+    print(f'bits: {format_bits(bits, len(bits))} = {bits_to_int(bits)}')
+
+    # Convert measurement result to phase
+    return order_from_measured_bits(bits, a, N)
+</code></pre>
+<p>Finally, we can put everything together into a top-level factoring function:</p>
+<pre><code class="language-python">def shor_factorize(N, n_tries=MAX_TRIES):
+    &quot;&quot;&quot;Factor N using Shor's Algorithm.&quot;&quot;&quot;
+    
+    # Attempt to find the order r of a^x mod N.
+    for trial in range(1, n_tries + 1):
+        print(f'\nTrial # {trial}')
+        a = random.randint(2, N - 1)
+        print(f'Random a={a}')
+
+        g = gcd(a, N)
+        if g &gt; 1:
+            print('Success: a and N are not coprime')
+            return g, N // g  # Trivial factors if a &amp; N are not coprime
+        
+        r = order_quantum(a, N)
+        print(f'Order r (classical) = {order_classical(a, N)}') # For comparison
+        print(f'Order r (quantum) = {r}')
+        
+        if not r:
+            print('Retry as convergent not found')
+            continue
+
+        if r % 2 != 0:
+            print('Retry as r is odd')
+            continue
+
+        if (a ** (r // 2)) % N == N - 1:
+            print(f'Retry as a**r//2 mod N = N-1')
+            continue
+
+        print(f'Success with difference of squares')
+        return gcd(a ** (r // 2) + 1, N), gcd(a ** (r // 2) - 1, N)
+
+    print(f'Failed to find a solution after {n_tries} attempts')
+    return None
+</code></pre>
+<h3><a id="demonstration" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demonstration</h3>
+<p>The following demonstration shows \(119\) being factored using the quantum algorithm.</p>
+<pre><code class="language-python">shor_factorize(119)
+</code></pre>
+<pre><code class="language-plain_text">Trial # 1
+Random a=101
+N=119, m=15, t=7
+bits: 000000000000000 = 0
+Fraction = 0/1
+continued_frac=[0]
+Convergents: ['0/1']
+Order r (classical) = 6
+Order r (quantum) = None
+Retry as convergent not found
+
+Trial # 2
+Random a=23
+N=119, m=15, t=7
+bits: 000010101010101 = 1365
+Fraction = 1365/32768
+continued_frac=[0, 24, 170, 1, 1, 1, 2]
+Convergents: ['0/1', '1/24', '170/4081', '171/4105', '341/8186', '512/12291', '1365/32768']
+a=23, q=24, i=1, 50
+a=23, q=24, i=2, 1
+Order r (classical) = 48
+Order r (quantum) = 48
+Success with difference of squares
+
+
+
+
+
+(17, 7)
+</code></pre>
+<p>You can try factoring other numbers but the algorithm will become very slow for larger values of \(N\). When it is run on a real quantum computer, Shor's algorithm can potentially give an exponential speed-up over a classical computer. However, when simulated on a classical computer, it is very much slower than a classical factorization algorithm.</p>
+<h3><a id="example-output" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example Output</h3>
+<p>Because of the probabilistic nature of the algorithm, there may be a number of retries and different paths to the solution. If the random variable \(a\) is not coprime with \(N\), it may even return the result without using the quantum algorithm.</p>
+<p>The following snapshots show some example outputs that may occur when factoring 119.</p>
+<h4><a id="example-a" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example A</h4>
+<pre><code class="language-plain_text">shor_factorize(119)
+
+Trial # 1
+Random a=29
+N=119, m=15, t=7
+bits: 010100000000000 = 10240
+Fraction = 5/16
+continued_frac=[0, 3, 5]
+Convergents: ['0/1', '1/3', '5/16']
+Order r (classical) = 16
+Order r (quantum) = 16
+Success with difference of squares
+(7, 17)
+</code></pre>
+<p>This is the nominal situation in which the algorithm finds a convergent whose denominator is the required order.</p>
+\[a^r \bmod{N} = 29^{16} \bmod{119} = 1
+\]
+<h4><a id="example-b" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example B</h4>
+<pre><code class="language-plain_text">shor_factorize(119)
+
+Trial # 1
+Random a=87
+N=119, m=15, t=7
+bits: 000101010101011 = 2731
+Fraction = 2731/32768
+continued_frac=[0, 11, 1, 681, 1, 3]
+Convergents: ['0/1', '1/11', '1/12', '682/8183', '683/8195', '2731/32768']
+Order r (classical) = 24
+Order r (quantum) = 24
+Success with difference of squares
+(17, 7)
+</code></pre>
+<p>In this example, the convergent \(1/12\) satisfies the appproximation criterion, but 12 is not the order because the convergent is a reduced fraction.</p>
+\[87^{12} \bmod{119} = 50
+\]
+<p>Small multiples of 12 are then tried, with a multiple of 2 giving the required order 24:</p>
+\[87^{2\times 12} \bmod{119} = 1
+\]
+<h4><a id="example-c" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example C</h4>
+<pre><code class="language-plain_text">shor_factorize(119)
+
+Trial # 1
+Random a=118
+N=119, m=15, t=7
+bits: 000000000000000 = 0
+Fraction = 0/1
+continued_frac=[0]
+Convergents: ['0/1']
+Order r (classical) = 2
+Order r (quantum) = 2
+Retry as a**r//2 mod N = N-1
+
+Trial # 2
+Random a=56
+Success: a and N are not coprime
+(7, 17)
+</code></pre>
+<p>The first attempt fails because the value of \(r\) does not satisfy the requirement that \(a^\frac{r}{2} \not\equiv -1 \pmod{N}\).</p>
+\[118^{\frac{2}{2}} \equiv -1 \pmod{119}
+\]
+<p>In this particular example, the cause of the failure was that the measured phase was zero. This value has a non-zero probability in the QPE, which leads to a failure.</p>
+<p>The algorithm starts again with a different random value \(a=56\) which happens not to be coprime to \(N\), so one factor is \(\gcd(119, 56)=7\) and the other is \(119/7=17\).</p>
+<pre><code class="language-python">
+</code></pre>
+</div></div></body></html>

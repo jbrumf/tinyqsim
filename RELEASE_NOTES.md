@@ -1,9 +1,21 @@
 ## TinyQsim Release Notes
 
+### Release Note (14 March 2026)
+
+- Python dependency updated to version 3.14
+- Fixed array comparison in qcircuit test harness
+
+Documentation:
+- Reorganised, updated and improved example notebooks
+- Added new example notebook on Shor's Algorithm
+- HTML doc now has table of contents on left
+
+---
+
 ### Release Note (29 May 2025)
 
 - New Example 1: Interference and Phase Kickback
-- Removed Tutorial 4: Low-Level-API
+- Removed "Low-Level API" tutorial as its use is not recommended
 - New plotting methods: plot_real_imag and plot_mag_phase
 - New QCircuit method to draw Bloch Sphere: plot_bloch
 - Barrier symbol now supports an optional label

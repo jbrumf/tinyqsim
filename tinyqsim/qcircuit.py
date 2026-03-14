@@ -398,7 +398,7 @@ class QCircuit(object):
         :param ylim: Y-axis limits [min, max]
         """
         sv = self._simulator.state_vector
-        nq = self.n_qubits
+        nq = quantum.n_qubits(sv)
         plot_bars(quantum.basis_names(nq), [sv.real, sv.imag], ylabels=['Real', 'Imag'],
                   show=show, save=save, height=height, ylims=[ylim, ylim])
 
@@ -410,8 +410,8 @@ class QCircuit(object):
         :param height: Scaling factor for plot height (default=1)
         :param ylim: Y-axis limits for magnitude [min, max]
         """
-        nq = self.n_qubits
         sv = self._simulator.state_vector
+        nq = quantum.n_qubits(sv)
         mag = np.absolute(sv)
         phase = np.atan2(sv.imag, sv.real) / np.pi
         plot_bars(quantum.basis_names(nq), [mag, phase], ylabels=['Magnitude', f'Phase/{PI}'],

@@ -1,0 +1,1198 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>example_2_phase_kickback</title><style>html{font-size:15.000000px;}</style><style>/* copy from https://github.com/sindresorhus/github-markdown-css/ */
+
+html,body{background-color: #feffff;}
+
+.markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  line-height: 1.5;
+  color: #333333;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+  font-size: 1rem;
+  word-wrap: break-word;
+}
+
+.markdown-body .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.markdown-body figure{margin:0;padding:0; display:table;}
+.markdown-body figure figcaption{font-size:92%; text-align:center; color:#09844f;}
+
+.markdown-body .anchor {
+  float: left;
+  line-height: 1;
+  margin-left: -1.25rem;
+  padding-right: 0.25rem;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #0595bf;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body details {
+  display: block;
+}
+
+.markdown-body summary {
+  display: list-item;
+}
+
+.markdown-body a {
+  background-color: initial;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline-width: 0;
+}
+
+.markdown-body strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+.markdown-body strong{
+  color: #333333;
+}
+.markdown-body em{
+  color: #333333;
+}
+
+.markdown-body img {
+  border-style: none;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace,monospace;
+  font-size: 0.9rem;
+}
+
+.markdown-body hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+.markdown-body input {
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body input {
+  overflow: visible;
+}
+
+.markdown-body [type=checkbox] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body * {
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown-body a {
+  color: #0366dd;
+  text-decoration: none;
+}
+.markdown-body mjx-container[jax="SVG"] > svg a{fill:#0366dd;stroke: #0366dd;}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body hr:after,
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  clear: both;
+}
+
+.markdown-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body details summary {
+  cursor: pointer;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 0.1875rem 0.3125rem;
+  font: 0.75rem SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  line-height: 0.75rem;
+  color: #09844f;
+  vertical-align: middle;
+  background-color: #f7f8f8;
+  border: 1px solid #e1e2e2;
+  border-radius: 0.1875rem;
+}
+
+.markdown-body p {
+  margin-top: 0;
+  margin-bottom: 0.625rem;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ol ol ol,
+.markdown-body ol ul ol,
+.markdown-body ul ol ol,
+.markdown-body ul ul ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code,
+.markdown-body pre {
+  font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+  font-size: 0.75rem;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body input::-webkit-inner-spin-button,
+.markdown-body input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.markdown-body:after,
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  clear: both;
+}
+
+.markdown-body>:first-child {
+  margin-top: 0!important;
+}
+
+.markdown-body>:last-child {
+  margin-bottom: 0!important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body blockquote,
+.markdown-body details,
+.markdown-body dl,
+.markdown-body ol,
+.markdown-body p,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body ul {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.markdown-body hr {
+  height: .25rem;
+  padding: 0;
+  margin: 1.5rem 0;
+  background-color: #e1e2e2;
+  border: 0;
+}
+
+.markdown-body blockquote {
+  padding: 0 1rem;
+  color: #636363;
+  border-left: .25rem solid #bbbbbb;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+  padding-bottom: .3rem;
+  border-bottom: 1px solid #e7e8e8;
+  color: #0595bf;
+}
+
+.markdown-body h2 {
+  font-size: 1.5rem;
+  color: #0595bf;
+}
+
+.markdown-body h3 {
+  font-size: 1.25rem;
+  color: #0595bf;
+}
+
+.markdown-body h4 {
+  font-size: 1rem;
+  color: #0595bf;
+}
+
+.markdown-body h5 {
+  font-size: .875rem;
+  color: #0595bf;
+}
+
+.markdown-body h6 {
+  font-size: .85rem;
+  color: #0595bf;
+}
+
+.markdown-body ol,
+.markdown-body ul {
+  padding-left: 2rem;
+}
+
+.markdown-body ol ol,
+.markdown-body ol ul,
+.markdown-body ul ol,
+.markdown-body ul ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li {
+  word-wrap: break-all;
+}
+
+.markdown-body li>p {
+  margin-top: 1rem;
+}
+
+.markdown-body li+li {
+  margin-top: .25rem;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.markdown-body dl dd {
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+}
+
+.markdown-body table th {
+  font-weight: 600;
+}
+
+.markdown-body table td,
+.markdown-body table th {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #b9baba;
+}
+
+.markdown-body table tr {
+  background-color: #feffff;
+  border-top: 1px solid #b9baba;
+}
+
+.markdown-body table th {
+  background-color: #e7e8e8;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f9f9;
+}
+
+.markdown-body img,.markdown-body video {
+  max-width: 100%;
+  box-sizing: initial;
+}
+
+.markdown-body img[align=right] {
+  padding-left: 1.25rem;
+}
+
+.markdown-body img[align=left] {
+  padding-right: 1.25rem;
+}
+
+.markdown-body code {
+  padding: .2rem .4rem;
+  margin: 0;
+  font-size: 85%;
+  background-color: #f7f8f8;
+  color: #09844f;
+  border-radius: 0.1875rem;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+   font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 1rem;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 1rem;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f8f8;
+  border-radius: 0.1875rem;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: initial;
+  border: 0;
+  color: #09844f;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 0.1875rem;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 .2rem .25rem -1.6rem;
+  vertical-align: middle;
+}
+
+.markdown-body .task-list-item input[type="checkbox"]{
+-webkit-appearance: none;-moz-appearance: none;appearance: none;
+width: 0.875rem; height: 0.875rem;outline: none;
+border: 1px solid #0366dd;border-radius: 2px; 
+}
+.markdown-body .task-list-item input[type="checkbox"]:checked {
+  background:no-repeat center/80% url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%3Cpath%20fill%3D%22%230366dd%22%20d%3D%22M173.898%20439.404l-166.4-166.4c-9.997-9.997-9.997-26.206%200-36.204l36.203-36.204c9.997-9.998%2026.207-9.998%2036.204%200L192%20312.69%20432.095%2072.596c9.997-9.997%2026.207-9.997%2036.204%200l36.203%2036.204c9.997%209.997%209.997%2026.206%200%2036.204l-294.4%20294.401c-9.998%209.997-26.207%209.997-36.204-.001z%22%2F%3E%3C%2Fsvg%3E") ;
+}
+
+.markdown-body section.footnotes{
+    margin-top:3rem;
+    border-top:solid 1px #e1e2e2;
+    padding-top:0px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .markdown-body mark{color: #111;}
+}
+
+/* PrismJS 1.23.0
+https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript */
+/**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+
+
+code[class*="language-"],
+pre[class*="language-"] {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+
+@media print {
+    code[class*="language-"],
+    pre[class*="language-"] {
+        text-shadow: none;
+    }
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+    padding: 1rem;
+    margin: .5rem 0;
+    overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+    background-color: #f7f8f8;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+    padding: .1rem;
+    border-radius: .3rem;
+    white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #8e9c92;
+}
+
+.token.punctuation {
+    color: #2834ce;
+}
+
+.token.namespace {
+    opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: #2834ce;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    color: #d32d26;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: #$$codeBlockColor$$;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+    color: #bc319c;
+}
+
+.token.function,
+.token.class-name {
+    color: #967d41;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+    color: #784830;
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+.token.italic {
+    font-style: italic;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+
+pre[class*="language-"].line-numbers {
+  position: relative;
+  padding-left: 3.8rem;
+  counter-reset: linenumber;
+}
+
+pre[class*="language-"].line-numbers > code {
+  position: relative;
+  white-space: inherit;
+}
+
+.line-numbers .line-numbers-rows {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  font-size: 100%;
+  left: -3.8rem;
+  width: 3rem; /* works for line-numbers below 1000 lines */
+  letter-spacing: -1px;
+  border-right: 1px solid #bfc0c0;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+
+  .line-numbers-rows > span {
+    display: block;
+    counter-increment: linenumber;
+  }
+
+    .line-numbers-rows > span:before {
+      content: counter(linenumber);
+      color: #bfc0c0;
+      display: block;
+      padding-right: 0.8rem;
+      text-align: right;
+    }
+
+
+</style><script>(n=>{"use strict";let s,r,e;const l=["cdn.jsdelivr.net","fastly.jsdelivr.net","gcore.jsdelivr.net","cdn.zenless.top","testingcf.jsdelivr.net"],t="//",i=l[0],o=Date.now(),a=2e3,c="jsdelivr-auto-fallback",f="/gh/PipecraftNet/jsdelivr-auto-fallback@main/empty.css?",d=e=>e&&e.includes(t+i),m=e=>e.replace(t+i,t+s),u=window.setTimeout,v=n.querySelectorAll.bind(n),b=()=>{let e,t;for(e of v('link[rel="stylesheet"]'))t=e.href,d(t)&&!t.includes(f)&&(e.href=m(t));for(e of v("script"))if(t=e.src,d(t)){const s=n.createElement("script");s.src=m(t),e.defer=!0,e.src="",e.before(s),e.remove()}for(e of v("img"))t=e.src,d(t)&&(e.src="",e.src=m(t));for(e of v("*[style]"))t=e.getAttribute("style"),d(t)&&e.setAttribute("style",m(t));for(e of v("style"))t=e.innerHTML,d(t)&&(e.innerHTML=m(t))},h=()=>{!e&&r&&s&&(console.warn(i+" is not available. Use "+s),e=!0,u(b,0),u(b,20),setInterval(b,500))},g=(()=>{try{return Object.assign({},JSON.parse(localStorage.getItem(c)||"{}"))}catch{return{}}})(),y=()=>{g.time=o,g.failed=!1,g.fastNode=null;for(const t of l)((e,t)=>{let s;const r=n.createElement("link"),l=e=>{s&&(clearTimeout(s),s=0,e||(r.href="data:text/css;base64,"),r.remove(),t(e))};s=u(l,a),r.addEventListener("error",()=>l(!1)),r.addEventListener("load",()=>l(!0)),r.rel="stylesheet",r.text="text/css",r.href=e+f+o,n.head.insertAdjacentElement("afterbegin",r)})("https://"+t,e=>{e||t!==i||(r=!0,g.failed=!0),e&&!s&&(s=t),e&&!g.fastNode&&(g.fastNode=t),h()});u(()=>{r&&!s&&(s=l[1],h()),localStorage.setItem(c,JSON.stringify(g))},a+100)};if(g.time&&o-g.time<36e5&&g.failed&&g.fastNode)r=!0,s=g.fastNode,h(),u(y,1e3);else if(n.head)y();else{const j=new MutationObserver(()=>{n.head&&(j.disconnect(),y())});j.observe(n,{childList:!0,subtree:!0})}})(document);</script>
+<style>.mweb-charts{background:#fff;}
+body{ box-sizing: border-box;
+    margin: 0 auto;}
+@media print{
+    pre, code, pre code {
+     overflow: visible !important;
+     white-space: pre-wrap !important;       /* css-3 */
+     white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+     white-space: -pre-wrap !important;      /* Opera 4-6 */
+     white-space: -o-pre-wrap !important;    /* Opera 7 */
+     word-wrap: break-word !important;       /* Internet Explorer 5.5+ */
+    }
+    html,body{margin:0;padding:4px;}
+    .mweb-yaml{display:none;}
+}
+
+
+
+div.code-toolbar {
+  position: relative;
+}
+
+div.code-toolbar > .toolbar {
+  position: absolute;
+  z-index: 10;
+  top: .3em;
+  right: .2em;
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0;
+}
+
+div.code-toolbar:hover > .toolbar {
+  opacity: 1;
+}
+
+/* Separate line b/c rules are thrown out if selector is invalid.
+   IE11 and old Edge versions don't support :focus-within. */
+div.code-toolbar:focus-within > .toolbar {
+  opacity: 1;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item {
+  display: inline-block;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > a {
+  cursor: pointer;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > button {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 0;
+  -webkit-user-select: none; /* for button */
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > a,
+div.code-toolbar > .toolbar > .toolbar-item > button,
+div.code-toolbar > .toolbar > .toolbar-item > span {
+  color: inherit;
+  font-size: .8em;
+  padding: 4px .5em;
+  background: #f5f2f0;
+  background: rgba(224, 224, 224, 0.4);
+  box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);
+  border-radius: .5em;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > a:hover,
+div.code-toolbar > .toolbar > .toolbar-item > a:focus,
+div.code-toolbar > .toolbar > .toolbar-item > button:hover,
+div.code-toolbar > .toolbar > .toolbar-item > button:focus,
+div.code-toolbar > .toolbar > .toolbar-item > span:hover,
+div.code-toolbar > .toolbar > .toolbar-item > span:focus {
+  color: inherit;
+  text-decoration: none;
+}
+</style><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script><script>!function(){if("undefined"!=typeof Prism&&"undefined"!=typeof document){var e=[],t={},n=function(){};Prism.plugins.toolbar={};var a=Prism.plugins.toolbar.registerButton=function(n,a){var r;r="function"==typeof a?a:function(e){var t;return"function"==typeof a.onClick?((t=document.createElement("button")).type="button",t.addEventListener("click",(function(){a.onClick.call(this,e)}))):"string"==typeof a.url?(t=document.createElement("a")).href=a.url:t=document.createElement("span"),a.className&&t.classList.add(a.className),t.textContent=a.text,t},n in t?console.warn('There is a button with the key "'+n+'" registered already.'):e.push(t[n]=r)},r=Prism.plugins.toolbar.hook=function(a){var r=a.element.parentNode;var l=a.element.classList;if(l.contains('language-mermaid') || l.contains('language-echarts') || l.contains('language-plantuml')){return;} if(r&&/pre/i.test(r.nodeName)&&!r.parentNode.classList.contains("code-toolbar")){var o=document.createElement("div");o.classList.add("code-toolbar"),r.parentNode.insertBefore(o,r),o.appendChild(r);var i=document.createElement("div");i.classList.add("toolbar");var l=e,d=function(e){for(;e;){var t=e.getAttribute("data-toolbar-order");if(null!=t)return(t=t.trim()).length?t.split(/\s*,\s*/g):[];e=e.parentElement}}(a.element);d&&(l=d.map((function(e){return t[e]||n}))),l.forEach((function(e){var t=e(a);if(t){var n=document.createElement("div");n.classList.add("toolbar-item"),n.appendChild(t),i.appendChild(n)}})),o.appendChild(i)}};a("label",(function(e){var t=e.element.parentNode;if(t&&/pre/i.test(t.nodeName)&&t.hasAttribute("data-label")){var n,a,r=t.getAttribute("data-label");try{a=document.querySelector("template#"+r)}catch(e){}return a?n=a.content:(t.hasAttribute("data-url")?(n=document.createElement("a")).href=t.getAttribute("data-url"):n=document.createElement("span"),n.textContent=r),n}})),Prism.hooks.add("complete",r)}}();</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.css"><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script><style>div.code-toolbar > .toolbar > .toolbar-item > a, div.code-toolbar > .toolbar > .toolbar-item > button, div.code-toolbar > .toolbar > .toolbar-item > span {padding: 4px .5em; background: #f5f2f0; background: rgba(224, 224, 224, 0.4);}</style><script>window.MathJax = {     tex: { tags: 'ams', inlineMath: [ ['$','$'], ['\\(','\\)'] ] } ,     startup: {     pageReady() {       return MathJax.startup.defaultPageReady().then(function () {          window.mweb_mathjax_ready_val = 'yes';          if(window.mweb_mathjax_ready !== undefined){ mweb_mathjax_ready(); }       });     }   }};document.addEventListener('DOMContentLoaded', function(event) {    if (typeof Prism != 'undefined') {         Prism.highlightAll();     }});window.mweb_mathjax_ready_val = '';function theMWebMathJaxRenderIsReady(key){ return window.mweb_mathjax_ready_val; }</script><script>window.MathJax = { tex: { tags: 'ams', inlineMath: [ ['$','$'], ['\\(','\\)'] ] } }; </script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"></script> <style>body{max-width:1108px; padding:24px;}</style>
+<script>(()=>{var e={647:(e,t,n)=>{var o,l,r;l=[],void 0===(r="function"==typeof(o=function(e){"use strict";const t=!!(e&&e.document&&e.document.querySelector&&e.addEventListener);if("undefined"==typeof window&&!t)return;const o=n(563);return e.tocbot=o,o}(void 0!==n.g?n.g:window||n.g))?o.apply(t,l):o)||(e.exports=r)},563:(e,t,n)=>{"use strict";function o(e){var t,n=[].forEach,o=[].some,l=document.body,r=!0,i=" ";function s(t,o){var l,r,a,u=o.appendChild((l=t,r=document.createElement("li"),a=document.createElement("a"),e.listItemClass&&r.setAttribute("class",e.listItemClass),e.onClick&&(a.onclick=e.onClick),e.includeTitleTags&&a.setAttribute("title",l.textContent),e.includeHtml&&l.childNodes.length?n.call(l.childNodes,(function(e){a.appendChild(e.cloneNode(!0))})):a.textContent=l.textContent,a.setAttribute("href",e.basePath+"#"+l.id),a.setAttribute("class",e.linkClass+i+"node-name--"+l.nodeName+i+e.extraLinkClasses),r.appendChild(a),r));if(t.children.length){var d=c(t.isCollapsed);t.children.forEach((function(e){s(e,d)})),u.appendChild(d)}}function c(t){var n=e.orderedList?"ol":"ul",o=document.createElement(n),l=e.listClass+i+e.extraListClasses;return t&&(l=(l=l+i+e.collapsibleClass)+i+e.isCollapsedClass),o.setAttribute("class",l),o}function a(t){var n=0;return null!==t&&(n=t.offsetTop,e.hasInnerContainers&&(n+=a(t.offsetParent))),n}function u(e,t){return e&&e.className!==t&&(e.className=t),e}function d(t){return t&&-1!==t.className.indexOf(e.collapsibleClass)&&-1!==t.className.indexOf(e.isCollapsedClass)?(u(t,t.className.replace(i+e.isCollapsedClass,"")),d(t.parentNode.parentNode)):t}return{enableTocAnimation:function(){r=!0},disableTocAnimation:function(t){var n=t.target||t.srcElement;"string"==typeof n.className&&-1!==n.className.indexOf(e.linkClass)&&(r=!1)},render:function(e,n){var o=c(!1);if(n.forEach((function(e){s(e,o)})),null!==(t=e||t))return t.firstChild&&t.removeChild(t.firstChild),0===n.length?t:t.appendChild(o)},updateToc:function(s){var c;c=e.scrollContainer&&document.querySelector(e.scrollContainer)?document.querySelector(e.scrollContainer).scrollTop:document.documentElement.scrollTop||l.scrollTop,e.positionFixedSelector&&function(){var n;n=e.scrollContainer&&document.querySelector(e.scrollContainer)?document.querySelector(e.scrollContainer).scrollTop:document.documentElement.scrollTop||l.scrollTop;var o=document.querySelector(e.positionFixedSelector);"auto"===e.fixedSidebarOffset&&(e.fixedSidebarOffset=t.offsetTop),n>e.fixedSidebarOffset?-1===o.className.indexOf(e.positionFixedClass)&&(o.className+=i+e.positionFixedClass):o.className=o.className.replace(i+e.positionFixedClass,"")}();var f,m=s;if(r&&null!==t&&m.length>0){o.call(m,(function(t,n){return a(t)>c+e.headingsOffset+10?(f=m[0===n?n:n-1],!0):n===m.length-1?(f=m[m.length-1],!0):void 0}));var h=t.querySelector("."+e.activeLinkClass),p=t.querySelector("."+e.linkClass+".node-name--"+f.nodeName+'[href="'+e.basePath+"#"+f.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g,"\\$1")+'"]');if(h===p)return;var C=t.querySelectorAll("."+e.linkClass);n.call(C,(function(t){u(t,t.className.replace(i+e.activeLinkClass,""))}));var g=t.querySelectorAll("."+e.listItemClass);n.call(g,(function(t){u(t,t.className.replace(i+e.activeListItemClass,""))})),p&&-1===p.className.indexOf(e.activeLinkClass)&&(p.className+=i+e.activeLinkClass);var v=p&&p.parentNode;v&&-1===v.className.indexOf(e.activeListItemClass)&&(v.className+=i+e.activeListItemClass);var S=t.querySelectorAll("."+e.listClass+"."+e.collapsibleClass);n.call(S,(function(t){-1===t.className.indexOf(e.isCollapsedClass)&&(t.className+=i+e.isCollapsedClass)})),p&&p.nextSibling&&-1!==p.nextSibling.className.indexOf(e.isCollapsedClass)&&u(p.nextSibling,p.nextSibling.className.replace(i+e.isCollapsedClass,"")),d(p&&p.parentNode.parentNode)}}}}n.r(t),n.d(t,{_buildHtml:()=>i,_headingsArray:()=>c,_options:()=>d,_parseContent:()=>s,_scrollListener:()=>a,destroy:()=>m,init:()=>f,refresh:()=>h});const l={tocSelector:".js-toc",contentSelector:".js-toc-content",headingSelector:"h1, h2, h3",ignoreSelector:".js-toc-ignore",hasInnerContainers:!1,linkClass:"toc-link",extraLinkClasses:"",activeLinkClass:"is-active-link",listClass:"toc-list",extraListClasses:"",isCollapsedClass:"is-collapsed",collapsibleClass:"is-collapsible",listItemClass:"toc-list-item",activeListItemClass:"is-active-li",collapseDepth:0,scrollSmooth:!0,scrollSmoothDuration:420,scrollSmoothOffset:0,scrollEndCallback:function(e){},headingsOffset:1,throttleTimeout:50,positionFixedSelector:null,positionFixedClass:"is-position-fixed",fixedSidebarOffset:"auto",includeHtml:!1,includeTitleTags:!1,onClick:function(e){},orderedList:!0,scrollContainer:null,skipRendering:!1,headingLabelCallback:!1,ignoreHiddenElements:!1,headingObjectCallback:null,basePath:"",disableTocScrollSync:!1,tocScrollOffset:0};function r(e){var t=e.duration,n=e.offset,o=location.hash?l(location.href):location.href;function l(e){return e.slice(0,e.lastIndexOf("#"))}document.body.addEventListener("click",(function(r){var i;"a"!==(i=r.target).tagName.toLowerCase()||!(i.hash.length>0||"#"===i.href.charAt(i.href.length-1))||l(i.href)!==o&&l(i.href)+"#"!==o||r.target.className.indexOf("no-smooth-scroll")>-1||"#"===r.target.href.charAt(r.target.href.length-2)&&"!"===r.target.href.charAt(r.target.href.length-1)||-1===r.target.className.indexOf(e.linkClass)||function(e,t){var n,o,l=window.pageYOffset,r={duration:t.duration,offset:t.offset||0,callback:t.callback,easing:t.easing||function(e,t,n,o){return(e/=o/2)<1?n/2*e*e+t:-n/2*(--e*(e-2)-1)+t}},i=document.querySelector('[id="'+decodeURI(e).split("#").join("")+'"]')||document.querySelector('[id="'+e.split("#").join("")+'"]'),s="string"==typeof e?r.offset+(e?i&&i.getBoundingClientRect().top||0:-(document.documentElement.scrollTop||document.body.scrollTop)):e,c="function"==typeof r.duration?r.duration(s):r.duration;function a(e){o=e-n,window.scrollTo(0,r.easing(o,l,s,c)),o<c?requestAnimationFrame(a):(window.scrollTo(0,l+s),"function"==typeof r.callback&&r.callback())}requestAnimationFrame((function(e){n=e,a(e)}))}(r.target.hash,{duration:t,offset:n,callback:function(){var e,t;e=r.target.hash,(t=document.getElementById(e.substring(1)))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())}})}),!1)}let i,s,c,a,u,d={};function f(e){d=function(){const e={};for(let t=0;t<arguments.length;t++){const n=arguments[t];for(const t in n)p.call(n,t)&&(e[t]=n[t])}return e}(l,e||{}),d.scrollSmooth&&(d.duration=d.scrollSmoothDuration,d.offset=d.scrollSmoothOffset,r(d)),i=o(d),s=function(e){var t=[].reduce;function n(e){return e[e.length-1]}function o(e){return+e.nodeName.toUpperCase().replace("H","")}function l(t){if(!function(e){try{return e instanceof window.HTMLElement||e instanceof window.parent.HTMLElement}catch(t){return e instanceof window.HTMLElement}}(t))return t;if(e.ignoreHiddenElements&&(!t.offsetHeight||!t.offsetParent))return null;const n=t.getAttribute("data-heading-label")||(e.headingLabelCallback?String(e.headingLabelCallback(t.innerText)):(t.innerText||t.textContent).trim());var l={id:t.id,children:[],nodeName:t.nodeName,headingLevel:o(t),textContent:n};return e.includeHtml&&(l.childNodes=t.childNodes),e.headingObjectCallback?e.headingObjectCallback(l,t):l}return{nestHeadingsArray:function(o){return t.call(o,(function(t,o){var r=l(o);return r&&function(t,o){for(var r=l(t),i=r.headingLevel,s=o,c=n(s),a=i-(c?c.headingLevel:0);a>0&&(!(c=n(s))||i!==c.headingLevel);)c&&void 0!==c.children&&(s=c.children),a--;i>=e.collapseDepth&&(r.isCollapsed=!0),s.push(r)}(r,t.nest),t}),{nest:[]})},selectHeadings:function(t,n){var o=n;e.ignoreSelector&&(o=n.split(",").map((function(t){return t.trim()+":not("+e.ignoreSelector+")"})));try{return t.querySelectorAll(o)}catch(e){return console.warn("Headers not found with selector: "+o),null}}}}(d),m();const t=function(e){try{return e.contentElement||document.querySelector(e.contentSelector)}catch(t){return console.warn("Contents element not found: "+e.contentSelector),null}}(d);if(null===t)return;const n=g(d);if(null===n)return;if(c=s.selectHeadings(t,d.headingSelector),null===c)return;const f=s.nestHeadingsArray(c).nest;if(d.skipRendering)return this;i.render(n,f),a=C((function(e){i.updateToc(c),!d.disableTocScrollSync&&function(e){var t=e.tocElement||document.querySelector(e.tocSelector);if(t&&t.scrollHeight>t.clientHeight){var n=t.querySelector("."+e.activeListItemClass);if(n){var o=t.scrollTop,l=o+t.clientHeight,r=n.offsetTop,i=r+n.clientHeight;r<o+e.tocScrollOffset?t.scrollTop-=o-r+e.tocScrollOffset:i>l-e.tocScrollOffset-30&&(t.scrollTop+=i-l+e.tocScrollOffset+60)}}}(d);const t=e&&e.target&&e.target.scrollingElement&&0===e.target.scrollingElement.scrollTop;(e&&(0===e.eventPhase||null===e.currentTarget)||t)&&(i.updateToc(c),d.scrollEndCallback&&d.scrollEndCallback(e))}),d.throttleTimeout),a(),d.scrollContainer&&document.querySelector(d.scrollContainer)?(document.querySelector(d.scrollContainer).addEventListener("scroll",a,!1),document.querySelector(d.scrollContainer).addEventListener("resize",a,!1)):(document.addEventListener("scroll",a,!1),document.addEventListener("resize",a,!1));let h=null;u=C((function(e){d.scrollSmooth&&i.disableTocAnimation(e),i.updateToc(c),h&&clearTimeout(h),h=setTimeout((function(){i.enableTocAnimation()}),d.scrollSmoothDuration)}),d.throttleTimeout),d.scrollContainer&&document.querySelector(d.scrollContainer)?document.querySelector(d.scrollContainer).addEventListener("click",u,!1):document.addEventListener("click",u,!1)}function m(){const e=g(d);null!==e&&(d.skipRendering||e&&(e.innerHTML=""),d.scrollContainer&&document.querySelector(d.scrollContainer)?(document.querySelector(d.scrollContainer).removeEventListener("scroll",a,!1),document.querySelector(d.scrollContainer).removeEventListener("resize",a,!1),i&&document.querySelector(d.scrollContainer).removeEventListener("click",u,!1)):(document.removeEventListener("scroll",a,!1),document.removeEventListener("resize",a,!1),i&&document.removeEventListener("click",u,!1)))}function h(e){m(),f(e||d)}const p=Object.prototype.hasOwnProperty;function C(e,t,n){let o,l;return t||(t=250),function(){const r=n||this,i=+new Date,s=arguments;o&&i<o+t?(clearTimeout(l),l=setTimeout((function(){o=i,e.apply(r,s)}),t)):(o=i,e.apply(r,s))}}function g(e){try{return e.tocElement||document.querySelector(e.tocSelector)}catch(t){return console.warn("TOC element not found: "+e.tocSelector),null}}}},t={};function n(o){var l=t[o];if(void 0!==l)return l.exports;var r=t[o]={exports:{}};return e[o](r,r.exports,n),r.exports}n.d=(e,t)=>{for(var o in t)n.o(t,o)&&!n.o(e,o)&&Object.defineProperty(e,o,{enumerable:!0,get:t[o]})},n.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}(),n.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),n.r=e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n(647)})();</script>
+<style>#mweb_toc_list_iid{overflow-y:auto}#mweb_toc_list_iid>.toc-list{overflow:hidden;position:relative}.toc>.toc-list li{list-style:none}.toc-list{margin:0;padding-left:10px}a.toc-link{height:100%}.is-collapsible{max-height:1000px;overflow:hidden;transition:all 300ms ease-in-out}.is-collapsed{max-height:0}.is-position-fixed{position:fixed !important;top:0} .is-active-link{} .toc-link::before{background-color:#eee;content:' ';display:inline-block;height:inherit;left:0;margin-top:-1px;position:absolute;width:2px;} .is-active-link::before{background-color:#54bc4b;} .mweb_ct_wrap{margin:0 auto;} .mweb_toc_wrap{margin-top: 18px;}  .mweb_toc_wrap_ct{position: fixed;  width: 266px; padding: 0px; overflow: auto; border-radius:4px; }  .mweb_toc_wrap_ct .markdown-body li{margin: 2px 0;} .mweb_toc_wrap_ct ul{padding-left: 14px;} .mweb_toc_wrap_ct .markdown-body{ padding:12px 12px; font-size: 13px;} .mweb_toc_wrap_ct li.is-active-li{ font-weight: bold;} .mweb_toc_wrap_ct li.is-active-li li{font-weight: normal;} #mweb_toc_list_iid{ padding-left:0px; } #mweb_toc_list_iid>ul{padding-left: 22px;} .mweb_toc_wrap_ct{width: 270px; top:42px; bottom:42px;} .mweb_toc_wrap_ct, .toc-link::before{background-color:#f8f8f8;} .is-active-link::before{background-color:#bbbbbb;}.mweb_ct_wrap{padding-left: 300px;} .mweb_toc_wrap{float: left;} .mweb_toc_wrap_ct{ margin-left: -300px;}@media screen and (max-width: 860px) {  .mweb_toc_wrap{display: none;} .mweb_ct_wrap{ padding:30px;} }@media print{ .mweb_toc_wrap{display: none;} .mweb_ct_wrap{ padding:30px;} }</style><script>document.addEventListener('DOMContentLoaded', (event) => {const ele = document.getElementById('markdown_content');const arr = ele.querySelectorAll('h1,h2,h3,h4,h5,h6'); var idNum = 0;arr.forEach((tmpEle) => { var idVal = 'mweb_tt_id_'+idNum;  if(tmpEle.id === ''){  tmpEle.id = idVal;  }  idNum++; });tocbot.init({ tocSelector: '#mweb_toc_list_iid', contentSelector: '#markdown_content',  headingSelector: 'h1, h2, h3, h4, h5, h6',  orderedList: false, collapseDepth: 6,scrollEndCallback: function (e) { const el = document.querySelector('#mweb_toc_list_iid li.is-active-li'); if(document.querySelector('#mweb_toc_list_iid>ul>li:first-child').classList.contains('is-active-li')){ document.getElementById('mweb_toc_list_iid').scrollTop=0; return;} if(typeof el.scrollIntoViewIfNeeded === 'function'){ el.scrollIntoViewIfNeeded();}else{ el.scrollIntoView(true);} },});});</script></head><body><div class='mweb_ct_wrap'><div class='mweb_toc_wrap'><div class='mweb_toc_wrap_ct'><div id='mweb_toc_list_iid' class='mweb_toc markdown-body'></div></div></div><div id='markdown_content' class='markdown-body'><h2><a id="example-2-phase-kickback" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example 2: Phase Kickback</h2>
+<h3><a id="purpose" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Purpose</h3>
+<p>This notebook example explores the phenomenon of Phase Kickback. This is an effect in which controlled gates can have an effect on their control qubits. It is an important building block in many quantum algorithms such as the Quantum Phase Estimation (QPE) and Shor's Algorithm.</p>
+<h3><a id="imports-and-definitions" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Imports and Definitions</h3>
+<p>The following Python imports will be needed:</p>
+<pre><code class="language-python">from tinyqsim.qcircuit import QCircuit
+import numpy as np
+from math import pi
+from cmath import exp
+</code></pre>
+<p>These Unicode definitions will be useful for annotating the quantum circuits:</p>
+<pre><code class="language-python">U_PI = '\u03C0'  # Unicode pi
+U_PHI = '\u03d5'  # Unicode phi
+KET0 = '|0\u27E9' # Unicode ket |0&gt;
+</code></pre>
+<h3><a id="introduction" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
+<p>Any unitary operator can be expressed in terms of the phases \(\phi_k\) of its eigenvectors \(\ket{u_k}\), as follows:</p>
+<p>\(\qquad U=\sum_k{e^{i\phi_k}\,\ket{u_k}\bra{u_k}}\)</p>
+<p>where \(\lambda_k = e^{i\phi_k}\) are the corresponding eigenvalues.</p>
+<p>The eigenvalue always has a magnitude of one because the operator is unitary, so it is just a phase term.</p>
+<p>If we apply the unitary to one of its eigenvectors \(\ket{u_k}\), the result will be the corresponding eigenvalue \(e^{i\theta_k}\) multiplied by the eigenvector:</p>
+<p>\(\qquad\begin{align*} U \ket{u_k} &amp;= ({e^{i\theta_k}\,\ket{u_k}\bra{\psi_k}})\ \ket{u_k}\\ &amp;= e^{i\theta_k}\ket{u_k} \end{align*}\)</p>
+<p>Consider a unitary operator \(U\) which has an eigenvector \(\ket{u_k}\) with corresponding eigenvalue \(e^{i\phi}\).</p>
+\[U\ket{u_k} = e^{i\phi}\ket{u_k}
+\]
+<p>We apply \(U\) to its eigenstate as a controlled-U with the control in superposition:</p>
+<pre><code class="language-python"># Ignore this code. It is just used to draw a circuit diagram.
+KET_U = fr'|$u_k$''\u27E9'
+qc = QCircuit(2)
+qc.qubit_labels({0: KET0, 1: KET_U}, numbers=False)
+qc.h(0)
+qc.cu(np.eye(2), 'U', 0, 1)
+qc.h(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+<p>The output is:</p>
+\[{\small\frac{1}{\sqrt{2}}}(\ket{0}\ket{u_k} + \ket{1}U\ket{u_k}
+\]
+\[= {\small\frac{1}{\sqrt{2}}}(\ket{0}\ket{u_k} + e^{i\phi}\ket{1}\ket{u_k}
+\]
+<p>This is not an entangled state, because it can be written as the tensor product of qubit states:</p>
+\[= ({\small\frac{1}{\sqrt{2}}}(\ket{0} + e^{i\phi}\ket{1})) \otimes\ket{u_k}
+\]
+<p>The phase now appears on the control qubit.</p>
+<p>Being able to do the factorization relies on the state \(\ket{\psi}\) being an eigenstate of \(U\). If this were not the case, the qubits would be entangled and it would not be meaningful to talk about their individual phases.</p>
+<p>This effect is called &quot;Phase Kickback&quot;. The phase resulting from a controlled gate is &quot;kicked back&quot; onto the control qubit and the target qubit is left unaffected. There were two things necessary to make this example work. The control input had to be in an equal superposition state and the target input had to be in an eigenvector of the controlled operation.</p>
+<h3><a id="example" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h3>
+<p>For a concrete example, we will use the following unitary matrix which has an eigenvector of \(\ket{1}\) with corresponding eigenvalue \(e^{\large i\frac{\pi}{3}}\).</p>
+\[U=\begin{bmatrix}1&amp;0\\0&amp;e^{i\phi}\end{bmatrix},\quad\text{where }\phi=\frac{\pi}{3}
+\]
+<pre><code class="language-python">u = np.array([[1,0],[0,exp(1j * pi/3)]])
+
+qc = QCircuit(2)
+qc.x(1)
+qc.barrier()
+qc.h(0)
+qc.cu(u, 'U', 0, 1)
+qc.h(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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
++T/Z1oiRTJDobgAAAABJRU5ErkJggg==" alt="png" /></p>
+<p>The \(X\) gate initializes qubit q1 to \(\ket{1}\), which is an eigenvector of \(U\).</p>
+<p>The output state is:</p>
+<pre><code class="language-python">qc.display_state(prefix=r'\ket{\psi} = ')
+</code></pre>
+<p>\(\displaystyle \ket{\psi} = (0.75+0.43301j)\ \ket{01} + (0.25-0.43301j)\ \ket{11}\)</p>
+<p>This is not an entangled state, because it can be written as the tensor product of qubit states:</p>
+\[\ket{\psi}=\left[(0.75+0.43301j)\ket{0}+(0.25-0.43301j)\ket{1}\right] \otimes\ket{1}
+\]
+<p>All the phase has been kicked-back to qubit q0. Qubit q1 is still in its original state \(\ket{1}\) and so has not been affected.</p>
+<p>Phase kickback will work for any unitary, because a unitary simply applies a phase \(\theta_k\) when its input is the corresonding eigenvector \(\ket{\phi_k}\).</p>
+<p>Although we have only considered a one-qubit unitary with two eigenvectors, it works for an N-qubit unitary with \(2^N\) eigenvectors. By initializing the input of the unitary to one of its eigenvectors, we can read out the phase associated with the corresponding eigenvalue. This plays an important role in algorithms such as Quantum Phase Estimation (QPE).</p>
+<h3><a id="understanding-controls" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Understanding Controls</h3>
+<p>Phase Kickback may seem very strange, because we often think of the control of a controlled gate as an enabling input, such that a \(\ket{1}\) on the control qubit enables the controlled operation on the target qubit and a \(\ket{0}\) on the control causes the gate to have no effect. However, this is a misleading way to think about controlled gates. It is valid when the control is in the computational basis state, \(\ket{0}\) or \(\ket{1}\). However, when the control is in a superposition state, the output of the gate is a superposition of its its outputs for each of the basis states, but this may no longer behave like a simple control action.</p>
+<p>For example, consider the following circuit with a controlled-X (CX) gate sandwiched between Hadamard gates. This &quot;Hadamard Sandwich&quot; changes the basis from Z to X before the CX gate and then back again afterwards.</p>
+<pre><code class="language-python">qc1 = QCircuit(2)
+qc1.h([0,1])
+qc1.cx(0,1)
+qc1.h([0,1])
+qc1.draw()
+</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALIAAAB4CAYAAABW+ai6AAAAOnRFWHRTb2Z0d2Fy
+ZQBNYXRwbG90bGliIHZlcnNpb24zLjEwLjgsIGh0dHBzOi8vbWF0cGxvdGxpYi5v
+cmcvwVt1zgAAAAlwSFlzAAAPYQAAD2EBqD+naQAAC59JREFUeJztnX1MleUbxz8H
+UIE0cx7FrJlmJpSThJrLMkT6zTKHtrkyodR87cWWy/2oH8WqmTbN1qzM1EyXqJmN
+laiVmS+t6aZo6ZKjg0y2NARTY4KIh/P744rg6DnCg+ftubk+27Nzzn0/z31fXn65
+n/v9dng8Hg+KYnOiwm2AogQCFbJiBCpkxQhUyIoRqJAVI1AhK0agQlaMQIWsGIEK
+WTECFbJiBCpkxQhiwm1Ac5SVQWVl6PN1OqFXr9DnG07s7OuIFnJZGfRPdHOhJjrk
+ecfGuTniim4zYra7ryNayJWViGOnZUHP4tBlfCKJC0vzqaxsO6Wy3X0d0UL+l57F
+0PtAuK1oG9jU19rYU4xAhawYgQpZMQIVsmIEKmTFCIIm5M2bYdAgiI2F226DxYuD
+lZOiBEnIu3fD6NGQkgJbtsDEiTBzJixfHozczOHSJenPPX8+3JbYj6AI+c03RcSf
+fALp6fDqqzB5MuTlQX19MHKEtIQ0PBM85AzI8XtP1fgqto/YHhwDroHycsjJgW7d
+5OrYUfy2aVO4LfNNJPq6VUJetgx694b4eMjIgD17wOGAlSuhthZ++AHGjfN+JisL
+Tp6EA/braw8qx49DaiosXAhnzzaG//gjjBoFc+eGzTRbYVnIhYUwbZqUGAUFMHy4
+t2hLS+HiRUhK8n7ujjvksziEo5924IknpER2u73DG37n5sKuXaG3y25YHqKeMweG
+DoVPP5XfI0ZInW7ePPl95ox83nCD93NdusjnX3+10lIDOXBA2hNXIyYGFi2CBx4I
+jU12xZKQ3W4oKoL5873Dx45tFHIDDofvNC4Pr66uxuVy+by3uDgOSPIZ54/4mHi6
+duhq6Rl/FBcXAzUBScsXq1YlEBXVk/p6P85CGoCbN7vZv/+XoNkBke3rlJSUZp+3
+JOSKCnFs9+7e4QkJjd8bSt6GkrmBht8N8Q24XC5SU1P95DgI2G/FRPKS88hLzrP0
+jD+ys7OAYFbq/we8DrS76l01NXVX8VGgiFxft2R7QktC7tZNXnWnTnmHl5c3fu/b
+F9q3l7rwQw81hh8+LJ+X150TExMpKirymV9xcRzZ2VYshOVHl7Pu93U+4zYO32gp
+rdWr80lKCl6JvGNHZ1566eoidjg89O/vJj/ft48Chd19bUnI0dHSrVZQALNmNYZv
+2ND4vUMHaQCuX+99z9q1cOONMkjSlPj4+Ba9OlpKSVUJ205u8xnn9rh9hvsjKSmJ
+AJp2BQMHwoIFUhD4K3Q8Hgc5OdcF1EeBIpJ8bbmxl5srgx2TJklvxb59sGaN9z15
+edI4mTpVut1++km67D7+GKJ0UPxfYmJkkCgzU35fLuaoKPHj+PGht81uWJZVZiYs
+WQLbtsGYMbB1q5S2Tbn3XvjqK9i7V3o1VqyQlveUKQGy2iAeeUSG8/v18w5v166e
+qVMlrn378NhmJ1q1QmT6dLka8LVgceRIuZTmGTECXC7pivvuu995443/8u23uaSn
+J4fbNNugL/oIweGAIUMgM/Mv4As6d7ZWx2zrqJAVIwjI4lOn03+rO1TsLN+JY5X/
+gQWATms6hcgas4lEX2uJrBiBClkxAhWyYgQqZMUIVMiKEdhjy6wT1qYX2i6/SMKm
+vo5oITudslPjhaX5Ic87Ns6N0xn6nSnDhd19HdFC7tULjriiw7Rnb9vZUhbs7+uI
+FjKIg9uSoMKJnX2tjT3FCFTIihGokBUjUCErRqBCVoxAhawYgQpZMQIVsmIEKmTF
+CFTIihGokBUjUCErRqBCVoxAhawYgQpZMQIVsmIEKmTFCFTIihGokBUjUCErRqBC
+Vowg4ldRl5X53hE/2Did9l1R3Frs7OuIFnJZGfRPdHOhJvQbpcTGuTniajt7W9jd
+1xEt5MpKxLHTsqBnCA+xPpHEhaX5VFaGtlSuqoKKihjAecXZ1MHG7r6OaCH/S89i
+6B3ME0jDw4UL8MUXcgLWvn1w/DjAQKCCtLR6Bg2C++6DyZOhf/8QGWVTX9tDyIZR
+VycHRb77Lpw+LWIdOxbuuksOo6+rg9LSKIqK5PD6BQvgwQfhvffgzjvDbHyEokIO
+Mb/+Ck8+CQcPwjPPwMyZcPvt/u+vrZWTZefMkVNnX38dcnL04M3LUXeEkN27pfSt
+rYU9e+D9968uYpAjkbOy4MABORI5N1dOnQ11HTrS0RI5RBw+DA8/LOdPFxbC9ddb
+ez42Ft5+W6ofWVnQqRN88EFQTLUlQSmRt26V85P79pWDEJ9/Phi52Ie6OqlO9OzZ
+OhE3Zdw4EfCHH8KmTYGz0e4ERchbtsDPP0NamjRe2joLF4o/Vq26NhE3MGOGlO7T
+pkmXnRIkIb/zjrxKV6yAzp2DkYN9qK2V3okZM+Cee5q/f8cOeYvt2OH/HocDPvoI
+ysvhs88CZam9aZWQly2D3r0hPh4yMqTh4nDAypX/JBqGJmRaQhqeCR5yBuT4vadq
+fBXbR2wPoVXw5ZdQUSG9E4Hklltg9GhYvDj0p85Goq8tS66wUF5p6elQUADDh0u9
+TfHN11/D4MGQmBj4tCdMkO68Y8cCn7bdsNxrMWcODB0qHfUAI0bA+fMwb16gTTOD
+oiIYOTI4aQ8e3JjHrbcGJw+7YKlEdrvFaY8+6h0+dmwgTTKHmhooKYHkZN/x9fUy
+x6Hpde6cxJ07d2Vcfb338wkJ0KMHHDoU3H+HHbBUIldUwKVL0L27d3hCQusNqK6u
+xuVy+YwrLo4DrJ3DFh8TT9cOXVtvkFf+xUBNq58/ezYaSPbbc1NWBn36+I4bM+bK
+sGPHpG3SlM6d6/nttwr27/+j1XZCZPs6JSWl2ectCblbN4iJgVOnvMPLy62k4o3L
+5SI1NdVP7CBgv6X08pLzyEvOa71BTcjOzgKuZQLN9cA56up8x/boIX3uTfnlF5g9
+W3p+Li/Je/S4Mo3q6kvk568kP//la7ATItnXnha0Zi0JOTpaxvsLCmS4tIENG6yk
+4k1iYiJFRUU+44qL48jOtpbe8qPLWff7Op9xG4dvtJTW6tX5JCW1vkT2eCA93U1J
+ie85vrGxMhmoKTH//I+kpsKwYVdPv7YW/vyzHTk5T/DYY/9ptZ1gf19bbuzl5kq3
+z6RJ0luxbx+sWeN9z/HjsHevfK+uhtLSRrFfXp+Oj49v0aujpZRUlbDt5DafcW6P
+tQkKSUlJXKtpd98t7YpgcOgQ1NU5GDOmFykpoV8BEEm+tizkzExYsgTeegvWrZOW
+89q1MGRI4z3bt4vQG/jmG7kg9H2e4eb++2HRIunZue66wKZdWChp+mtMtiVaNXQx
+fbo0VGpqZASqXz/v+IkTRbC+rrbGpEnw99/yRx9I6upkYCo7G+LiApu2HdFpnEGm
+Tx8YNQrmzpVSuTmGDZM/+Obqx0uWwIkT8OyzgbDS/qiQQ8DChXDyJLzySmDSKy2F
+l1+G556TaaFKgOYjO51ts9rQUvr1k5HPF1+U+cRPP936tE6flsZ2QoLMT1YEYybW
+7yzfiWOV46r3dFrTKUTWXMkLL8CRIzBlCpw5I92XVidXlZTIQMmpU7BrF3TsGBRT
+myUSfa1VixDhcMiE+Nmz5crIgKNHW/bsxYuy8HTgQGlg79oVnElIdkaFHEKiomD+
+fPj+exluTkyUCUXr10svUNPqWXW1rPF77TXZ72HWLNkW4OBBFbEvjKla2ImMDFl4
+8PnnsmTp8cclvEsXuerqpEfC7Za1eU89JSuudSsA/6iQw0R8vPQxT5oEf/who3+H
+DsnSpXbt4OabZVRwwABZSa1cHRVyBHDTTXJlZobbEvtiDyGfsDa90Hb5RRI29XVE
+C9nplJ0aLyzND3nesXFunM7Q70wZLuzua4enJZM9w4id9+y1G3b2dcQLWVFagvYj
+K0agQlaMQIWsGIEKWTECFbJiBCpkxQhUyIoRqJAVI1AhK0agQlaMQIWsGIEKWTEC
+FbJiBCpkxQhUyIoRqJAVI1AhK0agQlaMQIWsGMH/AYJ6v3UNx5lNAAAAAElFTkSu
+QmCC" alt="png" /></p>
+<p>This is exactly equivalent to the following circuit, in which the roles of the control and target qubits are interchanged:</p>
+<pre><code class="language-python">qc2 = QCircuit(2)
+qc2.cx(1,0)
+qc2.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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" alt="png" /></p>
+<p>We can verify the equivalence by comparing the unitary matrices of the two circuits:</p>
+<pre><code class="language-python">print(np.allclose(qc1.to_unitary(), qc2.to_unitary()))
+</code></pre>
+<pre><code class="language-plain_text">True
+</code></pre>
+<p>The &quot;Hadamard sandwich&quot; effectively changes the basis from Z to X. This has the effect of reversing the roles of the control and target qubits. So, the concept of a particular qubit of a gate being the control is dependent on the basis.</p>
+<p>For controlled gates that have a diagonal unitary matrix, such as CP and CZ, it is actually arbitary which qubit we regard as the control because of symmetry. These are often represented by a symmetrical symbol, such as the CZ in the following circuit.</p>
+<pre><code class="language-python">qc = QCircuit(2)
+qc.cz(0,1)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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
+wWT+Aapw5SwqI1tqAAAAAElFTkSuQmCC" alt="png" /></p>
+<p>In our earlier example, we used the following controlled unitary to demonstrate phase kickback:</p>
+\[U=\begin{bmatrix}1&amp;0\\0&amp;e^{i\phi}\end{bmatrix},\quad\text{where }\phi=\frac{\pi}{3}
+\]
+<p>Since this was a diagonal matrix, the gate was symmtrical and we could have drawn the circuit as follows:</p>
+<pre><code class="language-python">qc = QCircuit(2)
+qc.x(1)
+qc.barrier()
+qc.h(0)
+qc.cu(u, 'U', 1, 0)
+qc.h(0)
+qc.draw()
+</code></pre>
+<p><img src="data:image/png;base64,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
+rkJggg==" alt="png" /></p>
+<p>The control is enabled because of the \(X\) gate, so the circuit just reduces to an un-controlled \(U\) gate sandwiched between two Hadamard gates. However, as shown above in the introduction, phase kickback works more generally with any controlled unitary and does not require a diagonal matrix.</p>
+<h3><a id="application" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Application</h3>
+<p>Later example notebooks show how phase kickbck may be used to implement Quantum Phase Estimation and that this can, in turn, be used to implement Shor's algorithm.</p>
+</div></div></body></html>

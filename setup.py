@@ -20,7 +20,7 @@ setup(
         'Topic :: Scientific/Engineering',
         'Intended Audience :: Science/Research'
     ],
-    python_requires='>=3.12',
+    python_requires='>=3.14',
     install_requires=[
         'more-itertools',
         'numpy>=2',
@@ -30,6 +30,7 @@ setup(
         'scipy',
         'notebook',
         'pytest',
+	'pip',
         'pdoc',
         'nb-clean'
     ]

@@ -260,4 +260,4 @@ def test_param_multi_gate():
     qc.rx(pi, 'pi', [0, 2])
     qc.rx(-pi, '-pi', [0])
     qc.rx(-pi, '-pi', [2])
-    assert_equal(qc.state_vector, [1, 0, 0, 0, 0, 0, 0, 0])
+    assert_array_almost_equal(qc.state_vector, [1, 0, 0, 0, 0, 0, 0, 0])

@@ -2,18 +2,6 @@
 
 This document provides some informal notes on the design of TinyQsim, as well as some ideas for further development.
 
-<!-- TOC -->
-
-- [TinyQsim Design Notes](#tinyqsim-design-notes)
-  - [Introduction](#introduction)
-  - [Use of Tensors](#use-of-tensors)
-  - [Simulation](#simulation)
-  - [Endianness](#endianness)
-  - [Performance](#performance)
-  - [Software Modules](#software-modules)
-
-<!-- TOC -->
-
 ### Introduction
 
 TinyQsim was originally started as a fun project to learn about quantum computation and as a framework to explore new ideas. The aim was to 'keep it simple', rather than worrying about optimization. Nevertheless, it is capable of simulating a 20-qubit Quantum Fourier Transform in about one second. This is sufficient for most textbook examples.
