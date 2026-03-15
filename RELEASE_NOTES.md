@@ -1,5 +1,11 @@
 ## TinyQsim Release Notes
 
+### Release Note (15 March 2026)
+
+- Fixed missing output in tutorial documentation
+
+---
+
 ### Release Note (14 March 2026)
 
 - Python dependency updated to version 3.14
