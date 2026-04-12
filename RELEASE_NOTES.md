@@ -1,5 +1,9 @@
 ## TinyQsim Release Notes
 
+### Release Note (***** DRAFT *****)
+
+- Added 'show and 'save' methods to QCircuit.plot_bloch()
+
 ### Release Note (16 March 2026)
 
 - Python dependency updated to version 3.14

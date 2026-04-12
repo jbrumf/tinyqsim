@@ -434,14 +434,16 @@ class QCircuit(object):
         plot_bars(freq.keys(), [list(freq.values())], show=show, save=save,
                   ylabels=['Counts'], height=height, ylims=[ylim])
 
-    def plot_bloch(self, scale: float = 1.0):
+    def plot_bloch(self, show=True, save: str | None = False, scale: float = 1.0):
         """Draw the state vector on the Bloch sphere for a 1-qubit state.
         This method will raise an exception for multi-qubit states.
-        :param scale: scaling factor
+        :param show: show the plot
+        :param save: file to save image if required
+        :param scale: scaling factor (default=1)
         """
         if self.n_qubits != 1:
             raise ValueError('Bloch sphere only works for 1-qubit states')
-        bloch.plot_bloch(self._simulator.state_vector, scale)
+        bloch.plot_bloch(self._simulator.state_vector, show=show, save=save, scale=scale)
 
     # ------------------ I/O ------------------
 
