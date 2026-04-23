@@ -768,12 +768,17 @@ U_PHI = '\u03d5'  # Unicode phi
 KET0 = '|0\u27E9' # Unicode ket |0&gt;
 </code></pre>
 <h3><a id="introduction" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
-<p>Any unitary operator can be expressed in terms of the phases \(\phi_k\) of its eigenvectors \(\ket{u_k}\), as follows:</p>
-<p>\(\qquad U=\sum_k{e^{i\phi_k}\,\ket{u_k}\bra{u_k}}\)</p>
-<p>where \(\lambda_k = e^{i\phi_k}\) are the corresponding eigenvalues.</p>
+<p>Any unitary operator can be expressed in terms of the phases \(\phi_j\) of its eigenvectors \(\ket{u_j}\), as follows:</p>
+\[\qquad U=\sum_j{e^{i\phi_j}\,\ket{u_j}\bra{u_j}}
+\]
+<p>where \(\lambda_j = e^{i\phi_j}\) are the corresponding eigenvalues.</p>
 <p>The eigenvalue always has a magnitude of one because the operator is unitary, so it is just a phase term.</p>
-<p>If we apply the unitary to one of its eigenvectors \(\ket{u_k}\), the result will be the corresponding eigenvalue \(e^{i\theta_k}\) multiplied by the eigenvector:</p>
-<p>\(\qquad\begin{align*} U \ket{u_k} &amp;= ({e^{i\theta_k}\,\ket{u_k}\bra{\psi_k}})\ \ket{u_k}\\ &amp;= e^{i\theta_k}\ket{u_k} \end{align*}\)</p>
+<p>If we apply the unitary to one of its eigenvectors \(\ket{u_k}\), the result will be the corresponding eigenvalue \(e^{i\phi_k}\) multiplied by the eigenvector:</p>
+\[\qquad\begin{align*}
+U \ket{u_k} &amp;= ({e^{i\phi_k}\,\ket{u_k}\bra{\psi_k}})\ \ket{u_k}\\
+&amp;= e^{i\phi_k}\ket{u_k}
+\end{align*}
+\]
 <p>Consider a unitary operator \(U\) which has an eigenvector \(\ket{u_k}\) with corresponding eigenvalue \(e^{i\phi}\).</p>
 \[U\ket{u_k} = e^{i\phi}\ket{u_k}
 \]
@@ -940,7 +945,7 @@ hohYUWiIiBWFhohYUWiIiBWFhohYUWiIiBWFhohYUWiIiBWFhohYUWiIiBWFhohY
 \]
 <p>All the phase has been kicked-back to qubit q0. Qubit q1 is still in its original state \(\ket{1}\) and so has not been affected.</p>
 <p>Phase kickback will work for any unitary, because a unitary simply applies a phase \(\theta_k\) when its input is the corresonding eigenvector \(\ket{\phi_k}\).</p>
-<p>Although we have only considered a one-qubit unitary with two eigenvectors, it works for an N-qubit unitary with \(2^N\) eigenvectors. By initializing the input of the unitary to one of its eigenvectors, we can read out the phase associated with the corresponding eigenvalue. This plays an important role in algorithms such as Quantum Phase Estimation (QPE).</p>
+<p>Although we have only considered a one-qubit unitary with two eigenvectors, it works for an N-qubit unitary with \(2^N\) eigenvectors. By initializing the input of the unitary to one of its eigenvectors, we can read out the phase associated with the corresponding eigenvalue. This plays an important role in algorithms such as Quantum Phase Estimation (QPE) and Shor's Algorithm.</p>
 <h3><a id="understanding-controls" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Understanding Controls</h3>
 <p>Phase Kickback may seem very strange, because we often think of the control of a controlled gate as an enabling input, such that a \(\ket{1}\) on the control qubit enables the controlled operation on the target qubit and a \(\ket{0}\) on the control causes the gate to have no effect. However, this is a misleading way to think about controlled gates. It is valid when the control is in the computational basis state, \(\ket{0}\) or \(\ket{1}\). However, when the control is in a superposition state, the output of the gate is a superposition of its its outputs for each of the basis states, but this may no longer behave like a simple control action.</p>
 <p>For example, consider the following circuit with a controlled-X (CX) gate sandwiched between Hadamard gates. This &quot;Hadamard Sandwich&quot; changes the basis from Z to X before the CX gate and then back again afterwards.</p>

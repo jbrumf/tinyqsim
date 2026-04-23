@@ -4,6 +4,7 @@
 """
 
 from tinyqsim.qcircuit import QCircuit
+from tinyqsim.utils import int_to_bits
 import numpy as np
 from numpy import pi
 
@@ -44,14 +45,14 @@ def iqft(qc, n: int|None = None, start: int = 0):
         qc.h(j)
 
 
-def build_qpe_circuit(unitary, nqc, nqt, omit_iqft=False):
-    """Build Quantum Phase Estimation (QPE) circuit.
+def create_qpe_circuit(unitary, nqc, nqt, eigenvec=1, pre_iqft=None):
+    """Create Quantum Phase Estimation (QPE) circuit, excluding measurement.
     :param unitary: function returning the unitary matrix
     :param nqc: Number of control qubits
     :param nqt: Number of target qubits
-    :param omit_iqft: omit the inverse QFT
+    :param eigenvec: e.g. 3 for |0011> when nqt=4 (default=1)
+    :param pre_iqft: Function called just before IQFT
     :return: QPE circuit with 'nqc' control qubits and 'nqt' target qubits."""
-    # Assumes eigenvector is |1>
 
     # Registers
     regC = range(nqc)  # Control register
@@ -66,19 +67,23 @@ def build_qpe_circuit(unitary, nqc, nqt, omit_iqft=False):
     qc.qubit_labels(label_dict, numbers=False)
 
     # Initialialize registers
-    qc.h(regC)  # Create superposition
-    qc.x(regT[nqt - 1])  # Eigenvector
+    x = int_to_bits(eigenvec, nqt)
+    qc.x([regT[i] for i, s in enumerate(x) if s == 1])
+    qc.h(regC)
     qc.barrier('1')
 
     # Apply unitary operators
     for i, j in enumerate(reversed(regC)):
-        u = unitary(2**i, nqt)
-        qc.cu(u, f'$U^{{{2**i}}}$', j, *regT)
+        u = unitary(2 ** i)
+        qc.cu(u, f'$U^{{{2 ** i}}}$', j, *regT)
     qc.barrier('2')
 
+    # Call function to examine state just before the IQFT
+    if pre_iqft is not None:
+        pre_iqft(qc, nqc)
+
     # Inverse QFT
-    if not omit_iqft:
-        iqft(qc, nqc)
+    iqft(qc, nqc)
     return qc
 
 

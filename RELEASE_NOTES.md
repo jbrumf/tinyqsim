@@ -1,8 +1,10 @@
 ## TinyQsim Release Notes
 
-### Release Note (***** DRAFT *****)
+### Release Note (23 April 2026)
 
 - Added 'show and 'save' methods to QCircuit.plot_bloch()
+- Updated examples on Phase Kickback, QPE and Shor's algorithm
+- Replaced build_qpe_circuit method by create_qpe_circuit with modified options
 
 ### Release Note (16 March 2026)
 
