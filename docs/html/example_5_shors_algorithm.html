@@ -754,7 +754,7 @@ div.code-toolbar > .toolbar > .toolbar-item > span:focus {
 <script>(()=>{var e={647:(e,t,n)=>{var o,l,r;l=[],void 0===(r="function"==typeof(o=function(e){"use strict";const t=!!(e&&e.document&&e.document.querySelector&&e.addEventListener);if("undefined"==typeof window&&!t)return;const o=n(563);return e.tocbot=o,o}(void 0!==n.g?n.g:window||n.g))?o.apply(t,l):o)||(e.exports=r)},563:(e,t,n)=>{"use strict";function o(e){var t,n=[].forEach,o=[].some,l=document.body,r=!0,i=" ";function s(t,o){var l,r,a,u=o.appendChild((l=t,r=document.createElement("li"),a=document.createElement("a"),e.listItemClass&&r.setAttribute("class",e.listItemClass),e.onClick&&(a.onclick=e.onClick),e.includeTitleTags&&a.setAttribute("title",l.textContent),e.includeHtml&&l.childNodes.length?n.call(l.childNodes,(function(e){a.appendChild(e.cloneNode(!0))})):a.textContent=l.textContent,a.setAttribute("href",e.basePath+"#"+l.id),a.setAttribute("class",e.linkClass+i+"node-name--"+l.nodeName+i+e.extraLinkClasses),r.appendChild(a),r));if(t.children.length){var d=c(t.isCollapsed);t.children.forEach((function(e){s(e,d)})),u.appendChild(d)}}function c(t){var n=e.orderedList?"ol":"ul",o=document.createElement(n),l=e.listClass+i+e.extraListClasses;return t&&(l=(l=l+i+e.collapsibleClass)+i+e.isCollapsedClass),o.setAttribute("class",l),o}function a(t){var n=0;return null!==t&&(n=t.offsetTop,e.hasInnerContainers&&(n+=a(t.offsetParent))),n}function u(e,t){return e&&e.className!==t&&(e.className=t),e}function d(t){return t&&-1!==t.className.indexOf(e.collapsibleClass)&&-1!==t.className.indexOf(e.isCollapsedClass)?(u(t,t.className.replace(i+e.isCollapsedClass,"")),d(t.parentNode.parentNode)):t}return{enableTocAnimation:function(){r=!0},disableTocAnimation:function(t){var n=t.target||t.srcElement;"string"==typeof n.className&&-1!==n.className.indexOf(e.linkClass)&&(r=!1)},render:function(e,n){var o=c(!1);if(n.forEach((function(e){s(e,o)})),null!==(t=e||t))return t.firstChild&&t.removeChild(t.firstChild),0===n.length?t:t.appendChild(o)},updateToc:function(s){var c;c=e.scrollContainer&&document.querySelector(e.scrollContainer)?document.querySelector(e.scrollContainer).scrollTop:document.documentElement.scrollTop||l.scrollTop,e.positionFixedSelector&&function(){var n;n=e.scrollContainer&&document.querySelector(e.scrollContainer)?document.querySelector(e.scrollContainer).scrollTop:document.documentElement.scrollTop||l.scrollTop;var o=document.querySelector(e.positionFixedSelector);"auto"===e.fixedSidebarOffset&&(e.fixedSidebarOffset=t.offsetTop),n>e.fixedSidebarOffset?-1===o.className.indexOf(e.positionFixedClass)&&(o.className+=i+e.positionFixedClass):o.className=o.className.replace(i+e.positionFixedClass,"")}();var f,m=s;if(r&&null!==t&&m.length>0){o.call(m,(function(t,n){return a(t)>c+e.headingsOffset+10?(f=m[0===n?n:n-1],!0):n===m.length-1?(f=m[m.length-1],!0):void 0}));var h=t.querySelector("."+e.activeLinkClass),p=t.querySelector("."+e.linkClass+".node-name--"+f.nodeName+'[href="'+e.basePath+"#"+f.id.replace(/([ #;&,.+*~':"!^$[\]()=>|/\\@])/g,"\\$1")+'"]');if(h===p)return;var C=t.querySelectorAll("."+e.linkClass);n.call(C,(function(t){u(t,t.className.replace(i+e.activeLinkClass,""))}));var g=t.querySelectorAll("."+e.listItemClass);n.call(g,(function(t){u(t,t.className.replace(i+e.activeListItemClass,""))})),p&&-1===p.className.indexOf(e.activeLinkClass)&&(p.className+=i+e.activeLinkClass);var v=p&&p.parentNode;v&&-1===v.className.indexOf(e.activeListItemClass)&&(v.className+=i+e.activeListItemClass);var S=t.querySelectorAll("."+e.listClass+"."+e.collapsibleClass);n.call(S,(function(t){-1===t.className.indexOf(e.isCollapsedClass)&&(t.className+=i+e.isCollapsedClass)})),p&&p.nextSibling&&-1!==p.nextSibling.className.indexOf(e.isCollapsedClass)&&u(p.nextSibling,p.nextSibling.className.replace(i+e.isCollapsedClass,"")),d(p&&p.parentNode.parentNode)}}}}n.r(t),n.d(t,{_buildHtml:()=>i,_headingsArray:()=>c,_options:()=>d,_parseContent:()=>s,_scrollListener:()=>a,destroy:()=>m,init:()=>f,refresh:()=>h});const l={tocSelector:".js-toc",contentSelector:".js-toc-content",headingSelector:"h1, h2, h3",ignoreSelector:".js-toc-ignore",hasInnerContainers:!1,linkClass:"toc-link",extraLinkClasses:"",activeLinkClass:"is-active-link",listClass:"toc-list",extraListClasses:"",isCollapsedClass:"is-collapsed",collapsibleClass:"is-collapsible",listItemClass:"toc-list-item",activeListItemClass:"is-active-li",collapseDepth:0,scrollSmooth:!0,scrollSmoothDuration:420,scrollSmoothOffset:0,scrollEndCallback:function(e){},headingsOffset:1,throttleTimeout:50,positionFixedSelector:null,positionFixedClass:"is-position-fixed",fixedSidebarOffset:"auto",includeHtml:!1,includeTitleTags:!1,onClick:function(e){},orderedList:!0,scrollContainer:null,skipRendering:!1,headingLabelCallback:!1,ignoreHiddenElements:!1,headingObjectCallback:null,basePath:"",disableTocScrollSync:!1,tocScrollOffset:0};function r(e){var t=e.duration,n=e.offset,o=location.hash?l(location.href):location.href;function l(e){return e.slice(0,e.lastIndexOf("#"))}document.body.addEventListener("click",(function(r){var i;"a"!==(i=r.target).tagName.toLowerCase()||!(i.hash.length>0||"#"===i.href.charAt(i.href.length-1))||l(i.href)!==o&&l(i.href)+"#"!==o||r.target.className.indexOf("no-smooth-scroll")>-1||"#"===r.target.href.charAt(r.target.href.length-2)&&"!"===r.target.href.charAt(r.target.href.length-1)||-1===r.target.className.indexOf(e.linkClass)||function(e,t){var n,o,l=window.pageYOffset,r={duration:t.duration,offset:t.offset||0,callback:t.callback,easing:t.easing||function(e,t,n,o){return(e/=o/2)<1?n/2*e*e+t:-n/2*(--e*(e-2)-1)+t}},i=document.querySelector('[id="'+decodeURI(e).split("#").join("")+'"]')||document.querySelector('[id="'+e.split("#").join("")+'"]'),s="string"==typeof e?r.offset+(e?i&&i.getBoundingClientRect().top||0:-(document.documentElement.scrollTop||document.body.scrollTop)):e,c="function"==typeof r.duration?r.duration(s):r.duration;function a(e){o=e-n,window.scrollTo(0,r.easing(o,l,s,c)),o<c?requestAnimationFrame(a):(window.scrollTo(0,l+s),"function"==typeof r.callback&&r.callback())}requestAnimationFrame((function(e){n=e,a(e)}))}(r.target.hash,{duration:t,offset:n,callback:function(){var e,t;e=r.target.hash,(t=document.getElementById(e.substring(1)))&&(/^(?:a|select|input|button|textarea)$/i.test(t.tagName)||(t.tabIndex=-1),t.focus())}})}),!1)}let i,s,c,a,u,d={};function f(e){d=function(){const e={};for(let t=0;t<arguments.length;t++){const n=arguments[t];for(const t in n)p.call(n,t)&&(e[t]=n[t])}return e}(l,e||{}),d.scrollSmooth&&(d.duration=d.scrollSmoothDuration,d.offset=d.scrollSmoothOffset,r(d)),i=o(d),s=function(e){var t=[].reduce;function n(e){return e[e.length-1]}function o(e){return+e.nodeName.toUpperCase().replace("H","")}function l(t){if(!function(e){try{return e instanceof window.HTMLElement||e instanceof window.parent.HTMLElement}catch(t){return e instanceof window.HTMLElement}}(t))return t;if(e.ignoreHiddenElements&&(!t.offsetHeight||!t.offsetParent))return null;const n=t.getAttribute("data-heading-label")||(e.headingLabelCallback?String(e.headingLabelCallback(t.innerText)):(t.innerText||t.textContent).trim());var l={id:t.id,children:[],nodeName:t.nodeName,headingLevel:o(t),textContent:n};return e.includeHtml&&(l.childNodes=t.childNodes),e.headingObjectCallback?e.headingObjectCallback(l,t):l}return{nestHeadingsArray:function(o){return t.call(o,(function(t,o){var r=l(o);return r&&function(t,o){for(var r=l(t),i=r.headingLevel,s=o,c=n(s),a=i-(c?c.headingLevel:0);a>0&&(!(c=n(s))||i!==c.headingLevel);)c&&void 0!==c.children&&(s=c.children),a--;i>=e.collapseDepth&&(r.isCollapsed=!0),s.push(r)}(r,t.nest),t}),{nest:[]})},selectHeadings:function(t,n){var o=n;e.ignoreSelector&&(o=n.split(",").map((function(t){return t.trim()+":not("+e.ignoreSelector+")"})));try{return t.querySelectorAll(o)}catch(e){return console.warn("Headers not found with selector: "+o),null}}}}(d),m();const t=function(e){try{return e.contentElement||document.querySelector(e.contentSelector)}catch(t){return console.warn("Contents element not found: "+e.contentSelector),null}}(d);if(null===t)return;const n=g(d);if(null===n)return;if(c=s.selectHeadings(t,d.headingSelector),null===c)return;const f=s.nestHeadingsArray(c).nest;if(d.skipRendering)return this;i.render(n,f),a=C((function(e){i.updateToc(c),!d.disableTocScrollSync&&function(e){var t=e.tocElement||document.querySelector(e.tocSelector);if(t&&t.scrollHeight>t.clientHeight){var n=t.querySelector("."+e.activeListItemClass);if(n){var o=t.scrollTop,l=o+t.clientHeight,r=n.offsetTop,i=r+n.clientHeight;r<o+e.tocScrollOffset?t.scrollTop-=o-r+e.tocScrollOffset:i>l-e.tocScrollOffset-30&&(t.scrollTop+=i-l+e.tocScrollOffset+60)}}}(d);const t=e&&e.target&&e.target.scrollingElement&&0===e.target.scrollingElement.scrollTop;(e&&(0===e.eventPhase||null===e.currentTarget)||t)&&(i.updateToc(c),d.scrollEndCallback&&d.scrollEndCallback(e))}),d.throttleTimeout),a(),d.scrollContainer&&document.querySelector(d.scrollContainer)?(document.querySelector(d.scrollContainer).addEventListener("scroll",a,!1),document.querySelector(d.scrollContainer).addEventListener("resize",a,!1)):(document.addEventListener("scroll",a,!1),document.addEventListener("resize",a,!1));let h=null;u=C((function(e){d.scrollSmooth&&i.disableTocAnimation(e),i.updateToc(c),h&&clearTimeout(h),h=setTimeout((function(){i.enableTocAnimation()}),d.scrollSmoothDuration)}),d.throttleTimeout),d.scrollContainer&&document.querySelector(d.scrollContainer)?document.querySelector(d.scrollContainer).addEventListener("click",u,!1):document.addEventListener("click",u,!1)}function m(){const e=g(d);null!==e&&(d.skipRendering||e&&(e.innerHTML=""),d.scrollContainer&&document.querySelector(d.scrollContainer)?(document.querySelector(d.scrollContainer).removeEventListener("scroll",a,!1),document.querySelector(d.scrollContainer).removeEventListener("resize",a,!1),i&&document.querySelector(d.scrollContainer).removeEventListener("click",u,!1)):(document.removeEventListener("scroll",a,!1),document.removeEventListener("resize",a,!1),i&&document.removeEventListener("click",u,!1)))}function h(e){m(),f(e||d)}const p=Object.prototype.hasOwnProperty;function C(e,t,n){let o,l;return t||(t=250),function(){const r=n||this,i=+new Date,s=arguments;o&&i<o+t?(clearTimeout(l),l=setTimeout((function(){o=i,e.apply(r,s)}),t)):(o=i,e.apply(r,s))}}function g(e){try{return e.tocElement||document.querySelector(e.tocSelector)}catch(t){return console.warn("TOC element not found: "+e.tocSelector),null}}}},t={};function n(o){var l=t[o];if(void 0!==l)return l.exports;var r=t[o]={exports:{}};return e[o](r,r.exports,n),r.exports}n.d=(e,t)=>{for(var o in t)n.o(t,o)&&!n.o(e,o)&&Object.defineProperty(e,o,{enumerable:!0,get:t[o]})},n.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}(),n.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),n.r=e=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n(647)})();</script>
 <style>#mweb_toc_list_iid{overflow-y:auto}#mweb_toc_list_iid>.toc-list{overflow:hidden;position:relative}.toc>.toc-list li{list-style:none}.toc-list{margin:0;padding-left:10px}a.toc-link{height:100%}.is-collapsible{max-height:1000px;overflow:hidden;transition:all 300ms ease-in-out}.is-collapsed{max-height:0}.is-position-fixed{position:fixed !important;top:0} .is-active-link{} .toc-link::before{background-color:#eee;content:' ';display:inline-block;height:inherit;left:0;margin-top:-1px;position:absolute;width:2px;} .is-active-link::before{background-color:#54bc4b;} .mweb_ct_wrap{margin:0 auto;} .mweb_toc_wrap{margin-top: 18px;}  .mweb_toc_wrap_ct{position: fixed;  width: 266px; padding: 0px; overflow: auto; border-radius:4px; }  .mweb_toc_wrap_ct .markdown-body li{margin: 2px 0;} .mweb_toc_wrap_ct ul{padding-left: 14px;} .mweb_toc_wrap_ct .markdown-body{ padding:12px 12px; font-size: 13px;} .mweb_toc_wrap_ct li.is-active-li{ font-weight: bold;} .mweb_toc_wrap_ct li.is-active-li li{font-weight: normal;} #mweb_toc_list_iid{ padding-left:0px; } #mweb_toc_list_iid>ul{padding-left: 22px;} .mweb_toc_wrap_ct{width: 270px; top:42px; bottom:42px;} .mweb_toc_wrap_ct, .toc-link::before{background-color:#f8f8f8;} .is-active-link::before{background-color:#bbbbbb;}.mweb_ct_wrap{padding-left: 300px;} .mweb_toc_wrap{float: left;} .mweb_toc_wrap_ct{ margin-left: -300px;}@media screen and (max-width: 860px) {  .mweb_toc_wrap{display: none;} .mweb_ct_wrap{ padding:30px;} }@media print{ .mweb_toc_wrap{display: none;} .mweb_ct_wrap{ padding:30px;} }</style><script>document.addEventListener('DOMContentLoaded', (event) => {const ele = document.getElementById('markdown_content');const arr = ele.querySelectorAll('h1,h2,h3,h4,h5,h6'); var idNum = 0;arr.forEach((tmpEle) => { var idVal = 'mweb_tt_id_'+idNum;  if(tmpEle.id === ''){  tmpEle.id = idVal;  }  idNum++; });tocbot.init({ tocSelector: '#mweb_toc_list_iid', contentSelector: '#markdown_content',  headingSelector: 'h1, h2, h3, h4, h5, h6',  orderedList: false, collapseDepth: 6,scrollEndCallback: function (e) { const el = document.querySelector('#mweb_toc_list_iid li.is-active-li'); if(document.querySelector('#mweb_toc_list_iid>ul>li:first-child').classList.contains('is-active-li')){ document.getElementById('mweb_toc_list_iid').scrollTop=0; return;} if(typeof el.scrollIntoViewIfNeeded === 'function'){ el.scrollIntoViewIfNeeded();}else{ el.scrollIntoView(true);} },});});</script></head><body><div class='mweb_ct_wrap'><div class='mweb_toc_wrap'><div class='mweb_toc_wrap_ct'><div id='mweb_toc_list_iid' class='mweb_toc markdown-body'></div></div></div><div id='markdown_content' class='markdown-body'><h2><a id="example-5-shor-s-algorithm" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example 5: Shor's Algorithm</h2>
 <h3><a id="purpose" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Purpose</h3>
-<p>This example uses TinyQsim to demonstrate the principle of Shor's Algorithm for integer factorisation. It makes use of the Quantum Fourier Transform (QFT) and Quantum Phase Estimation (QPE) algorithms that were explored in previous examples, so it would be useful to become familiar with those examples first.</p>
+<p>This notebook uses TinyQsim to demonstrate the principle of Shor's Algorithm for integer factorisation. It makes use of the Quantum Fourier Transform (QFT) and Quantum Phase Estimation (QPE) algorithms that were explored in previous examples, so it would be useful to become familiar with those examples first.</p>
 <h3><a id="introduction" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h3>
 <p>Factoring large composite numbers is an interesting mathematical problem in its own right, but it is has particular practical implications for the widely-used RSA encryption system. RSA relies for its security on the fact that it is easy to multiply two large prime numbers but very difficult to find the factors if you are just given their product.</p>
 <p>In 1994, Peter Shor published a quantum algorithm, now known as Shor's algorithm, that can theoretically factor large composite numbers exponentially faster than a classical computer. Daniel Simon had previously shown the possibility of exponential speedup on a contrived problem, but Shor's algorithm was the first to offer the promise of exponential speedup on a real-world problem. To have any practical advantage over classical factoring methods, Shor's algorithm would need to be run on a quantum computer with thousands of logical (error free) qubits, which is still some way in the future.</p>
@@ -774,7 +774,9 @@ import random
 <pre><code class="language-python">MAX_TRIES = 10  # Give up after 10 attempts
 </code></pre>
 <pre><code class="language-python">def format_bits(bitlist, nbits=0):
-    &quot;&quot;&quot;Format a list of bits (0 or 1) as a string, optionally padded with zeros to nbits.&quot;&quot;&quot;
+    &quot;&quot;&quot;Format a list of bits (0 or 1) as a string, optionally padded with zeros to nbits.
+    Example: format_bits([0,1,0,1],6) -&gt; '000101'
+    &quot;&quot;&quot;
     return ''.join([str(i) for i in bitlist]).zfill(nbits)
 </code></pre>
 <h3><a id="the-top-level-algorithm" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Top-Level Algorithm</h3>
@@ -806,6 +808,7 @@ import random
 <p>If \(N\nmid (a^{r/2}\pm 1)\) then the following must be factors of \(N\) and we have a solution:</p>
 \[\qquad\gcd(a^{r/2}+1, N)\quad\text{ and }\quad\gcd(a^{r/2}-1, N)
 \]
+<p><strong>Note:</strong> Modular exponentiation and Euclid's algorithm can be used to calculate expressions of this form efficiently.</p>
 <p>We require that neither of the terms \((a^{r/2}+1)\) and \((a^{r/2}-1)\) is zero. The latter can't be zero because it would imply that \(r/2\) was the order of \(a\) modulo \(N\); but it is smaller than \(r\) which is defined as the smallest positive integer \(r\) such that \(a^r\equiv 1\pmod{N}\), which would lead to a contradiction. To guard against the first one being zero, we restart the algorithm with a new random \(a\) if:</p>
 \[\quad a^{r/2}\equiv -1\pmod{N}
 \]
@@ -818,7 +821,7 @@ import random
 <p>As the GCD is 1, it follows that 2 and 21 are coprime, so there isn't a trivial factor and we can proceed with the &quot;difference of squares&quot; approach.</p>
 <p>Next, we need to find the order \(r\), which is the smallest positive integer such that \(2^r\equiv 1\pmod{21}\). To do this classically, we could try succesive integers for 'r':</p>
 \[\begin{align*}
-2^0&amp;\equiv 1&amp;\pmod{21}&amp;\quad\text{(ignore)}\\
+2^0&amp;\equiv 1&amp;\pmod{21}&amp;\quad\text{(start of cycle)}\\
 2^1&amp;\equiv 2&amp;\pmod{21}\\
 2^2&amp;\equiv 4&amp;\pmod{21}\\
 2^3&amp;\equiv 8&amp;\pmod{21}\\
@@ -841,14 +844,22 @@ import random
 \]
 <h3><a id="classical-order-finding" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Classical Order Finding</h3>
 <p>The top-level algorithm described above can be coded in Python as follows. To demonstrate that this works as intended, a simple classical implemention of the order-finding routine will be used initially.</p>
-<pre><code class="language-python"># A non-quantum order-finding routine
-def order_classical(a, N):
+<pre><code class="language-python">def order_classical(a, N):
+    &quot;&quot;&quot;A non-quantum order-finding routine
+    :param a: An initial random value 1&lt;a&lt;N
+    :param N: The number to be factored
+    :return: the multiplicative order
+    &quot;&quot;&quot;
     for r in range(1,N):
         if pow(a,r,N) == 1:
             return r
     raise ValueError(f'Failed to find order of {a} modulo {N}')
 </code></pre>
 <pre><code class="language-python">def factorize_classical(N: int):
+    &quot;&quot;&quot;Factorize N using classical order-finding.
+    :param N: The number to be factored
+    :return: Tuple of factors (or None if not found) 
+    &quot;&quot;&quot;
     for _ in range(MAX_TRIES):
         a = random.randint(2, N-1)
         g = gcd(a, N)
@@ -882,48 +893,44 @@ print(factorize_classical(247))
 <p>Quantum order finding works by defining a unitary \(U\) such that:</p>
 \[U: \ket{x}\mapsto \ket{ax\bmod N}
 \]
-<p>The QPE returns an approximation to an eigenvalue of \(U\), when the input of the target register is the corresponding eigenstate.</p>
+<p>The QPE returns an approximation to an eigenvalue of \(U\), when the input of the target register is the corresponding eigenvector.</p>
 <p>If \(U_{a,N}\ket{x} = \ket{ax \bmod N}\), then it satisfies \(U^r_{a,N}=I\) when \(r\) is the order.</p>
 <p>Hence, its eigenvalues will be \(e^{2\pi\frac{k}{r}}\) for \(k=0,\dots,r-1\).</p>
-<p>Applying \(U\) to the eigenstate \(k\)-times multiplies the phase \(\phi_s\) by \(k\):</p>
-\[U^k\ket{\lambda}=e^{2\pi ik\phi_s}\ket{u}
+<p>Applying \(U\) to the eigenstate \(k\)-times multiplies the phase \(\theta\) by \(k\):</p>
+\[U^k\ket{u_e}=e^{2\pi ik\theta}\ket{u_e}
 \]
 \[U^k: \ket{x}\mapsto \ket{a^kx\bmod N}
 \]
-<p>where \(\ket{u}\) is the eigenvector of \(U\) for which we want to find the phase of the eigenvalue \(\lambda\).</p>
-<p>Using Quantum Phase Estimation (QPE) with \(m\) qubits for the control register, we will measure some value \(x\), such that \(\frac{x}{2^m}\) is an approximation to \(\frac{k}{r}\):</p>
+<p>where \(\ket{u_e}\) is the eigenvector of \(U\) for which we want to find the phase of the eigenvalue \(\lambda\).</p>
+<p>We then use Quantum Phase Estimation (QPE) to find the phase as described in the earler notebook on QPE.</p>
+<p>Using QPE with \(m\) qubits for the control register, we will measure some value \(x\), such that \(\frac{x}{2^m}\) is an approximation to the true phase \(\frac{k}{r}\):</p>
 \[\frac{x}{2^m}\approx\frac{k}{r}
 \]
 <p>We need to deduce the order \(r\) by finding the exact rational \(\frac{k}{r}\) from the approximation \(\frac{x}{2^m}\).</p>
-<p>This can be done by computing the sequence of continued-fraction convergents and checking each one to see whether its denominator is the order \(r\) of \(a\) modulo \(N\). This should be done in order of increasing candidate \(r\), as the order is defined as the <em>smallest</em> such value.</p>
-\[a^r\equiv 1\pmod{N}
-\]
-<p>The approximation error is:</p>
-\[\left|\frac{x}{2^m}-\frac{k}{r}\right|
-\]
-<p>There is a theorem by Legendre that states that if a rational number \(\frac{p}{q}\) is a sufficently good approximation of a real number \(\alpha\), such that:</p>
-\[\left|\alpha-\frac{p}{q}\right| &lt; \frac{1}{2q^2}
-\]
-<p>then \(\frac{p}{q}\) must be one of the convergents of the continued fraction of \(\alpha\).</p>
-<p>Rather than test each convergent denominator to see whether it is the order 'r' of \(a\) mod \(N\), it is faster to only test ones that satisfy the approximation error condition:</p>
-\[\left|\frac{x}{2^m}-\frac{k}{r}\right| &lt; \frac{1}{2r^2}
-\]
-<p>The procedure may still sometimes fail to find the order because the convergents are <em>reduced fractions</em> in their lowest terms. The actual order may therefore be a multiple of the convergent denominator. The simplest solution is to restart the algorithm with a new random value \(a\), as is done for other failure conditions. Another approach is to try small multiples of the candidate order.</p>
 <h3><a id="implementing-the-unitary" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Implementing the Unitary</h3>
-<p>The unitary operator \(U\) is specific to given values of \(a\) and \(N\) and consequently needs to be constructed for each run of the circuit. There are several ways to build such an operation out of gates, but they are quite complicated. Since the purpose of this notebook is just to demonstrate the principle of Shor's algorithm, we will implement the unitary as a single \(2^K\times 2^K\) unitary matrix, where \(K\) is the number of qubits necessary for a binary represententation of the number to be factored. Modular exponentiation can be viewed as a permutation operation, so the matrix can be constructed by starting with an identity matrix and permuting the columns, as shown in the following simple implementation.</p>
-<pre><code class="language-python">def modexp_unitary(a, N, nq, k):
+<p>The unitary operator \(U\) is specific to given values of \(a\) and \(N\) and consequently needs to be constructed for each run of the circuit. There are several ways to build such an operation out of gates, but they are quite complicated. Since the purpose of this notebook is just to demonstrate the principle of Shor's algorithm, we will implement the unitary as a single \(2^t\times 2^t\) unitary matrix, where \(t\) is the number of qubits necessary for a binary represententation of the number to be factored. Modular exponentiation can be viewed as a permutation operation, so the matrix can be constructed by starting with an identity matrix and permuting the columns, as shown in the following simple implementation.</p>
+<pre><code class="language-python">def modexp_unitary(a, N, t, k):
     &quot;&quot;&quot;Create unitary gate for modular exponentiation: a^k mod N.
-      This is a slow but simple implementation as a matrix.
+    :param a: An initial random value 1&lt;a&lt;N
+    :param N: The number to be factored
+    :param t: Number of bits required to represent N in binary
+    :param k: The exponent
+    :return: the unitary matrix
     &quot;&quot;&quot;
     assert gcd(a, N) == 1  # Pre-condition: 'a' is coprime with N
-    m = np.eye(2**nq, dtype=int)
+    m = np.eye(2**t, dtype=int)
     m[[(a ** k * i) % N for i in range(N)]] = m[range(N)]
     return m
 </code></pre>
 <h3><a id="quantum-phase-estimation" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quantum Phase Estimation</h3>
-<p>The following Python function constructs and runs the quantum circuit for performing Quantum Phase Estimation using the modular exponentiation unitary. See the previous notebook on Quantum Phase Estimation for more background and the definition of the function 'build_qpe_circuit'.</p>
+<p>The following Python function constructs and runs the quantum circuit for performing Quantum Phase Estimation using the modular exponentiation unitary. See the previous notebook on Quantum Phase Estimation for more background and the definition of the function 'create_qpe_circuit'.</p>
 <pre><code class="language-python">def run_quantum_circuit(a, N, m=None):
-    &quot;&quot;&quot;Create and run the quantum phase estimation circuit.&quot;&quot;&quot;
+    &quot;&quot;&quot;Create and run the quantum phase estimation circuit.
+    :param a: An initial random value 1&lt;a&lt;N
+    :param N: The number to be factored
+    :param m: Overrides the default number of control qubits
+    :return: (circuit, bits)
+    &quot;&quot;&quot;
 
     # Calculate register sizes
     t = int.bit_length(N)  # Size of state register (to hold N)
@@ -941,7 +948,7 @@ print(factorize_classical(247))
     return qc, bits
 </code></pre>
 <p>We can now build the quantum circuit for specific values of \(a\) and \(N\).</p>
-<p>The following diagram shows the general form of the circuit. The default value \(m\) has been overidden to reduce the number of control qubits from 8 to 4, to keep the diagram simple.</p>
+<p>The following diagram shows the general form of the Quantum Phase Estimation circuit for the trivial case of factoring 15. The number of qubits used for the 'C' register has been reduced from 9 to 4 to make the diagram easier to understand.</p>
 <p>The circuit is the same as the example in the QPE notebook except that it is using the modular exponentiation unitary and measurements are performed on the output of the control register.</p>
 <pre><code class="language-python">qc, bits = run_quantum_circuit(a=11, N=15, m=4)
 qc.draw()
@@ -1459,49 +1466,71 @@ AIehWAcAAAAAwGH+PwvH8pbgfAPaAAAAAElFTkSuQmCC" alt="png" /></p>
 <p>Register C normally requires more qubits than register T to give the required phase resolution. The following value is commonly used:</p>
 \[m = \lceil 2\log_2 N\rceil + 1
 \]
-<p>In the circuit above, a smaller value has been used to make the diagram easier to understand.</p>
-<p>The target register is initialized to the eigenvector \(\ket{u_e}=\ket{0001}\) of the unitary \(U\):</p>
-\[\ket{\psi_1}=\ket{0}^{\otimes m}\otimes\ket{u_e}
-\]
-<p>So applying the inverse QFT to register C results in:</p>
-\[\ket{\psi_3}=\ket{x}\ket{u_e}
-\]
-<p>where the phase \(\theta\) is approximated by the binary fraction \(\large\frac{x}{2^m}\).</p>
+<p><strong>Note:</strong> This value can be derived using Legendre's theorem on continued fractions. It guarantees that the correct partial-fraction convergent will appear in the list of convergents (see above). However, the convergents are <em>reduced fractions</em>, so the required order may be a multiple of the convergent denominator.</p>
+<p>The circuit diagram above is just to illustrate the generate form of the QPE circuit, so a smaller value of \(m\) has been used to make the diagram easier to understand.</p>
+<p>The target register is initialized to the eigenvector \(\ket{u_e}=\ket{0\dots 01}\) of the unitary \(U\). Then applying QPE gives an approximation \(\frac{x}{2^m}\) to the phase, as discussed above.</p>
 <h3><a id="computing-the-order" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Computing the Order</h3>
-<p>The next step is to find the multiplicative order \(r\) from the estimated phase.</p>
-<p>The result of the quantum phase estimation is the phase expressed as a binary fraction \(\large\frac{x}{2^m}\) approximated to '\(m\) bits.</p>
-<p>This is an approximation to the true phase:</p>
-\[\phi = \frac{k}{r} \approx \frac{x}{2^m}
+<p>Using Quantum Phase Estimation (QPE), measurement of the \(m\)-qubit control register will give some value \(x\), such that \(\frac{x}{2^m}\) is an approximation to the true phase \(\theta=\frac{k}{r}\):</p>
+\[\frac{x}{2^m}\approx\frac{k}{r}
 \]
 <p>where \(k=0,1,\dots,r-1\)</p>
-<p>We need to deduce the order \(r\) by finding the exact rational \(\frac{k}{r}\) from the approximation \(\frac{x}{2^m}\).</p>
-<p>This can be done by computing the sequence of continued-fraction convergents. These are a sequence of progressively better approximations to a fraction. For example, the first few convergents for \(\pi\) are \(\frac{22}{7}, \frac{333}{106}, \frac{355}{113},\dots\).</p>
-<p>In our case, we have rational fraction, so the sequence is finite. We just need to check each convergent to see whether its denominator is the order of \(a\) modulo \(N\):</p>
+<p>The next step is to deduce the multiplicative order \(r\) by finding the exact rational \(\frac{k}{r}\) from the approximation \(\frac{x}{2^m}\). This can be done by computing the sequence of <em>continued-fraction convergents</em>, which are a sequence of progressively better approximations to a fraction.</p>
+<p>We just need to check the denominator \(q\) of each convergent until we find the first one that satisfies:</p>
 \[a^q\equiv 1\pmod{N}
 \]
+<p>For example, for \(a=40, N=119, m=15\), the QPE might return \(x=27989\). Then the continued-fraction convergents would be:</p>
+\[\small\frac{1}{1}, \frac{5}{6}, \frac{6}{7}, \frac{35}{41}, \frac{41}{48}
+\]
+<p>Checking each of the denominators \(q\) as a candidate \(r\), the first to succeed is \(r=48\):</p>
+\[a^r = 40^{48} \equiv 1 \pmod{119}
+\]
+<p>Hence, we have found that the order \(r\) is \(48\).</p>
+<p>The approximation error in the value returned by QPE is:</p>
+\[\left|\frac{x}{2^m}-\frac{k}{r}\right|
+\]
+<p>Legendre's theorem on continued fractions states that if a rational number \(\frac{p}{q}\) is a sufficently good approximation of a real number \(\alpha\), such that:</p>
+\[\left|\alpha-\frac{p}{q}\right| &lt; \frac{1}{2q^2}
+\]
+<p>then \(\frac{p}{q}\) must be one of the convergents of the continued fraction of \(\alpha\).</p>
+<p>Rather than test each convergent denominator to see whether it is the order 'r' of \(a\) mod \(N\), it can be faster to only test ones that satisfy the approximation error condition:</p>
+\[\left|\frac{x}{2^m}-\frac{k}{r}\right| &lt; \frac{1}{2r^2}
+\]
+<p>The procedure may still sometimes fail to find the order because the convergents are <em>reduced fractions</em> in their lowest terms. The actual order may therefore be a multiple of the convergent denominator. The simplest solution is to restart the algorithm with a new random value \(a\), as is done for other failure conditions.</p>
+<p><strong>Note:</strong> Another solution to the reduced fraction problem is to try small multiples of the candidate order. Alternatively, the quantum circuit may be run  two or more times and the Least Common Multiple (LCM) of the resulting denominators used as the candidate \(r\) value.</p>
 <p>The following function is used to compute the sequence of convergents from the phase returned by the Quantum Phase Estimation circuit.</p>
 <pre><code class="language-python">def build_convergents(x):
-    &quot;&quot;&quot;Build convergents of continued fraction.&quot;&quot;&quot;
+    &quot;&quot;&quot;Return the continued-fraction convergents of the fraction 'x'.
+    :param x: The fraction
+    :return: list of tuples (p,q) for the convergents
+    &quot;&quot;&quot;
     f = Fraction(x)
     fraction = continued_fraction(f)
-    print(f'continued_frac={fraction}')
     return list(convergents(fraction))
 </code></pre>
 <p>The order is then found by checking each convergent to find the first one whose denominator \(q\) satisfies:</p>
 \[a^q \equiv 1 \pmod{N}
 \]
-<p>This may fail as the convergents are reduced fractions, in which case the algorithm is restarted with a new value of \(a\).</p>
-<pre><code class="language-python">def order_from_measured_bits(bits, a, N):
-
-    &quot;&quot;&quot;Convert measurement result to phase.&quot;&quot;&quot;
+<p>The check based on Legendre's theorem on continued fraction, which was mentioned earlier, is used to skip over convergents that are not sufficiently good approximations.</p>
+<p>This may fail as the convergents are reduced fractions, in which case small multiples of the candidate convergent are tried.</p>
+<pre><code class="language-python">def order_from_measured_bits(bits, a, N, multiples=8):
+    &quot;&quot;&quot;Compute the multiplicative order from bits returned by QPE.
+    :param bits: QPE result as an array of bit values (0 or 1)
+    :param a: An initial random value 1&lt;a&lt;N
+    :param N: The number to be factored
+    :param multiples: Largest multiplier to be tried
+    :return: the multiplicative order (or None)
+    &quot;&quot;&quot;
+    
     m = len(bits)
     x = bits_to_int(bits)
+    if x == 0:
+        return None
     M = 2 ** m
 
     # Find convergents
     f = Fraction(x, M)
     convergents = build_convergents(f)
-    print('Convergents:', [f'{p}/{q}' for p,q in convergents])
+    print('Convergents:', [f'{p}/{q}' for p,q in convergents if q&lt;N])
 
     for p,q in convergents:
         if q &gt; N:
@@ -1511,17 +1540,23 @@ AIehWAcAAAAAwGH+PwvH8pbgfAPaAAAAAElFTkSuQmCC" alt="png" /></p>
 
         # Check whether convergent is a good enough approximation
         ok = abs(x/M - p/q) &lt;= 1/(2 * 2**m)
+        print(f'Legendre test on convergent: {p}/{q} -&gt; {ok}')
 
         if ok:
-            for i in range(1,5):
-                print(f'a={a}, q={q}, i={i}, {pow(a, q*i, N)}')
+            # Try small multiples as convergents are reduced fractions
+            for i in range(1, multiples + 1):
+                print(f'Check: {a}^({q}*{i}) mod {N} = {pow(a, q*i, N)}')
                 if pow(a, q*i, N) == 1:
                     return q*i
     return None
 </code></pre>
 <p>Putting the above functions together, we can define the quantum order-finding routine. This involves generating and running the quantum circuit and then extracting the order from the measured phase.</p>
 <pre><code class="language-python">def order_quantum(a, N):
-    &quot;&quot;&quot;Quantum order-finding function.&quot;&quot;&quot;
+    &quot;&quot;&quot;Quantum order-finding function.
+    :param a: An initial random value 1&lt;a&lt;N
+    :param N: The number to be factored
+    :return: The multiplicative order 'r'
+    &quot;&quot;&quot;
 
     # Run the quantum circuit
     qc, bits = run_quantum_circuit(a, N)
@@ -1531,9 +1566,12 @@ AIehWAcAAAAAwGH+PwvH8pbgfAPaAAAAAElFTkSuQmCC" alt="png" /></p>
     # Convert measurement result to phase
     return order_from_measured_bits(bits, a, N)
 </code></pre>
-<p>Finally, we can put everything together into a top-level factoring function:</p>
+<p>Finally, we can put everything together into a top-level factoring function as follows. The output includes the order found by a classical algorithm for comparison.</p>
 <pre><code class="language-python">def shor_factorize(N, n_tries=MAX_TRIES):
-    &quot;&quot;&quot;Factor N using Shor's Algorithm.&quot;&quot;&quot;
+    &quot;&quot;&quot;Factor N using Shor's Algorithm.
+    :param N: The number to be factored
+    :return: Tuple of factors (or None if not found)  
+    &quot;&quot;&quot;
     
     # Attempt to find the order r of a^x mod N.
     for trial in range(1, n_tries + 1):
@@ -1573,24 +1611,16 @@ AIehWAcAAAAAwGH+PwvH8pbgfAPaAAAAAElFTkSuQmCC" alt="png" /></p>
 <pre><code class="language-python">shor_factorize(119)
 </code></pre>
 <pre><code class="language-plain_text">Trial # 1
-Random a=3
+Random a=116
 N=119, m=15, t=7
-bits: 011110101010001 = 15697
-Fraction = 15697/32768
-continued_frac=[0, 2, 11, 2, 2, 1, 4, 13, 1, 2]
-Convergents: ['0/1', '1/2', '11/23', '23/48', '57/119', '80/167', '377/787', '4981/10398', '5358/11185', '15697/32768']
-Order r (classical) = 48
-Order r (quantum) = None
-Retry as convergent not found
-
-Trial # 2
-Random a=23
-N=119, m=15, t=7
-bits: 001110101010101 = 7509
-Fraction = 7509/32768
-continued_frac=[0, 4, 2, 1, 2, 1, 41, 1, 15]
-Convergents: ['0/1', '1/4', '2/9', '3/13', '8/35', '11/48', '459/2003', '470/2051', '7509/32768']
-a=23, q=48, i=1, 1
+bits: 101101010101011 = 23211
+Fraction = 23211/32768
+Convergents: ['0/1', '1/1', '2/3', '5/7', '17/24']
+Legendre test on convergent: 2/3 -&gt; False
+Legendre test on convergent: 5/7 -&gt; False
+Legendre test on convergent: 17/24 -&gt; True
+Check: 116^(24*1) mod 119 = 50
+Check: 116^(24*2) mod 119 = 1
 Order r (classical) = 48
 Order r (quantum) = 48
 Success with difference of squares
@@ -1601,73 +1631,74 @@ Success with difference of squares
 
 (17, 7)
 </code></pre>
-<p>You can try factoring other numbers but the algorithm will become very slow for larger values of \(N\). When it is run on a real quantum computer, Shor's algorithm can potentially give an exponential speed-up over a classical computer. However, when simulated on a classical computer, it is very much slower than a classical factorization algorithm.</p>
+<p>Shor's algorithm can, in principle, give an exponential speed-up over a classical computer. However, when the quantum algorithm is simulated on a classical computer, it is very much slower than a classical factorization algorithm.</p>
+<p>You can try factoring other numbers but the algorithm will become very slow for larger values of \(N\). Factoring 119, which is a 7-bit number, requires \(m+t=15+7=22\) qubits and may take a few seconds. Factoring 253, which is an 8-bit number, requires \(m+t=17+8=25\) qubits and will consequently take longer to run.</p>
 <h3><a id="example-output" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example Output</h3>
-<p>Because of the probabilistic nature of the algorithm, there may be a number of retries and different paths to the solution. If the random variable \(a\) is not coprime with \(N\), it may even return the result without using the quantum algorithm.</p>
+<p>Because of the probabilistic nature of the algorithm, there may be a number of retries and different paths to the solution. If the random variable \(a\) is not coprime with \(N\), it can return the result without even using the quantum algorithm.</p>
 <p>The following snapshots show some example outputs that may occur when factoring 119.</p>
 <h4><a id="example-a" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example A</h4>
-<pre><code class="language-plain_text">shor_factorize(119)
-
-Trial # 1
-Random a=29
+<pre><code class="language-plain_text">Trial # 1
+Random a=40
 N=119, m=15, t=7
-bits: 010100000000000 = 10240
-Fraction = 5/16
-continued_frac=[0, 3, 5]
-Convergents: ['0/1', '1/3', '5/16']
-Order r (classical) = 16
-Order r (quantum) = 16
+bits: 110110101010101 = 27989
+Fraction = 27989/32768
+Convergents: ['0/1', '1/1', '5/6', '6/7', '35/41', '41/48']
+Legendre test on convergent: 5/6 -&gt; False
+Legendre test on convergent: 6/7 -&gt; False
+Legendre test on convergent: 35/41 -&gt; False
+Legendre test on convergent: 41/48 -&gt; True
+Check: 40^(48*1) mod 119 = 1
+Order r (classical) = 48
+Order r (quantum) = 48
 Success with difference of squares
-(7, 17)
+
+(17, 7)
 </code></pre>
 <p>This is the nominal situation in which the algorithm finds a convergent whose denominator is the required order.</p>
-\[a^r \bmod{N} = 29^{16} \bmod{119} = 1
+\[a^r \bmod{N} = 40^{48} \bmod{119} = 1
 \]
 <h4><a id="example-b" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example B</h4>
 <pre><code class="language-plain_text">shor_factorize(119)
 
 Trial # 1
-Random a=87
+Random a=9
 N=119, m=15, t=7
-bits: 000101010101011 = 2731
-Fraction = 2731/32768
-continued_frac=[0, 11, 1, 681, 1, 3]
-Convergents: ['0/1', '1/11', '1/12', '682/8183', '683/8195', '2731/32768']
+bits: 111010101010101 = 30037
+Fraction = 30037/32768
+Convergents: ['0/1', '1/1', '10/11', '11/12']
+Legendre test on convergent: 10/11 -&gt; False
+Legendre test on convergent: 11/12 -&gt; True
+Check: 9^(12*1) mod 119 = 50
+Check: 9^(12*2) mod 119 = 1
 Order r (classical) = 24
 Order r (quantum) = 24
 Success with difference of squares
+
 (17, 7)
 </code></pre>
-<p>In this example, the convergent \(1/12\) satisfies the appproximation criterion, but 12 is not the order because the convergent is a reduced fraction.</p>
-\[87^{12} \bmod{119} = 50
+<p>In this example, the convergent \(11/12\) satisfies the appproximation criterion, but 12 is not the order because the convergent is a reduced fraction.</p>
+\[9^{12\times 1} \bmod{119} = 50
 \]
 <p>Small multiples of 12 are then tried, with a multiple of 2 giving the required order 24:</p>
-\[87^{2\times 12} \bmod{119} = 1
+\[9^{12\times 2} \bmod{119} = 1
 \]
 <h4><a id="example-c" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example C</h4>
 <pre><code class="language-plain_text">shor_factorize(119)
 
 Trial # 1
-Random a=118
+Random a=55
 N=119, m=15, t=7
 bits: 000000000000000 = 0
-Fraction = 0/1
-continued_frac=[0]
-Convergents: ['0/1']
-Order r (classical) = 2
-Order r (quantum) = 2
-Retry as a**r//2 mod N = N-1
+Order r (classical) = 4
+Order r (quantum) = None
+Retry as convergent not found
 
 Trial # 2
-Random a=56
+Random a=68
 Success: a and N are not coprime
-(7, 17)
+
+(17, 7)
 </code></pre>
-<p>The first attempt fails because the value of \(r\) does not satisfy the requirement that \(a^\frac{r}{2} \not\equiv -1 \pmod{N}\).</p>
-\[118^{\frac{2}{2}} \equiv -1 \pmod{119}
-\]
 <p>In this particular example, the cause of the failure was that the measured phase was zero. This value has a non-zero probability in the QPE, which leads to a failure.</p>
-<p>The algorithm starts again with a different random value \(a=56\) which happens not to be coprime to \(N\), so one factor is \(\gcd(119, 56)=7\) and the other is \(119/7=17\).</p>
-<pre><code class="language-python">
-</code></pre>
+<p>The algorithm starts again with a different random value \(a=68\) which happens not to be coprime to \(N\), so one factor is \(\gcd(119,68)=17\) and the other is \(119/17=7\).</p>
 </div></div></body></html>
